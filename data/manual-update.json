@@ -1,0 +1,17 @@
+{
+  "updated_at": "2026-04-15T10:00:00+09:00",
+  "scenario": {
+    "A_diplomacy_pct": 65,
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 5
+  },
+  "war_risk_premium_pct": 1.0,
+  "war_risk_premium_source": "Argus Media 2026-04-15",
+  "hormuz_daily_flow_mbpd": 8.2,
+  "hormuz_normal_flow_mbpd": 21.0,
+  "flow_disruption_pct": 61,
+  "critical_date": "2026-04-17",
+  "critical_note": "Critical Window: France主導4/18会議",
+  "last_manual_note": "Trump「war終わり間近」発言後、封鎖継続中。WTI急落$91.49。"
+}
