@@ -1,5 +1,467 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head><meta charset="UTF-8"><title>hormuz-data</title></head>
-<body><h1>初期化完了</h1></body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ホルムズ データ監視ダッシュボード</title>
+  <style>
+    :root {
+      --bg: #0a0e1a;
+      --card: #111827;
+      --border: #1e3a5f;
+      --accent: #f97316;
+      --accent2: #3b82f6;
+      --green: #22c55e;
+      --red: #ef4444;
+      --yellow: #eab308;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --font: 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      border-bottom: 2px solid var(--accent);
+      padding: 18px 24px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    header h1 { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    header h1 span { color: var(--accent); }
+    .header-meta { font-size: 0.72rem; color: var(--muted); text-align: right; }
+    .header-meta a { color: var(--accent2); text-decoration: none; }
+    .header-meta a:hover { text-decoration: underline; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      padding: 20px 20px 8px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .card.orange::before { background: linear-gradient(90deg, var(--accent), #fb923c); }
+    .card.blue::before   { background: linear-gradient(90deg, var(--accent2), #60a5fa); }
+    .card.green::before  { background: linear-gradient(90deg, var(--green), #4ade80); }
+    .card.red::before    { background: linear-gradient(90deg, var(--red), #f87171); }
+    .card.yellow::before { background: linear-gradient(90deg, var(--yellow), #facc15); }
+    .card-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .card-value {
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .card-unit { font-size: 0.95rem; font-weight: 400; color: var(--muted); margin-left: 4px; }
+    .card-sub { font-size: 0.76rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      margin-right: 4px;
+      margin-top: 4px;
+    }
+    .badge-orange { background: rgba(249,115,22,0.18); color: var(--accent);  border: 1px solid rgba(249,115,22,0.35); }
+    .badge-blue   { background: rgba(59,130,246,0.18);  color: var(--accent2); border: 1px solid rgba(59,130,246,0.35); }
+    .badge-green  { background: rgba(34,197,94,0.18);   color: var(--green);   border: 1px solid rgba(34,197,94,0.35); }
+    .flow-bar-wrap { margin-top: 12px; }
+    .flow-bar-bg {
+      background: rgba(255,255,255,0.07);
+      border-radius: 6px;
+      height: 10px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .flow-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
+    .flow-bar-label { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--muted); }
+    .scenario-list { margin-top: 10px; }
+    .scenario-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .scenario-name { font-size: 0.72rem; color: var(--text); min-width: 130px; }
+    .scenario-bar-bg { flex: 1; background: rgba(255,255,255,0.07); border-radius: 4px; height: 7px; overflow: hidden; }
+    .scenario-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+    .scenario-pct { font-size: 0.7rem; font-weight: 700; min-width: 32px; text-align: right; }
+    .card-footer {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.64rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .dot-live {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .dot-manual {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--yellow);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .critical-window {
+      background: linear-gradient(135deg, rgba(239,68,68,0.12), rgba(249,115,22,0.08));
+      border: 1px solid rgba(239,68,68,0.35);
+      border-radius: 10px;
+      padding: 14px 20px;
+      margin: 0 20px 16px;
+    }
+    .critical-window h3 {
+      font-size: 0.78rem; font-weight: 700;
+      color: var(--red); letter-spacing: 0.07em;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .critical-window p { font-size: 0.82rem; line-height: 1.6; }
+    footer {
+      padding: 16px 20px;
+      font-size: 0.65rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 10px;
+      line-height: 1.8;
+    }
+    footer a { color: var(--accent2); text-decoration: none; }
+    @media (max-width: 600px) {
+      .card-value { font-size: 1.9rem; }
+      header h1 { font-size: 1rem; }
+      .grid { padding: 12px 12px 6px; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🛢 ホルムズ <span>データ監視</span> ダッシュボード</h1>
+  <div class="header-meta">
+    <div id="header-updated">データ読み込み中…</div>
+    <div style="margin-top:3px;">
+      <a href="https://yattanda.github.io/hormuz-map/" target="_blank">← 地図で読むホルムズ危機 (メインサイト)</a>
+    </div>
+  </div>
+</header>
+
+<div class="critical-window" id="critical-banner" style="display:none;margin-top:16px;">
+  <h3>⚠ Critical Window</h3>
+  <p id="critical-text"></p>
+</div>
+
+<div class="grid">
+
+  <!-- Card 1: AIS通航船舶数 -->
+  <div class="card orange">
+    <div class="card-label">🛥 ホルムズ海峡 AIS検出船舶数（当日）</div>
+    <div style="display:flex;align-items:baseline;gap:6px;">
+      <div class="card-value" id="ais-count">—</div>
+      <div class="card-unit">隻</div>
+    </div>
+    <div style="margin-top:6px;">
+      <span class="badge badge-orange" id="ais-tanker">タンカー — 隻</span>
+      <span class="badge badge-blue"   id="ais-cargo">貨物船 — 隻</span>
+      <span class="badge badge-green"  id="ais-other">その他 — 隻</span>
+    </div>
+    <div class="flow-bar-wrap">
+      <div class="flow-bar-bg">
+        <div class="flow-bar-fill" id="ais-bar"
+             style="width:0%;background:linear-gradient(90deg,var(--accent),#fb923c)"></div>
+      </div>
+      <div class="flow-bar-label">
+        <span>封鎖前比（通常200隻/日）</span>
+        <span id="ais-bar-pct">—%</span>
+      </div>
+    </div>
+    <div class="card-sub">
+      推定実通航数（ダーク船補正）: <strong id="ais-estimated">—</strong> 隻<br/>
+      <span style="font-size:0.63rem;">補正係数 ×<span id="ais-factor">—</span>（UANI/Kpler推定ベース）</span>
+    </div>
+    <div class="card-footer">
+      <span class="dot-live"></span>
+      AISstream.io ／ 最終取得: <span id="ais-updated">—</span>
+    </div>
+  </div>
+
+  <!-- Card 2: 通航量BPD -->
+  <div class="card red">
+    <div class="card-label">🛢 ホルムズ通過石油 推定流量</div>
+    <div style="display:flex;align-items:baseline;gap:6px;">
+      <div class="card-value" id="flow-val">—</div>
+      <div class="card-unit">百万BPD</div>
+    </div>
+    <div class="flow-bar-wrap">
+      <div class="flow-bar-bg">
+        <div class="flow-bar-fill" id="flow-bar"
+             style="width:0%;background:linear-gradient(90deg,var(--red),#f87171)"></div>
+      </div>
+      <div class="flow-bar-label">
+        <span>通常時 <span id="flow-normal">21.0</span> 百万BPD 比</span>
+        <span id="flow-pct">—%</span>
+      </div>
+    </div>
+    <div class="card-sub">
+      供給途絶: <strong id="flow-disruption" style="color:var(--red)">—%</strong><br/>
+      <span style="font-size:0.63rem;">出典: IEA / UANI 推計・手動更新</span>
+    </div>
+    <div class="card-footer">
+      <span class="dot-manual"></span>
+      手動更新 ／ <span id="flow-updated">—</span>
+    </div>
+  </div>
+
+  <!-- Card 3: WTI/Brent -->
+  <div class="card blue">
+    <div class="card-label">💹 原油価格（EIA 週次）</div>
+    <div style="display:flex;gap:24px;align-items:flex-end;">
+      <div>
+        <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">WTI</div>
+        <div style="display:flex;align-items:baseline;gap:4px;">
+          <div class="card-value" id="wti-val" style="font-size:2rem;color:#60a5fa">—</div>
+          <div class="card-unit">USD/bbl</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Brent</div>
+        <div style="display:flex;align-items:baseline;gap:4px;">
+          <div class="card-value" id="brent-val" style="font-size:2rem;color:#93c5fd">—</div>
+          <div class="card-unit">USD/bbl</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-sub" style="margin-top:10px;">
+      米国原油在庫: <strong id="eia-inventory">—</strong> 百万バレル
+      （前週比 <span id="eia-inv-change">—</span> 百万バレル）<br/>
+      米国原油生産: <strong id="eia-production">—</strong> 百万BPD
+    </div>
+    <div class="card-footer">
+      <span class="dot-live"></span>
+      EIA Open Data API ／ 最終取得: <span id="eia-updated">—</span>
+    </div>
+  </div>
+
+  <!-- Card 4: 保険料率 -->
+  <div class="card yellow">
+    <div class="card-label">🔒 戦争リスク保険料率（War Risk Premium）</div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <div style="font-size:2rem;font-weight:800;color:var(--yellow);" id="ins-val">—</div>
+      <div class="card-unit" style="color:var(--yellow);">% AWR</div>
+    </div>
+    <div class="card-sub" style="margin-top:8px;">
+      通常時: 0.025〜0.05% ／ 現在: <span id="ins-val2" style="color:var(--yellow);font-weight:700;">—%</span><br/>
+      タンカー1隻あたり +約 <span id="ins-cost">—</span> 万USD/航海<br/>
+      <span style="font-size:0.63rem;">出典: <span id="ins-source">—</span></span>
+    </div>
+    <div class="card-footer">
+      <span class="dot-manual"></span>
+      手動更新 ／ <span id="ins-updated">—</span>
+    </div>
+  </div>
+
+  <!-- Card 5: シナリオ確率 -->
+  <div class="card green">
+    <div class="card-label">📊 シナリオ確率（現在の推定）</div>
+    <div class="scenario-list" id="scenario-list">
+      <div style="opacity:0.4;font-size:0.8rem;">読み込み中…</div>
+    </div>
+    <div class="card-footer">
+      <span class="dot-manual"></span>
+      手動更新 ／ <span id="scenario-updated">—</span>
+    </div>
+  </div>
+
+  <!-- Card 6: 中東輸入依存度 -->
+  <div class="card orange">
+    <div class="card-label">🌍 米国の中東原油輸入比率（EIA）</div>
+    <div style="display:flex;align-items:baseline;gap:4px;">
+      <div class="card-value" id="me-import">—</div>
+      <div class="card-unit">%</div>
+    </div>
+    <div class="card-sub">
+      米国の中東依存度は限定的。<br/>
+      日本・韓国・中国・インドは80〜90%超が湾岸産。<br/>
+      <span style="font-size:0.63rem;">EIA Import Data ／ 参考値</span>
+    </div>
+    <div class="card-footer">
+      <span class="dot-live"></span>
+      EIA Open Data API ／ 最終取得: <span id="me-updated">—</span>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+
+<div style="padding:0 20px 16px;">
+  <div style="font-size:0.68rem;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap;">
+    <span><span class="dot-live" style="display:inline-block;vertical-align:middle;margin-right:4px;"></span>自動更新（GitHub Actions）</span>
+    <span><span class="dot-manual" style="display:inline-block;vertical-align:middle;margin-right:4px;"></span>手動更新（管理者による入力）</span>
+  </div>
+</div>
+
+<footer>
+  <strong>データソース:</strong>
+  AISstream.io（リアルタイムAISデータ）/
+  EIA Open Data API（米国エネルギー省・公式統計）/
+  UANI・IEA・Argus Media（手動参照・引用）<br/>
+  <strong>免責:</strong> AISデータの技術的限界（ダーク船・受信局カバレッジ空白等）を含みます。投資判断等への利用はご自身の責任でお願いします。<br/>
+  <a href="https://yattanda.github.io/hormuz-map/" target="_blank">← メインサイト「地図で読むホルムズ危機」に戻る</a>
+</footer>
+
+<script>
+const BASE = 'https://yattanda.github.io/hormuz-data-';
+
+function fmtDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString('ja-JP', {
+      timeZone: 'Asia/Tokyo',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit'
+    }) + ' JST';
+  } catch { return iso; }
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+async function loadAIS() {
+  try {
+    const res = await fetch(`${BASE}/data/ais-snapshot.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error('fetch error');
+    const d = await res.json();
+    setText('ais-count', d.vessels_detected ?? '—');
+    setText('ais-tanker', `タンカー ${d.breakdown?.tanker ?? '—'} 隻`);
+    setText('ais-cargo',  `貨物船 ${d.breakdown?.cargo  ?? '—'} 隻`);
+    setText('ais-other',  `その他 ${d.breakdown?.other  ?? '—'} 隻`);
+    setText('ais-estimated', d.estimated_actual ?? '—');
+    setText('ais-factor',    d.dark_estimate_factor ?? '—');
+    setText('ais-updated',   fmtDate(d.updated_at));
+    const pct = Math.min(Math.round((d.vessels_detected / 200) * 100), 100);
+    setText('ais-bar-pct', pct + '%');
+    const bar = document.getElementById('ais-bar');
+    if (bar) bar.style.width = pct + '%';
+  } catch(e) { console.warn('AIS:', e); setText('ais-count','N/A'); }
+}
+
+async function loadEIA() {
+  try {
+    const res = await fetch(`${BASE}/data/eia-weekly.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error('fetch error');
+    const d = await res.json();
+    setText('wti-val',   d.wti_price_usd   != null ? `$${d.wti_price_usd.toFixed(2)}`   : '—');
+    setText('brent-val', d.brent_price_usd != null ? `$${d.brent_price_usd.toFixed(2)}` : '—');
+    if (d.us_crude_inventory_mb != null) {
+      setText('eia-inventory', d.us_crude_inventory_mb.toFixed(1));
+      const chg = d.us_crude_inventory_change_mb;
+      const el = document.getElementById('eia-inv-change');
+      if (el) {
+        el.textContent = (chg >= 0 ? '+' : '') + chg.toFixed(1);
+        el.style.color = chg < 0 ? 'var(--green)' : 'var(--red)';
+      }
+    }
+    if (d.us_crude_production_mbpd != null)
+      setText('eia-production', d.us_crude_production_mbpd.toFixed(1));
+    if (d.middle_east_import_share_pct != null) {
+      setText('me-import',  d.middle_east_import_share_pct.toFixed(1));
+      setText('me-updated', fmtDate(d.updated_at));
+    }
+    setText('eia-updated', fmtDate(d.updated_at));
+  } catch(e) { console.warn('EIA:', e); setText('wti-val','N/A'); }
+}
+
+async function loadManual() {
+  try {
+    const res = await fetch(`${BASE}/data/manual-update.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error('fetch error');
+    const d = await res.json();
+
+    if (d.hormuz_daily_flow_mbpd != null) {
+      setText('flow-val', d.hormuz_daily_flow_mbpd.toFixed(1));
+      setText('flow-normal', (d.hormuz_normal_flow_mbpd ?? 21).toFixed(1));
+      const pct = Math.round((d.hormuz_daily_flow_mbpd / (d.hormuz_normal_flow_mbpd ?? 21)) * 100);
+      setText('flow-pct', pct + '%');
+      const bar = document.getElementById('flow-bar');
+      if (bar) bar.style.width = pct + '%';
+    }
+    if (d.flow_disruption_pct != null)
+      setText('flow-disruption', d.flow_disruption_pct + '%');
+    setText('flow-updated', fmtDate(d.updated_at));
+
+    if (d.war_risk_premium_pct != null) {
+      setText('ins-val',  d.war_risk_premium_pct.toFixed(2));
+      setText('ins-val2', d.war_risk_premium_pct.toFixed(2) + '%');
+      const cost = Math.round(d.war_risk_premium_pct * 0.01 * 120 * 50000 / 10000);
+      setText('ins-cost', cost);
+    }
+    setText('ins-source',  d.war_risk_premium_source ?? '—');
+    setText('ins-updated', fmtDate(d.updated_at));
+
+    const sc = d.scenario;
+    if (sc) {
+      const scenarios = [
+        { key: 'A_diplomacy_pct',       label: 'A: 外交解決',           color: 'var(--green)'  },
+        { key: 'B_partial_blockade_pct', label: 'B: 部分封鎖継続',       color: 'var(--yellow)' },
+        { key: 'C_full_blockade_pct',    label: 'C: 完全封鎖',           color: 'var(--accent)' },
+        { key: 'D_escalation_pct',       label: 'D: 軍事エスカレーション', color: 'var(--red)'    },
+      ];
+      const list = document.getElementById('scenario-list');
+      if (list) list.innerHTML = scenarios.map(s => `
+        <div class="scenario-row">
+          <div class="scenario-name">${s.label}</div>
+          <div class="scenario-bar-bg">
+            <div class="scenario-bar-fill" style="width:${sc[s.key]??0}%;background:${s.color};"></div>
+          </div>
+          <div class="scenario-pct" style="color:${s.color};">${sc[s.key]??0}%</div>
+        </div>`).join('');
+    }
+    setText('scenario-updated', fmtDate(d.updated_at));
+    setText('header-updated', `最終手動更新: ${fmtDate(d.updated_at)}`);
+
+    if (d.critical_date && d.critical_note) {
+      const banner = document.getElementById('critical-banner');
+      const text   = document.getElementById('critical-text');
+      if (banner && text) {
+        text.textContent = `⏰ Critical Window: ${d.critical_date} ─ ${d.critical_note}`;
+        banner.style.display = 'block';
+      }
+    }
+  } catch(e) { console.warn('Manual:', e); }
+}
+
+(async function init() {
+  await Promise.all([loadAIS(), loadEIA(), loadManual()]);
+})();
+</script>
+</body>
 </html>
