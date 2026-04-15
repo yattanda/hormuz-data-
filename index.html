@@ -105,11 +105,11 @@
     .flow-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
     .flow-bar-label { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--muted); }
     .scenario-list { margin-top: 10px; }
-    .scenario-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .scenario-name { font-size: 0.68rem; color: var(--text); min-width: 110px; }
-    .scenario-bar-bg { flex: 1; background: rgba(255,255,255,0.07); border-radius: 4px; height: 7px; overflow: hidden; }
-    .scenario-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
-    .scenario-pct { font-size: 0.7rem; font-weight: 700; min-width: 32px; text-align: right; }
+   .scenario-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+   .scenario-name { font-size: 0.65rem; color: var(--text); min-width: 0; flex: 0 0 auto; max-width: 120px; }
+   .scenario-bar-bg { flex: 1; min-width: 20px; background: rgba(255,255,255,0.07); border-radius: 4px; height: 7px; overflow: hidden; }
+   .scenario-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+   .scenario-pct { font-size: 0.68rem; font-weight: 700; min-width: 28px; text-align: right; flex-shrink: 0; }
     .card-footer {
       margin-top: 12px;
       padding-top: 8px;
@@ -157,16 +157,19 @@
     }
     footer a { color: var(--accent2); text-decoration: none; }
     @media (max-width: 768px) {
-    .card-value { font-size: 1.6rem; }
-    header h1 { font-size: 0.95rem; }
-    .grid {
+  .card-value { font-size: 1.6rem; }
+  header h1 { font-size: 0.95rem; }
+  .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     padding: 10px 10px 6px;
-    }
-  .card { padding: 14px 14px 12px; }
-  .card-label { font-size: 0.62rem; }
-  .card-sub { font-size: 0.7rem; }
+  }
+  .card { padding: 12px 12px 10px; }
+  .card-label { font-size: 0.60rem; }
+  .card-sub { font-size: 0.68rem; }
+  .scenario-name { font-size: 0.60rem; max-width: 100px; }
+  .scenario-pct { font-size: 0.62rem; min-width: 24px; }
+  .scenario-bar-bg { min-width: 15px; }
 }
   </style>
 </head>
