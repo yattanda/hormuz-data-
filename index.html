@@ -41,11 +41,12 @@
     .header-meta a { color: var(--accent2); text-decoration: none; }
     .header-meta a:hover { text-decoration: underline; }
     .grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
-      padding: 12px 12px 6px;
-    }
+     display: grid;
+     grid-template-columns: repeat(6, 1fr);
+     gap: 10px;
+     padding: 12px 12px 6px;
+     width: 100%;
+     }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -155,11 +156,18 @@
       line-height: 1.8;
     }
     footer a { color: var(--accent2); text-decoration: none; }
-    @media (max-width: 600px) {
-      .card-value { font-size: 1.9rem; }
-      header h1 { font-size: 1rem; }
-      .grid { padding: 12px 12px 6px; gap: 12px; }
+    @media (max-width: 768px) {
+    .card-value { font-size: 1.6rem; }
+    header h1 { font-size: 0.95rem; }
+    .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px 10px 6px;
     }
+  .card { padding: 14px 14px 12px; }
+  .card-label { font-size: 0.62rem; }
+  .card-sub { font-size: 0.7rem; }
+}
   </style>
 </head>
 <body>
