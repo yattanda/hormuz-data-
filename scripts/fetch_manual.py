@@ -14,7 +14,8 @@ import sys
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 # RSS フィードリスト
 RSS_FEEDS = [
@@ -53,8 +54,7 @@ def fetch_rss_news(max_items=15):
 
 def analyze_with_gemini(api_key, news_items):
     """Gemini API でニュースを分析してJSONを生成"""
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    client = genai.Client(api_key=api_key)
 
     news_text = "\n".join([
         f"- {item['title']}: {item['description']}"
@@ -94,7 +94,10 @@ def analyze_with_gemini(api_key, news_items):
 """
 
     try:
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt
+        )
         text = response.text.strip()
         # コードブロックを除去
         if "```json" in text:

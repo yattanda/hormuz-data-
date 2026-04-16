@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install google-generativeai
+          pip install google-genai
 
       - name: Fetch and analyze news
         env:
