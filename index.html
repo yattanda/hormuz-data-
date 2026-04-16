@@ -348,7 +348,7 @@
   ①封鎖・緊張による船舶のAIS意図的停止（ダークシッピング）
   ②陸上受信局のカバレッジ限界（外洋中央部は受信困難）。
   <strong>検出ゼロ＝通航ゼロではありません。</strong><br/>
-  <a href="https://yattanda.github.io/hormuz-map/" target="_blank">← メインサイト「地図で読むホルムズ危機」に戻る</a>
+  <a id="main-site-link" href="https://yattanda.github.io/hormuz-map/" target="_blank">← メインサイト「地図で読むホルムズ危機」に戻る</a>
 </footer>
 
 <script>
@@ -473,7 +473,14 @@ async function loadManual() {
     }
   } catch(e) { console.warn('Manual:', e); }
 }
-
+// 埋め込み時はメインサイトリンクを非表示
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('embed') === '1') {
+  const link = document.getElementById('main-site-link');
+  if (link) link.style.display = 'none';
+  const headerMeta = document.querySelector('.header-meta');
+  if (headerMeta) headerMeta.style.display = 'none';
+}
 (async function init() {
   await Promise.all([loadAIS(), loadEIA(), loadManual()]);
 })();
