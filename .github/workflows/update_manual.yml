@@ -1,0 +1,39 @@
+name: Update Manual Data (Gemini AI)
+
+on:
+  schedule:
+    - cron: '0 22 * * *'  # 毎日 07:00 JST
+  workflow_dispatch:
+
+jobs:
+  fetch-manual:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install google-generativeai
+
+      - name: Fetch and analyze news
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/fetch_manual.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/manual-update.json
+          git diff --staged --quiet || git commit -m "chore: auto update manual data $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push

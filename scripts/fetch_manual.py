@@ -1,0 +1,158 @@
+"""
+fetch_manual.py
+RSSフィードから最新ニュースを取得し、
+Google Gemini API で分析して
+data/manual-update.json を自動更新する。
+
+必要環境変数:
+  GEMINI_API_KEY : Google Gemini API キー
+"""
+
+import json
+import os
+import sys
+import urllib.request
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone, timedelta
+import google.generativeai as genai
+
+# RSS フィードリスト
+RSS_FEEDS = [
+    "https://feeds.reuters.com/reuters/topNews",
+    "https://feeds.bbci.co.uk/news/world/middle_east/rss.xml",
+    "https://www.aljazeera.com/xml/rss/all.xml",
+]
+
+KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "封鎖"]
+
+def fetch_rss_news(max_items=15):
+    """RSSフィードからホルムズ関連ニュースを取得"""
+    news_items = []
+    for url in RSS_FEEDS:
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=10) as response:
+                tree = ET.parse(response)
+                root = tree.getroot()
+                for item in root.iter("item"):
+                    title = item.findtext("title", "")
+                    desc = item.findtext("description", "")
+                    pub_date = item.findtext("pubDate", "")
+                    text = f"{title} {desc}"
+                    if any(kw.lower() in text.lower() for kw in KEYWORDS):
+                        news_items.append({
+                            "title": title,
+                            "description": desc[:200],
+                            "pubDate": pub_date
+                        })
+            if len(news_items) >= max_items:
+                break
+        except Exception as e:
+            print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
+    return news_items[:max_items]
+
+def analyze_with_gemini(api_key, news_items):
+    """Gemini API でニュースを分析してJSONを生成"""
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-1.5-flash")
+
+    news_text = "\n".join([
+        f"- {item['title']}: {item['description']}"
+        for item in news_items
+    ])
+
+    prompt = f"""
+以下は本日のホルムズ海峡・イラン情勢に関する最新ニュースです。
+これらを分析して、以下のJSON形式で回答してください。
+必ずJSON形式のみで返答し、説明文は不要です。
+
+ニュース:
+{news_text}
+
+出力形式:
+{{
+  "scenario": {{
+    "A_diplomacy_pct": <外交解決シナリオの確率 0-100の整数>,
+    "B_partial_blockade_pct": <部分封鎖継続シナリオの確率 0-100の整数>,
+    "C_full_blockade_pct": <完全封鎖シナリオの確率 0-100の整数>,
+    "D_escalation_pct": <エスカレーションシナリオの確率 0-100の整数>
+  }},
+  "war_risk_premium_pct": <戦争リスク保険料率 小数点1桁>,
+  "war_risk_premium_source": "推定値（Gemini自動分析）",
+  "hormuz_daily_flow_mbpd": <ホルムズ通過量 百万バレル/日 小数点1桁>,
+  "hormuz_normal_flow_mbpd": 21.0,
+  "flow_disruption_pct": <流量disruption率 整数>,
+  "critical_date": "<次の重要日程 YYYY-MM-DD形式>",
+  "critical_note": "<重要日程の説明 日本語30文字以内>",
+  "last_manual_note": "<最新状況メモ 日本語100文字以内>"
+}}
+
+注意:
+- シナリオ確率の合計は必ず100になること
+- critical_dateはYYYY-MM-DD形式
+- flow_disruption_pct = round((1 - hormuz_daily_flow_mbpd / 21.0) * 100)
+"""
+
+    try:
+        response = model.generate_content(prompt)
+        text = response.text.strip()
+        # コードブロックを除去
+        if "```json" in text:
+            text = text.split("```json")[1].split("```")[0].strip()
+        elif "```" in text:
+            text = text.split("```")[1].split("```")[0].strip()
+        return json.loads(text)
+    except Exception as e:
+        print(f"[Gemini] Error: {e}", file=sys.stderr)
+        return None
+
+def build_manual_json(data):
+    """manual-update.json の形式に変換"""
+    jst = timezone(timedelta(hours=9))
+    now = datetime.now(jst).isoformat(timespec="seconds")
+    return {
+        "updated_at": now,
+        "auto_generated": True,
+        "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
+        **data
+    }
+
+def save_manual(data, path="data/manual-update.json"):
+    """JSONファイルに保存"""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    print(f"[Manual] Saved to {path}")
+
+def main():
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        print("[Manual] ERROR: GEMINI_API_KEY not set.", file=sys.stderr)
+        sys.exit(1)
+
+    print("[Manual] Fetching RSS news...")
+    news_items = fetch_rss_news()
+    print(f"[Manual] Found {len(news_items)} relevant articles.")
+
+    if not news_items:
+        print("[Manual] No news found. Skipping update.", file=sys.stderr)
+        sys.exit(0)
+
+    print("[Manual] Analyzing with Gemini...")
+    data = analyze_with_gemini(api_key, news_items)
+
+    if not data:
+        print("[Manual] Gemini analysis failed. Skipping update.", file=sys.stderr)
+        sys.exit(1)
+
+    manual = build_manual_json(data)
+    save_manual(manual)
+
+    print("[Manual] Done.")
+    print(f"  シナリオA: {data['scenario']['A_diplomacy_pct']}%")
+    print(f"  保険料率: {data['war_risk_premium_pct']}%")
+    print(f"  流量: {data['hormuz_daily_flow_mbpd']} MBPD")
+    print(f"  重要日程: {data['critical_date']}")
+
+if __name__ == "__main__":
+    main()
