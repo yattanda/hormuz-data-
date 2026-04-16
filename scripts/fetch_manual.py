@@ -19,10 +19,10 @@ from google.genai import types
 
 # RSS フィードリスト
 RSS_FEEDS = [
-    "https://feeds.reuters.com/reuters/worldNews",
     "https://feeds.bbci.co.uk/news/world/rss.xml",
     "https://www.aljazeera.com/xml/rss/all.xml",
     "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml",
+    "https://news.google.com/rss/search?q=Hormuz+strait+blockade&hl=en-US&gl=US&ceid=US:en",
 ]
 
 KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "封鎖"]
@@ -96,7 +96,7 @@ def analyze_with_gemini(api_key, news_items):
 
     try:
         response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-1.5-flash-8b",
         contents=prompt
         )
         text = response.text.strip()
