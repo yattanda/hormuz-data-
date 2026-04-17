@@ -1,19 +1,19 @@
 {
-  "updated_at": "2026-04-17T10:53:19+09:00",
+  "updated_at": "2026-04-17T11:03:00+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 45,
-    "B_partial_blockade_pct": 35,
+    "A_diplomacy_pct": 20,
+    "B_partial_blockade_pct": 60,
     "C_full_blockade_pct": 5,
     "D_escalation_pct": 15
   },
-  "war_risk_premium_pct": 3.5,
+  "war_risk_premium_pct": 6.8,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 21.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 0,
-  "critical_date": "2023-12-03",
-  "critical_note": "レバノン停戦期限",
-  "last_manual_note": "イスラエルとレバノン間の10日間停戦が発効。米国とイランの和平交渉も進展の兆しを見せるが、レバノン国民は停戦の継続に懐疑的。"
+  "flow_disruption_pct": 76,
+  "critical_date": "2026-04-22",
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "CENTCOMはイラン港への出入りを対象とする封鎖を実施し、米国は「完全実施」を主張。イラン関連船舶の通過は阻止されている。停戦交渉期限（22日）が迫る中、外交解決の可能性も示唆される。"
 }
