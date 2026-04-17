@@ -205,7 +205,6 @@ def main():
         sys.exit(1)
 
     print("[Manual] Fetching RSS news...")
-    fix: increase RSS sources and news items for stable Gemini analysis
     print(f"[Manual] Found {len(news_items)} relevant articles.")
 
     if not news_items:
