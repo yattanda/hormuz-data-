@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-17T17:35:33+09:00",
+  "updated_at": "2026-04-17T18:19:41+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 25,
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 60,
+    "C_full_blockade_pct": 10,
     "D_escalation_pct": 15
   },
-  "war_risk_premium_pct": 7.5,
+  "war_risk_premium_pct": 6.5,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
   "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国によるホルムズ海峡（イラン港）封鎖が4日目を迎え、タンカーの通過は大幅に減少。停戦交渉は一度決裂したが、イランが新たな提案を行うなど、外交的な動きは継続中。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 14,
-  "ais_estimated_cargo": 1,
-  "ais_estimation_note": "ニュース記事の通過阻止数・引き返し報告及び周辺海域の船舶動向から推計"
+  "last_manual_note": "米軍によるホルムズ海峡封鎖が続く中、米イラン間で停戦交渉が継続中。一部の船舶は通過しているものの、流量は大幅に減少しており、地域情勢は極めて緊張している。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "DoD発表・CNN報道より(medium)"
 }
