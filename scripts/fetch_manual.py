@@ -19,16 +19,23 @@ from google.genai import types
 
 # RSS フィードリスト
 RSS_FEEDS = [
+    # Google News 検索（ホルムズ・封鎖関連）
     "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en",
     "https://news.google.com/rss/search?q=Hormuz+oil+flow+tanker+2026&hl=en-US&gl=US&ceid=US:en",
     "https://news.google.com/rss/search?q=Iran+ceasefire+talks+2026&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=war+risk+insurance+tanker+Hormuz&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=MarineTraffic+Hormuz+ships+2026&hl=en-US&gl=US&ceid=US:en",
+    # 一般ニュースRSS
     "https://www.aljazeera.com/xml/rss/all.xml",
+    "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml",
 ]
 
 
 KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait", "封鎖", "ホルムズ", "イラン"]
 
-def fetch_rss_news(max_items=15):
+def fetch_rss_news(max_items=40):
     """RSSフィードからホルムズ関連ニュースを取得"""
     news_items = []
     for url in RSS_FEEDS:
@@ -77,7 +84,7 @@ def analyze_with_gemini(api_key, news_items):
 - 米イラン間で停戦交渉が進行中（パキスタン仲介）
 - 停戦期限は2026年4月22日
 
-【最新ニュース】
+【最新ニュース】（{len(news_items)}件のニュース記事を分析）
 {news_text}
 
 【出力形式】
@@ -198,7 +205,7 @@ def main():
         sys.exit(1)
 
     print("[Manual] Fetching RSS news...")
-    news_items = fetch_rss_news()
+    fix: increase RSS sources and news items for stable Gemini analysis
     print(f"[Manual] Found {len(news_items)} relevant articles.")
 
     if not news_items:
