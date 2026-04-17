@@ -63,6 +63,7 @@ def fetch_rss_news(max_items=40):
 
 def analyze_with_gemini(api_key, news_items):
     """Gemini API でニュースを分析してJSONを生成"""
+    import time
     client = genai.Client(api_key=api_key)
 
     news_text = "\n".join([
@@ -106,7 +107,7 @@ def analyze_with_gemini(api_key, news_items):
   "ais_estimated_vessels": <整数。対象は緯度22〜27°N・経度55.5〜60.5°Eのバウンディングボックス内を【通過中】の船舶のみ。待機中・引き返し中・停泊中は除外。通常時は約80隻/日、封鎖中は通常比10〜30%（8〜24隻）が目安>,
   "ais_estimated_tankers": <整数。上記通過中船舶のうちタンカーのみ。通常時比率約60%、封鎖中は大幅減>,
   "ais_estimated_cargo": <整数。上記通過中船舶のうち貨物船のみ>,
-  "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度をhigh/medium/lowで末尾に付記。例：「DoD発表・Kpler推計より(medium)」>,"
+  "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度をhigh/medium/lowで末尾に付記。例：「DoD発表・Kpler推計より(medium)」>
 }}
 
 【注意事項】
@@ -122,23 +123,27 @@ def analyze_with_gemini(api_key, news_items):
 - 根拠となるニュースが見つからない場合はais_estimated_vesselsを5〜15の範囲で保守的に推計
 """
 
+    for attempt in range(3):  # 最大3回リトライ
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
+            text = response.text.strip()
+            if "```json" in text:
+                text = text.split("```json")[1].split("```")[0].strip()
+            elif "```" in text:
+                text = text.split("```")[1].split("```")[0].strip()
+            return json.loads(text)
+        except Exception as e:
+            print(f"[Gemini] Attempt {attempt+1} failed: {e}", file=sys.stderr)
+            if attempt < 2:
+                wait = (attempt + 1) * 30  # 30秒→60秒待機
+                print(f"[Gemini] Waiting {wait}s before retry...", file=sys.stderr)
+                time.sleep(wait)
 
-
-    try:
-        response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
-        )
-        text = response.text.strip()
-        # コードブロックを除去
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text:
-            text = text.split("```")[1].split("```")[0].strip()
-        return json.loads(text)
-    except Exception as e:
-        print(f"[Gemini] Error: {e}", file=sys.stderr)
-        return None
+    print("[Gemini] All retries failed.", file=sys.stderr)
+    return None
 
 def build_manual_json(data):
     """manual-update.json の形式に変換"""
