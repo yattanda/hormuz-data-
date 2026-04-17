@@ -63,36 +63,48 @@ def analyze_with_gemini(api_key, news_items):
     ])
 
     prompt = f"""
-以下は本日のホルムズ海峡・イラン情勢に関する最新ニュースです。
-これらを分析して、以下のJSON形式で回答してください。
+あなたはホルムズ海峡・イラン情勢の専門アナリストです。
+以下の最新ニュースを分析して、JSON形式で回答してください。
 必ずJSON形式のみで返答し、説明文は不要です。
 
-ニュース:
+【重要な背景知識】
+- 2026年4月13日にCENTCOMがホルムズ海峡封鎖を実施
+- 通常時のホルムズ通過量は約21百万バレル/日
+- 封鎖前の通過量は約17〜18百万バレル/日
+- 現在は大幅に減少していると推定される
+- 戦争リスク保険料率は封鎖前の1%から大幅上昇中
+- 米イラン間で停戦交渉が進行中（パキスタン仲介）
+- 停戦期限は2026年4月22日
+
+【最新ニュース】
 {news_text}
 
-出力形式:
+【出力形式】
 {{
   "scenario": {{
-    "A_diplomacy_pct": <外交解決シナリオの確率 0-100の整数>,
+    "A_diplomacy_pct": <外交解決・封鎖解除シナリオの確率 0-100の整数>,
     "B_partial_blockade_pct": <部分封鎖継続シナリオの確率 0-100の整数>,
-    "C_full_blockade_pct": <完全封鎖シナリオの確率 0-100の整数>,
-    "D_escalation_pct": <エスカレーションシナリオの確率 0-100の整数>
+    "C_full_blockade_pct": <完全封鎖継続シナリオの確率 0-100の整数>,
+    "D_escalation_pct": <軍事エスカレーションシナリオの確率 0-100の整数>
   }},
-  "war_risk_premium_pct": <戦争リスク保険料率 小数点1桁>,
+  "war_risk_premium_pct": <戦争リスク保険料率 小数点1桁 現在は1.0〜7.5%の範囲>,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": <ホルムズ通過量 百万バレル/日 小数点1桁>,
+  "hormuz_daily_flow_mbpd": <ホルムズ通過量 百万バレル/日 封鎖中は2〜10程度>,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": <流量disruption率 整数>,
-  "critical_date": "<次の重要日程 YYYY-MM-DD形式>",
+  "flow_disruption_pct": <流量disruption率 整数 = round((1 - hormuz_daily_flow_mbpd / 21.0) * 100)>,
+  "critical_date": "<次の重要日程 必ずYYYY-MM-DD形式 2026年以降の日付>",
   "critical_note": "<重要日程の説明 日本語30文字以内>",
-  "last_manual_note": "<最新状況メモ 日本語100文字以内>"
+  "last_manual_note": "<最新状況メモ 日本語100文字以内 ホルムズ封鎖・イラン情勢に関する最新動向>"
 }}
 
-注意:
+【注意事項】
 - シナリオ確率の合計は必ず100になること
-- critical_dateはYYYY-MM-DD形式
-- flow_disruption_pct = round((1 - hormuz_daily_flow_mbpd / 21.0) * 100)
+- critical_dateは必ず2026年以降のYYYY-MM-DD形式
+- hormuz_daily_flow_mbpdは封鎖中なので21.0にはならない
+- flow_disruption_pctはhormuz_daily_flow_mbpdから計算すること
+- last_manual_noteはホルムズ・イラン情勢に関する内容のみ記載
 """
+
 
     try:
         response = client.models.generate_content(
