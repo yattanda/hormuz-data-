@@ -1,19 +1,19 @@
 {
-  "updated_at": "2026-04-17T10:03:04+09:00",
+  "updated_at": "2026-04-17T10:53:19+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 60,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 0,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 45,
+    "B_partial_blockade_pct": 35,
+    "C_full_blockade_pct": 5,
+    "D_escalation_pct": 15
   },
   "war_risk_premium_pct": 3.5,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
   "hormuz_daily_flow_mbpd": 21.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 0,
-  "critical_date": "2024-05-26",
+  "critical_date": "2023-12-03",
   "critical_note": "レバノン停戦期限",
-  "last_manual_note": "イスラエル・レバノン間で10日間の停戦が発効も、持続性には懐疑的な見方も。トランプ発言でイランとの合意への期待高まる中、水面下の緊張は続く。"
+  "last_manual_note": "イスラエルとレバノン間の10日間停戦が発効。米国とイランの和平交渉も進展の兆しを見せるが、レバノン国民は停戦の継続に懐疑的。"
 }
