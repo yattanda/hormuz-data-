@@ -1,17 +1,19 @@
 {
-  "updated_at": "2026-04-15T10:00:00+09:00",
+  "updated_at": "2026-04-17T10:03:04+09:00",
+  "auto_generated": true,
+  "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 65,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 5
+    "A_diplomacy_pct": 60,
+    "B_partial_blockade_pct": 10,
+    "C_full_blockade_pct": 0,
+    "D_escalation_pct": 30
   },
-  "war_risk_premium_pct": 1.0,
-  "war_risk_premium_source": "Argus Media 2026-04-15",
-  "hormuz_daily_flow_mbpd": 8.2,
+  "war_risk_premium_pct": 3.5,
+  "war_risk_premium_source": "推定値（Gemini自動分析）",
+  "hormuz_daily_flow_mbpd": 21.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 61,
-  "critical_date": "2026-04-17",
-  "critical_note": "Critical Window: France主導4/18会議",
-  "last_manual_note": "Trump「war終わり間近」発言後、封鎖継続中。WTI急落$91.49。"
+  "flow_disruption_pct": 0,
+  "critical_date": "2024-05-26",
+  "critical_note": "レバノン停戦期限",
+  "last_manual_note": "イスラエル・レバノン間で10日間の停戦が発効も、持続性には懐疑的な見方も。トランプ発言でイランとの合意への期待高まる中、水面下の緊張は続く。"
 }
