@@ -103,10 +103,10 @@ def analyze_with_gemini(api_key, news_items):
   "critical_date": "<次の重要日程 必ずYYYY-MM-DD形式 2026年以降の日付>",
   "critical_note": "<重要日程の説明 日本語30文字以内>",
   "last_manual_note": "<最新状況メモ 日本語100文字以内 ホルムズ封鎖・イラン情勢に関する最新動向>",
-  "ais_estimated_vessels": <本日のホルムズ海峡通過推定船舶数 整数 封鎖中は0〜20程度>,
-  "ais_estimated_tankers": <うちタンカー推定数 整数>,
-  "ais_estimated_cargo": <うち貨物船推定数 整数>,
-  "ais_estimation_note": "<推定根拠 日本語50文字以内 例：MarineTraffic公開データ・ニュース記事より推計>"
+  "ais_estimated_vessels": <整数。対象は緯度22〜27°N・経度55.5〜60.5°Eのバウンディングボックス内を【通過中】の船舶のみ。待機中・引き返し中・停泊中は除外。通常時は約80隻/日、封鎖中は通常比10〜30%（8〜24隻）が目安>,
+  "ais_estimated_tankers": <整数。上記通過中船舶のうちタンカーのみ。通常時比率約60%、封鎖中は大幅減>,
+  "ais_estimated_cargo": <整数。上記通過中船舶のうち貨物船のみ>,
+  "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度をhigh/medium/lowで末尾に付記。例：「DoD発表・Kpler推計より(medium)」>,"
 }}
 
 【注意事項】
@@ -117,6 +117,9 @@ def analyze_with_gemini(api_key, news_items):
 - last_manual_noteはホルムズ・イラン情勢に関する内容のみ記載
 - ais_estimated_vesselsは封鎖中のニュース・公開データから推計すること
 - ais_estimated_tankers + ais_estimated_cargo <= ais_estimated_vessels
+- ais_estimated_vesselsは「通過中」のみカウント。周辺待機・引き返し船は含めない
+- 封鎖中のタンカー比率は通常60%だが封鎖中は大幅に下がる可能性がある
+- 根拠となるニュースが見つからない場合はais_estimated_vesselsを5〜15の範囲で保守的に推計
 """
 
 
