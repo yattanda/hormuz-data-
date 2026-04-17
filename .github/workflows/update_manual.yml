@@ -2,7 +2,7 @@ name: Update Manual Data (Gemini AI)
 
 on:
   schedule:
-    - cron: '0 22 * * *'  # 毎日 07:00 JST
+    - cron: '30 0 * * *'  # 毎日 09:30 JST
   workflow_dispatch:
 
 jobs:
