@@ -205,6 +205,7 @@ def main():
         sys.exit(1)
 
     print("[Manual] Fetching RSS news...")
+    news_items = fetch_rss_news(max_items=40)
     print(f"[Manual] Found {len(news_items)} relevant articles.")
 
     if not news_items:
