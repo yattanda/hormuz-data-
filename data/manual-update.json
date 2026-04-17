@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-04-17T15:53:34+09:00",
+  "updated_at": "2026-04-17T16:28:35+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 50,
-    "B_partial_blockade_pct": 30,
+    "A_diplomacy_pct": 40,
+    "B_partial_blockade_pct": 40,
     "C_full_blockade_pct": 10,
     "D_escalation_pct": 10
   },
@@ -14,10 +14,10 @@
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米軍によるイラン港湾関連船舶の封鎖が続く中、イランが核活動停止を提案し、停戦交渉が期限に迫っている。",
-  "ais_estimated_vessels": 8,
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米軍はホルムズ海峡全体の封鎖ではなくイラン港湾への出入りを阻止中。この措置により船舶通行は大幅減少。米イラン間はパキスタン仲介で停戦交渉継続中。",
+  "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 5,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "ニュース記事の記述及び米国防総省の発表に基づき推計"
+  "ais_estimated_cargo": 5,
+  "ais_estimation_note": "ニュース記事（阻止船舶数、流量減）と過去データより推計"
 }
