@@ -95,7 +95,11 @@ def analyze_with_gemini(api_key, news_items):
   "flow_disruption_pct": <流量disruption率 整数 = round((1 - hormuz_daily_flow_mbpd / 21.0) * 100)>,
   "critical_date": "<次の重要日程 必ずYYYY-MM-DD形式 2026年以降の日付>",
   "critical_note": "<重要日程の説明 日本語30文字以内>",
-  "last_manual_note": "<最新状況メモ 日本語100文字以内 ホルムズ封鎖・イラン情勢に関する最新動向>"
+  "last_manual_note": "<最新状況メモ 日本語100文字以内 ホルムズ封鎖・イラン情勢に関する最新動向>",
+  "ais_estimated_vessels": <本日のホルムズ海峡通過推定船舶数 整数 封鎖中は0〜20程度>,
+  "ais_estimated_tankers": <うちタンカー推定数 整数>,
+  "ais_estimated_cargo": <うち貨物船推定数 整数>,
+  "ais_estimation_note": "<推定根拠 日本語50文字以内 例：MarineTraffic公開データ・ニュース記事より推計>"
 }}
 
 【注意事項】
@@ -104,7 +108,10 @@ def analyze_with_gemini(api_key, news_items):
 - hormuz_daily_flow_mbpdは封鎖中なので21.0にはならない
 - flow_disruption_pctはhormuz_daily_flow_mbpdから計算すること
 - last_manual_noteはホルムズ・イラン情勢に関する内容のみ記載
+- ais_estimated_vesselsは封鎖中のニュース・公開データから推計すること
+- ais_estimated_tankers + ais_estimated_cargo <= ais_estimated_vessels
 """
+
 
 
     try:
@@ -140,6 +147,49 @@ def save_manual(data, path="data/manual-update.json"):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     print(f"[Manual] Saved to {path}")
+def save_ais_estimate(data, path="data/ais-snapshot.json"):
+    """Gemini推計をais-snapshot.jsonに反映"""
+    import json, os
+    from datetime import datetime, timezone, timedelta
+
+    jst = timezone(timedelta(hours=9))
+    now = datetime.now(jst).isoformat(timespec="seconds")
+
+    # 既存ファイルを読み込み
+    existing = {}
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+        except Exception:
+            pass
+
+    # Gemini推計で上書き
+    vessels = data.get("ais_estimated_vessels", 0)
+    tankers = data.get("ais_estimated_tankers", 0)
+    cargo = data.get("ais_estimated_cargo", 0)
+    note = data.get("ais_estimation_note", "Gemini AI推計")
+
+    existing.update({
+        "updated_at": now,
+        "source": "Gemini AI推計（ニュース・公開データより）",
+        "vessels_detected": vessels,
+        "breakdown": {
+            "tanker": tankers,
+            "cargo": cargo,
+            "other": max(0, vessels - tankers - cargo)
+        },
+        "dark_estimate_factor": 1.35,
+        "estimated_actual": round(vessels * 1.35),
+        "estimation_note": note,
+        "note": "Gemini AIがニュース・MarineTraffic公開データから推計。AIS非検出（ダークシッピング）船舶を含む推定値。"
+    })
+
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(existing, f, ensure_ascii=False, indent=2)
+    print(f"[AIS] Saved estimate to {path}")
+    print(f"  推定船舶数: {vessels} 隻（補正後: {round(vessels * 1.35)} 隻）")
 
 def main():
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -164,6 +214,8 @@ def main():
 
     manual = build_manual_json(data)
     save_manual(manual)
+        # AIS推計も保存
+    save_ais_estimate(data)
 
     print("[Manual] Done.")
     print(f"  シナリオA: {data['scenario']['A_diplomacy_pct']}%")
