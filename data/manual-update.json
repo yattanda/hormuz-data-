@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-17T16:33:31+09:00",
+  "updated_at": "2026-04-17T17:35:33+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 45,
+    "B_partial_blockade_pct": 40,
     "C_full_blockade_pct": 25,
-    "D_escalation_pct": 10
+    "D_escalation_pct": 15
   },
-  "war_risk_premium_pct": 5.0,
+  "war_risk_premium_pct": 7.5,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
   "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国はホルムズ海峡封鎖を宣言したが、軍はイラン港湾の封鎖と説明し情報が錯綜。イランは核活動停止を提案も、停戦交渉は期限間近で難航しており、緊張状態が続く。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 2,
-  "ais_estimation_note": "ニュース記事（阻止された船舶数、封鎖状況）より推計"
+  "last_manual_note": "米国によるホルムズ海峡（イラン港）封鎖が4日目を迎え、タンカーの通過は大幅に減少。停戦交渉は一度決裂したが、イランが新たな提案を行うなど、外交的な動きは継続中。",
+  "ais_estimated_vessels": 15,
+  "ais_estimated_tankers": 14,
+  "ais_estimated_cargo": 1,
+  "ais_estimation_note": "ニュース記事の通過阻止数・引き返し報告及び周辺海域の船舶動向から推計"
 }
