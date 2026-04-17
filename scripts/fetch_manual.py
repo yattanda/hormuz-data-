@@ -19,13 +19,14 @@ from google.genai import types
 
 # RSS フィードリスト
 RSS_FEEDS = [
-    "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=Hormuz+oil+flow+tanker+2026&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=Iran+ceasefire+talks+2026&hl=en-US&gl=US&ceid=US:en",
     "https://www.aljazeera.com/xml/rss/all.xml",
-    "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml",
-    "https://news.google.com/rss/search?q=Hormuz+strait+blockade&hl=en-US&gl=US&ceid=US:en",
 ]
 
-KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "封鎖"]
+
+KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait", "封鎖", "ホルムズ", "イラン"]
 
 def fetch_rss_news(max_items=15):
     """RSSフィードからホルムズ関連ニュースを取得"""
