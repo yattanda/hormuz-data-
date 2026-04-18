@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-18T10:20:57+09:00",
+  "updated_at": "2026-04-18T12:33:16+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 30,
+    "A_diplomacy_pct": 35,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 15,
     "D_escalation_pct": 10
   },
-  "war_risk_premium_pct": 5.5,
+  "war_risk_premium_pct": 4.5,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "イランはホルムズ海峡開放を主張するも、米国は封鎖継続を断言。停戦交渉期限が迫る中、海峡通過船舶は大幅に減少。",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "イランはホルムズ海峡の再開を宣言するも、米軍は封鎖の継続を主張し一部の通過を阻止。停戦交渉が期限に迫る。",
   "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "報道内容と米軍発表からの推計(medium)"
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 7,
+  "ais_estimation_note": "米軍の阻止・迂回報告を基に推計(low)"
 }

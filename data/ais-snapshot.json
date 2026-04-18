@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-04-18T10:25:50+09:00",
-  "source": "AISstream.io",
+  "updated_at": "2026-04-18T12:33:16+09:00",
+  "source": "Gemini AI推計（ニュース・公開データより）",
   "collection_duration_sec": 180,
   "bbox": {
     "min_lat": 22.0,
@@ -8,14 +8,15 @@
     "min_lon": 55.5,
     "max_lon": 60.5
   },
-  "vessels_detected": 0,
+  "vessels_detected": 8,
   "breakdown": {
-    "tanker": 0,
-    "cargo": 0,
+    "tanker": 1,
+    "cargo": 7,
     "other": 0
   },
   "dark_estimate_factor": 1.35,
-  "estimated_actual": 0,
+  "estimated_actual": 11,
   "messages_received": 0,
-  "note": "AIS非検出（ダークシッピング）船舶を含む推定値。補正係数1.35はUANI/Kpler公開レポート推定ベース。陸上受信局の地理的限界あり（外洋中央部はカバレッジ不完全）。"
+  "note": "Gemini AIがニュース・MarineTraffic公開データから推計。AIS非検出（ダークシッピング）船舶を含む推定値。",
+  "estimation_note": "米軍の阻止・迂回報告を基に推計(low)"
 }
