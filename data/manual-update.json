@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-17T17:35:33+09:00",
+  "updated_at": "2026-04-19T10:55:23+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 25,
-    "D_escalation_pct": 15
+    "B_partial_blockade_pct": 25,
+    "C_full_blockade_pct": 45,
+    "D_escalation_pct": 10
   },
-  "war_risk_premium_pct": 7.5,
+  "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国によるホルムズ海峡（イラン港）封鎖が4日目を迎え、タンカーの通過は大幅に減少。停戦交渉は一度決裂したが、イランが新たな提案を行うなど、外交的な動きは継続中。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 14,
-  "ais_estimated_cargo": 1,
-  "ais_estimation_note": "ニュース記事の通過阻止数・引き返し報告及び周辺海域の船舶動向から推計"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "イランは米国の海上封鎖解除を要求しホルムズ海峡を再閉鎖、船舶への発砲も発生。米イラン停戦交渉は期限を控え混乱続く。",
+  "ais_estimated_vessels": 5,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 4,
+  "ais_estimation_note": "報道混乱と攻撃・Uターンより推計(medium)"
 }
