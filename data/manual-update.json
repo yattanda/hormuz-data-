@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-19T12:53:23+09:00",
+  "updated_at": "2026-04-20T09:30:46+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 15,
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 25,
+    "C_full_blockade_pct": 45,
     "D_escalation_pct": 15
   },
   "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
   "critical_note": "停戦交渉期限",
-  "last_manual_note": "ホルムズ海峡はイランによる「閉鎖宣言」と米国の「封鎖継続」で混乱し、通過船舶への発砲も報告。停戦交渉は期限間近だが不透明。米軍は拿捕準備、イラン政権内の分裂も指摘される。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "混乱状況と報道より推計(medium)"
+  "last_manual_note": "イランはホルムズ海峡の完全閉鎖を主張し、通過船舶への発砲・妨害が報告。米国はイラン船を拿捕。停戦交渉は難航中。",
+  "ais_estimated_vessels": 7,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 2,
+  "ais_estimation_note": "報道された攻撃・阻止件数より(medium)"
 }
