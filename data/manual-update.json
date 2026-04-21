@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-21T09:30:45+09:00",
+  "updated_at": "2026-04-21T12:49:49+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 45,
-    "D_escalation_pct": 40
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 20
   },
-  "war_risk_premium_pct": 6.8,
+  "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国によるイラン船舶拿捕を受け、停戦交渉は危機に瀕している。イランは海峡を再び閉鎖し、停戦期限を前に緊張が高まっている。商業船の通過はほぼ停止状態。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 4,
-  "ais_estimation_note": "報道及び過去の封鎖事例から推計(medium)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米国のイラン船舶拿捕、イランの海峡再閉鎖・発砲で緊張激化。停戦交渉難航。ホルムズの船舶交通は停滞状態。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "ニュース記事・現状から推計(medium)"
 }
