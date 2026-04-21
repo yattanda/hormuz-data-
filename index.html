@@ -484,6 +484,8 @@ if (urlParams.get('embed') === '1') {
   if (link) link.style.display = 'none';
   const headerMeta = document.querySelector('.header-meta');
   if (headerMeta) headerMeta.style.display = 'none';
+  const card5 = document.querySelector('.card.green');
+  if (card5) card5.style.display = 'none';
 }
 (async function init() {
   await Promise.all([loadAIS(), loadEIA(), loadManual()]);
