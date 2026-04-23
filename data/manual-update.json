@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-23T09:30:46+09:00",
+  "updated_at": "2026-04-23T12:50:43+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
+    "A_diplomacy_pct": 5,
     "B_partial_blockade_pct": 20,
     "C_full_blockade_pct": 40,
-    "D_escalation_pct": 30
+    "D_escalation_pct": 35
   },
-  "war_risk_premium_pct": 6.8,
+  "war_risk_premium_pct": 6.5,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.5,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 83,
-  "critical_date": "2026-04-23",
-  "critical_note": "停戦延長中・次回会談日程待ち",
-  "last_manual_note": "米国のホルムズ海峡封鎖は継続中。イランは船舶拿捕と攻撃を繰り返し、米国もイラン船を拿捕。停戦期限が迫る中、交渉は難航し緊張状態が続いている。",
-  "ais_estimated_vessels": 8,
+  "flow_disruption_pct": 76,
+  "critical_date": "2026-04-22",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米イラン間の停戦交渉が難航する中、ホルムズ海峡では米軍によるイラン船舶拿捕とイランによる商業船舶拿捕・発砲が頻発し、軍事的緊張が極めて高い状態にある。イランは海峡の閉鎖を宣言しており、通航は大幅に減少。",
+  "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "複数船舶攻撃・通過報告より(medium)"
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "ニュース報道と流量推計より(low)"
 }
