@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-24T09:31:13+09:00",
+  "updated_at": "2026-04-24T12:55:20+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 40
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 35
   },
   "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン双方による船舶拿捕が継続、イランは地雷を敷設し海峡閉鎖を再表明。停戦交渉は難航し、軍事エスカレーションのリスクが高い。",
-  "ais_estimated_vessels": 5,
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "ホルムズ封鎖が継続し、米イラン双方による船舶拿捕や機雷敷設、攻撃が激化。停戦交渉は難航し、期限を目前にエスカレーションリスクが増大している。",
+  "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 4,
-  "ais_estimation_note": "一部通過報道と交戦リスクから推計(low)"
+  "ais_estimated_cargo": 9,
+  "ais_estimation_note": "報道記事に基づき推計 (low)"
 }
