@@ -262,21 +262,17 @@
 
   <!-- Card 3: WTI/Brent -->
   <div class="card blue">
-    <div class="card-label">💹 原油価格（EIA 週次）</div>
-    <div style="display:flex;gap:24px;align-items:flex-end;">
+    <div class="card-label">💹 原油価格（EIA <span style="color:#fbbf24; font-size:0.85em; font-weight:700;">週次</span>）</div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
       <div>
-        <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">WTI</div>
-        <div style="display:flex;align-items:baseline;gap:4px;">
-          <div class="card-value" id="wti-val" style="font-size:2rem;color:#60a5fa">—</div>
-          <div class="card-unit">USD/bbl</div>
-        </div>
+        <div style="font-size:0.65rem; color:#94a3b8;">WTI</div>
+        <span class="card-value" id="wti-val" style="font-size:2rem;color:#60a5fa">—</span>
+        <span class="card-unit">USD/bbl</span>
       </div>
       <div>
-        <div style="font-size:0.65rem;color:var(--muted);margin-bottom:2px;">Brent</div>
-        <div style="display:flex;align-items:baseline;gap:4px;">
-          <div class="card-value" id="brent-val" style="font-size:2rem;color:#93c5fd">—</div>
-          <div class="card-unit">USD/bbl</div>
-        </div>
+        <div style="font-size:0.65rem; color:#94a3b8;">Brent</div>
+        <span class="card-value" id="brent-val" style="font-size:1.4rem;color:#93c5fd">—</span>
+        <span class="card-unit">USD/bbl</span>
       </div>
     </div>
     <div class="card-sub" style="margin-top:10px;">
@@ -324,7 +320,7 @@
 
   <!-- Card 6: 中東輸入依存度 -->
   <div class="card orange">
-    <div class="card-label">🌍 米国の中東原油輸入比率（EIA）</div>
+    <div class="card-label">🌍 米国の中東原油輸入比率（EIA <span style="color:#fbbf24; font-size:0.85em; font-weight:700;">週次</span>）</div>
     <div style="display:flex;align-items:baseline;gap:4px;">
       <div class="card-value" id="me-import">—</div>
       <div class="card-unit">%</div>
@@ -343,7 +339,7 @@
 
   <!-- 🇯🇵 日本向け調達フロー カード -->
   <div class="card" style="border-color: rgba(56,189,248,0.3); grid-column: span 2;">
-    <div class="card-label">🇯🇵 日本向け調達フロー（週次・6ルート）</div>
+    <div class="card-label">🇯🇵 日本向け調達フロー（<span style="color:#fbbf24; font-size:0.85em; font-weight:700;">週次</span>・6ルート）</div>
 
     <!-- 合計サマリー -->
     <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:4px;">
@@ -365,6 +361,14 @@
     </div>
 
     <!-- ルート別リスト -->
+    <div style="display:flex; font-size:0.6rem; color:#475569;
+      padding:0 0 4px 0; border-bottom:1px solid rgba(255,255,255,0.07);
+      margin-bottom:4px;">
+      <span style="flex:1;">ルート</span>
+      <span style="min-width:52px; text-align:right;">万BPD</span>
+      <span style="min-width:36px; text-align:right;">前週比</span>
+      <span style="min-width:30px; text-align:right;">隻/週</span>
+    </div>
     <div id="jf-routes" style="display:flex; flex-direction:column; gap:4px;">
       <!-- JSで動的生成 -->
     </div>
