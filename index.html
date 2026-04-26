@@ -171,6 +171,13 @@
   .scenario-pct { font-size: 0.62rem; min-width: 24px; }
   .scenario-bar-bg { min-width: 15px; }
 }
+    .flow-route-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; margin: 3px 0 6px; }
+    .flow-route-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+    .flow-route-row { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; margin-bottom: 2px; }
+    .flow-route-label { flex: 1; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .flow-route-val { min-width: 52px; text-align: right; font-weight: 700; font-size: 0.68rem; }
+    .flow-route-delta { min-width: 36px; text-align: right; font-size: 0.62rem; }
+    .flow-route-tanker { min-width: 30px; text-align: right; font-size: 0.62rem; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -333,6 +340,45 @@
     </div>
   </div>
 
+
+  <!-- 🇯🇵 日本向け調達フロー カード -->
+  <div class="card" style="border-color: rgba(56,189,248,0.3); grid-column: span 2;">
+    <div class="card-label">🇯🇵 日本向け調達フロー（週次・6ルート）</div>
+
+    <!-- 合計サマリー -->
+    <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:4px;">
+      <div class="card-value" id="jf-total" style="font-size:1.6rem;">—</div>
+      <div class="card-unit">万BPD</div>
+      <div id="jf-pct" style="font-size:0.75rem; font-weight:700; color:var(--red); margin-left:4px;">—%</div>
+    </div>
+
+    <!-- 全体バー -->
+    <div class="flow-bar-wrap" style="margin-bottom:10px;">
+      <div class="flow-bar-bg">
+        <div class="flow-bar-fill" id="jf-total-bar"
+             style="width:0%; background:linear-gradient(90deg,#38bdf8,#4ade80);"></div>
+      </div>
+      <div class="flow-bar-label">
+        <span>平常時 236万BPD比</span>
+        <span id="jf-total-pct-label">—%</span>
+      </div>
+    </div>
+
+    <!-- ルート別リスト -->
+    <div id="jf-routes" style="display:flex; flex-direction:column; gap:4px;">
+      <!-- JSで動的生成 -->
+    </div>
+
+    <!-- フッター -->
+    <div class="card-footer" style="margin-top:8px;">
+      <span class="dot-manual"></span>
+      週次手動更新 ／ 最終更新: <span id="jf-updated">—</span>
+      <div style="font-size:0.58rem; color:var(--muted); margin-top:2px;">
+        出典: METI・Kpler・Bloomberg推計ベース
+      </div>
+    </div>
+  </div>
+
 </div><!-- /grid -->
 
 <div style="padding:0 20px 16px;">
@@ -491,6 +537,65 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 (async function init() {
   await Promise.all([loadAIS(), loadEIA(), loadManual()]);
+})();
+</script>
+
+<script>
+(async function initJapanFlow() {
+  const OIL_FLOW_URL = 'data/oil-flow.json';
+
+  let data;
+  try {
+    const res = await fetch(OIL_FLOW_URL + '?t=' + Date.now());
+    data = await res.json();
+  } catch (e) {
+    console.warn('oil-flow.json fetch failed:', e);
+    document.getElementById('jf-total').textContent = 'N/A';
+    return;
+  }
+
+  const routes  = data.routes;
+  const normal  = data.normal_total_bpd || 236;
+  const updated = data.updated || '—';
+
+  const totalBpd = Object.values(routes).reduce((s, r) => s + (r.bpd || 0), 0);
+  const pct      = Math.round(totalBpd / normal * 100);
+
+  document.getElementById('jf-total').textContent          = totalBpd;
+  document.getElementById('jf-pct').textContent            = '(平常比 ' + pct + '%)';
+  document.getElementById('jf-total-bar').style.width      = Math.min(pct, 100) + '%';
+  document.getElementById('jf-total-pct-label').textContent = pct + '%';
+  document.getElementById('jf-updated').textContent        = updated;
+
+  const container = document.getElementById('jf-routes');
+  const ORDER = ['old', 'A', 'B', 'C_US', 'C_GL', 'D'];
+
+  ORDER.forEach(key => {
+    const r = routes[key];
+    if (!r) return;
+
+    const barPct   = r.bpd > 0 ? Math.min(Math.round(r.bpd / normal * 100 * 3), 100) : 0;
+    const delta    = r.bpd - (r.prev_bpd || 0);
+    const deltaStr = delta > 0 ? '<span style="color:#4ade80">▲' + delta + '</span>'
+                   : delta < 0 ? '<span style="color:#ef4444">▼' + Math.abs(delta) + '</span>'
+                   : '<span style="color:#64748b">→</span>';
+
+    const tankerStr = r.tankers_week > 0 ? '🚢×' + r.tankers_week : '—';
+
+    container.insertAdjacentHTML('beforeend', `
+      <div>
+        <div class="flow-route-row">
+          <span class="flow-route-label" style="color:${r.color};">${r.label}</span>
+          <span class="flow-route-val" style="color:${r.color};">${r.bpd > 0 ? r.bpd + '万' : '停止中'}</span>
+          <span class="flow-route-delta">${deltaStr}</span>
+          <span class="flow-route-tanker">${tankerStr}</span>
+        </div>
+        <div class="flow-route-bar">
+          <div class="flow-route-fill" style="width:${barPct}%; background:${r.color};"></div>
+        </div>
+      </div>
+    `);
+  });
 })();
 </script>
 </body>
