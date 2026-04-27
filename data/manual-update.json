@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-26T12:59:38+09:00",
+  "updated_at": "2026-04-27T09:31:04+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 15,
-    "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 35
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 40
   },
-  "war_risk_premium_pct": 5.0,
+  "war_risk_premium_pct": 6.8,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
-  "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "ホルムズ海峡は米イラン双方の軍事行動により実質的な封鎖状態。停戦交渉は難航し、軍事エスカレーションのリスクが高まっている。イラン経済は深刻な打撃を受けている。",
-  "ais_estimated_vessels": 5,
+  "flow_disruption_pct": 88,
+  "critical_date": "2026-05-05",
+  "critical_note": "停戦交渉再開/決裂の節目",
+  "last_manual_note": "米イラン双方によるホルムズ封鎖が継続し、イランは船舶拿捕や機雷敷設で対抗。米国は武力行使を辞さない構えで、軍事エスカレーションのリスクが高まっている。停戦交渉は停滞中。原油価格は高騰。",
+  "ais_estimated_vessels": 7,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "Reuters報道より推計(high)"
+  "ais_estimated_cargo": 5,
+  "ais_estimation_note": "ニュース報道の状況から推計(low)"
 }
