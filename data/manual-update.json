@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-27T13:03:39+09:00",
+  "updated_at": "2026-04-28T09:30:43+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 15,
-    "B_partial_blockade_pct": 25,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 25,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 5,
+    "D_escalation_pct": 25
   },
-  "war_risk_premium_pct": 5.8,
+  "war_risk_premium_pct": 6.5,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は期限を目前に膠着。米国は海峡封鎖を継続し、イランは開放を主張しつつ船舶拿捕や発砲で対抗。通過船舶は極めて限定的。",
-  "ais_estimated_vessels": 5,
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "ホルムズ海峡は米イラン双方による実質的な部分封鎖状態が継続。イランは封鎖解除と戦争終結の取引を提案中だが、交渉は難航。米側は強硬姿勢を維持し、船舶拿捕や攻撃の報告も続く。",
+  "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 4,
-  "ais_estimation_note": "Reuters報道（24時間で5隻通過）より(medium)"
+  "ais_estimated_cargo": 5,
+  "ais_estimation_note": "ニュース情報に基づく推計(medium)"
 }
