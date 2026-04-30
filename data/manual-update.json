@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-04-29T13:07:07+09:00",
+  "updated_at": "2026-04-30T09:30:48+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 20
   },
-  "war_risk_premium_pct": 6.5,
+  "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国とイラン双方による事実上のホルムズ海峡封鎖が継続。停戦交渉は核問題で難航し、イランは船舶拿捕。原油価格は高騰中。",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米国によるホルムズ海峡封鎖は継続中。イランは交渉再開を提案したが、米国は核合意まで封鎖継続の姿勢。交渉は停滞し、一部攻撃事案も報告され緊張は高い。",
   "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 5,
-  "ais_estimation_note": "Reuters/NPR報道より推計(medium)"
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "複数記事で「trickle」と表現(medium)"
 }
