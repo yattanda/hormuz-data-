@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-01T13:33:43+09:00",
+  "updated_at": "2026-05-02T09:30:41+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 25,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 20,
+    "B_partial_blockade_pct": 50,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 15
   },
-  "war_risk_premium_pct": 7.0,
+  "war_risk_premium_pct": 6.8,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "ホルムズ封鎖が継続中。イランは封鎖解除を条件に海峡再開を提案するも、米国は核合意まで封鎖継続を主張。停戦交渉期限が迫る中、イランはシャドー船団や陸路で封鎖回避を試み、原油価格高騰が続く。",
-  "ais_estimated_vessels": 10,
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "イランは米国の封鎖解除と戦争終結を条件に海峡再開を提案。しかし米国は核合意を条件に封鎖維持を表明し、交渉は膠着。イランは一部船舶を拿捕し、シャドー艦隊による迂回を試みている。原油価格は高騰中。",
+  "ais_estimated_vessels": 12,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "CNN報道・Al Jazeera記事より(medium)"
+  "ais_estimated_cargo": 10,
+  "ais_estimation_note": "ニュース分析・過去データに基づく(medium)"
 }
