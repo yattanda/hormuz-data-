@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-03T09:30:48+09:00",
+  "updated_at": "2026-05-03T13:15:08+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 35,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 10
   },
-  "war_risk_premium_pct": 5.5,
+  "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
   "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米国はホルムズ海峡の封鎖を継続しイランの提案を拒否。イランは「影の艦隊」で封鎖回避を試み、通行料徴収を計画。停戦交渉は難航。",
+  "last_manual_note": "米イラン停戦交渉は期限を迎え混迷。ホルムズ海峡の開閉情報が錯綜するが、米国による封鎖は実質継続中。イランはシャドーフリートや代替ルートで対抗。",
   "ais_estimated_vessels": 12,
   "ais_estimated_tankers": 3,
   "ais_estimated_cargo": 9,
-  "ais_estimation_note": "ニュース報道・影の艦隊存在より(medium)"
+  "ais_estimation_note": "複数記事及び封鎖中流量から推計(medium)"
 }
