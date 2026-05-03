@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-02T12:55:57+09:00",
+  "updated_at": "2026-05-03T09:30:48+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 15,
+    "A_diplomacy_pct": 20,
     "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 25,
-    "D_escalation_pct": 20
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 25
   },
-  "war_risk_premium_pct": 7.0,
+  "war_risk_premium_pct": 5.5,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.5,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 83,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "ホルムズ海峡は米国の封鎖により実質閉鎖状態。イランは解除を提案したが米国は核合意を条件に拒否。油価高騰、イランは影の艦隊で一部回避。停戦交渉の行方が注目される。",
-  "ais_estimated_vessels": 10,
+  "last_manual_note": "米国はホルムズ海峡の封鎖を継続しイランの提案を拒否。イランは「影の艦隊」で封鎖回避を試み、通行料徴収を計画。停戦交渉は難航。",
+  "ais_estimated_vessels": 12,
   "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 5,
-  "ais_estimation_note": "報道を総合的に判断(medium)"
+  "ais_estimated_cargo": 9,
+  "ais_estimation_note": "ニュース報道・影の艦隊存在より(medium)"
 }
