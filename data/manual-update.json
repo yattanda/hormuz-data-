@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-03T13:15:08+09:00",
+  "updated_at": "2026-05-04T09:30:54+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 35,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 10
+    "A_diplomacy_pct": 25,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 15
   },
   "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は期限を迎え混迷。ホルムズ海峡の開閉情報が錯綜するが、米国による封鎖は実質継続中。イランはシャドーフリートや代替ルートで対抗。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 3,
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉は期限を控え継続中だが、イランの提案は米国に拒否され、海峡の状況は流動的。船舶攻撃も発生し緊張状態が続く。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 1,
   "ais_estimated_cargo": 9,
-  "ais_estimation_note": "複数記事及び封鎖中流量から推計(medium)"
+  "ais_estimation_note": "ニュース報道・封鎖影響より推計(low)"
 }
