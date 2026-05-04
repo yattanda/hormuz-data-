@@ -1,6 +1,6 @@
 {
   "_comment": "週1回手動更新。BPDは万バレル/日単位。tankers_weekは週あたり寄港タンカー隻数推定。prev_bpdは前週値。",
-  "updated": "2026年4月27日 JST",
+  "updated": "2026年5月4日 JST",
   "normal_total_bpd": 236,
   "routes": {
     "old": {
@@ -10,41 +10,41 @@
       "tankers_week": 0,
       "prev_bpd": 0,
       "status": "red",
-      "note": "米軍封鎖継続中。商業船運航自主停止。"
+      "note": "米軍封鎖継続中。Project Freedom（5/4開始）は閉じ込め船の「脱出護衛」目的であり新規商業通航は依然不可。"
     },
     "A": {
-      "label": "ルートA（ジャイラ経由）",
+      "label": "ルートA（フジャイラ経由）",
       "color": "#38bdf8",
-      "bpd": 60,
+      "bpd": 62,
       "tankers_week": 3,
-      "prev_bpd": 50,
+      "prev_bpd": 60,
       "status": "yellow",
-      "note": "ENEOSが稼働中。混雑・遅延傾向。"
+      "note": "ENEOSが稼働中。混雑・遅延傾向継続。港湾処理能力が上限付近。"
     },
     "B": {
       "label": "ルートB（インブー・東西PL）",
       "color": "#4ade80",
-      "bpd": 120,
+      "bpd": 125,
       "tankers_week": 6,
-      "prev_bpd": 100,
+      "prev_bpd": 120,
       "status": "green",
-      "note": "4/12全面復旧。主幹ルートとして機能中。"
+      "note": "4/12全面復旧。主幹ルートとして安定稼働中。"
     },
     "C_US": {
       "label": "ルートC🇺🇸（米国）",
       "color": "#a78bfa",
-      "bpd": 30,
-      "tankers_week": 2,
-      "prev_bpd": 10,
+      "bpd": 45,
+      "tankers_week": 3,
+      "prev_bpd": 30,
       "status": "green",
-      "note": "アラスカ・メキシコ湾岸。4/25第1便着。急増中。"
+      "note": "5月から本格到着フェーズ突入。アラスカ・メキシコ湾岸。昨年比4倍増ペース。"
     },
     "C_GL": {
       "label": "ルートC🌍（南半球）",
       "color": "#fb923c",
-      "bpd": 10,
+      "bpd": 12,
       "tankers_week": 1,
-      "prev_bpd": 5,
+      "prev_bpd": 10,
       "status": "orange",
       "note": "ブラジル・西アフリカ経由。本格化は6月以降。"
     },
