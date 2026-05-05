@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-05T09:30:59+09:00",
+  "updated_at": "2026-05-05T12:54:19+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 30,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 55
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 30
   },
   "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限、現在は決裂",
-  "last_manual_note": "米イラン停戦交渉決裂後、米軍は船舶誘導を開始し、イランもこれに対し攻撃・報復を示唆。両軍間で直接的な軍事衝突が発生しており、海峡情勢は極めて緊迫。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "米軍誘導の通過報道・流量激減考慮(medium)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉が期限を迎える中、米軍は海峡の船舶誘導を試みる「Project Freedom」を開始。イランは強く反発し、両軍間で武力衝突が頻発、停戦は崩壊寸前。海峡の物流は大幅に停滞。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 2,
+  "ais_estimation_note": "報道内容・背景知識から推計(medium)"
 }
