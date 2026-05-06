@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-06T09:30:53+09:00",
+  "updated_at": "2026-05-06T13:10:37+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 25,
-    "D_escalation_pct": 20
+    "A_diplomacy_pct": 35,
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 15
   },
-  "war_risk_premium_pct": 5.5,
+  "war_risk_premium_pct": 6.8,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 2.5,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 88,
-  "critical_date": "2026-05-31",
-  "critical_note": "停戦交渉進展の見極め",
-  "last_manual_note": "米イラン双方による「二重封鎖」状態が続き、海峡内での交戦や攻撃の応酬が頻発。停戦交渉は進展が見られず、停戦は破綻寸前。通過船舶は極めて限定的。",
-  "ais_estimated_vessels": 7,
+  "flow_disruption_pct": 83,
+  "critical_date": "2026-04-22",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米、護送作戦一時停止しイランとの交渉進展に期待。イランは米封鎖解除を条件に海峡再開提案。脆弱な停戦下、二重封鎖と散発的交戦は続く。",
+  "ais_estimated_vessels": 8,
   "ais_estimated_tankers": 1,
   "ais_estimated_cargo": 3,
-  "ais_estimation_note": "ニュース記事の描写、流量推計より(low)"
+  "ais_estimation_note": "ニュースと過去データから推計(low)"
 }
