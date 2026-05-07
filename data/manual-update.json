@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-07T09:30:49+09:00",
+  "updated_at": "2026-05-07T13:09:33+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 35,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 10
+    "A_diplomacy_pct": 25,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 20
   },
-  "war_risk_premium_pct": 7.0,
+  "war_risk_premium_pct": 6.5,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉の期限",
-  "last_manual_note": "米国の封鎖作戦は一時停止中だが、イランは米国の封鎖解除と戦争終結を条件に海峡再開を提案。停戦交渉は期限を控え正念場を迎えている。",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "ホルムズ海峡は米イラン双方による事実上の「ダブル封鎖」状態。停戦交渉期限が迫る中、トランプによる軍事オプション示唆と作戦一時停止が交錯。中国が仲介に乗り出している。",
   "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "ニュース情報と封鎖中の状況から推計 (low)"
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "米海軍阻止報告とイラン閉鎖宣言に基づく（low）"
 }
