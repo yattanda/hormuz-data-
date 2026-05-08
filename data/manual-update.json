@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-08T09:30:54+09:00",
+  "updated_at": "2026-05-08T12:57:07+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 35,
+    "B_partial_blockade_pct": 20,
     "C_full_blockade_pct": 10,
-    "D_escalation_pct": 15
+    "D_escalation_pct": 30
   },
   "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米イラン間で停戦交渉が最終局面に入り、Trumpはホルムズでの作戦を一時停止。しかし、イランは海峡封鎖を継続し、船舶への攻撃も報告されるなど、緊張は依然高い。約1500隻の船舶が湾内で立ち往生しており、経済的影響は深刻。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 4,
-  "ais_estimation_note": "ニュース記事からの総合的な判断(low)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米国のホルムズ封鎖とイランによる対抗封鎖、船舶攻撃が続く中、停戦交渉が進行。米は作戦を一時停止し、イランも条件付きで海峡再開を提示するが、交渉は依然不透明。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 3,
+  "ais_estimation_note": "軍事行動と交渉動向から推計(low)"
 }
