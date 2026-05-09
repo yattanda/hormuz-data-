@@ -1,6 +1,6 @@
 {
   "_comment": "週1回手動更新。BPDは万バレル/日単位。tankers_weekは週あたり寄港タンカー隻数推定。prev_bpdは前週値。",
-  "updated": "2026年5月8日 JST",
+  "updated": "2026年5月4日 JST",
   "normal_total_bpd": 236,
   "routes": {
     "old": {
@@ -14,12 +14,12 @@
     },
     "A": {
       "label": "ルートA（フジャイラ経由）",
-      "color": "#ef4444",
-      "bpd": 0,
-      "tankers_week": 0,
-      "prev_bpd": 62,
-      "status": "red",
-      "note": "5/4 VTTIターミナル直撃・火災。積み出し停止中。イランがフジャイラを「管理域」に宣言。ADCOPパイプライン終端が機能不全。再開時期未定。"
+      "color": "#38bdf8",
+      "bpd": 62,
+      "tankers_week": 3,
+      "prev_bpd": 60,
+      "status": "yellow",
+      "note": "ENEOSが稼働中。混雑・遅延傾向継続。港湾処理能力が上限付近。"
     },
     "B": {
       "label": "ルートB（インブー・東西PL）",
