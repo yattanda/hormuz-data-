@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-10T09:30:48+09:00",
+  "updated_at": "2026-05-10T13:29:28+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
+    "A_diplomacy_pct": 15,
     "B_partial_blockade_pct": 5,
-    "C_full_blockade_pct": 45,
-    "D_escalation_pct": 40
+    "C_full_blockade_pct": 50,
+    "D_escalation_pct": 30
   },
-  "war_risk_premium_pct": 7.0,
+  "war_risk_premium_pct": 6.8,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 2.5,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 88,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米国によるホルムズ封鎖とイランの対抗措置により海峡はほぼ閉鎖状態。停戦交渉中に双方の軍事衝突が頻発し、エスカレーションリスクが極めて高い。",
+  "last_manual_note": "米イラン双方によるホルムズ海峡の封鎖が続き、停戦交渉中に軍事衝突が頻発。イランは封鎖解除と終戦を条件に海峡開放を提案。",
   "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 4,
-  "ais_estimation_note": "ニュース報道より推計(low)"
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 1,
+  "ais_estimation_note": "ニュース報道推計より(low)"
 }
