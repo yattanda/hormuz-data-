@@ -191,10 +191,6 @@
   </div>
 </header>
 
-<div class="critical-window" id="critical-banner" style="display:none;margin-top:16px;">
-  <h3>⚠ Critical Window</h3>
-  <p id="critical-text"></p>
-</div>
 
 <div class="grid">
 
@@ -515,14 +511,7 @@ async function loadManual() {
     setText('scenario-updated', fmtDate(d.updated_at));
     setText('header-updated', `最終手動更新: ${fmtDate(d.updated_at)}`);
 
-    if (d.critical_date && d.critical_note) {
-      const banner = document.getElementById('critical-banner');
-      const text   = document.getElementById('critical-text');
-      if (banner && text) {
-        text.textContent = `⏰ Critical Window: ${d.critical_date} ─ ${d.critical_note}`;
-        banner.style.display = 'block';
-      }
-    }
+
   } catch(e) { console.warn('Manual:', e); }
 }
 // 埋め込み時はメインサイトリンクを非表示
