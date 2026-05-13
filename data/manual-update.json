@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-12T13:12:09+09:00",
+  "updated_at": "2026-05-13T09:30:54+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 0,
+    "B_partial_blockade_pct": 10,
+    "C_full_blockade_pct": 40,
     "D_escalation_pct": 40
   },
-  "war_risk_premium_pct": 6.8,
+  "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は「瀬戸際」で、トランプ大統領はイラン提案を拒否。米は軍事オプションを検討し、イラン関連タンカーへの攻撃も実行。ホルムズ海峡は「効果的に封鎖」状態が続き、一部はトランスポンダーを切って通過。緊張は高まり、軍事エスカレーションのリスクが非常に高い。",
+  "last_manual_note": "米イラン停戦交渉は「生命維持装置」状態。トランプ大統領がイランの提案を拒否し、打開の見込み薄。米イラン双方によるホルムズ海峡封鎖が続き、船舶への攻撃・拿捕が頻発し軍事的緊張が高まっている。",
   "ais_estimated_vessels": 8,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "ニュース報道・通過量より推計(medium)"
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "複数報道及び封鎖状況より推計(medium)"
 }
