@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-13T09:30:54+09:00",
+  "updated_at": "2026-05-13T13:26:51+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 40
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 35,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 45
   },
   "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は「生命維持装置」状態。トランプ大統領がイランの提案を拒否し、打開の見込み薄。米イラン双方によるホルムズ海峡封鎖が続き、船舶への攻撃・拿捕が頻発し軍事的緊張が高まっている。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "複数報道及び封鎖状況より推計(medium)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "ホルムズ海峡の封鎖が継続し、米イラン間の停戦交渉は決裂寸前。双方による船舶拿捕が発生し、軍事エスカレーションのリスクが高まっている。",
+  "ais_estimated_vessels": 15,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 10,
+  "ais_estimation_note": "ニュース記事の記述に基づき推計(medium)"
 }
