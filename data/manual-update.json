@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-14T09:30:43+09:00",
+  "updated_at": "2026-05-14T13:26:31+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 40
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 35
   },
-  "war_risk_premium_pct": 6.5,
+  "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "ホルムズ海峡は米イラン双方による実質的な封鎖が継続。停戦交渉は難航し、軍事衝突のリスクが高まっている。",
-  "ais_estimated_vessels": 10,
+  "last_manual_note": "ホルムズ海峡は米CENTCOMとイラン双方による実質的な封鎖が継続中。米イラン停戦交渉は難航し、期限の22日が迫る。米国は武力開放も示唆、イランは迂回ルートを模索しつつ抵抗。緊張は極めて高い状態。",
+  "ais_estimated_vessels": 8,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "報道情報及び封鎖状態からの推計(medium)"
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "ニュース報道・通行量減少を基に推計(medium)"
 }
