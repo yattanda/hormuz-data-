@@ -231,7 +231,6 @@ def main():
 
     print("[Manual] Done.")
     print(f"  シナリオA: {data['scenario']['A_diplomacy_pct']}%")
-    print(f"  保険料率: {data['war_risk_premium_pct']}%")
     print(f"  流量: {data['hormuz_daily_flow_mbpd']} MBPD")
     print(f"  重要日程: {data['critical_date']}")
 
