@@ -8,8 +8,9 @@
     "C_full_blockade_pct": 15,
     "D_escalation_pct": 25
   },
-  "war_risk_premium_pct": 7.0,
-  "war_risk_premium_source": "推定値（Gemini自動分析）",
+  "war_risk_premium_manual": null,
+  "war_risk_premium_verified": false,
+  "war_risk_premium_source": null,
   "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 81,

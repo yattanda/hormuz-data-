@@ -81,7 +81,6 @@ def analyze_with_gemini(api_key, news_items):
 - 通常時のホルムズ通過量は約21百万バレル/日
 - 封鎖前の通過量は約17〜18百万バレル/日
 - 現在は大幅に減少していると推定される
-- 戦争リスク保険料率は封鎖前の1%から大幅上昇中
 - 米イラン間で停戦交渉が進行中（パキスタン仲介）
 - 停戦期限は2026年4月22日
 
@@ -96,8 +95,6 @@ def analyze_with_gemini(api_key, news_items):
     "C_full_blockade_pct": <完全封鎖継続シナリオの確率 0-100の整数>,
     "D_escalation_pct": <軍事エスカレーションシナリオの確率 0-100の整数>
   }},
-  "war_risk_premium_pct": <戦争リスク保険料率 小数点1桁 現在は1.0〜7.5%の範囲>,
-  "war_risk_premium_source": "推定値（Gemini自動分析）",
   "hormuz_daily_flow_mbpd": <ホルムズ通過量 百万バレル/日 封鎖中は2〜10程度>,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": <流量disruption率 整数 = round((1 - hormuz_daily_flow_mbpd / 21.0) * 100)>,

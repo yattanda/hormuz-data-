@@ -284,19 +284,24 @@
   <!-- Card 4: 保険料率 -->
   <div class="card yellow">
     <div class="card-label">🔒 戦争リスク保険料率（War Risk Premium）</div>
-    <div style="display:flex;align-items:baseline;gap:4px;">
+    <div style="display:flex;align-items:baseline;gap:6px;">
       <div style="font-size:2rem;font-weight:800;color:var(--yellow);" id="ins-val">—</div>
       <div class="card-unit" style="color:var(--yellow);">% AWR</div>
+      <span id="ins-badge" style="font-size:0.68rem;font-weight:700;margin-left:4px;color:#94a3b8;">— 未確認</span>
     </div>
     <div class="card-sub" style="margin-top:8px;">
-      通常時: 0.025〜0.05% ／ 現在: <span id="ins-val2" style="color:var(--yellow);font-weight:700;">—%</span><br/>
+      通常時: 0.025〜0.125% ／ 現在: <span id="ins-val2" style="color:var(--yellow);font-weight:700;">—%</span><br/>
       タンカー1隻あたり +約 <span id="ins-cost">—</span> 万USD/航海<br/>
-      <span style="font-size:0.63rem;">出典: <span id="ins-source">—</span></span>
+      <span style="font-size:0.63rem;">出典: <span id="ins-source">—</span></span><br/>
+      <span style="font-size:0.60rem;color:#64748b;line-height:1.6;">
+        ※有意な情報のある日のみ表示<br/>
+        ※船籍・積荷・旗国・航路により大幅変動
+      </span>
     </div>
     <div class="card-footer">
-     <span class="dot-live"></span>
-     🤖 自動更新（Gemini AI）／ <span id="ins-updated">—</span>
-    <div style="font-size:0.58rem;color:var(--muted);margin-top:2px;">🕖 毎日 07:00 JST 自動実行</div>
+     <span>✏️</span>
+     手動確認時のみ更新 ／ <span id="ins-updated">—</span>
+    <div style="font-size:0.58rem;color:var(--muted);margin-top:2px;">S&amp;P Global / Caixin / Lloyd's List 参照</div>
 </div>
   </div>
 
@@ -481,11 +486,23 @@ async function loadManual() {
       setText('flow-disruption', d.flow_disruption_pct + '%');
     setText('flow-updated', fmtDate(d.updated_at));
 
-    if (d.war_risk_premium_pct != null) {
-      setText('ins-val',  d.war_risk_premium_pct.toFixed(2));
-      setText('ins-val2', d.war_risk_premium_pct.toFixed(2) + '%');
-      const cost = Math.round(d.war_risk_premium_pct * 0.01 * 120 * 50000 / 10000);
+    const insPct = d.war_risk_premium_manual;
+    const insVerified = d.war_risk_premium_verified === true;
+    if (insPct != null) {
+      setText('ins-val',  insPct.toFixed(2));
+      setText('ins-val2', insPct.toFixed(2) + '%');
+      const cost = Math.round(insPct * 0.01 * 120 * 50000 / 10000);
       setText('ins-cost', cost);
+    }
+    const badge = document.getElementById('ins-badge');
+    if (badge) {
+      if (insPct != null && insVerified) {
+        badge.textContent = '✓ 確認済み';
+        badge.style.color = '#4ade80';
+      } else {
+        badge.textContent = '— 未確認';
+        badge.style.color = '#94a3b8';
+      }
     }
     setText('ins-source',  d.war_risk_premium_source ?? '—');
     setText('ins-updated', fmtDate(d.updated_at));

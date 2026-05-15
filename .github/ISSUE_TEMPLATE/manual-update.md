@@ -21,8 +21,9 @@ assignees: yattanda
 - [ ] `hormuz_daily_flow_mbpd` ホルムズ通過量（Kpler/Argus参照）
 - [ ] `hormuz_normal_flow_mbpd` 通常時通過量（変更がなければそのまま）
 - [ ] `flow_disruption_pct` 流量disruption率（自動計算: 1 - daily/normal × 100）
-- [ ] `war_risk_premium_pct` 戦争リスク保険料率（Argus Media参照）
-- [ ] `war_risk_premium_source` 出典と日付を更新
+- [ ] `war_risk_premium_manual` 確認できる場合のみ数値をセット（例: 2.0）。確認できない場合は `null` のまま
+- [ ] `war_risk_premium_verified` 確認済みなら `true`、未確認なら `false`
+- [ ] `war_risk_premium_source` 確認済みの場合のみ出典と日付を記載（例: "S&P Global 2026/05/15"）
 
 ---
 
