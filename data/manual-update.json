@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-05-14T13:26:31+09:00",
+  "updated_at": "2026-05-15T09:30:57+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 5,
+    "A_diplomacy_pct": 15,
     "B_partial_blockade_pct": 40,
     "C_full_blockade_pct": 20,
-    "D_escalation_pct": 35
+    "D_escalation_pct": 25
   },
   "war_risk_premium_pct": 7.0,
   "war_risk_premium_source": "推定値（Gemini自動分析）",
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "ホルムズ海峡は米CENTCOMとイラン双方による実質的な封鎖が継続中。米イラン停戦交渉は難航し、期限の22日が迫る。米国は武力開放も示唆、イランは迂回ルートを模索しつつ抵抗。緊張は極めて高い状態。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "ニュース報道・通行量減少を基に推計(medium)"
+  "last_manual_note": "米イランは双方によるホルムズ海峡の「二重封鎖」状態。中国船は一部通過を許可されているものの、米国によるイランタンカー攻撃や船舶拿捕が続く。停戦交渉期限が迫る中、外交努力と軍事緊張が交錯。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 9,
+  "ais_estimation_note": "ニュース記事と通常時流量からの推計(low)"
 }
