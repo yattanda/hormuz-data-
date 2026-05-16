@@ -1,24 +1,21 @@
 {
-  "updated_at": "2026-05-15T13:32:37+09:00",
+  "updated_at": "2026-05-16T09:30:45+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 25,
-    "B_partial_blockade_pct": 35,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 30,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 20
   },
-  "war_risk_premium_manual": null,
-  "war_risk_premium_verified": false,
-  "war_risk_premium_source": null,
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉の最終期限",
-  "last_manual_note": "米イラン停戦交渉が最終局面に入り、22日の期限を前に情勢緊迫。双方による船舶拿捕・阻止が続く中、イランは中国船の通過を容認し限定的通航が継続。軍事エスカレーションリスクは高止まり。",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "CENTCOMによる海峡封鎖後、米イラン双方による船舶拿捕・攻撃が多発し「二重封鎖」状態。中国船はイランの許可を得て通過。パキスタン仲介の停戦交渉が22日に期限を迎える。",
   "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 5,
-  "ais_estimation_note": "複数報道より中国船は通過(medium)"
+  "ais_estimated_tankers": 6,
+  "ais_estimated_cargo": 2,
+  "ais_estimation_note": "ニュース記事の中国船通過情報より(medium)"
 }
