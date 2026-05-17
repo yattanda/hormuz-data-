@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-16T13:07:02+09:00",
+  "updated_at": "2026-05-17T09:30:48+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 15
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 25
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉の期限",
-  "last_manual_note": "米イラン双方によるホルムズ海峡の「二重封鎖」が継続。船舶拿捕・攻撃事案が頻発し軍事緊張は高く、中国船の一部が通過中。停戦交渉期限が迫る中、外交努力は難航している。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 5,
-  "ais_estimated_cargo": 2,
-  "ais_estimation_note": "報道分析に基づき保守的に推計(low)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米イラン双方によるホルムズ海峡の部分的封鎖が継続。船舶の拿捕や沈没、米軍によるタンカーへの発砲も発生し緊張が高まっている。中国は海峡の再開に向けて外交努力を行っているが、停戦交渉は難航。イランは通行料徴収計画を示唆。",
+  "ais_estimated_vessels": 15,
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 7,
+  "ais_estimation_note": "ニュース記事と公開データから推計 (medium)"
 }
