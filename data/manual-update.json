@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-17T09:30:48+09:00",
+  "updated_at": "2026-05-17T13:36:15+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 20
   },
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン双方によるホルムズ海峡の部分的封鎖が継続。船舶の拿捕や沈没、米軍によるタンカーへの発砲も発生し緊張が高まっている。中国は海峡の再開に向けて外交努力を行っているが、停戦交渉は難航。イランは通行料徴収計画を示唆。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 7,
-  "ais_estimation_note": "ニュース記事と公開データから推計 (medium)"
+  "last_manual_note": "米イラン双方による実質封鎖が継続し、船舶拿捕や沈没で緊張高まる。中国は開放を支持しつつ、交渉期限が迫る。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 5,
+  "ais_estimation_note": "イラン発表・衛星画像分析より(medium)"
 }
