@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-18T09:30:49+09:00",
+  "updated_at": "2026-05-18T13:48:28+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 25
+    "B_partial_blockade_pct": 5,
+    "C_full_blockade_pct": 45,
+    "D_escalation_pct": 30
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "CENTCOMによる封鎖継続。米イラン双方による船舶拿捕が続く中、パキスタン仲介の停戦交渉は期限を目前に膠着。イランは通航料徴収計画を表明し、情勢は緊迫。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 1,
-  "ais_estimation_note": "報道に基づく推計（限定的通過示唆）(low)"
+  "last_manual_note": "ホルムズ海峡は米イラン双方による「二重封鎖」状態が継続。船舶の拿捕・沈没が頻発し、通過は極めて困難。原油価格は高騰。停戦交渉の期限が迫り、軍事的緊張は最高レベル。",
+  "ais_estimated_vessels": 7,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "複数記事で拿捕・座礁報告より(medium)"
 }
