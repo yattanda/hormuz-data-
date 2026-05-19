@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-19T09:30:58+09:00",
+  "updated_at": "2026-05-19T13:38:31+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 25,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 30,
+    "B_partial_blockade_pct": 35,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 4.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 79,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は期限を控え難航。米国は攻撃を保留しつつイラン関連タンカー拿捕。イランは海峡再開条件提示、独自の船舶管理・通行料計画を発表。ホルムズ海峡通過量は「細流」に減少。",
-  "ais_estimated_vessels": 15,
+  "critical_note": "米イラン停戦交渉の期限",
+  "last_manual_note": "米イラン間の停戦交渉は期限を控え停滞気味。双方による海峡の「二重封鎖」状態が継続し、一部の回避行動や拿捕も報告されている。",
+  "ais_estimated_vessels": 12,
   "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 12,
-  "ais_estimation_note": "ニュース報道の「細流」表現に基づき推計 (medium)"
+  "ais_estimated_cargo": 7,
+  "ais_estimation_note": "CNN報道および各国機関発表より（medium）"
 }
