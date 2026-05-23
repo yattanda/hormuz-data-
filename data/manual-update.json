@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-23T09:31:01+09:00",
+  "updated_at": "2026-05-23T13:12:48+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 25,
-    "B_partial_blockade_pct": 55,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 35,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉継続中も難航。ホルムズ海峡は実質的閉鎖が続き、米国は作戦一時停止、イランは通過一部管理を主張。原油高騰で国際社会に深刻な影響。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 12,
-  "ais_estimation_note": "各国報道とイラン主張を総合分析(medium)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉は進展の兆しがあるものの、ホルムズ海峡は依然として実質的に封鎖状態。イランは一部船舶の通過を主張し、米国は軍事圧力を維持しつつ交渉継続。双方の「二重封鎖」で緊張が続く。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 4,
+  "ais_estimation_note": "報道記事分析より推定(medium)"
 }
