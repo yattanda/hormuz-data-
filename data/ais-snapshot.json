@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-24T13:45:46+09:00",
+  "updated_at": "2026-05-25T09:30:49+09:00",
   "source": "Gemini AI推計（ニュース・公開データより）",
   "collection_duration_sec": 180,
   "bbox": {
@@ -10,13 +10,13 @@
   },
   "vessels_detected": 15,
   "breakdown": {
-    "tanker": 2,
-    "cargo": 6,
-    "other": 7
+    "tanker": 3,
+    "cargo": 8,
+    "other": 4
   },
   "dark_estimate_factor": 1.35,
   "estimated_actual": 20,
   "messages_received": 0,
   "note": "Gemini AIがニュース・MarineTraffic公開データから推計。AIS非検出（ダークシッピング）船舶を含む推定値。",
-  "estimation_note": "CNN『わずかな流れ』報道・封鎖状況を勘案(medium)"
+  "estimation_note": "イラン報道・限定的商業航行より(medium)"
 }
