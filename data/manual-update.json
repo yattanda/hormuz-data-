@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-25T09:30:49+09:00",
+  "updated_at": "2026-05-25T13:58:47+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 70,
-    "B_partial_blockade_pct": 20,
+    "A_diplomacy_pct": 50,
+    "B_partial_blockade_pct": 40,
     "C_full_blockade_pct": 5,
     "D_escalation_pct": 5
   },
   "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 76,
-  "critical_date": "2026-05-28",
-  "critical_note": "米イラン停戦合意の最終発表見込み",
-  "last_manual_note": "米イラン停戦交渉が最終段階に進展し、ホルムズ海峡の開放が合意に含まれるとの情報が複数ある。一方、米国は封鎖を継続し、イランも独自の支配を主張する二重封鎖状態。一部船舶は通過しているが、流量は大幅減少。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 3,
+  "critical_date": "2026-04-22",
+  "critical_note": "停戦交渉の期限",
+  "last_manual_note": "米イラン間で停戦交渉が進行中。トランプ大統領は合意が「大部分交渉済み」と発言する一方で、米国封鎖の継続も示唆しており状況は流動的。ホルムズ海峡は限定的な通過があるものの、事実上の封鎖状態が続いている。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 2,
   "ais_estimated_cargo": 8,
-  "ais_estimation_note": "イラン報道・限定的商業航行より(medium)"
+  "ais_estimation_note": "米軍発表・個別報道を基に推計(low)"
 }
