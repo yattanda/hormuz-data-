@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-27T09:31:18+09:00",
+  "updated_at": "2026-05-27T13:53:29+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
+    "A_diplomacy_pct": 45,
     "B_partial_blockade_pct": 35,
-    "C_full_blockade_pct": 10,
+    "C_full_blockade_pct": 5,
     "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉の期限",
-  "last_manual_note": "米イラン停戦交渉は期限を控え進展と停滞が混在。米国は一部軍事行動を継続し、イランは封鎖中に通過調整と主張。原油価格高騰。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 12,
-  "ais_estimation_note": "イラン発表とCENTCOM報告を総合(medium)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米イラン間の停戦交渉が最終局面。トランプ大統領は合意が「ほぼ完了」と主張するも、米軍攻撃は継続し、海峡は「細流」状態。イランは封鎖解除と凍結資産の返還を求める。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "CENTCOM報告・CNN記述より(medium)"
 }
