@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-29T09:30:54+09:00",
+  "updated_at": "2026-05-29T13:50:14+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 15,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 20,
+    "A_diplomacy_pct": 30,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 10,
     "D_escalation_pct": 20
   },
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
-  "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン間で停戦交渉が続くも、トランプの合意否定と双方の攻撃応酬により情勢は緊迫。ホルムズ海峡の封鎖は継続中。",
+  "flow_disruption_pct": 81,
+  "critical_date": "2026-05-25",
+  "critical_note": "停戦提案に関する米国の決定",
+  "last_manual_note": "米イラン停戦交渉は継続中だがトランプは不満を表明。ホルムズは事実上封鎖、米イランは衝突を継続し緊張状態。",
   "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 11,
-  "ais_estimation_note": "イラン発表及び封鎖状況より推計(medium)"
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 9,
+  "ais_estimation_note": "イランの主張を考慮し現状を保守的に推計(medium)"
 }
