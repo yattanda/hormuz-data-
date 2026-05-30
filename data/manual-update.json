@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-30T09:31:00+09:00",
+  "updated_at": "2026-05-30T13:30:55+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 5,
+    "A_diplomacy_pct": 50,
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 10,
     "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 6.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 71,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "Trump大統領はホルムズ封鎖解除に意欲を示すが、停戦交渉は難航。米国はイラン南部を空爆、イランは独自に船舶通過を調整し通行料を徴収。依然として海上封鎖は継続中。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "イラン発表26隻を参考に推計(medium)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イラン間でホルムズ海峡再開を含む停戦延長の暫定合意報道があるが、トランプは最終決定を延期。米軍攻撃も続き、海峡は実質封鎖状態。情勢は依然不透明。",
+  "ais_estimated_vessels": 26,
+  "ais_estimated_tankers": 5,
+  "ais_estimated_cargo": 21,
+  "ais_estimation_note": "イラン国営テレビ発表に基づく(low)"
 }
