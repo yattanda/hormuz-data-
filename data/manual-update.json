@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-05-31T09:30:47+09:00",
+  "updated_at": "2026-05-31T13:56:58+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 35,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 3.5,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 83,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "CENTCOMによるホルムズ海峡封鎖は継続中。米イラン停戦交渉は期限を控え最終段階。商業船への米軍による阻止行動が複数報告されている。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "複数報道と封鎖状況より推計(medium)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉は継続中だが、米軍は封鎖破りを試みる商船を阻止し、イランは海峡支配を主張し緊張が続く。トランプは合意を示唆しつつ新たな要求。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 7,
+  "ais_estimation_note": "米軍の阻止活動報道とイランの通過主張から(medium)"
 }
