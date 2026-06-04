@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-04T09:30:53+09:00",
+  "updated_at": "2026-06-04T14:15:30+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 30,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 35
   },
   "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米イラン交渉の期限が迫る中、イランは交渉停止を宣言しつつ強硬姿勢を維持。米国はホルムズ封鎖を継続し、通過を阻止。一部で通過が試みられ、軍事衝突も発生。",
-  "ais_estimated_vessels": 12,
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "イランは米国との交渉を停止し、完全封鎖を宣言。クウェート空港へのドローン攻撃や船舶の拿捕・沈没が発生し、緊張は高まっている。米国の封鎖は継続中。",
+  "ais_estimated_vessels": 20,
   "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 9,
-  "ais_estimation_note": "イラン主張・米軍発表より推計(medium)"
+  "ais_estimated_cargo": 15,
+  "ais_estimation_note": "ニュース分析・保守的推計 (medium)"
 }
