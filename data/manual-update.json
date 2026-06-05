@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-05T09:30:57+09:00",
+  "updated_at": "2026-06-05T13:52:47+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 15,
-    "B_partial_blockade_pct": 45,
+    "B_partial_blockade_pct": 40,
     "C_full_blockade_pct": 5,
-    "D_escalation_pct": 35
+    "D_escalation_pct": 40
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 7.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 67,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は進捗報道とイランの停止表明が錯綜。イランは封鎖継続を主張し、米軍は封鎖突破船を阻止。クウェートへの攻撃など軍事緊張は高止まり。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 10,
-  "ais_estimation_note": "ニュース記事及び過去データ推計より(medium)"
+  "critical_note": "米イラン停戦交渉の期限",
+  "last_manual_note": "イランは米国との交渉停止とホルムズ完全封鎖を宣言。米軍は船舶通過を阻止しつつ、一部支援を実施。クウェートへのイラン攻撃で緊張が高まっている。",
+  "ais_estimated_vessels": 20,
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 16,
+  "ais_estimation_note": "Al JazeeraおよびTimes of Israel報道より推計(medium)"
 }
