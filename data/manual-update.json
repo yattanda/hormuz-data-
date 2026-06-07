@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-07T09:31:27+09:00",
+  "updated_at": "2026-06-07T14:03:00+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 20
   },
   "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン間で衝突が散発し、イランは交渉停止と完全封鎖を表明。停戦期限が迫り、緊張が高まっている。",
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "イランは交渉停止・完全封鎖を宣言も、米国も封鎖維持。停戦交渉期限迫り緊張状態。一部船舶は通過。",
   "ais_estimated_vessels": 20,
-  "ais_estimated_tankers": 2,
+  "ais_estimated_tankers": 5,
   "ais_estimated_cargo": 15,
-  "ais_estimation_note": "イラン発表・複数報道から推計(medium)"
+  "ais_estimation_note": "イランの通過主張と部分通過の報道より(medium)"
 }
