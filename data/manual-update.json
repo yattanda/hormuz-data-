@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-08T14:09:06+09:00",
+  "updated_at": "2026-06-09T13:42:16+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 30,
+    "A_diplomacy_pct": 25,
+    "B_partial_blockade_pct": 25,
     "C_full_blockade_pct": 30,
-    "D_escalation_pct": 30
+    "D_escalation_pct": 20
   },
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国によるホルムズ海峡封鎖が継続し、イランの石油輸出は激減。停戦交渉は難航し、散発的な軍事衝突が発生。イランは封鎖解除を条件に海峡再開を提案しているが、対抗措置として完全封鎖を主張する場面も。中国が仲介に動き、期限の22日を前に緊張が高まる。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "ニュース記事及び流量推計より(medium)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "停戦交渉はウラン濃縮・通過料で膠着しつつ進展。米国は封鎖を維持し、イランは海峡支配を主張し対抗姿勢を強めている。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 9,
+  "ais_estimation_note": "イラン主張と米国の阻止活動より推計(medium)"
 }
