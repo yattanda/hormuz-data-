@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-09T13:42:16+09:00",
+  "updated_at": "2026-06-10T09:31:07+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 25,
-    "B_partial_blockade_pct": 25,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 20
+    "A_diplomacy_pct": 50,
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 5,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 8.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 62,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "停戦交渉はウラン濃縮・通過料で膠着しつつ進展。米国は封鎖を維持し、イランは海峡支配を主張し対抗姿勢を強めている。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 9,
-  "ais_estimation_note": "イラン主張と米国の阻止活動より推計(medium)"
+  "last_manual_note": "米イラン停戦交渉は期限を控え進展を示すが、濃縮ウランと通行料で対立。米ヘリ墜落で緊張続くも、航行量は微増傾向。",
+  "ais_estimated_vessels": 20,
+  "ais_estimated_tankers": 6,
+  "ais_estimated_cargo": 14,
+  "ais_estimation_note": "イランの通過調整主張、米長官発言より(medium)"
 }
