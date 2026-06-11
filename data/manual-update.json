@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-11T09:30:58+09:00",
+  "updated_at": "2026-06-11T14:04:33+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 45,
-    "B_partial_blockade_pct": 35,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 45
   },
-  "hormuz_daily_flow_mbpd": 8.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 62,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉が期限間近。トランプ氏が合意間近と示唆する一方、米軍はイランへの空爆を継続し、イラン側も封鎖強化を主張。海峡通行量は減少しているが、イランが一部船舶の通過を調整し、米国も一部航行支援を行っており、部分封鎖状態が続く。",
-  "ais_estimated_vessels": 24,
-  "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 18,
-  "ais_estimation_note": "イラン主張・米エネルギー長官発言より(medium)"
+  "last_manual_note": "米ヘリ墜落と米国の報復で緊張増大。停戦交渉は難航し一度決裂報道も。イランは一部船舶の通過を主張するが、海峡は事実上閉鎖状態が続く。",
+  "ais_estimated_vessels": 15,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 10,
+  "ais_estimation_note": "イランの船舶通過主張と米阻止活動より推計(medium)"
 }
