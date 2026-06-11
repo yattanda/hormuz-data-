@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-10T13:53:50+09:00",
+  "updated_at": "2026-06-11T09:30:58+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 30,
+    "A_diplomacy_pct": 45,
+    "B_partial_blockade_pct": 35,
     "C_full_blockade_pct": 5,
-    "D_escalation_pct": 25
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 7.0,
+  "hormuz_daily_flow_mbpd": 8.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 67,
+  "flow_disruption_pct": 62,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は期限が迫り進展と対立が混在。ホルムズ海峡は部分封鎖継続中だが、米軍が通過支援しつつイランも一部調整関与。米ヘリ撃墜と報復攻撃が発生。",
-  "ais_estimated_vessels": 18,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 14,
-  "ais_estimation_note": "DoD発表・メディア報道より(medium)"
+  "last_manual_note": "米イラン停戦交渉が期限間近。トランプ氏が合意間近と示唆する一方、米軍はイランへの空爆を継続し、イラン側も封鎖強化を主張。海峡通行量は減少しているが、イランが一部船舶の通過を調整し、米国も一部航行支援を行っており、部分封鎖状態が続く。",
+  "ais_estimated_vessels": 24,
+  "ais_estimated_tankers": 6,
+  "ais_estimated_cargo": 18,
+  "ais_estimation_note": "イラン主張・米エネルギー長官発言より(medium)"
 }
