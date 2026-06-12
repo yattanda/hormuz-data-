@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-12T09:30:58+09:00",
+  "updated_at": "2026-06-12T14:11:16+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 60,
-    "B_partial_blockade_pct": 15,
+    "A_diplomacy_pct": 30,
+    "B_partial_blockade_pct": 50,
     "C_full_blockade_pct": 10,
-    "D_escalation_pct": 15
+    "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 6.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 71,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉が進展。トランプ大統領は合意間近と示唆する一方、交渉の難航や米軍による通過妨害も報道。ホルムズ海峡の封鎖は継続しつつ、限定的な通過も示唆されている。",
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉は期限間近だが、イランは交渉停止・完全封鎖を宣言。米側は取引否定と進展示唆が混在し不透明。米軍は封鎖破り船を阻止、散発的衝突は継続中。",
   "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 2,
   "ais_estimated_cargo": 8,
-  "ais_estimation_note": "イラン発表及び米軍阻止報道から推計(medium)"
+  "ais_estimation_note": "他報道と矛盾。保守的に推計 (medium)"
 }
