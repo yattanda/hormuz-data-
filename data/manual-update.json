@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-14T14:13:15+09:00",
+  "updated_at": "2026-06-15T09:31:07+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 30,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 20
+    "A_diplomacy_pct": 95,
+    "B_partial_blockade_pct": 5,
+    "C_full_blockade_pct": 0,
+    "D_escalation_pct": 0
   },
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は期限を控え情報錯綜。トランプは署名間近と主張するがイランは難色を示す。ホルムズ海峡通過量は極めて低水準で、米軍による違反船停止やイランによる密輸試みが報じられている。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 1,
-  "ais_estimation_note": "報道記事より推計(low)"
+  "critical_note": "停戦交渉の最終期限",
+  "last_manual_note": "米イラン間で平和合意が成立し、ホルムズ海峡の米海軍による封鎖解除が決定。原油価格は下落したが、署名時期やイラン側の発言に一部不確実性が見られる。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "ニュース報道から推計(medium)"
 }
