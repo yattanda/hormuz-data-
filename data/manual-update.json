@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-15T14:32:49+09:00",
+  "updated_at": "2026-06-16T09:31:34+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 95,
-    "B_partial_blockade_pct": 3,
-    "C_full_blockade_pct": 1,
-    "D_escalation_pct": 1
+    "A_diplomacy_pct": 90,
+    "B_partial_blockade_pct": 8,
+    "C_full_blockade_pct": 2,
+    "D_escalation_pct": 0
   },
-  "hormuz_daily_flow_mbpd": 8.0,
+  "hormuz_daily_flow_mbpd": 7.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 62,
-  "critical_date": "2026-06-19",
-  "critical_note": "ホルムズ海峡の正式な再開予定日",
-  "last_manual_note": "米イラン間で和平合意が成立し、トランプ大統領がホルムズ海峡の米海軍封鎖解除を命令。海峡は間もなく再開される見込みで、原油価格は下落。",
-  "ais_estimated_vessels": 12,
+  "flow_disruption_pct": 67,
+  "critical_date": "2026-04-22",
+  "critical_note": "停戦合意の履行期限",
+  "last_manual_note": "米イラン間で停戦合意が成立し、ホルムズ海峡の封鎖解除が決定された。ただし、海峡の完全な再開には時間がかかるとの見方も強い。",
+  "ais_estimated_vessels": 15,
   "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 5,
-  "ais_estimation_note": "複数報道に基づき推計(medium)"
+  "ais_estimated_cargo": 12,
+  "ais_estimation_note": "ニュース報道と流量推計より(medium)"
 }
