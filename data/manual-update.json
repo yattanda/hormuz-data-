@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-16T09:31:34+09:00",
+  "updated_at": "2026-06-17T09:31:09+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 90,
-    "B_partial_blockade_pct": 8,
-    "C_full_blockade_pct": 2,
+    "A_diplomacy_pct": 95,
+    "B_partial_blockade_pct": 5,
+    "C_full_blockade_pct": 0,
     "D_escalation_pct": 0
   },
-  "hormuz_daily_flow_mbpd": 7.0,
+  "hormuz_daily_flow_mbpd": 8.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 67,
+  "flow_disruption_pct": 62,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦合意の履行期限",
-  "last_manual_note": "米イラン間で停戦合意が成立し、ホルムズ海峡の封鎖解除が決定された。ただし、海峡の完全な再開には時間がかかるとの見方も強い。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 12,
-  "ais_estimation_note": "ニュース報道と流量推計より(medium)"
+  "critical_note": "和平協定の正式署名",
+  "last_manual_note": "米イラン間で和平協定が成立し、ホルムズ海峡の米軍封鎖が解除。船舶通過が再開されつつあるが、正式署名と詳細の明確化が待たれる。",
+  "ais_estimated_vessels": 20,
+  "ais_estimated_tankers": 7,
+  "ais_estimated_cargo": 9,
+  "ais_estimation_note": "ニュース報道に基づく通過開始状況 (medium)"
 }
