@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-17T09:31:09+09:00",
+  "updated_at": "2026-06-17T14:21:04+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 95,
-    "B_partial_blockade_pct": 5,
+    "A_diplomacy_pct": 85,
+    "B_partial_blockade_pct": 10,
     "C_full_blockade_pct": 0,
-    "D_escalation_pct": 0
+    "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 8.0,
+  "hormuz_daily_flow_mbpd": 10.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 62,
-  "critical_date": "2026-04-22",
-  "critical_note": "和平協定の正式署名",
-  "last_manual_note": "米イラン間で和平協定が成立し、ホルムズ海峡の米軍封鎖が解除。船舶通過が再開されつつあるが、正式署名と詳細の明確化が待たれる。",
-  "ais_estimated_vessels": 20,
-  "ais_estimated_tankers": 7,
-  "ais_estimated_cargo": 9,
-  "ais_estimation_note": "ニュース報道に基づく通過開始状況 (medium)"
+  "flow_disruption_pct": 52,
+  "critical_date": "2026-04-24",
+  "critical_note": "米イラン停戦合意の正式署名",
+  "last_manual_note": "米イランが停戦合意に達し、ホルムズ海峡の封鎖解除が開始。原油価格は下落する一方、合意詳細や正式署名待ちで不確実性も残る。",
+  "ais_estimated_vessels": 25,
+  "ais_estimated_tankers": 10,
+  "ais_estimated_cargo": 15,
+  "ais_estimation_note": "ニュース報道より推計(medium)"
 }
