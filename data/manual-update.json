@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-17T14:21:04+09:00",
+  "updated_at": "2026-06-18T09:31:37+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 85,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 0,
+    "A_diplomacy_pct": 70,
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 5,
     "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 10.0,
+  "hormuz_daily_flow_mbpd": 6.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 52,
-  "critical_date": "2026-04-24",
-  "critical_note": "米イラン停戦合意の正式署名",
-  "last_manual_note": "米イランが停戦合意に達し、ホルムズ海峡の封鎖解除が開始。原油価格は下落する一方、合意詳細や正式署名待ちで不確実性も残る。",
-  "ais_estimated_vessels": 25,
-  "ais_estimated_tankers": 10,
-  "ais_estimated_cargo": 15,
-  "ais_estimation_note": "ニュース報道より推計(medium)"
+  "flow_disruption_pct": 71,
+  "critical_date": "2026-04-22",
+  "critical_note": "停戦最終期限",
+  "last_manual_note": "米イラン間の停戦合意により、米国はホルムズ海峡封鎖を解除した。海峡は再開されたが、合意後もIRGCによる船舶標的化の報告があり安全上の懸念は根強い。イランの海峡支配力が増し、通過量は低水準に留まる。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "複数記事の状況と一部報じられた隻数に基づき推計(medium)"
 }
