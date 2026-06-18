@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T09:31:37+09:00",
+  "updated_at": "2026-06-18T14:11:23+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
@@ -8,14 +8,14 @@
     "C_full_blockade_pct": 5,
     "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 6.0,
+  "hormuz_daily_flow_mbpd": 12.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 71,
+  "flow_disruption_pct": 43,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦最終期限",
-  "last_manual_note": "米イラン間の停戦合意により、米国はホルムズ海峡封鎖を解除した。海峡は再開されたが、合意後もIRGCによる船舶標的化の報告があり安全上の懸念は根強い。イランの海峡支配力が増し、通過量は低水準に留まる。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "複数記事の状況と一部報じられた隻数に基づき推計(medium)"
+  "critical_note": "米イラン停戦期限",
+  "last_manual_note": "米イラン平和合意締結によりホルムズ海峡は封鎖解除・再開。しかしイスラエルの不満やIRGCの船舶攻撃報道もあり、安全確保には懸念が残る。",
+  "ais_estimated_vessels": 28,
+  "ais_estimated_tankers": 9,
+  "ais_estimated_cargo": 14,
+  "ais_estimation_note": "ニュース報道と安全懸念に基づき推計(medium)"
 }
