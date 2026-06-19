@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-19T09:31:02+09:00",
+  "updated_at": "2026-06-19T14:30:14+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 70,
-    "B_partial_blockade_pct": 20,
+    "A_diplomacy_pct": 90,
+    "B_partial_blockade_pct": 10,
     "C_full_blockade_pct": 0,
-    "D_escalation_pct": 10
+    "D_escalation_pct": 0
   },
-  "hormuz_daily_flow_mbpd": 13.0,
+  "hormuz_daily_flow_mbpd": 15.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 38,
-  "critical_date": "2026-07-22",
-  "critical_note": "停戦合意後の状況評価",
-  "last_manual_note": "米イラン間で停戦合意が成立し、ホルムズ海峡の米軍による封鎖は解除された。石油輸送が再開されつつあるが、イランが新たな航行料を課す計画を発表しており、完全に正常化するには時間を要する見込み。",
-  "ais_estimated_vessels": 18,
-  "ais_estimated_tankers": 10,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "ニュース報道から推計(medium)"
+  "flow_disruption_pct": 29,
+  "critical_date": "2026-06-21",
+  "critical_note": "最終合意に向けた交渉期限",
+  "last_manual_note": "米軍がホルムズ海峡の海上封鎖を解除し、イランとの停戦合意が成立。石油輸送は再開したが、最終合意には60日の交渉期間があり、イランは海峡通過料導入を計画している。",
+  "ais_estimated_vessels": 35,
+  "ais_estimated_tankers": 24,
+  "ais_estimated_cargo": 11,
+  "ais_estimation_note": "タンカー航行再開報道に基づき推計(medium)"
 }
