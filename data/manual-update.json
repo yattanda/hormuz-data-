@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-18T14:11:23+09:00",
+  "updated_at": "2026-06-19T09:31:02+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 70,
     "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 5
+    "C_full_blockade_pct": 0,
+    "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 12.0,
+  "hormuz_daily_flow_mbpd": 13.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 43,
-  "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦期限",
-  "last_manual_note": "米イラン平和合意締結によりホルムズ海峡は封鎖解除・再開。しかしイスラエルの不満やIRGCの船舶攻撃報道もあり、安全確保には懸念が残る。",
-  "ais_estimated_vessels": 28,
-  "ais_estimated_tankers": 9,
-  "ais_estimated_cargo": 14,
-  "ais_estimation_note": "ニュース報道と安全懸念に基づき推計(medium)"
+  "flow_disruption_pct": 38,
+  "critical_date": "2026-07-22",
+  "critical_note": "停戦合意後の状況評価",
+  "last_manual_note": "米イラン間で停戦合意が成立し、ホルムズ海峡の米軍による封鎖は解除された。石油輸送が再開されつつあるが、イランが新たな航行料を課す計画を発表しており、完全に正常化するには時間を要する見込み。",
+  "ais_estimated_vessels": 18,
+  "ais_estimated_tankers": 10,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "ニュース報道から推計(medium)"
 }
