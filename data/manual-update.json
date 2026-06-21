@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-21T09:30:59+09:00",
+  "updated_at": "2026-06-21T14:22:57+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 60,
-    "B_partial_blockade_pct": 25,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 10
+    "A_diplomacy_pct": 80,
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 0,
+    "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 15.0,
+  "hormuz_daily_flow_mbpd": 18.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 29,
-  "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国がホルムズ海峡の海軍封鎖を解除し、米イラン間で停戦合意が成立。石油輸送は再開し交通量は回復傾向にあるが、機雷除去やイランによる通行料導入の動きなど課題も残る。",
-  "ais_estimated_vessels": 40,
-  "ais_estimated_tankers": 28,
-  "ais_estimated_cargo": 12,
-  "ais_estimation_note": "ニュース記事の通過量回復報道より推計(medium)"
+  "flow_disruption_pct": 14,
+  "critical_date": "2026-06-12",
+  "critical_note": "最終合意の期限",
+  "last_manual_note": "米軍によるホルムズ海峡の封鎖は解除されたが、イランの通行料導入計画や地雷問題が残り、完全な正常化には時間を要する。米イラン停戦は延長され、60日以内に最終合意を目指す。",
+  "ais_estimated_vessels": 30,
+  "ais_estimated_tankers": 15,
+  "ais_estimated_cargo": 15,
+  "ais_estimation_note": "複数記事の交通量増加表現と地雷情報から(medium)"
 }
