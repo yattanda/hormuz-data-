@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-23T09:31:04+09:00",
+  "updated_at": "2026-06-23T13:36:10+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 15,
+    "A_diplomacy_pct": 20,
     "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 0,
-    "D_escalation_pct": 35
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 7.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 67,
   "critical_date": "2026-04-22",
   "critical_note": "停戦交渉期限",
-  "last_manual_note": "停戦期限を前にイランがホルムズ海峡の再閉鎖を宣言、交渉は難航。米国はイラン産原油販売の免除措置を承認しつつ、状況は不安定。交通量は大幅に減少している。",
-  "ais_estimated_vessels": 7,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "ニュース報道から推計(low)"
+  "last_manual_note": "米国がホルムズ封鎖を解除し和平合意が報じられるも、イランが海峡再閉鎖を宣言し交渉中断。イラン政府内でも見解が分かれ、情勢は極めて不安定。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 7,
+  "ais_estimated_cargo": 3,
+  "ais_estimation_note": "ニュース報道を総合的に判断(medium)"
 }
