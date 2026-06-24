@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-23T13:36:10+09:00",
+  "updated_at": "2026-06-24T09:31:05+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 40,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 5,
+    "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 7.0,
+  "hormuz_daily_flow_mbpd": 6.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 67,
+  "flow_disruption_pct": 71,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国がホルムズ封鎖を解除し和平合意が報じられるも、イランが海峡再閉鎖を宣言し交渉中断。イラン政府内でも見解が分かれ、情勢は極めて不安定。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 7,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "ニュース報道を総合的に判断(medium)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米国はホルムズ海峡の封鎖を解除し、イランとの停戦合意も報じられたが、イランが海峡の再閉鎖や通航料徴収を宣言し、交渉中断の動きも見られるなど、状況は極めて不安定化している。船舶の往来は一時回復後に再び減速している。",
+  "ais_estimated_vessels": 20,
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 12,
+  "ais_estimation_note": "「Dozens」報道と再閉鎖による減速を考慮 (medium)"
 }
