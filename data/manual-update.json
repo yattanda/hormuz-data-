@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-06-24T13:43:57+09:00",
+  "updated_at": "2026-06-25T09:31:20+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 30,
+    "A_diplomacy_pct": 20,
     "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 5,
+    "C_full_blockade_pct": 15,
     "D_escalation_pct": 15
   },
   "hormuz_daily_flow_mbpd": 4.5,
@@ -13,9 +13,9 @@
   "flow_disruption_pct": 79,
   "critical_date": "2026-04-22",
   "critical_note": "停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は期限を控え難航。イランはホルムズ海峡の再閉鎖と船舶砲撃を宣言し、米国も封鎖継続中。一部通過や外交的動きも見られ、情勢は極めて流動的。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "複数報道とイラン発表に基づき推計(medium)"
+  "last_manual_note": "米イラン停戦交渉は期限を控え難航。米国は封鎖解除もイランは海峡再閉鎖を宣言し、通行料導入を計画。情報錯綜し状況は不安定。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "ニュース報道から推計(medium)"
 }
