@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-26T09:31:06+09:00",
+  "updated_at": "2026-06-26T13:46:54+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 60,
-    "B_partial_blockade_pct": 30,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 5
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 60,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 10.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 52,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米国はホルムズ封鎖解除を宣言し停戦交渉も進展。交通量回復の兆候もあるが、イラン側の矛盾する発表により状況は不安定。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 11,
-  "ais_estimation_note": "複数ニュース記事より推計(medium)"
+  "last_manual_note": "米イラン停戦交渉が期限直前で難航する中、イランが交渉停止を宣言。一部船舶の通過は確認されるものの、混乱が続き、完全な解除には至らず部分封鎖の状態。",
+  "ais_estimated_vessels": 20,
+  "ais_estimated_tankers": 6,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "ニュース報道より推計(medium)"
 }
