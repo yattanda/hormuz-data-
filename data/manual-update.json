@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-27T09:31:17+09:00",
+  "updated_at": "2026-06-27T13:30:50+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 15,
+    "A_diplomacy_pct": 60,
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 5,
     "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 7.0,
+  "hormuz_daily_flow_mbpd": 10.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 67,
-  "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉の期限",
-  "last_manual_note": "米軍のホルムズ封鎖は解除され停戦合意に至ったが、イランは海峡閉鎖を宣言し、船舶への攻撃や引き返し、通行料導入計画など妨害を継続。情勢は不安定。",
+  "flow_disruption_pct": 52,
+  "critical_date": "2026-06-21",
+  "critical_note": "最終合意の期限",
+  "last_manual_note": "米国が封鎖解除し航路開放合意で交通量回復傾向。しかしイランは独自の管理を主張し、完全封鎖の脅威も表明しており、最終合意に課題。",
   "ais_estimated_vessels": 20,
-  "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 10,
-  "ais_estimation_note": "複数記事の交通量増加・妨害情報を総合判断(medium)"
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 7,
+  "ais_estimation_note": "複数報道からの流量回復推計(medium)"
 }
