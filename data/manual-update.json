@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-06-28T09:31:12+09:00",
+  "updated_at": "2026-06-28T13:57:09+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 10
+    "A_diplomacy_pct": 25,
+    "B_partial_blockade_pct": 50,
+    "C_full_blockade_pct": 5,
+    "D_escalation_pct": 20
   },
   "hormuz_daily_flow_mbpd": 6.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 71,
-  "critical_date": "2026-06-21",
-  "critical_note": "最終合意に向けた60日間の期限",
-  "last_manual_note": "米イラン間で停戦交渉が初期合意に至り、米軍による封鎖は一時解除されたものの、イランが船舶攻撃や再閉鎖を宣言し、交渉停滞を報じる記事も複数存在する。状況は極めて不安定で、ホルムズ海峡の自由航行は依然妨げられている。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 8,
-  "ais_estimated_cargo": 7,
-  "ais_estimation_note": "米イラン合意後の航行停滞を踏まえ推計(medium)"
+  "critical_date": "2026-04-22",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米イラン間で停戦合意は原則成立し、米国はホルムズ封鎖解除を開始。一時的に通過量が増加したが、イランによる船舶攻撃や再封鎖宣言、通行料徴収の動きがあり、情勢は依然不安定。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 5,
+  "ais_estimated_cargo": 5,
+  "ais_estimation_note": "複数報道より一時回復後の停滞を推計(medium)"
 }
