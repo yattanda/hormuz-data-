@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-30T13:39:57+09:00",
+  "updated_at": "2026-07-01T09:31:01+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
@@ -11,11 +11,11 @@
   "hormuz_daily_flow_mbpd": 12.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 43,
-  "critical_date": "2026-06-21",
-  "critical_note": "最終合意期限",
-  "last_manual_note": "米イラン停戦合意成立。ホルムズ海峡の米軍封鎖は解除され、船舶往来が増加。イランは管理関与を主張し、ドローン攻撃の報道もあり情勢は不安定。最終合意に向け60日間の期限設定。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 9,
-  "ais_estimation_note": "複数報道より増加傾向を推計(medium)"
+  "critical_date": "2026-06-16",
+  "critical_note": "最終合意に向けた60日間の期限",
+  "last_manual_note": "米イラン間の停戦合意により、米国は海軍封鎖を解除。ホルムズ海峡の交通量は回復傾向にあるが、イランは新たな規制を示唆しており、最終合意に向けた交渉が継続中。",
+  "ais_estimated_vessels": 20,
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "複数のニュースで交通量増加が報道(medium)"
 }
