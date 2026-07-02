@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-01T13:59:25+09:00",
+  "updated_at": "2026-07-02T09:30:59+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 75,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 0,
+    "A_diplomacy_pct": 60,
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 5,
     "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 15.0,
+  "hormuz_daily_flow_mbpd": 13.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 29,
-  "critical_date": "2026-06-22",
-  "critical_note": "最終合意の期限",
-  "last_manual_note": "米がホルムズ封鎖を解除し、イランとの停戦合意が成立。海峡の船舶交通量は急増し、イランは石油輸出を再開。最終合意に向け60日間の期限が設定されたが、イランは海峡への影響力保持を主張しており、今後の動向に注目される。",
-  "ais_estimated_vessels": 55,
-  "ais_estimated_tankers": 36,
-  "ais_estimated_cargo": 19,
-  "ais_estimation_note": "船舶交通量急増・回復報道に基づき推計(medium)"
+  "flow_disruption_pct": 38,
+  "critical_date": "2026-04-22",
+  "critical_note": "米イラン停戦交渉の最終期限",
+  "last_manual_note": "米国による海峡封鎖は解除され、停戦合意が進行中。船舶交通は回復傾向だが、イランは通行料導入や再閉鎖を示唆し、情勢は不安定さを残す。",
+  "ais_estimated_vessels": 40,
+  "ais_estimated_tankers": 15,
+  "ais_estimated_cargo": 25,
+  "ais_estimation_note": "ニュース報道による推計 (medium)"
 }
