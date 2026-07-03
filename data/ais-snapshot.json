@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-02T13:35:46+09:00",
+  "updated_at": "2026-07-03T09:30:58+09:00",
   "source": "Gemini AI推計（ニュース・公開データより）",
   "collection_duration_sec": 180,
   "bbox": {
@@ -8,15 +8,15 @@
     "min_lon": 55.5,
     "max_lon": 60.5
   },
-  "vessels_detected": 60,
+  "vessels_detected": 70,
   "breakdown": {
-    "tanker": 38,
-    "cargo": 22,
+    "tanker": 42,
+    "cargo": 28,
     "other": 0
   },
   "dark_estimate_factor": 1.35,
-  "estimated_actual": 81,
+  "estimated_actual": 94,
   "messages_received": 0,
   "note": "Gemini AIがニュース・MarineTraffic公開データから推計。AIS非検出（ダークシッピング）船舶を含む推定値。",
-  "estimation_note": "ニュース報道の交通量回復に基づき推計(medium)"
+  "estimation_note": "報道記事のトラフィック増加情報より推計(medium)"
 }
