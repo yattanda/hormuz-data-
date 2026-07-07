@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-07T09:31:02+09:00",
+  "updated_at": "2026-07-07T13:29:40+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 80,
-    "B_partial_blockade_pct": 15,
+    "A_diplomacy_pct": 70,
+    "B_partial_blockade_pct": 25,
     "C_full_blockade_pct": 3,
     "D_escalation_pct": 2
   },
   "hormuz_daily_flow_mbpd": 14.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 33,
-  "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉最終期限",
-  "last_manual_note": "米国のホルムズ海峡封鎖は解除され、米イランは停戦合意。タンカー通過量は回復傾向。しかしイランは通行料徴収や再閉鎖を示唆し、情勢は不安定。",
-  "ais_estimated_vessels": 30,
-  "ais_estimated_tankers": 21,
-  "ais_estimated_cargo": 9,
-  "ais_estimation_note": "ニュース報道から通過量回復を推計(medium)"
+  "critical_date": "2026-06-24",
+  "critical_note": "最終合意に向けた交渉期限",
+  "last_manual_note": "米国がホルムズ封鎖を解除し停戦合意。イランは通行料導入や友好国優遇を示唆しており、航行の自由には不透明感が残る。",
+  "ais_estimated_vessels": 50,
+  "ais_estimated_tankers": 30,
+  "ais_estimated_cargo": 20,
+  "ais_estimation_note": "複数メディア報道に基づく定性推計(medium)"
 }
