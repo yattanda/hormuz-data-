@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-08T09:31:10+09:00",
+  "updated_at": "2026-07-08T12:51:50+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 70,
-    "B_partial_blockade_pct": 25,
-    "C_full_blockade_pct": 0,
+    "A_diplomacy_pct": 25,
+    "B_partial_blockade_pct": 65,
+    "C_full_blockade_pct": 5,
     "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 16.0,
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 24,
-  "critical_date": "2026-06-15",
-  "critical_note": "最終和平合意の期限",
-  "last_manual_note": "米国による封鎖解除とイランとの和平合意により船舶通過は回復。攻撃事案やイランの通行料検討など、情勢は依然不安定。",
-  "ais_estimated_vessels": 40,
-  "ais_estimated_tankers": 20,
-  "ais_estimated_cargo": 20,
-  "ais_estimation_note": "ニュース記事の通過報告から推計 (medium)"
+  "flow_disruption_pct": 86,
+  "critical_date": "2026-06-21",
+  "critical_note": "最終合意に向けた60日間の期限",
+  "last_manual_note": "米イラン停戦合意後、米国の海上封鎖は解除されたが、イランがホルムズ海峡の再閉鎖を宣言し、船舶交通は停滞。海峡の安全と自由な航行に懸念が残る。",
+  "ais_estimated_vessels": 5,
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 1,
+  "ais_estimation_note": "報道記事と状況証拠より推計(medium)"
 }
