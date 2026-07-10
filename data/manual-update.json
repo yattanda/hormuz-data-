@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-10T09:31:10+09:00",
+  "updated_at": "2026-07-10T13:29:39+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 70,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 5
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 50
   },
-  "hormuz_daily_flow_mbpd": 15.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 29,
-  "critical_date": "2026-08-16",
-  "critical_note": "最終合意に向けた60日期限",
-  "last_manual_note": "米イラン間で停戦合意が成立し、米軍によるホルムズ封鎖は解除された。原油輸送再開も、イランの海上通行料導入計画が新たな懸念材料となっている。",
-  "ais_estimated_vessels": 50,
-  "ais_estimated_tankers": 25,
-  "ais_estimated_cargo": 25,
-  "ais_estimation_note": "複数報道が航行再開・増加を示唆 (medium)"
+  "flow_disruption_pct": 76,
+  "critical_date": "2026-04-22",
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉が事実上崩壊し、双方が報復攻撃を再開。イランはホルムズ海峡の再閉鎖を宣言し、航行は極めて危険な状態にある。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "報道内容と封鎖状況より推計(medium)"
 }
