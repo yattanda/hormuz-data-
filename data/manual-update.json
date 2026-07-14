@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-13T13:06:43+09:00",
+  "updated_at": "2026-07-14T09:31:01+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 35
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 40,
+    "D_escalation_pct": 30
   },
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉の期限",
-  "last_manual_note": "CENTCOMによるホルムズ封鎖が継続中。米イラン停戦交渉は難航し、散発的な軍事衝突が発生。イランは独自に海峡閉鎖を宣言しつつ、通行料徴収計画を発表。一部商船・タンカーの通過は確認されるが、交通量は大幅に減少している。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "サウジタンカー報道及び海運減速記事より推計(medium)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米国がホルムズ海峡の封鎖を再開し、20%の通行料を課すと発表。イランへの新たな空爆も報告され、軍事緊張が高まっている。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 7,
+  "ais_estimation_note": "報道内容からの推計(low)"
 }
