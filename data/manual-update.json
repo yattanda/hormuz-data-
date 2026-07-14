@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-14T09:31:01+09:00",
+  "updated_at": "2026-07-14T12:41:48+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 10,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 50
   },
-  "hormuz_daily_flow_mbpd": 3.5,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 83,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米国がホルムズ海峡の封鎖を再開し、20%の通行料を課すと発表。イランへの新たな空爆も報告され、軍事緊張が高まっている。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 7,
-  "ais_estimation_note": "報道内容からの推計(low)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米国がホルムズ海峡の再封鎖と20%通行料徴収を命令。イランはタンカー攻撃で報復し、米イラン衝突が激化。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 3,
+  "ais_estimation_note": "報道とリスク分析より(low)"
 }
