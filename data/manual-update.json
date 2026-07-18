@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-17T09:31:05+09:00",
+  "updated_at": "2026-07-18T09:30:50+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 3,
-    "B_partial_blockade_pct": 7,
-    "C_full_blockade_pct": 25,
-    "D_escalation_pct": 65
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 55,
+    "C_full_blockade_pct": 5,
+    "D_escalation_pct": 30
   },
   "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米国はホルムズ海峡の封鎖を再開・強化し、イランへの空爆を継続。イランも報復攻撃を行い、軍事衝突が激化している。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 4,
-  "ais_estimation_note": "ニュース報道と封鎖状況から推計(low)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米国の対イラン攻撃激化と封鎖回避タンカー攻撃でホルムズ通過量は記録的低水準。イラン報復、原油価格高騰。停戦交渉期限迫る中、緊迫続く。",
+  "ais_estimated_vessels": 6,
+  "ais_estimated_tankers": 0,
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "複数の報道の通過量激減から推計 (medium)"
 }
