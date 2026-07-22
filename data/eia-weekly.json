@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-07-16T00:36:48+09:00",
+  "updated_at": "2026-07-23T00:44:37+09:00",
   "source": "EIA Open Data API v2",
-  "wti_price_usd": 70.48,
-  "series_week": "2026-07-03",
-  "brent_price_usd": 69.7,
-  "us_crude_inventory_mb": 730.8,
-  "us_crude_inventory_change_mb": -3.2,
+  "wti_price_usd": 72.26,
+  "series_week": "2026-07-10",
+  "brent_price_usd": 73.33,
+  "us_crude_inventory_mb": 726.2,
+  "us_crude_inventory_change_mb": -4.7,
   "us_crude_production_mbpd": 13.9,
   "middle_east_import_share_pct": 16.8
 }
