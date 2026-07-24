@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-23T12:51:05+09:00",
+  "updated_at": "2026-07-24T09:31:37+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 40
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 5,
+    "D_escalation_pct": 50
   },
-  "hormuz_daily_flow_mbpd": 3.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 86,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米イラン間で軍事衝突が激化し、イランは「全面戦争」を宣言。米国はホルムズ封鎖を再開し、タンカーへの攻撃も報告。フーシ派も紅海で新たな封鎖を宣言し、事態は極めて緊迫。",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米国はイランへの大規模攻撃を示唆し、イラン側も強硬姿勢。紅海でのフーシ派の活動激化で代替ルートも危険に。停戦交渉は難航し、軍事エスカレーションの脅威が高まっている。",
   "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "報道内容から推計(low)"
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 4,
+  "ais_estimation_note": "報道に基づく状況判断（low）"
 }
