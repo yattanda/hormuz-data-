@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-27T09:32:01+09:00",
+  "updated_at": "2026-07-27T13:10:37+09:00",
   "source": "Gemini AI推計（ニュース・公開データより）",
   "collection_duration_sec": 180,
   "bbox": {
@@ -18,5 +18,5 @@
   "estimated_actual": 14,
   "messages_received": 0,
   "note": "Gemini AIがニュース・MarineTraffic公開データから推計。AIS非検出（ダークシッピング）船舶を含む推定値。",
-  "estimation_note": "複数記事の記述より推計(low)"
+  "estimation_note": "ニュース記事の定性情報と過去推計より(low)"
 }
