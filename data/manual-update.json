@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-29T09:30:54+09:00",
+  "updated_at": "2026-07-29T12:47:01+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 40
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 35
   },
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉の期限",
-  "last_manual_note": "米軍によるホルムズ海峡の封鎖が再開され、イランの報復攻撃や米軍によるイラン領内攻撃が激化。通過船舶は大幅減。停戦交渉は期限間近で予断を許さない。",
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米軍によるホルムズ海峡封鎖が再開され、通過船舶への攻撃も実施。イランは報復し、周辺地域での軍事行動が激化。停戦交渉は難航。",
   "ais_estimated_vessels": 8,
   "ais_estimated_tankers": 1,
   "ais_estimated_cargo": 7,
-  "ais_estimation_note": "ニュース報道の状況を基に推計(low)"
+  "ais_estimation_note": "ニュース記事の記述から推計 (low)"
 }
