@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-07-29T12:47:01+09:00",
+  "updated_at": "2026-07-30T09:31:07+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 35
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 30
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 4.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 81,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米軍によるホルムズ海峡封鎖が再開され、通過船舶への攻撃も実施。イランは報復し、周辺地域での軍事行動が激化。停戦交渉は難航。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 7,
-  "ais_estimation_note": "ニュース記事の記述から推計 (low)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "CENTCOMによるホルムズ海峡封鎖が継続中。米軍は封鎖破り試みる船舶に発砲・攻撃し、イラン領内への空爆も実施。イランも報復し、タンカー攻撃や海峡閉鎖を主張。停戦交渉は期限迫るが、軍事緊張は極めて高い。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "ニュース記事の記述より推計 (medium)"
 }
