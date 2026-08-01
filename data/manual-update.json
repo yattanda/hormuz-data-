@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-01T09:30:54+09:00",
+  "updated_at": "2026-08-01T12:57:57+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 30,
-    "C_full_blockade_pct": 25,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 40
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
-  "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米がホルムズ封鎖を強化しイランと相互攻撃を継続。停戦交渉は続くが緊張は極めて高い。フーシ派も活動拡大。",
+  "flow_disruption_pct": 86,
+  "critical_date": "2026-08-04",
+  "critical_note": "停戦交渉進展可否",
+  "last_manual_note": "米イラン間の衝突激化、ホルムズ封鎖は再強化され通過量大幅減。停戦交渉継続も地域緊張高まる。",
   "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "ニュース記事の記述から推計 (medium)"
+  "ais_estimated_cargo": 5,
+  "ais_estimation_note": "複数記事情報より推計(medium)"
 }
