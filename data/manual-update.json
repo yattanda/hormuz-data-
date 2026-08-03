@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-03T09:31:15+09:00",
+  "updated_at": "2026-08-03T13:03:32+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 30,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 35,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 45
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 83,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉の期限",
-  "last_manual_note": "米国はホルムズ封鎖を再強化し、イランも報復で応酬。軍事衝突が激化し、海峡通過量は大幅減。停戦交渉期限迫る中、情勢は一段と緊迫。",
-  "ais_estimated_vessels": 5,
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イラン間で緊張が極度に高まり、米国はホルムズ海峡の封鎖を再開。イランは反発し、双方による攻撃が激化。停戦交渉は難航し、海峡通過量は大幅減。",
+  "ais_estimated_vessels": 7,
   "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 4,
-  "ais_estimation_note": "報道から通過困難性を保守的に推計(low)"
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "ニュース報道より通過船舶が激減と推測(medium)"
 }
