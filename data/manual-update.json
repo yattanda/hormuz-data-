@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-05T09:30:59+09:00",
+  "updated_at": "2026-08-05T12:41:17+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 20,
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 10,
     "C_full_blockade_pct": 40,
-    "D_escalation_pct": 30
+    "D_escalation_pct": 35
   },
   "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉の期限",
-  "last_manual_note": "米国によるホルムズ海峡封鎖が継続・強化され、航行はほぼ停止状態。米イラン双方による攻撃が頻発し、軍事緊張は極めて高く、外交交渉は難航している。",
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉は難航しつつも継続。米軍はホルムズ封鎖を強化し、違反船を攻撃。イランも報復しており、海峡情勢は緊迫。",
   "ais_estimated_vessels": 5,
   "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "報道「at a standstill」「transits hit low」より推計(medium)"
+  "ais_estimated_cargo": 4,
+  "ais_estimation_note": "ニュース記事報道より推計(low)"
 }
