@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-05T12:41:17+09:00",
+  "updated_at": "2026-08-06T09:30:55+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 15,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 35
+    "A_diplomacy_pct": 40,
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 20
   },
   "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
-  "critical_note": "停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉は難航しつつも継続。米軍はホルムズ封鎖を強化し、違反船を攻撃。イランも報復しており、海峡情勢は緊迫。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 4,
-  "ais_estimation_note": "ニュース記事報道より推計(low)"
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米イラン間でホルムズ海峡の封鎖解除に向けた外交交渉が進行中。オマーンを介した運航ルート合意の報道がある一方、米国のイラン船攻撃、イランの報復、通行料課金など軍事衝突も継続し運航はほぼ停止状態。",
+  "ais_estimated_vessels": 7,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 5,
+  "ais_estimation_note": "報道に基づき推計(low)"
 }
