@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-07T09:30:57+09:00",
+  "updated_at": "2026-08-07T12:22:05+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 40,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 20
+    "A_diplomacy_pct": 50,
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン間の停戦交渉は期限を控え最終段階にあるが、米国は封鎖を継続。イランは米国・イスラエル船の航行禁止と通行料徴収を提案。双方の散発的な攻撃も続く。",
-  "ais_estimated_vessels": 10,
+  "last_manual_note": "米イラン停戦交渉が最終段階との報道。しかし米軍の封鎖継続とイランの船舶攻撃・報復も続き、情勢は依然として緊迫している。",
+  "ais_estimated_vessels": 7,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "ニュース報道から大幅減と推計 (low)"
+  "ais_estimated_cargo": 3,
+  "ais_estimation_note": "ニュース記事の動向から推計 (low)"
 }
