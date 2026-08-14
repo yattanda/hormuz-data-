@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-13T12:04:02+09:00",
+  "updated_at": "2026-08-14T09:30:51+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 10
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 5,
+    "C_full_blockade_pct": 50,
+    "D_escalation_pct": 30
   },
-  "hormuz_daily_flow_mbpd": 2.0,
+  "hormuz_daily_flow_mbpd": 4.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 90,
+  "flow_disruption_pct": 79,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "イランはホルムズ再開に米以船舶の通行禁止など強硬条件を提示。米国は補償を要求し交渉難航。米軍は海峡封鎖を維持し、通過試みた船舶へ発砲。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 0,
-  "ais_estimated_cargo": 1,
-  "ais_estimation_note": "報道状況と封鎖の有効性から推計(medium)"
+  "last_manual_note": "米イラン双方、ホルムズ海峡の支配権を主張。停戦交渉は難航し、イランは封鎖解除に強硬な条件提示。通過量は大幅減。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 7,
+  "ais_estimation_note": "複数報道・過去データ分析より(low)"
 }
