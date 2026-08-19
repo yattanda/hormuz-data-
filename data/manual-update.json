@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-19T09:30:54+09:00",
+  "updated_at": "2026-08-19T10:56:53+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 15,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 40
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 45
   },
-  "hormuz_daily_flow_mbpd": 4.5,
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 79,
+  "flow_disruption_pct": 86,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "停戦交渉期限を迎えつつも米イラン双方の強硬姿勢が続き、封鎖解除の見通しは立たない。通過量は過去3ヶ月で最低水準にあり、軍事的緊張が高まっている。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 9,
-  "ais_estimation_note": "報道及び背景知識の目安より推計(medium)"
+  "last_manual_note": "米イラン停戦交渉は期限を迎え決裂の様相。イランは封鎖解除の強硬条件を提示し、米国は無期限封鎖を表明。双方の強硬姿勢と攻撃発生でエスカレーションリスク高まる。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "ニュース記述より推計(low)"
 }
