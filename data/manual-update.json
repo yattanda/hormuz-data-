@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-20T10:55:55+09:00",
+  "updated_at": "2026-08-21T09:30:51+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 5,
+    "A_diplomacy_pct": 15,
     "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 25,
-    "D_escalation_pct": 25
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 30
   },
   "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 76,
-  "critical_date": "2026-04-30",
-  "critical_note": "米イラン間の次なる動き",
-  "last_manual_note": "米イラン停戦交渉決裂後、ホルムズ海峡の封鎖は継続。イランは独自支配を主張し船舶攻撃発生。米は経済圧力強化、海軍支援で一部通過も情勢緊迫。",
+  "critical_date": "2026-04-22",
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉は期限間近で難航。トランプは経済制裁と海峡領土化を警告、イランは制裁解除と封鎖解除を要求。海峡通過は低水準で推移し、米海軍は一部船舶通過を支援中。",
   "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "米海軍支援報道と船舶攻撃事例より推計(medium)"
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 3,
+  "ais_estimation_note": "Kpler分析および報道より推計(medium)"
 }
