@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-23T09:30:58+09:00",
+  "updated_at": "2026-08-23T11:06:29+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 35,
-    "B_partial_blockade_pct": 35,
+    "A_diplomacy_pct": 50,
+    "B_partial_blockade_pct": 20,
     "C_full_blockade_pct": 10,
     "D_escalation_pct": 20
   },
-  "hormuz_daily_flow_mbpd": 9.0,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 57,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン停戦交渉が期限を迎える中、イランは新たな要求を提示。米国は一部の石油通過を主張する一方、交通量は低迷している。",
-  "ais_estimated_vessels": 12,
+  "last_manual_note": "米イラン停戦交渉は仲介国の尽力で進展の兆しがあるが、イランは新たな要求を提示し、トランプは強硬姿勢を維持。海峡の通行量は低水準で推移しており、緊張状態が続く。",
+  "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 5,
-  "ais_estimated_cargo": 7,
-  "ais_estimation_note": "米国発表・交通量低迷報道より(medium)"
+  "ais_estimated_cargo": 5,
+  "ais_estimation_note": "ニュース記事情報に基づき推計(medium)"
 }
