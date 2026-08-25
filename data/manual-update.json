@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-24T11:02:07+09:00",
+  "updated_at": "2026-08-25T09:30:58+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 15,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 25,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 25
   },
-  "hormuz_daily_flow_mbpd": 9.0,
+  "hormuz_daily_flow_mbpd": 8.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 57,
+  "flow_disruption_pct": 62,
   "critical_date": "2026-04-22",
   "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "イランはホルムズ海峡の閉鎖継続を主張しつつ、一部イラクのタンカー通過を許可。米国は9百万bpdが通過中と主張。停戦交渉は難航し、米軍護衛下のタンカーへの攻撃も発生するなど緊張状態が続く。",
+  "last_manual_note": "ホルムズ海峡は米国の封鎖とイランの攻撃により通行量が大幅に減少。米イラン間で停戦交渉が進行中だが、イランは新たな要求を提示し、トランプ政権は強硬姿勢。停戦期限は22日に迫り、緊張状態が続く。",
   "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 7,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "米政府発表・複数記事の交通量記述より(medium)"
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "報道及び流量推計より算出(medium)"
 }
