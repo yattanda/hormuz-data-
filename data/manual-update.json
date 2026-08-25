@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-25T09:30:58+09:00",
+  "updated_at": "2026-08-25T10:56:49+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 25,
     "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 25
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 20
   },
-  "hormuz_daily_flow_mbpd": 8.0,
+  "hormuz_daily_flow_mbpd": 9.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 62,
+  "flow_disruption_pct": 57,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "ホルムズ海峡は米国の封鎖とイランの攻撃により通行量が大幅に減少。米イラン間で停戦交渉が進行中だが、イランは新たな要求を提示し、トランプ政権は強硬姿勢。停戦期限は22日に迫り、緊張状態が続く。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 6,
-  "ais_estimation_note": "報道及び流量推計より算出(medium)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イラン停戦交渉が期限を迎えようとする中、イランは封鎖解除の広範な条件を提示。米は経済制裁と海峡封鎖継続の姿勢。イランによるタンカー攻撃やトランプ氏の挑発発言で緊張は高止まり。",
+  "ais_estimated_vessels": 20,
+  "ais_estimated_tankers": 5,
+  "ais_estimated_cargo": 10,
+  "ais_estimation_note": "米政権発表・海運情報より(medium)"
 }
