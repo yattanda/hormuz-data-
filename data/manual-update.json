@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-26T09:31:09+09:00",
+  "updated_at": "2026-08-26T11:06:00+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 25,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 30,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 10
   },
   "hormuz_daily_flow_mbpd": 9.0,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 57,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "停戦交渉は期限間近で難航。イランは新たな要求を提示し、米国は制裁緩和を条件とする。海峡の通過量は大幅減少が続く。",
-  "ais_estimated_vessels": 24,
-  "ais_estimated_tankers": 10,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "米政府発表及びトラフィック動向分析 (medium)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "停戦交渉は進むがイランは強硬姿勢を維持。米は無期限封鎖継続と経済圧力強化を表明。通過量は大幅減、攻撃も散発。22日の交渉期限が焦点。",
+  "ais_estimated_vessels": 20,
+  "ais_estimated_tankers": 5,
+  "ais_estimated_cargo": 15,
+  "ais_estimation_note": "Fortune誌報道の通過量とCENTCOM封鎖目安より(medium)"
 }
