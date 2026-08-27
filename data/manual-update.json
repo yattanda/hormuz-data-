@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-27T09:30:54+09:00",
+  "updated_at": "2026-08-27T19:01:54+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
@@ -8,14 +8,14 @@
     "C_full_blockade_pct": 10,
     "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 9.0,
+  "hormuz_daily_flow_mbpd": 5.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 57,
+  "flow_disruption_pct": 74,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉の期限",
-  "last_manual_note": "イランとオマーンが暫定航路で合意模索中。米は制裁解除と引き換えに開通提案。イランは閉鎖継続を主張し、米の要求を待つ。部分的な石油通過は続くが、停戦交渉期限が迫り緊張。",
-  "ais_estimated_vessels": 15,
-  "ais_estimated_tankers": 7,
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "ホルムズ海峡はCENTCOMによる封鎖が続き、イランは解除条件を提示。オマーンと暫定ルート交渉中だが、米イラン停戦交渉の期限が迫り緊張が続く。流量は大幅減少。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 4,
   "ais_estimated_cargo": 8,
-  "ais_estimation_note": "米国発表の通過量・交通量記事より推計(medium)"
+  "ais_estimation_note": "報道及び封鎖状況より推計(medium)"
 }
