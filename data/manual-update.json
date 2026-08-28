@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-28T09:31:02+09:00",
+  "updated_at": "2026-08-28T20:33:15+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
     "A_diplomacy_pct": 15,
-    "B_partial_blockade_pct": 25,
-    "C_full_blockade_pct": 45,
-    "D_escalation_pct": 15
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 40,
+    "D_escalation_pct": 25
   },
   "hormuz_daily_flow_mbpd": 1.05,
   "hormuz_normal_flow_mbpd": 21.0,
   "flow_disruption_pct": 95,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉の期限",
-  "last_manual_note": "ホルムズ海峡はCENTCOMの封鎖により交通量が95%減。米国は無期限封鎖と経済圧力強化を表明。イランは自国支配権を主張し、米イスラエル船の通行禁止を要求。停戦交渉は期限が迫るが、双方の隔たりは大きい。",
-  "ais_estimated_vessels": 5,
+  "critical_note": "米イラン停戦交渉期限",
+  "last_manual_note": "米国はホルムズ海峡の封鎖を維持しつつ経済的圧力を強化。イランは再開条件提示や一時航路合意を進める一方、軍事報復も発生。停戦交渉の期限が迫る中、海峡通過量は95%減。",
+  "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "Al Jazeeraの95%減報道に基づく(medium)"
+  "ais_estimated_cargo": 8,
+  "ais_estimation_note": "複数報道の交通量減少に基づき推計(medium)"
 }
