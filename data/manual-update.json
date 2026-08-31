@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-08-30T14:33:43+09:00",
+  "updated_at": "2026-08-31T09:31:11+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 30,
-    "B_partial_blockade_pct": 0,
-    "C_full_blockade_pct": 50,
-    "D_escalation_pct": 20
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 30
   },
-  "hormuz_daily_flow_mbpd": 1.05,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 95,
+  "flow_disruption_pct": 76,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米によるホルムズ海峡封鎖継続で通過量は95%減少、イラン経済に打撃。停戦交渉期限迫るも、米は強硬姿勢、イランは解除条件提示で外交解決は不透明。",
-  "ais_estimated_vessels": 4,
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "ホルムズ海峡の交通量は最低水準。米は無期限封鎖を継続し経済圧力を強化。イランは封鎖解除条件を提示。米軍とイランの軍事衝突が発生し、停戦交渉は難航中。期限は22日。",
+  "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 1,
-  "ais_estimated_cargo": 3,
-  "ais_estimation_note": "メディア報道「95%減」から推計(medium)"
+  "ais_estimated_cargo": 9,
+  "ais_estimation_note": "ニュース報道による交通量減少推計(medium)"
 }
