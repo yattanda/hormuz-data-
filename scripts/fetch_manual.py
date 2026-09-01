@@ -149,7 +149,7 @@ def build_manual_json(data):
     return {
         "updated_at": now,
         "auto_generated": True,
-        "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
+        "source": "Gemini AI自動分析（Google ニュース検索・BBC・Al Jazeera・NYT の公開RSS）",
         **data
     }
 
