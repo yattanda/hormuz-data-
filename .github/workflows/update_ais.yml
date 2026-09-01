@@ -1,12 +1,28 @@
 name: Update AIS Snapshot
 
+# 2026-09-01 無効化（ファイルは記録として残す）
+#
+# 理由: AISstream.io にはペルシャ湾・ホルムズ海峡のカバレッジが存在しないことを実測で確認した。
+#   - 全世界bboxでは60秒に3,467隻を受信できるが、ホルムズbboxは180秒で0隻
+#   - ペルシャ湾・オマーン湾・紅海・インド西岸もすべて0隻
+#   - ホルムズ海峡中心から最も近い受信船まで約1,900km（地中海・黒海）
+#   受信局がボランティアの陸上局に依存するため、bboxを変えても取得できない。
+#   その結果、2026-04-15の初回実行以降このワークフローは常に0隻を書き込んでいた。
+#
+# 影響: data/ais-snapshot.json は update_manual.yml（09:30 JST）が単独で更新する。
+#   従来は本ワークフロー（09:00 JST）の書き込みを30分後に上書きする競合状態だった。
+#
+# 再開手順: 下の schedule のコメントを外し、jobs.fetch-ais.if を削除する。
+
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  # schedule:
+  #   - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
   fetch-ais:
+    # 無効化ガード。外部スケジューラからの workflow_dispatch でも実行されない
+    if: false
     runs-on: ubuntu-latest
     permissions:
       contents: write

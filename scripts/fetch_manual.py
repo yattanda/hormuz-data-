@@ -197,6 +197,10 @@ def save_ais_estimate(data, path="data/ais-snapshot.json"):
         "note": "Gemini AIがニュース・MarineTraffic公開データから推計。AIS非検出（ダークシッピング）船舶を含む推定値。"
     })
 
+    # AIS実測を前提とした旧キーは、実測を行っていない以上そのまま残さない
+    for stale_key in ("collection_duration_sec", "bbox", "messages_received"):
+        existing.pop(stale_key, None)
+
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(existing, f, ensure_ascii=False, indent=2)
