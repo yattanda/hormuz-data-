@@ -196,7 +196,7 @@
 
   <!-- Card 1: AIS通航船舶数 -->
   <div class="card orange">
-    <div class="card-label">🛥 ホルムズ海峡 AIS検出船舶数（当日）</div>
+    <div class="card-label">🛥 ホルムズ海峡 通航船舶数（当日）</div>
     <div style="display:flex;align-items:baseline;gap:6px;">
       <div class="card-value" id="ais-count">—</div>
       <div class="card-unit">隻</div>
@@ -219,10 +219,11 @@
     <div class="card-sub">
       推定実通航数（ダーク船補正）: <strong id="ais-estimated">—</strong> 隻<br/>
       <span style="font-size:0.63rem;">補正係数 ×<span id="ais-factor">—</span>（UANI/Kpler推定ベース）</span>
+      <div id="ais-estnote" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     </div>
     <div class="card-footer">
      <span class="dot-live"></span>
-     AISstream.io ／ 最終取得: <span id="ais-updated">—</span>
+     出典: <span id="ais-source">—</span> ／ 最終更新: <span id="ais-updated">—</span>
     <div style="font-size:0.58rem;color:var(--muted);margin-top:2px;">🕘 毎日 09:00 JST 自動実行</div>
 </div>
   </div>
@@ -435,6 +436,15 @@ async function loadAIS() {
     setText('ais-estimated', d.estimated_actual ?? '—');
     setText('ais-factor',    d.dark_estimate_factor ?? '—');
     setText('ais-updated',   fmtDate(d.updated_at));
+    setText('ais-source',    d.source ?? '—');
+    // 出典が AISstream 受信でない場合は、推定値である旨を明示する
+    const estNote = document.getElementById('ais-estnote');
+    if (estNote) {
+      const isAIS = (d.source ?? '').includes('AISstream');
+      estNote.style.display = isAIS ? 'none' : 'block';
+      estNote.textContent = isAIS ? '' :
+        '※ この数値はAIS受信データではありません。' + (d.note ?? '');
+    }
     const pct = Math.min(Math.round((d.vessels_detected / 200) * 100), 100);
     setText('ais-bar-pct', pct + '%');
     const bar = document.getElementById('ais-bar');
