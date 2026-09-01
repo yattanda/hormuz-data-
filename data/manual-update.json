@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-09-01T09:31:01+09:00",
+  "updated_at": "2026-09-01T14:21:56+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Reuters/BBC/Al Jazeera RSS）",
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 25,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 40
   },
-  "hormuz_daily_flow_mbpd": 5.0,
+  "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 76,
+  "flow_disruption_pct": 88,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン間で軍事衝突が再燃し緊張が大幅に高まっている。米国はホルムズ海峡の無期限封鎖と経済圧力を継続する姿勢。イランは閉鎖解除に強硬な条件を提示し、停戦交渉は難航。エスカレーションリスクが高い。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 9,
-  "ais_estimation_note": "ニュース分析に基づく推計 (low)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米イランの軍事衝突と報復が激化し、海峡支配権巡り対立。米国の無期限封鎖と経済圧力でイラン経済は苦境に。停戦交渉難航も期限迫り、通過量は大幅減。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 6,
+  "ais_estimation_note": "ニュース記事の記述から推計(medium)"
 }
