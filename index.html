@@ -617,5 +617,58 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })();
 </script>
+<script>
+/* ===== 親ページへ実コンテンツ高さを通知（iframe 埋め込み時のみ） ===== */
+(function () {
+  if (window.parent === window) return;
+
+  function measureHeight() {
+    const body = document.body;
+    if (!body) return 0;
+    let bottom = 0;
+    for (let i = 0; i < body.children.length; i++) {
+      const el = body.children[i];
+      if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) continue;
+      if (rect.bottom > bottom) bottom = rect.bottom;
+    }
+    if (!bottom) return 0;
+    bottom += window.scrollY || 0;
+    const cs = window.getComputedStyle(body);
+    bottom += parseFloat(cs.paddingBottom) || 0;
+    bottom += parseFloat(cs.marginBottom) || 0;
+    return Math.ceil(bottom + 8);
+  }
+
+  let last = 0;
+  function sendHeight() {
+    const h = measureHeight();
+    if (h < 200 || Math.abs(h - last) < 2) return;
+    last = h;
+    window.parent.postMessage({ type: 'iframeHeight', height: h }, '*');
+  }
+
+  let timer = null;
+  function scheduleSend() {
+    clearTimeout(timer);
+    timer = setTimeout(sendHeight, 120);
+  }
+
+  window.addEventListener('load', function () {
+    sendHeight();
+    [300, 1000, 2500, 5000].forEach(function (ms) { setTimeout(sendHeight, ms); });
+  });
+  window.addEventListener('resize', scheduleSend);
+  if (window.ResizeObserver) {
+    new ResizeObserver(scheduleSend).observe(document.body);
+  }
+  if (window.MutationObserver) {
+    new MutationObserver(scheduleSend).observe(document.body, {
+      childList: true, subtree: true, characterData: true
+    });
+  }
+})();
+</script>
 </body>
 </html>
