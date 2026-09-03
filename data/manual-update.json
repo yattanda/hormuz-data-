@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-09-02T13:48:07+09:00",
+  "updated_at": "2026-09-03T09:30:58+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Google ニュース検索・BBC・Al Jazeera・NYT の公開RSS）",
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 55,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 15,
+    "B_partial_blockade_pct": 50,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 9.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 81,
+  "flow_disruption_pct": 57,
   "critical_date": "2026-04-22",
   "critical_note": "停戦交渉期限",
-  "last_manual_note": "米イラン軍事衝突が激化し、交渉は行き詰まり。米国は無期限封鎖と更なる経済圧力を表明。イランは再開に強硬条件を提示し、海峡通過量は3ヶ月ぶりの低水準。周辺国は代替ルートを模索中。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 1,
+  "last_manual_note": "ホルムズ海峡は米軍による封鎖が継続。イランは閉鎖主張も、米国は日量9百万バレル通過と指摘。散発的な船舶攻撃と米国の報復により軍事緊張は非常に高く、停戦交渉は難航している。イラン経済は深刻な打撃。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 4,
   "ais_estimated_cargo": 4,
-  "ais_estimation_note": "ニュース報道と過去データより(medium)"
+  "ais_estimation_note": "米国発表9mbpd及びKplerデータより(medium)"
 }
