@@ -80,7 +80,7 @@ def check_spans():
     return ng
 
 
-def call(key, box, hours=None, limit=50, verbose=False):
+def call(key, box, hours=None, limit=50, token=None, verbose=False):
     """bounding-box を1回叩く。(status, headers, body_dict_or_text) を返す。"""
     params = {
         "filter.lonLeft": box["lonLeft"],
@@ -89,6 +89,8 @@ def call(key, box, hours=None, limit=50, verbose=False):
         "filter.latTop": box["latTop"],
         "pagination.limit": limit,
     }
+    if token:
+        params["pagination.nextToken"] = token
     if hours:
         now = datetime.now(timezone.utc).replace(microsecond=0)
         params["time.from"] = (now - timedelta(hours=hours)).isoformat().replace("+00:00", "Z")
@@ -181,12 +183,94 @@ def probe(label, key, box, hours, verbose):
     return n, headers, body
 
 
+def count_all(key, box, hours, max_pages, verbose):
+    """nextToken を辿って全件取得し、隻数・移動中/停泊中の内訳・消費コール数を実測する。
+
+    「海峡に居る船」と「通航中の船」は別物で、この bbox にはホルムズの錨泊地が含まれる。
+    sog（対地速力）で切り分けないと、錨泊船を通航量として数えてしまう。
+    """
+    MOVING_KT = 1.0  # これ未満は錨泊・漂泊とみなす
+
+    seen = {}          # MMSI -> vessel（ページ間の重複を排除する）
+    pages = 0
+    token = None
+    quota_first = None
+    quota_last = None
+    loc_sample = None
+
+    print("")
+    print("[全ページ取得: ホルムズ海峡の実隻数を測る]")
+
+    while pages < max_pages:
+        status, headers, body = call(key, box, hours=hours, limit=50, token=token, verbose=verbose)
+        pages += 1
+
+        q = quota_of(headers)
+        if q is not None:
+            if quota_first is None:
+                quota_first = q
+            quota_last = q
+
+        if status != 200 or not isinstance(body, dict):
+            print("  {} ページ目で失敗: HTTP {}".format(pages, status))
+            if isinstance(body, dict):
+                err = body.get("error") or {}
+                print("    code={} message={}".format(err.get("code", ""), err.get("message", "")))
+            break
+
+        vessels = body.get("vessels") or []
+        for v in vessels:
+            mmsi = v.get("mmsi")
+            if mmsi is not None:
+                seen[mmsi] = v
+            if loc_sample is None and v.get("location") is not None:
+                loc_sample = v.get("location")
+
+        token = body.get("nextToken")
+        print("  {} ページ目: {} 隻取得（累計ユニーク {} 隻）".format(pages, len(vessels), len(seen)))
+
+        if not token or not vessels:
+            break
+
+    truncated = bool(token)
+
+    moving = [v for v in seen.values() if (v.get("sog") or 0) >= MOVING_KT]
+    still = [v for v in seen.values() if (v.get("sog") or 0) < MOVING_KT]
+
+    print("")
+    print("  取得ページ数: {} （= 消費コール数）{}".format(
+        pages, "  ※ --max-pages に達して打ち切り。実数はさらに多い" if truncated else ""))
+    print("  ユニーク隻数: {}".format(len(seen)))
+    print("  うち移動中（sog >= {}kt）: {} 隻".format(MOVING_KT, len(moving)))
+    print("  うち停泊・漂泊（sog < {}kt）: {} 隻".format(MOVING_KT, len(still)))
+    if quota_first is not None and quota_last is not None:
+        print("  クォータ残: {} -> {}".format(quota_first, quota_last))
+    if loc_sample is not None:
+        print("  未文書フィールド location の例: {}".format(json.dumps(loc_sample, ensure_ascii=False)[:200]))
+
+    monthly = pages * 30
+    print("")
+    print("  日次1回で運用した場合の月間コール数: {} × 30日 = {} コール".format(pages, monthly))
+    if truncated:
+        print("  -> 打ち切りのため下限値。実際はこれを上回る")
+    if monthly > 150:
+        print("  -> **無料枠150を超える**。範囲を絞るか、取得頻度・方式の見直しが要る")
+    else:
+        print("  -> 無料枠150に収まる")
+
+    return len(seen), pages, truncated
+
+
 def main():
     ap = argparse.ArgumentParser(description="VesselAPI のホルムズ海峡カバレッジを実測する")
     ap.add_argument("--key", default=os.environ.get("VESSELAPI_API_KEY"))
     ap.add_argument("--hours", type=int, default=None,
                     help="time.from/to を明示指定する（最大4。既定は指定なし）")
     ap.add_argument("--skip-controls", action="store_true", help="対照海域の実験を省略する")
+    ap.add_argument("--count", action="store_true",
+                    help="ホルムズ bbox の全ページを辿り、実隻数と月間コール数を実測する")
+    ap.add_argument("--max-pages", type=int, default=20,
+                    help="--count の取得ページ上限（既定20＝最大20コール）")
     ap.add_argument("--verbose", action="store_true")
     args = ap.parse_args()
 
@@ -212,6 +296,15 @@ def main():
         span_of(HORMUZ)))
     print("time 窓: {}".format("直近{}時間".format(args.hours) if args.hours else "指定なし（API既定）"))
     print("=" * 72)
+
+    if args.count:
+        # 実隻数と月間コール数の実測に専念する。対照・認証テストは叩かない
+        n, pages, truncated = count_all(args.key, HORMUZ, args.hours, args.max_pages, args.verbose)
+        if n == 0:
+            print("")
+            print("判定: 0 隻。--count を外して対照海域つきで再実行し、原因を切り分けてください。")
+            return 10
+        return 0
 
     hormuz_n, headers, body = probe("本命: ホルムズ海峡", args.key, HORMUZ, args.hours, args.verbose)
     quota_before = quota_of(headers)
