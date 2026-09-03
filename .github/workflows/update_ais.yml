@@ -1,27 +1,38 @@
-name: Update AIS Snapshot
+name: Update AIS Snapshot (VesselAPI)
 
-# 2026-09-01 無効化（ファイルは記録として残す）
+# データソース履歴:
+#   2026-04-15〜09-01  AISstream.io（WebSocket）
+#     ペルシャ湾・ホルムズ海峡の受信局カバレッジが存在せず、約4.5か月にわたり
+#     vessels_detected: 0 を書き続けた。2026-09-01 に無効化。
+#     （全世界 bbox は60秒で3,467隻、ホルムズ bbox は180秒で0隻。最寄り受信船まで約1,900km）
+#   2026-09-03〜        VesselAPI（REST）
+#     契約前に tools/diag_vesselapi.py でホルムズ bbox の実測を行い、
+#     カバレッジの実在を確認したうえで採用（ユニーク21隻／うち移動中5隻）。
 #
-# 理由: AISstream.io にはペルシャ湾・ホルムズ海峡のカバレッジが存在しないことを実測で確認した。
-#   - 全世界bboxでは60秒に3,467隻を受信できるが、ホルムズbboxは180秒で0隻
-#   - ペルシャ湾・オマーン湾・紅海・インド西岸もすべて0隻
-#   - ホルムズ海峡中心から最も近い受信船まで約1,900km（地中海・黒海）
-#   受信局がボランティアの陸上局に依存するため、bboxを変えても取得できない。
-#   その結果、2026-04-15の初回実行以降このワークフローは常に0隻を書き込んでいた。
+# 現在このワークフローは【無効】。
+#   理由: VesselAPI のデータを公開サイトに表示することが利用規約上許されるかを
+#         提供元に照会中（2026-09-03 送信・回答待ち。tools/vesselapi-inquiry.md 参照）。
+#         回答を待たずに公開表示を始めない。
+#   有効化手順: 下の schedule のコメントを外し、jobs.fetch-ais.if の行を削除する。
+#              あわせて GitHub Secret に VESSELAPI_API_KEY を登録すること。
 #
-# 影響: data/ais-snapshot.json は update_manual.yml（09:30 JST）が単独で更新する。
-#   従来は本ワークフロー（09:00 JST）の書き込みを30分後に上書きする競合状態だった。
+# 運用上の必須事項:
+#   VesselAPI の API キーは最長90日で失効する。失効すると HTTP 401 となり
+#   scripts/fetch_ais.py が終了コード 2 で失敗する（= このワークフローが赤くなる）。
+#   「黙って0隻を書き続ける」事故を繰り返さないため、失敗を握り潰さないこと。
+#   90日ごとにキーを再発行し Secret を更新する。
 #
-# 再開手順: 下の schedule のコメントを外し、jobs.fetch-ais.if を削除する。
+# 消費コール数: 3コール/回 × 30日 = 月90コール（無料枠150）。
+#   ホルムズが0隻だった日のみ、対照海域の生存確認に +1 コールを使う。
 
 on:
   # schedule:
-  #   - cron: '0 0 * * *'
+  #   - cron: '0 0 * * *'   # 毎日 09:00 JST
   workflow_dispatch:
 
 jobs:
   fetch-ais:
-    # 無効化ガード。外部スケジューラからの workflow_dispatch でも実行されない
+    # 無効化ガード。規約回答が得られるまでは workflow_dispatch でも実行されない
     if: false
     runs-on: ubuntu-latest
     permissions:
@@ -36,26 +47,21 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          pip install websockets requests
+      # scripts/fetch_ais.py は標準ライブラリのみで動く（依存インストール不要）
 
       - name: Fetch AIS data
         env:
-          AISSTREAM_API_KEY: ${{ secrets.AISSTREAM_API_KEY }}
+          VESSELAPI_API_KEY: ${{ secrets.VESSELAPI_API_KEY }}
         run: |
           python scripts/fetch_ais.py
 
       - name: Commit and push
         run: |
-         git config --local user.email "github-actions[bot]@users.noreply.github.com"
-         git config --local user.name "github-actions[bot]"
-         git add data/ais-snapshot.json
-         git stash
-         git pull --rebase origin main
-         git stash pop
-         git checkout --theirs data/ais-snapshot.json
-         git add data/ais-snapshot.json
-         git diff --staged --quiet || git commit -m "chore: update AIS snapshot $(date -u '+%Y-%m-%d %H:%M UTC')"
-         git push
-
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          # data/ais-estimate.json は推計専用（update_manual.yml が書く）。ここでは絶対に触らない
+          git add data/ais-snapshot.json
+          git diff --staged --quiet || git commit -m "chore: update AIS実測 $(date -u '+%Y-%m-%d %H:%M UTC')"
+          # 競合は checkout --theirs で握り潰さない。書き手が1つになったため rebase で足りる
+          git pull --rebase origin main
+          git push

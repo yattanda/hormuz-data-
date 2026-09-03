@@ -1,0 +1,22 @@
+{
+  "updated_at": "2026-09-03T13:46:44+09:00",
+  "measurement": "estimate",
+  "source": "Gemini AI推計（ニュース・公開データより）",
+  "model": "gemini-2.5-flash",
+  "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
+  "estimated_vessels": 20,
+  "breakdown": {
+    "tanker": 6,
+    "cargo": 8,
+    "other": 6
+  },
+  "confidence": "medium",
+  "estimation_note": "報道と流量データより推計",
+  "bbox": {
+    "lat_bottom": 25.8,
+    "lat_top": 27.0,
+    "lon_left": 55.6,
+    "lon_right": 57.0
+  },
+  "note": "AIS 受信による実測値ではない。報道・公開データから生成AIが推計した値であり、実測が取得できない場合の代替として表示される。"
+}

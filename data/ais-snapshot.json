@@ -1,14 +1,21 @@
 {
-  "updated_at": "2026-09-03T13:46:44+09:00",
-  "source": "Gemini AI推計（ニュース・公開データより）",
-  "vessels_detected": 20,
-  "breakdown": {
-    "tanker": 6,
-    "cargo": 8,
-    "other": 6
+  "updated_at": null,
+  "measurement": "actual",
+  "source": "VesselAPI",
+  "source_url": "https://vesselapi.com/",
+  "fetch_ok": false,
+  "coverage_verified": false,
+  "coverage_check": null,
+  "bbox": {
+    "lat_bottom": 25.8,
+    "lat_top": 27.0,
+    "lon_left": 55.6,
+    "lon_right": 57.0
   },
-  "dark_estimate_factor": 1.35,
-  "estimated_actual": 27,
-  "note": "Gemini AIがニュース・MarineTraffic公開データから推計。AIS非検出（ダークシッピング）船舶を含む推定値。",
-  "estimation_note": "報道と流量データより推計(medium)"
+  "vessels_detected": null,
+  "breakdown": {
+    "moving": null,
+    "stationary": null
+  },
+  "note": "実測は未取得。このファイルは scripts/fetch_ais.py（VesselAPI）専用であり、推計値を書き込んではならない。update_ais.yml が有効化されるまで更新されず、表示側は data/ais-estimate.json（推計）にフォールバックする。"
 }

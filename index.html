@@ -197,6 +197,9 @@
   <!-- Card 1: AIS通航船舶数 -->
   <div class="card orange">
     <div class="card-label">🛥 ホルムズ海峡 通航船舶数（当日）</div>
+    <div style="margin:5px 0 3px;">
+      <span id="ais-origin" style="display:inline-block;padding:2px 7px;border-radius:3px;font-size:0.6rem;font-weight:700;border:1px solid transparent;">—</span>
+    </div>
     <div style="display:flex;align-items:baseline;gap:6px;">
       <div class="card-value" id="ais-count">—</div>
       <div class="card-unit">隻</div>
@@ -212,7 +215,7 @@
              style="width:0%;background:linear-gradient(90deg,var(--accent),#fb923c)"></div>
       </div>
       <div class="flow-bar-label">
-        <span>封鎖前比（通常200隻/日）</span>
+        <span id="ais-bar-basis">封鎖前比（通常200隻/日）</span>
         <span id="ais-bar-pct">—%</span>
       </div>
     </div>
@@ -424,32 +427,158 @@ function setText(id, val) {
   if (el) el.textContent = val;
 }
 
-async function loadAIS() {
+// ダーク船補正係数（UANI/Kpler 推定ベース）。
+// 実測・推計のどちらにも同じ係数を掛けるため、データ側ではなくここに一元的に置く。
+// かつて fetch_ais.py と fetch_manual.py に 1.35 が二重定義されていた。
+const DARK_FACTOR = 1.35;
+
+// 実測値として採用できる鮮度の上限。cron は日次なので1日スキップまでは許容する。
+const ACTUAL_MAX_AGE_H = 48;
+
+// 通常時の日間通航隻数。推計値の「封鎖前比」の分母に使う。
+const NORMAL_VESSELS_PER_DAY = 200;
+
+function ageHours(iso) {
+  if (!iso) return Infinity;
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return Infinity;
+  return (Date.now() - t) / 3600000;
+}
+
+/**
+ * 実測スナップショットを採用してよいかを判定する。
+ *
+ * 「取得成功かつ0隻」には (1)本当に船がいない (2)API側の障害 の2つの原因があり、
+ * 誤って (2) を「通航ゼロ」と表示すると重大な誤報になる。
+ * fetch_ais.py が対照海域で API の生存を確認できたときだけ 0 隻を実測として扱う。
+ */
+function actualIsUsable(d) {
+  if (!d || d.measurement !== 'actual') return false;
+  if (d.fetch_ok !== true) return false;
+  if (typeof d.vessels_detected !== 'number') return false;
+  if (ageHours(d.updated_at) > ACTUAL_MAX_AGE_H) return false;
+  if (d.vessels_detected === 0 && d.coverage_verified !== true) return false;
+  return true;
+}
+
+async function fetchJSON(name) {
   try {
-    const res = await fetch(`${BASE}/data/ais-snapshot.json?t=${Date.now()}`);
-    if (!res.ok) throw new Error('fetch error');
-    const d = await res.json();
-    setText('ais-count', d.vessels_detected ?? '—');
-    setText('ais-tanker', `タンカー ${d.breakdown?.tanker ?? '—'} 隻`);
-    setText('ais-cargo',  `貨物船 ${d.breakdown?.cargo  ?? '—'} 隻`);
-    setText('ais-other',  `その他 ${d.breakdown?.other  ?? '—'} 隻`);
-    setText('ais-estimated', d.estimated_actual ?? '—');
-    setText('ais-factor',    d.dark_estimate_factor ?? '—');
-    setText('ais-updated',   fmtDate(d.updated_at));
-    setText('ais-source',    d.source ?? '—');
-    // 出典が AISstream 受信でない場合は、推定値である旨を明示する
-    const estNote = document.getElementById('ais-estnote');
+    const res = await fetch(`${BASE}/data/${name}?t=${Date.now()}`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (e) { console.warn('AIS fetch:', name, e); return null; }
+}
+
+function setAisBadge(id, label, count, show) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = show ? '' : 'none';
+  if (show) el.textContent = `${label} ${count ?? '—'} 隻`;
+}
+
+function setAisOrigin(text, color, bg) {
+  const el = document.getElementById('ais-origin');
+  if (!el) return;
+  el.textContent = text;
+  el.style.color = color;
+  el.style.background = bg;
+  el.style.borderColor = color;
+}
+
+function setAisBar(pct, basisLabel) {
+  setText('ais-bar-basis', basisLabel);
+  setText('ais-bar-pct', pct == null ? '—%' : pct + '%');
+  const bar = document.getElementById('ais-bar');
+  if (bar) bar.style.width = (pct == null ? 0 : pct) + '%';
+}
+
+const CONFIDENCE_JA = { high: '高', medium: '中', low: '低' };
+
+async function loadAIS() {
+  // 実測と推計は別ファイル。実測を優先し、使えないときだけ推計へフォールバックする。
+  const [snap, est] = await Promise.all([
+    fetchJSON('ais-snapshot.json'),
+    fetchJSON('ais-estimate.json')
+  ]);
+
+  const useActual = actualIsUsable(snap);
+  const d = useActual ? snap : est;
+  const estNote = document.getElementById('ais-estnote');
+
+  if (!d) {
+    setText('ais-count', 'N/A');
+    setAisOrigin('データ取得不可', '#f87171', 'rgba(248,113,113,0.12)');
+    setAisBadge('ais-tanker', '', null, false);
+    setAisBadge('ais-cargo',  '', null, false);
+    setAisBadge('ais-other',  '', null, false);
+    setAisBar(null, '—');
+    setText('ais-estimated', '—');
+    setText('ais-factor', DARK_FACTOR);
+    setText('ais-source', '—');
+    setText('ais-updated', '—');
+    if (estNote) estNote.style.display = 'none';
+    return;
+  }
+
+  let count;
+
+  if (useActual) {
+    count = d.vessels_detected;
+    // VesselAPI の bbox 応答は船種を返さないため、内訳は動静（移動中／停泊）で示す
+    setAisBadge('ais-tanker', '移動中',     d.breakdown?.moving,     true);
+    setAisBadge('ais-cargo',  '停泊・漂泊', d.breakdown?.stationary, true);
+    setAisBadge('ais-other',  '', null, false);
+
+    // 封鎖前比の分母は、この bbox・この取得方式での実測基準値が無いため使えない。
+    // 代わりに「うち移動中の割合」を示す。錨泊待機が増えるほど下がり、滞留の指標になる。
+    const moving = d.breakdown?.moving;
+    const pct = (count > 0 && typeof moving === 'number')
+      ? Math.round((moving / count) * 100) : 0;
+    setAisBar(pct, 'うち移動中の割合');
+
+    setAisOrigin('実測（AIS受信）', '#4ade80', 'rgba(74,222,128,0.12)');
+
     if (estNote) {
-      const isAIS = (d.source ?? '').includes('AISstream');
-      estNote.style.display = isAIS ? 'none' : 'block';
-      estNote.textContent = isAIS ? '' :
-        '※ この数値はAIS受信データではありません。' + (d.note ?? '');
+      if (count === 0) {
+        estNote.style.display = 'block';
+        estNote.textContent =
+          '※ 通航 0 隻。同時刻に対照海域で船舶を取得できており、受信系統は正常です。';
+      } else {
+        estNote.style.display = 'none';
+        estNote.textContent = '';
+      }
     }
-    const pct = Math.min(Math.round((d.vessels_detected / 200) * 100), 100);
-    setText('ais-bar-pct', pct + '%');
-    const bar = document.getElementById('ais-bar');
-    if (bar) bar.style.width = pct + '%';
-  } catch(e) { console.warn('AIS:', e); setText('ais-count','N/A'); }
+  } else {
+    count = d.estimated_vessels;
+    setAisBadge('ais-tanker', 'タンカー', d.breakdown?.tanker, true);
+    setAisBadge('ais-cargo',  '貨物船',   d.breakdown?.cargo,  true);
+    setAisBadge('ais-other',  'その他',   d.breakdown?.other,  true);
+
+    const pct = typeof count === 'number'
+      ? Math.min(Math.round((count / NORMAL_VESSELS_PER_DAY) * 100), 100) : null;
+    setAisBar(pct, `封鎖前比（通常${NORMAL_VESSELS_PER_DAY}隻/日）`);
+
+    const conf = CONFIDENCE_JA[d.confidence] || '不明';
+    setAisOrigin(`AI推計（信頼度: ${conf}）`, '#fbbf24', 'rgba(251,191,36,0.12)');
+
+    // 推計であること・生成手段・前提を必ず明示する（編集方針 第3節）
+    if (estNote) {
+      estNote.style.display = 'block';
+      const parts = ['※ AIS受信による実測値ではありません。'];
+      if (d.method) parts.push(d.method + '。');
+      if (d.estimation_note) parts.push(`推計根拠: ${d.estimation_note}。`);
+      parts.push(`信頼度: ${conf}。`);
+      if (snap && snap.fetch_ok !== true) parts.push('実測は未取得のため推計を表示しています。');
+      else if (snap) parts.push('実測が採用条件を満たさないため推計を表示しています。');
+      estNote.textContent = parts.join('');
+    }
+  }
+
+  setText('ais-count', count ?? '—');
+  setText('ais-estimated', typeof count === 'number' ? Math.round(count * DARK_FACTOR) : '—');
+  setText('ais-factor', DARK_FACTOR);
+  setText('ais-source', d.source ?? '—');
+  setText('ais-updated', fmtDate(d.updated_at));
 }
 
 async function loadEIA() {

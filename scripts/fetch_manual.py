@@ -101,10 +101,11 @@ def analyze_with_gemini(api_key, news_items):
   "critical_date": "<次の重要日程 必ずYYYY-MM-DD形式 2026年以降の日付>",
   "critical_note": "<重要日程の説明 日本語30文字以内>",
   "last_manual_note": "<最新状況メモ 日本語100文字以内 ホルムズ封鎖・イラン情勢に関する最新動向>",
-  "ais_estimated_vessels": <整数。対象は緯度22〜27°N・経度55.5〜60.5°Eのバウンディングボックス内を【通過中】の船舶のみ。待機中・引き返し中・停泊中は除外。通常時は約80隻/日、封鎖中は通常比10〜30%（8〜24隻）が目安>,
+  "ais_estimated_vessels": <整数。対象は緯度25.8〜27.0°N・経度55.6〜57.0°Eのバウンディングボックス内を【通過中】の船舶のみ。待機中・引き返し中・停泊中は除外。通常時は約80隻/日、封鎖中は通常比10〜30%（8〜24隻）が目安>,
   "ais_estimated_tankers": <整数。上記通過中船舶のうちタンカーのみ。通常時比率約60%、封鎖中は大幅減>,
   "ais_estimated_cargo": <整数。上記通過中船舶のうち貨物船のみ>,
-  "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度をhigh/medium/lowで末尾に付記。例：「DoD発表・Kpler推計より(medium)」>
+  "ais_confidence": "<high / medium / low のいずれか1語。推計の信頼度>",
+  "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度の語は含めず根拠のみ。例：「DoD発表・Kpler推計より」>
 }}
 
 【注意事項】
@@ -118,6 +119,8 @@ def analyze_with_gemini(api_key, news_items):
 - ais_estimated_vesselsは「通過中」のみカウント。周辺待機・引き返し船は含めない
 - 封鎖中のタンカー比率は通常60%だが封鎖中は大幅に下がる可能性がある
 - 根拠となるニュースが見つからない場合はais_estimated_vesselsを5〜15の範囲で保守的に推計
+- ais_confidenceは必ず high / medium / low のいずれか1語のみ。文章にしない
+- 直接の根拠となる報道がなく背景知識からの外挿にとどまる場合は low とすること
 """
 
     for attempt in range(3):  # 最大3回リトライ
@@ -153,59 +156,107 @@ def build_manual_json(data):
         **data
     }
 
+def write_json(data, path):
+    """一時ファイルに書いてから置き換える。
+
+    open(path, "w") は開いた時点で原本を空にするため、書き込み中に例外が出ると
+    原本を失う。エンコードの検証も書き込み前に済ませる。
+    """
+    directory = os.path.dirname(path)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
+
+    body = json.dumps(data, ensure_ascii=False, indent=2)
+    body.encode("utf-8")  # 書き込む前にエンコード可能なことを確かめる
+
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        f.write(body)
+    os.replace(tmp, path)
+
+
 def save_manual(data, path="data/manual-update.json"):
     """JSONファイルに保存"""
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    write_json(data, path)
     print(f"[Manual] Saved to {path}")
-def save_ais_estimate(data, path="data/ais-snapshot.json"):
-    """Gemini推計をais-snapshot.jsonに反映"""
-    import json, os
-    from datetime import datetime, timezone, timedelta
 
+
+def parse_confidence(data):
+    """信頼度を high / medium / low に正規化する。
+
+    ais_confidence を優先し、無ければ ais_estimation_note 末尾の "(low)" 形式を拾う。
+    プロンプト変更前の出力形式が返ってきても壊れないようにするための二段構え。
+    判定できない場合は最も保守的な low を採る。
+    """
+    raw = str(data.get("ais_confidence") or "").strip().lower()
+    if raw in ("high", "medium", "low"):
+        return raw
+
+    note = str(data.get("ais_estimation_note") or "").lower()
+    for level in ("high", "medium", "low"):
+        if f"({level})" in note:
+            return level
+    return "low"
+
+
+def strip_confidence(note):
+    """推計根拠の文末に付いた "(low)" 等を取り除く。信頼度は別フィールドで持つ。"""
+    text = str(note or "").strip()
+    for level in ("high", "medium", "low", "High", "Medium", "Low"):
+        for token in (f"({level})", f"（{level}）"):
+            text = text.replace(token, "")
+    return text.strip() or "Gemini AI推計"
+
+
+def save_ais_estimate(data, path="data/ais-estimate.json"):
+    """Gemini 推計を data/ais-estimate.json に保存する。
+
+    **実測ファイル data/ais-snapshot.json には決して書かない。**
+    かつて両者が同じファイルを交互に上書きし、実測と推計が区別できない状態が
+    2026-04〜09 にわたって続いた。生成元とファイルを1対1に保つことが本関数の要件。
+
+    ダーク船補正（×1.35）はここでは掛けない。補正は推計であり、
+    実測・推計の双方に同じ係数を適用する必要があるため、表示側で一元的に扱う。
+    """
     jst = timezone(timedelta(hours=9))
     now = datetime.now(jst).isoformat(timespec="seconds")
 
-    # 既存ファイルを読み込み
-    existing = {}
-    if os.path.exists(path):
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                existing = json.load(f)
-        except Exception:
-            pass
-
-    # Gemini推計で上書き
     vessels = data.get("ais_estimated_vessels", 0)
     tankers = data.get("ais_estimated_tankers", 0)
     cargo = data.get("ais_estimated_cargo", 0)
-    note = data.get("ais_estimation_note", "Gemini AI推計")
+    confidence = parse_confidence(data)
+    reason = strip_confidence(data.get("ais_estimation_note"))
 
-    existing.update({
+    estimate = {
         "updated_at": now,
+        # 実測か推計かを、source 文字列ではなくこのフィールドで判別する
+        "measurement": "estimate",
         "source": "Gemini AI推計（ニュース・公開データより）",
-        "vessels_detected": vessels,
+        "model": "gemini-2.5-flash",
+        "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
+        "estimated_vessels": vessels,
         "breakdown": {
             "tanker": tankers,
             "cargo": cargo,
-            "other": max(0, vessels - tankers - cargo)
+            "other": max(0, vessels - tankers - cargo),
         },
-        "dark_estimate_factor": 1.35,
-        "estimated_actual": round(vessels * 1.35),
-        "estimation_note": note,
-        "note": "Gemini AIがニュース・MarineTraffic公開データから推計。AIS非検出（ダークシッピング）船舶を含む推定値。"
-    })
+        "confidence": confidence,
+        "estimation_note": reason,
+        "bbox": {
+            "lat_bottom": 25.8,
+            "lat_top": 27.0,
+            "lon_left": 55.6,
+            "lon_right": 57.0,
+        },
+        "note": (
+            "AIS 受信による実測値ではない。報道・公開データから生成AIが推計した値であり、"
+            "実測が取得できない場合の代替として表示される。"
+        ),
+    }
 
-    # AIS実測を前提とした旧キーは、実測を行っていない以上そのまま残さない
-    for stale_key in ("collection_duration_sec", "bbox", "messages_received"):
-        existing.pop(stale_key, None)
-
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(existing, f, ensure_ascii=False, indent=2)
+    write_json(estimate, path)
     print(f"[AIS] Saved estimate to {path}")
-    print(f"  推定船舶数: {vessels} 隻（補正後: {round(vessels * 1.35)} 隻）")
+    print(f"  推定船舶数: {vessels} 隻（信頼度: {confidence}）")
 
 def main():
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -230,7 +281,8 @@ def main():
 
     manual = build_manual_json(data)
     save_manual(manual)
-        # AIS推計も保存
+
+    # AIS推計は実測とは別ファイル（data/ais-estimate.json）に保存する
     save_ais_estimate(data)
 
     print("[Manual] Done.")
