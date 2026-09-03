@@ -45,18 +45,39 @@ from datetime import datetime, timedelta, timezone
 
 BASE = "https://api.vesselapi.com/v1/location/vessels/bounding-box"
 
-# 本番 scripts/fetch_ais.py の BBOX と同一（ホルムズ海峡＋オマーン湾＋UAE沿岸）
-HORMUZ = {"latBottom": 22.0, "latTop": 27.0, "lonLeft": 55.5, "lonRight": 60.5}
+# API 側の制約: bbox の総スパン |dLat| + |dLon| は 4 度以内
+# （2026-09-03 に実測で判明。公開ドキュメントには記載が無い）
+SPAN_LIMIT = 4.0
+
+# ホルムズ海峡の本体と主要通航路。スパン和 1.2 + 1.4 = 2.6 度で制約内に収まる。
+# 本番 scripts/fetch_ais.py の BBOX（lat 22-27 / lon 55.5-60.5）はスパン和 10 度で
+# この API では通らない。オマーン湾・UAE沿岸まで含めるにはタイル分割が要る（README 参照）
+HORMUZ = {"latBottom": 25.8, "latTop": 27.0, "lonLeft": 55.6, "lonRight": 57.0}
 
 # 対照海域。上2つは世界有数の輻輳海域で、AIS が機能していれば必ず船が返る
 CONTROLS = [
     ("シンガポール海峡", {"latBottom": 1.0, "latTop": 1.4, "lonLeft": 103.4, "lonRight": 104.0}),
     ("ロッテルダム港沖", {"latBottom": 51.8, "latTop": 52.2, "lonLeft": 3.8, "lonRight": 4.5}),
     # 船がまず居ない海域。「取得成功かつ0隻」の応答形を確認するための対照
-    ("南太平洋（空白対照）", {"latBottom": -40.0, "latTop": -35.0, "lonLeft": -140.0, "lonRight": -135.0}),
+    ("南太平洋（空白対照）", {"latBottom": -39.5, "latTop": -39.0, "lonLeft": -139.5, "lonRight": -139.0}),
 ]
 
 TIMEOUT = 30
+
+
+def span_of(box):
+    """bbox の総スパン |dLat| + |dLon| を返す。"""
+    return abs(box["latTop"] - box["latBottom"]) + abs(box["lonRight"] - box["lonLeft"])
+
+
+def check_spans():
+    """API を叩く前に、全 bbox がスパン制約を満たすか自己検証する。"""
+    ng = []
+    for label, box in [("ホルムズ海峡", HORMUZ)] + CONTROLS:
+        s = span_of(box)
+        if s > SPAN_LIMIT:
+            ng.append("{}: スパン和 {:.1f} 度（上限 {}）".format(label, s, SPAN_LIMIT))
+    return ng
 
 
 def call(key, box, hours=None, limit=50, verbose=False):
@@ -176,11 +197,19 @@ def main():
         print("--hours は 1〜4 の範囲で指定してください（API 側の上限が4時間）。")
         return 30
 
+    ng = check_spans()
+    if ng:
+        print("bbox がスパン制約（|dLat|+|dLon| <= {} 度）に違反しています。".format(SPAN_LIMIT))
+        for line in ng:
+            print("  - " + line)
+        return 30
+
     print("=" * 72)
     print("VesselAPI 実現可能性検証  {}".format(
         datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d %H:%M JST")))
-    print("bbox(ホルムズ): lat {} - {} / lon {} - {}".format(
-        HORMUZ["latBottom"], HORMUZ["latTop"], HORMUZ["lonLeft"], HORMUZ["lonRight"]))
+    print("bbox(ホルムズ): lat {} - {} / lon {} - {}（スパン和 {:.1f} 度）".format(
+        HORMUZ["latBottom"], HORMUZ["latTop"], HORMUZ["lonLeft"], HORMUZ["lonRight"],
+        span_of(HORMUZ)))
     print("time 窓: {}".format("直近{}時間".format(args.hours) if args.hours else "指定なし（API既定）"))
     print("=" * 72)
 
