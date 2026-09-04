@@ -209,7 +209,7 @@ def parse_value(raw):
         return None
 
 
-def fetch_monthly(stats_data_id: str, resolved: dict):
+def fetch_monthly(stats_data_id: str, resolved: dict, year: int):
     """相手国別・月別の原油輸入数量[kL]を取り、数値が入っている最新月を返す。
 
     戻り値: (quantities, month)。データが1か月も無ければ (None, None)。
@@ -262,16 +262,29 @@ def fetch_monthly(stats_data_id: str, resolved: dict):
             continue
         by_month.setdefault(month, {})[country] = parse_value(v.get("$"))
 
-    # 対象国のいずれかに数値が入っている月だけを「公表済み」とみなす。
-    # 6か国すべてが欠測になることは実務上ないため、この判定で未公表月を除ける。
-    published = sorted(m for m, d in by_month.items()
-                       if any(x is not None for x in d.values()))
+    # 未公表の月は欠測ではなく 0 が入って返ってくる（2026-09-04 に実測）。
+    # そのため「値が存在するか」ではなく「合計が 0 より大きいか」で公表済みを判定する。
+    # 対象6か国の合計が 0 になる月は実務上ないため、この判定で未公表月を除ける。
+    totals = {}
+    for m, d in by_month.items():
+        totals[m] = sum(x for x in d.values() if x is not None)
+
+    # 未来の月は採用しない。統計表は年単位で12か月分の枠を持つため、
+    # 判定を誤ると到来していない月を掴む。
+    now = datetime.now(JST)
+    max_month = 12
+    if year == now.year:
+        max_month = now.month
+
+    published = sorted(m for m, total in totals.items() if total > 0 and m <= max_month)
+    print("  月別合計[kL]: {}".format(
+        {m: round(totals[m]) for m in sorted(totals)}))
     if not published:
         return None, None
 
     latest = published[-1]
     quantities = {c: (by_month[latest].get(c) or 0.0) for c in ALL_COUNTRIES}
-    print("  公表済みの月: {} → 採用 {}月".format(published, latest))
+    print("  公表済みの月: {} / 上限 {}月 → 採用 {}月".format(published, max_month, latest))
     return quantities, latest
 
 
@@ -298,7 +311,7 @@ def collect_latest_data():
             resolved["month_key"],
             resolved["year"],
         ))
-        quantities, month = fetch_monthly(table_id, resolved)
+        quantities, month = fetch_monthly(table_id, resolved, resolved["year"])
         if quantities:
             return table_id, resolved["year"], month, quantities
         tried.append(table_id)
