@@ -1,0 +1,18 @@
+# 認証情報（絶対に追跡しない）
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 一時ファイル（スクリプトが os.replace() 前に作る）
+*.tmp
+
+# OS
+Thumbs.db
+.DS_Store
