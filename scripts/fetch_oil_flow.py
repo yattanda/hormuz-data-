@@ -76,6 +76,7 @@ VLCC_CAPACITY_BBL = 2000000     # VLCC 1隻あたりの標準積載量（バレ�
 EXPECTED_UNIT = "KL"            # 想定する数量の単位。異なれば換算が狂うので中断する
 STALE_AFTER_DAYS = 45
 MAX_TABLES_TO_TRY = 2           # 当年表にデータが無い場合、前年表まで遡る
+MAX_YEARS_TO_TRY = 2            # 1つの表が複数年を含む場合、新しい方から試す年数
 
 JST = timezone(timedelta(hours=9))
 
@@ -158,7 +159,8 @@ def resolve_classes(stats_data_id: str) -> dict:
         "months": {},         # 月(int) -> code
         "month_key": None,
         "unit_code": None,
-        "year": None,
+        "years": {},          # 年(int) -> 時間軸コード
+        "time_key": None,
     }
 
     for obj in class_objs:
@@ -184,11 +186,12 @@ def resolve_classes(stats_data_id: str) -> dict:
             elif name == UNIT_NAME:
                 resolved["unit_code"] = code
 
-            # 年（時間軸）
+            # 年（時間軸）。1つの表が複数年を含むことがあるため全部集める。
             if key.startswith("time"):
                 digits = "".join(ch for ch in code if ch.isdigit())
                 if len(digits) >= 4:
-                    resolved["year"] = int(digits[:4])
+                    resolved["time_key"] = key
+                    resolved["years"][int(digits[:4])] = code
 
     missing = []
     if not resolved["crude"]:
@@ -198,7 +201,7 @@ def resolve_classes(stats_data_id: str) -> dict:
             missing.append("国「{}」".format(country))
     if not resolved["months"]:
         missing.append("月別数量（「N月_数量」）")
-    if resolved["year"] is None:
+    if not resolved["years"]:
         missing.append("時間軸（年）")
     if missing:
         raise RuntimeError(
@@ -238,6 +241,7 @@ def fetch_monthly(stats_data_id: str, resolved: dict, year: int):
         param_name(crude_key): crude_code,
         param_name(country_key): country_codes,
         param_name(month_key): ",".join(month_codes),
+        param_name(resolved["time_key"]): resolved["years"][year],
         "metaGetFlg": "N",
         "cntGetFlg": "N",
         "limit": 100000,
@@ -333,17 +337,21 @@ def collect_latest_data():
     for table_id in table_ids:
         print("統計表を確認: {}".format(table_id))
         resolved = resolve_classes(table_id)
-        print("  分類キー: 概況品={} / 国={} / 月={} / 年={}".format(
+        years = sorted(resolved["years"], reverse=True)
+        print("  分類キー: 概況品={} / 国={} / 月={} / 収録年={}".format(
             resolved["crude"][0],
             next(iter(resolved["countries"].values()))[0],
             resolved["month_key"],
-            resolved["year"],
+            years,
         ))
-        quantities, month = fetch_monthly(table_id, resolved, resolved["year"])
-        if quantities:
-            return table_id, resolved["year"], month, quantities
+        # 1つの表が複数年を含むことがある（例: 2021〜2025年）。
+        # 時間軸を絞らないと年をまたいだ値が混ざるため、年ごとに取得する。
+        for year in years[:MAX_YEARS_TO_TRY]:
+            quantities, month = fetch_monthly(table_id, resolved, year)
+            if quantities:
+                return table_id, year, month, quantities
+            print("  {}年には公表済みの月が無い".format(year))
         tried.append(table_id)
-        print("  公表済みの月が無いため次の表へ")
     raise RuntimeError(
         "データが入った月が見つかりませんでした（確認した表: {}）".format(tried)
     )
