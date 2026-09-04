@@ -8,13 +8,24 @@ data/oil-flow.json の日本向け調達フローを算出して更新する。
 必要環境変数:
   ESTAT_APP_ID : e-Stat のアプリケーションID
 
+対象統計表の構造（2026-09-04 に実測）:
+  cat01 概況品目(輸入)          : 30301000 = 30301_原油及び粗油
+  cat02 概況品目表の数量・金額  : 100=単位 / 110=合計_数量 / 130=1月_数量 …（月ごとに20刻み）
+  area  国                      : 50137=サウジ 50147=UAE 50304=米国 50410=ブラジル …
+  time  時間軸(年次)            : 2026000000 = 2026年（1年につき1表）
+
+  **月は時間軸ではなく cat02 に入っている。** 時間軸は年しか持たない。
+
 方針:
   - 分類コードは実行時に getMetaInfo で解決する（年ごとの体系変更に耐えるため）
+  - 未公表の月を掴まないよう、実際に数値が入っている最新月を選ぶ
+  - 年初は当年表にまだデータが無いため、1つ前の年の表へ遡る
   - 既存 JSON の label / color / note / 手動ルート（old, D）は保持する
   - どのルートにも割り当てられない相手国の量は集計に含めない
 """
 
 import os
+import re
 import sys
 import json
 import calendar
@@ -47,17 +58,20 @@ load_env_file()
 APP_ID = os.getenv("ESTAT_APP_ID")
 
 STATS_CODE_TRADE = "00350300"   # 財務省貿易統計
-CRUDE_CODE = "30301"            # 概況品: 原油及び粗油
+CRUDE_NAME = "原油及び粗油"      # 概況品目の名称（コードは年により桁数が変わりうる）
 
 BBL_PER_KL = 6.28981            # 1キロリットルあたりのバレル数
 VLCC_CAPACITY_BBL = 2000000     # VLCC 1隻あたりの標準積載量（バレル）
+EXPECTED_UNIT = "KL"            # 想定する数量の単位。異なれば換算が狂うので中断する
 STALE_AFTER_DAYS = 45
+MAX_TABLES_TO_TRY = 2           # 当年表にデータが無い場合、前年表まで遡る
 
 JST = timezone(timedelta(hours=9))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_PATH = os.path.join(HERE, "..", "data", "oil-flow.json")
 METHOD_URL = "https://github.com/yattanda/hormuz-data-/blob/main/docs/oil-flow-method.md"
+ATTRIBUTION = "出典：政府統計の総合窓口(e-Stat)（財務省 普通貿易統計）を加工して作成"
 
 # ルート → 相手国名（e-Stat の国名表記に含まれる文字列で照合する）
 ROUTE_MAPPING = {
@@ -68,6 +82,11 @@ ROUTE_MAPPING = {
 }
 # 統計から分離できないため手動値のまま据え置くルート
 MANUAL_ROUTES = ["old", "D"]
+
+ALL_COUNTRIES = [c for names in ROUTE_MAPPING.values() for c in names]
+
+MONTH_QUANTITY_RE = re.compile(r"^(\d{1,2})月_数量$")
+UNIT_NAME = "単位"
 
 
 def api_get(endpoint: str, params: dict) -> dict:
@@ -99,8 +118,8 @@ def param_name(class_id: str) -> str:
     return "cd" + class_id[0].upper() + class_id[1:]
 
 
-def find_latest_table() -> str:
-    """「概況品別国別表 輸入」の最新の統計表IDを返す。"""
+def find_tables() -> list:
+    """「概況品別国別表 輸入」の統計表を新しい順に返す。"""
     body = api_get("getStatsList", {
         "statsCode": STATS_CODE_TRADE,
         "searchWord": "概況品別国別表 輸入",
@@ -114,40 +133,62 @@ def find_latest_table() -> str:
         return str(t.get("SURVEY_DATE") or t.get("UPDATED_DATE") or "")
 
     tables.sort(key=sort_key, reverse=True)
-    return tables[0]["@id"]
+    return tables
 
 
 def resolve_classes(stats_data_id: str) -> dict:
-    """メタ情報から、概況品・国・時間軸の分類キーとコードを解決する。"""
+    """メタ情報から、概況品・国・月・年の分類コードを解決する。"""
     body = api_get("getMetaInfo", {"statsDataId": stats_data_id})
     class_objs = as_list(body["METADATA_INF"]["CLASS_INF"]["CLASS_OBJ"])
 
-    resolved = {"crude": None, "countries": {}, "time_key": None}
+    resolved = {
+        "crude": None,        # (class_id, code)
+        "countries": {},      # 国名 -> (class_id, code)
+        "months": {},         # 月(int) -> code
+        "month_key": None,
+        "unit_code": None,
+        "year": None,
+    }
 
     for obj in class_objs:
         key = obj["@id"]
-        classes = as_list(obj.get("CLASS"))
-
-        for c in classes:
+        for c in as_list(obj.get("CLASS")):
             code = str(c.get("@code", ""))
             name = str(c.get("@name", ""))
-            if code == CRUDE_CODE or (CRUDE_CODE in code and "原油" in name):
-                resolved["crude"] = (key, code)
-            for countries in ROUTE_MAPPING.values():
-                for country in countries:
-                    if country in name and country not in resolved["countries"]:
-                        resolved["countries"][country] = (key, code)
 
-        if key.startswith("time"):
-            resolved["time_key"] = key
+            # 概況品目: 名称で照合する（コードは年により桁数が変わりうる）
+            if CRUDE_NAME in name:
+                resolved["crude"] = (key, code)
+
+            # 国
+            for country in ALL_COUNTRIES:
+                if country in name and country not in resolved["countries"]:
+                    resolved["countries"][country] = (key, code)
+
+            # 月別の数量（cat02）
+            m = MONTH_QUANTITY_RE.match(name)
+            if m:
+                resolved["months"][int(m.group(1))] = code
+                resolved["month_key"] = key
+            elif name == UNIT_NAME:
+                resolved["unit_code"] = code
+
+            # 年（時間軸）
+            if key.startswith("time"):
+                digits = "".join(ch for ch in code if ch.isdigit())
+                if len(digits) >= 4:
+                    resolved["year"] = int(digits[:4])
 
     missing = []
     if not resolved["crude"]:
-        missing.append("概況品コード " + CRUDE_CODE)
-    for countries in ROUTE_MAPPING.values():
-        for country in countries:
-            if country not in resolved["countries"]:
-                missing.append("国「{}」".format(country))
+        missing.append("概況品目「{}」".format(CRUDE_NAME))
+    for country in ALL_COUNTRIES:
+        if country not in resolved["countries"]:
+            missing.append("国「{}」".format(country))
+    if not resolved["months"]:
+        missing.append("月別数量（「N月_数量」）")
+    if resolved["year"] is None:
+        missing.append("時間軸（年）")
     if missing:
         raise RuntimeError(
             "メタ情報から解決できませんでした: " + " / ".join(missing)
@@ -156,87 +197,79 @@ def resolve_classes(stats_data_id: str) -> dict:
     return resolved
 
 
-def fetch_quantities(stats_data_id: str, resolved: dict):
-    """相手国別の原油輸入数量[kL]と、対象期間コードを返す。"""
+def parse_value(raw):
+    """統計値を float にする。未公表・秘匿（'-' '***' 等）は None を返す。"""
+    if raw is None:
+        return None
+    text = str(raw).strip().replace(",", "")
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
+def fetch_monthly(stats_data_id: str, resolved: dict):
+    """相手国別・月別の原油輸入数量[kL]を取り、数値が入っている最新月を返す。
+
+    戻り値: (quantities, month)。データが1か月も無ければ (None, None)。
+    """
     crude_key, crude_code = resolved["crude"]
     country_key = next(iter(resolved["countries"].values()))[0]
     country_codes = ",".join(code for _, code in resolved["countries"].values())
+    month_key = resolved["month_key"]
+
+    month_codes = list(resolved["months"].values())
+    if resolved["unit_code"]:
+        month_codes = month_codes + [resolved["unit_code"]]
 
     params = {
         "statsDataId": stats_data_id,
         param_name(crude_key): crude_code,
         param_name(country_key): country_codes,
+        param_name(month_key): ",".join(month_codes),
         "metaGetFlg": "N",
         "cntGetFlg": "N",
-        "limit": 10000,
+        "limit": 100000,
     }
     body = api_get("getStatsData", params)
-
     values = as_list(body["STATISTICAL_DATA"]["DATA_INF"]["VALUE"])
     if not values:
         raise RuntimeError("データが0件です。分類コードの指定を確認してください")
 
     code_to_country = {code: country for country, (_, code) in resolved["countries"].items()}
+    code_to_month = {code: month for month, code in resolved["months"].items()}
     country_attr = "@" + country_key
-    time_attr = "@" + (resolved["time_key"] or "time")
+    month_attr = "@" + month_key
 
-    all_periods = sorted({v[time_attr] for v in values if time_attr in v})
-    if not all_periods:
-        raise RuntimeError("時間軸が取得できませんでした")
+    # 単位の検証。想定と違えば換算係数が狂うので中断する。
+    if resolved["unit_code"]:
+        units = {str(v.get("$")).strip() for v in values
+                 if v.get(month_attr) == resolved["unit_code"]}
+        units = {u for u in units if u and u != "None"}
+        if units and not any(EXPECTED_UNIT in u.upper() for u in units):
+            raise RuntimeError(
+                "数量の単位が想定（{}）と異なります: {}".format(EXPECTED_UNIT, sorted(units))
+            )
 
-    periods = [p for p in all_periods if is_monthly_period(p)]
-    if not periods:
-        raise RuntimeError(
-            "月次の時間軸コードが見つかりません。取得できたコード: "
-            + ", ".join(all_periods[-10:])
-        )
-    latest = periods[-1]
-    print("時間軸: 月次 {} 件 / 全 {} 件 → 採用 {}".format(
-        len(periods), len(all_periods), latest))
-
-    quantities = {}
+    by_month = {}
     for v in values:
-        if v.get(time_attr) != latest:
-            continue
+        month = code_to_month.get(v.get(month_attr))
         country = code_to_country.get(v.get(country_attr))
-        if not country:
+        if month is None or country is None:
             continue
-        try:
-            quantities[country] = float(v.get("$"))
-        except (TypeError, ValueError):
-            quantities[country] = 0.0
+        by_month.setdefault(month, {})[country] = parse_value(v.get("$"))
 
+    # 対象国のいずれかに数値が入っている月だけを「公表済み」とみなす。
+    # 6か国すべてが欠測になることは実務上ないため、この判定で未公表月を除ける。
+    published = sorted(m for m, d in by_month.items()
+                       if any(x is not None for x in d.values()))
+    if not published:
+        return None, None
+
+    latest = published[-1]
+    quantities = {c: (by_month[latest].get(c) or 0.0) for c in ALL_COUNTRIES}
+    print("  公表済みの月: {} → 採用 {}月".format(published, latest))
     return quantities, latest
-
-
-def is_monthly_period(period_code: str) -> bool:
-    """月次の時間軸コードか判定する。
-
-    同じ表に年計（末尾が 00 の「2026000000」など）が混ざっており、
-    単純に最大値を取ると年計を掴んでしまうため必要。
-    """
-    digits = "".join(ch for ch in str(period_code) if ch.isdigit())
-    if len(digits) < 6:
-        return False
-    return 1 <= int(digits[-2:]) <= 12
-
-
-def period_to_year_month(period_code: str):
-    """e-Stat の時間軸コードから年・月を取り出す。
-
-    月次の時間軸コードは「2026000707」のように
-    年4桁 + 期間種別 + 月2桁（末尾）で構成される。
-    """
-    digits = "".join(ch for ch in str(period_code) if ch.isdigit())
-    if len(digits) < 6:
-        raise RuntimeError("時間軸コードを解釈できません: " + str(period_code))
-    year = int(digits[:4])
-    month = int(digits[-2:])
-    if not 1 <= month <= 12:
-        raise RuntimeError(
-            "月次データではない時間軸コードです（月={}）: {}".format(month, period_code)
-        )
-    return year, month
 
 
 def kl_to_man_bpd(kl: float, year: int, month: int) -> float:
@@ -248,6 +281,30 @@ def man_bpd_to_tankers_week(man_bpd: float) -> int:
     return round(man_bpd * 10000 * 7 / VLCC_CAPACITY_BBL)
 
 
+def collect_latest_data():
+    """新しい表から順に見て、最初にデータが取れた (統計表ID, 年, 月, 数量) を返す。"""
+    tables = find_tables()
+    tried = []
+    for table in tables[:MAX_TABLES_TO_TRY]:
+        table_id = table["@id"]
+        print("統計表を確認: {}".format(table_id))
+        resolved = resolve_classes(table_id)
+        print("  分類キー: 概況品={} / 国={} / 月={} / 年={}".format(
+            resolved["crude"][0],
+            next(iter(resolved["countries"].values()))[0],
+            resolved["month_key"],
+            resolved["year"],
+        ))
+        quantities, month = fetch_monthly(table_id, resolved)
+        if quantities:
+            return table_id, resolved["year"], month, quantities
+        tried.append(table_id)
+        print("  公表済みの月が無いため次の表へ")
+    raise RuntimeError(
+        "データが入った月が見つかりませんでした（確認した表: {}）".format(tried)
+    )
+
+
 def main():
     if not APP_ID:
         print("ESTAT_APP_ID が未設定です", file=sys.stderr)
@@ -256,13 +313,7 @@ def main():
     with open(OUT_PATH, encoding="utf-8") as f:
         current = json.load(f)
 
-    table_id = find_latest_table()
-    print("統計表ID:", table_id)
-    resolved = resolve_classes(table_id)
-    print("分類キー: 概況品={} / 国={}".format(
-        resolved["crude"][0], next(iter(resolved["countries"].values()))[0]))
-    quantities, period = fetch_quantities(table_id, resolved)
-    year, month = period_to_year_month(period)
+    table_id, year, month, quantities = collect_latest_data()
 
     routes = current["routes"]
     audit_quantities = {}
@@ -309,11 +360,10 @@ def main():
     current["source"] = {
         # 政府標準利用規約（第2.0版）に基づく出典表示。
         # 数量を換算・集計しているため「加工して作成」に当たる。
-        "attribution": "出典：政府統計の総合窓口(e-Stat)（財務省 普通貿易統計）を加工して作成",
+        "attribution": ATTRIBUTION,
         "provider": "財務省 普通貿易統計「概況品別国別表 輸入」（e-Stat API v3.0）",
         "stats_data_id": table_id,
-        "commodity_code": CRUDE_CODE,
-        "period_code": period,
+        "commodity": CRUDE_NAME,
         "period": "{}-{:02d}".format(year, month),
         "fetched_at": now.isoformat(timespec="seconds"),
     }
