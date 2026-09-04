@@ -81,6 +81,8 @@ STALE_AFTER_DAYS = 45
 MAX_TABLES_TO_TRY = 2           # 当年表にデータが無い場合、前年表まで遡る
 MAX_YEARS_TO_TRY = 2            # 1つの表が複数年を含む場合、新しい方から試す年数
 BASELINE_YEAR = 2025            # 平常時総量の基準年（ホルムズ封鎖前の直近通年）
+EXCLUDE_TITLE_WORD = "税関別"    # 税関ごとの内訳表。全国計ではないので使わない
+BASELINE_SANITY_RANGE = (100, 400)  # 平常時総量[万BPD]の妥当な範囲。外れたら中断する
 
 JST = timezone(timedelta(hours=9))
 
@@ -142,6 +144,16 @@ def find_tables() -> list:
         "limit": 100,
     })
     tables = as_list(body["DATALIST_INF"]["TABLE_INF"])
+
+    # 検索語には「税関別概況品別国別表」も引っかかる。これは税関ごとの内訳で
+    # 全国計ではないため、混ぜると合計が過小になる（2026-09-04 に実際に発生）。
+    def title_of(t):
+        title = t.get("TITLE")
+        if isinstance(title, dict):
+            title = title.get("$")
+        return str(title or "") + " " + str(t.get("STATISTICS_NAME") or "")
+
+    tables = [t for t in tables if EXCLUDE_TITLE_WORD not in title_of(t)]
     if not tables:
         raise RuntimeError("概況品別国別表 輸入 が見つかりません")
 
@@ -402,6 +414,13 @@ def compute_baseline():
         days = 366 if calendar.isleap(BASELINE_YEAR) else 365
         man_bpd = total_kl * BBL_PER_KL / days / 10000
         print("  年間合計 {:,.0f} kL / {} 日 → {:.1f} 万BPD".format(total_kl, days, man_bpd))
+
+        lo, hi = BASELINE_SANITY_RANGE
+        if not lo <= man_bpd <= hi:
+            raise RuntimeError(
+                "平常時総量 {:.1f} 万BPD が想定範囲 {}〜{} の外です。"
+                "統計表の選択（表={}）を確認してください".format(man_bpd, lo, hi, table_id)
+            )
         return round(man_bpd), total_kl, table_id
     raise RuntimeError("基準年 {} を含む統計表が見つかりません".format(BASELINE_YEAR))
 
