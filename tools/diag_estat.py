@@ -128,8 +128,9 @@ def cmd_meta(stats_data_id: str):
         for c in hits[:20]:
             print(f"    code={c['@code']}  name={c['@name']}")
         if not hits:
-            print(f"    （該当なし。先頭3件: "
-                  f"{[ (c['@code'], c['@name']) for c in classes[:3] ]}）")
+            print("    （検索語に該当なし。先頭12件を表示）")
+            for c in classes[:12]:
+                print(f"    code={c['@code']}  name={c['@name']}")
 
 
 if __name__ == "__main__":

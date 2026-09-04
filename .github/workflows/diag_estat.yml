@@ -1,0 +1,41 @@
+name: Diagnose e-Stat classification codes
+
+# fetch_oil_flow.py が使う分類コードを、実際のAPIレスポンスで確認するための
+# 手動実行専用ワークフロー。ローカルに appId を置かずに済ませるためのもの。
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'list（統計表を検索）または meta（分類コードを表示）'
+        required: true
+        default: 'list'
+        type: choice
+        options:
+          - list
+          - meta
+      stats_data_id:
+        description: 'command=meta のときの統計表ID'
+        required: false
+        default: ''
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run diagnosis
+        env:
+          ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+        run: |
+          python tools/diag_estat.py "${{ inputs.command }}" ${{ inputs.stats_data_id }}
