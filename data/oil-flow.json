@@ -18,7 +18,7 @@
       "color": "#ef4444",
       "bpd": 69,
       "tankers_week": 2,
-      "prev_bpd": 0,
+      "prev_bpd": 69,
       "status": "red",
       "note": "5/4 VTTIターミナル直撃・火災。積み出し停止中。イランがフジャイラを「管理域」に宣言。ADCOPパイプライン終端が機能不全。再開時期未定。",
       "derivation": "estimated_from_trade_statistics"
@@ -28,7 +28,7 @@
       "color": "#4ade80",
       "bpd": 68,
       "tankers_week": 2,
-      "prev_bpd": 0,
+      "prev_bpd": 68,
       "status": "green",
       "note": "4/12全面復旧。主幹ルートとして安定稼働中。",
       "derivation": "estimated_from_trade_statistics"
@@ -38,7 +38,7 @@
       "color": "#a78bfa",
       "bpd": 89,
       "tankers_week": 3,
-      "prev_bpd": 0,
+      "prev_bpd": 89,
       "status": "green",
       "note": "5月から本格到着フェーズ突入。アラスカ・メキシコ湾岸。昨年比4倍増ペース。",
       "derivation": "estimated_from_trade_statistics"
