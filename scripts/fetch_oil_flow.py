@@ -180,10 +180,19 @@ def fetch_quantities(stats_data_id: str, resolved: dict):
     country_attr = "@" + country_key
     time_attr = "@" + (resolved["time_key"] or "time")
 
-    periods = sorted({v[time_attr] for v in values if time_attr in v})
-    if not periods:
+    all_periods = sorted({v[time_attr] for v in values if time_attr in v})
+    if not all_periods:
         raise RuntimeError("時間軸が取得できませんでした")
+
+    periods = [p for p in all_periods if is_monthly_period(p)]
+    if not periods:
+        raise RuntimeError(
+            "月次の時間軸コードが見つかりません。取得できたコード: "
+            + ", ".join(all_periods[-10:])
+        )
     latest = periods[-1]
+    print("時間軸: 月次 {} 件 / 全 {} 件 → 採用 {}".format(
+        len(periods), len(all_periods), latest))
 
     quantities = {}
     for v in values:
@@ -198,6 +207,18 @@ def fetch_quantities(stats_data_id: str, resolved: dict):
             quantities[country] = 0.0
 
     return quantities, latest
+
+
+def is_monthly_period(period_code: str) -> bool:
+    """月次の時間軸コードか判定する。
+
+    同じ表に年計（末尾が 00 の「2026000000」など）が混ざっており、
+    単純に最大値を取ると年計を掴んでしまうため必要。
+    """
+    digits = "".join(ch for ch in str(period_code) if ch.isdigit())
+    if len(digits) < 6:
+        return False
+    return 1 <= int(digits[-2:]) <= 12
 
 
 def period_to_year_month(period_code: str):
@@ -236,7 +257,10 @@ def main():
         current = json.load(f)
 
     table_id = find_latest_table()
+    print("統計表ID:", table_id)
     resolved = resolve_classes(table_id)
+    print("分類キー: 概況品={} / 国={}".format(
+        resolved["crude"][0], next(iter(resolved["countries"].values()))[0]))
     quantities, period = fetch_quantities(table_id, resolved)
     year, month = period_to_year_month(period)
 
