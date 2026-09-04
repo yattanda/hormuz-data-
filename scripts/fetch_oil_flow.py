@@ -61,6 +61,13 @@ APP_ID = os.getenv("ESTAT_APP_ID")
 # --dry-run: JSON を書かず、取得した内訳だけを表示する（検証用）
 DRY_RUN = "--dry-run" in sys.argv
 
+# --table <statsDataId>: 特定の統計表を指定して確認する（検証用。--dry-run と併用）
+FORCE_TABLE = None
+if "--table" in sys.argv:
+    _i = sys.argv.index("--table")
+    if _i + 1 < len(sys.argv):
+        FORCE_TABLE = sys.argv[_i + 1]
+
 STATS_CODE_TRADE = "00350300"   # 財務省貿易統計
 CRUDE_NAME = "原油及び粗油"      # 概況品目の名称（コードは年により桁数が変わりうる）
 
@@ -317,10 +324,13 @@ def man_bpd_to_tankers_week(man_bpd: float) -> int:
 
 def collect_latest_data():
     """新しい表から順に見て、最初にデータが取れた (統計表ID, 年, 月, 数量) を返す。"""
-    tables = find_tables()
+    if FORCE_TABLE:
+        table_ids = [FORCE_TABLE]
+    else:
+        table_ids = [t["@id"] for t in find_tables()[:MAX_TABLES_TO_TRY]]
+
     tried = []
-    for table in tables[:MAX_TABLES_TO_TRY]:
-        table_id = table["@id"]
+    for table_id in table_ids:
         print("統計表を確認: {}".format(table_id))
         resolved = resolve_classes(table_id)
         print("  分類キー: 概況品={} / 国={} / 月={} / 年={}".format(

@@ -15,7 +15,7 @@ on:
           - meta
           - dryrun
       stats_data_id:
-        description: 'command=meta のときの統計表ID'
+        description: 'command=meta / dryrun のときの統計表ID（dryrun は省略可）'
         required: false
         default: ''
 
@@ -47,4 +47,8 @@ jobs:
         env:
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
         run: |
-          python scripts/fetch_oil_flow.py --dry-run
+          if [ -n "${{ inputs.stats_data_id }}" ]; then
+            python scripts/fetch_oil_flow.py --dry-run --table "${{ inputs.stats_data_id }}"
+          else
+            python scripts/fetch_oil_flow.py --dry-run
+          fi
