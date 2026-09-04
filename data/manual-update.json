@@ -1,21 +1,22 @@
 {
-  "updated_at": "2026-09-03T13:46:44+09:00",
+  "updated_at": "2026-09-04T09:31:15+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Google ニュース検索・BBC・Al Jazeera・NYT の公開RSS）",
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 50
+    "B_partial_blockade_pct": 10,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 55
   },
-  "hormuz_daily_flow_mbpd": 9.0,
+  "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 57,
+  "flow_disruption_pct": 88,
   "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米軍によるホルムズ海峡の封鎖（イラン原油輸出阻止）が継続・強化され、イランは海峡封鎖を主張し通過条件を提示。米軍はイラン船舶を攻撃、イランも反撃しタンカー攻撃も発生。停戦交渉は難航し、緊張は高い。",
-  "ais_estimated_vessels": 20,
-  "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 8,
-  "ais_estimation_note": "報道と流量データより推計(medium)"
+  "critical_note": "停戦交渉期限",
+  "last_manual_note": "米軍によるホルムズ海峡封鎖が継続し、イランの石油輸出は停止。米イラン間の攻撃が常態化し、停戦交渉は難航している。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 7,
+  "ais_confidence": "low",
+  "ais_estimation_note": "交通量激減報道と過去データから推計"
 }
