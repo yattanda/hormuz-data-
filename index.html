@@ -370,7 +370,7 @@
       margin-bottom:4px;">
       <span style="flex:1;">ルート</span>
       <span style="min-width:52px; text-align:right;">万BPD</span>
-      <span style="min-width:36px; text-align:right;">前週比</span>
+      <span style="min-width:36px; text-align:right;">前回比</span>
       <span style="min-width:30px; text-align:right;">隻/週</span>
     </div>
     <div id="jf-routes" style="display:flex; flex-direction:column; gap:4px;">
@@ -379,10 +379,13 @@
 
     <!-- フッター -->
     <div class="card-footer" style="margin-top:8px;">
-      <span class="dot-manual"></span>
-      週次手動更新 ／ 最終更新: <span id="jf-updated">—</span>
+      <span class="dot-live"></span>
+      月次自動更新 ／ 基準: <span id="jf-updated">—</span>
+      <div id="jf-stale" style="display:none; font-size:0.6rem; color:#fbbf24; margin-top:3px;"></div>
       <div style="font-size:0.58rem; color:var(--muted); margin-top:2px;">
-        出典: METI・Kpler・Bloomberg推計ベース
+        出典: 財務省 普通貿易統計（e-Stat API）／
+        <a href="https://github.com/yattanda/hormuz-data-/blob/main/docs/oil-flow-method.md"
+           style="color:inherit;" target="_blank" rel="noopener">算出方法</a>
       </div>
     </div>
   </div>
@@ -714,6 +717,26 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('jf-total-bar').style.width      = Math.min(pct, 100) + '%';
   document.getElementById('jf-total-pct-label').textContent = pct + '%';
   document.getElementById('jf-updated').textContent        = updated;
+
+  // 鮮度チェック: updated_iso から stale_after_days を超えたら警告を出す。
+  // 自動更新が止まったことに気づかないまま古い値を出し続けた
+  // 2026-05〜09 の事象への対策（詳細: docs/oil-flow-method.md）。
+  const staleEl = document.getElementById('jf-stale');
+  if (staleEl) {
+    const iso   = data.updated_iso;
+    const limit = data.stale_after_days || 45;
+    if (!iso) {
+      staleEl.textContent = '⚠ このデータには更新日時が記録されていません';
+      staleEl.style.display = 'block';
+    } else {
+      const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+      if (days > limit) {
+        staleEl.textContent = '⚠ 自動更新が ' + days + ' 日間止まっています'
+                            + '（想定間隔 ' + limit + ' 日）。値は最新ではありません。';
+        staleEl.style.display = 'block';
+      }
+    }
+  }
 
   const container = document.getElementById('jf-routes');
   const ORDER = ['old', 'A', 'B', 'C_US', 'C_GL', 'D'];
