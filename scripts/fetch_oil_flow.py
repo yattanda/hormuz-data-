@@ -299,7 +299,9 @@ def fetch_monthly(stats_data_id: str, resolved: dict, year: int):
         print("")
 
     latest = published[-1]
-    quantities = {c: (by_month[latest].get(c) or 0.0) for c in ALL_COUNTRIES}
+    # 欠測（統計に該当行が無い＝実績なし）は None のまま返し、
+    # 集計では 0 として扱いつつ _audit では 0 と区別できるようにする。
+    quantities = {c: by_month[latest].get(c) for c in ALL_COUNTRIES}
     print("  公表済みの月: {} / 上限 {}月 → 採用 {}月".format(published, max_month, latest))
     return quantities, latest
 
@@ -352,7 +354,7 @@ def main():
     total_mapped = 0.0
 
     for route, countries in ROUTE_MAPPING.items():
-        kl = sum(quantities.get(c, 0.0) for c in countries)
+        kl = sum(quantities.get(c) or 0.0 for c in countries)
         man_bpd = kl_to_man_bpd(kl, year, month)
         total_mapped += man_bpd
 
@@ -364,7 +366,8 @@ def main():
         routes[route] = entry
 
         for c in countries:
-            audit_quantities[c] = round(quantities.get(c, 0.0))
+            v = quantities.get(c)
+            audit_quantities[c] = None if v is None else round(v)
 
     for route in MANUAL_ROUTES:
         if route in routes:
@@ -402,7 +405,7 @@ def main():
     current["_audit"] = {
         "quantities_kl": audit_quantities,
         "mapped_total_bpd": round(total_mapped, 1),
-        "note": "quantities_kl は各相手国の原油輸入数量[kL]。ルート未対応国は集計に含めていない。",
+        "note": "quantities_kl は各相手国の原油輸入数量[kL]。null は当該月の貿易統計に該当する計上が無いこと（実績なし）を示し、集計では 0 として扱う。ルート未対応国は集計に含めていない。",
     }
 
     if DRY_RUN:
