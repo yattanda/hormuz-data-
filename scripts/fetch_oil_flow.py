@@ -262,6 +262,9 @@ def main():
     }
     current["route_mapping"] = ROUTE_MAPPING
     current["source"] = {
+        # 政府標準利用規約（第2.0版）に基づく出典表示。
+        # 数量を換算・集計しているため「加工して作成」に当たる。
+        "attribution": "出典：政府統計の総合窓口(e-Stat)（財務省 普通貿易統計）を加工して作成",
         "provider": "財務省 普通貿易統計「概況品別国別表 輸入」（e-Stat API v3.0）",
         "stats_data_id": table_id,
         "commodity_code": CRUDE_CODE,
