@@ -251,6 +251,7 @@
     <div class="card-sub">
       供給途絶: <strong id="flow-disruption" style="color:var(--red)">—%</strong><br/>
       <span style="font-size:0.63rem;">出典: <span id="flow-source">—</span></span>
+      <div id="ctx-note-flow" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     </div>
     <div class="card-footer">
      <span class="dot-live"></span>
@@ -315,6 +316,7 @@
     <div class="scenario-list" id="scenario-list">
       <div style="opacity:0.4;font-size:0.8rem;">読み込み中…</div>
     </div>
+    <div id="ctx-note-scenario" style="display:none;margin-top:8px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     <div class="card-footer">
      <span class="dot-live"></span>
      🤖 自動更新（Gemini AI）／ <span id="scenario-updated">—</span>
@@ -610,6 +612,35 @@ async function loadEIA() {
   } catch(e) { console.warn('EIA:', e); setText('wti-val','N/A'); }
 }
 
+// 推計に与えた前提（data/context.json）の鮮度と出典状況を読者に伝える。
+// 前提が古くなっても表示が何も変わらなければ、陳腐化は誰にも気付かれない。
+function applyContextNotice(ctx) {
+  const flowEl = document.getElementById('ctx-note-flow');
+  const scEl   = document.getElementById('ctx-note-scenario');
+  if (!ctx) {
+    [flowEl, scEl].forEach(el => { if (el) el.style.display = 'none'; });
+    return;
+  }
+
+  const stale = ctx.stale === true && ctx.updated;
+  const staleMsg = stale
+    ? `⚠️ この推計に与えた前提は ${ctx.updated} 基準で、${ctx.age_days} 日更新されていません。`
+    : '';
+
+  if (scEl) {
+    scEl.textContent = staleMsg;
+    scEl.style.display = staleMsg ? 'block' : 'none';
+  }
+  if (flowEl) {
+    const parts = [];
+    if (staleMsg) parts.push(staleMsg);
+    if (ctx.normal_flow_verified === false)
+      parts.push('通常時流量は出典未確認の概数です。');
+    flowEl.textContent = parts.join(' ');
+    flowEl.style.display = parts.length ? 'block' : 'none';
+  }
+}
+
 async function loadManual() {
   try {
     const res = await fetch(`${BASE}/data/manual-update.json?t=${Date.now()}`);
@@ -618,12 +649,20 @@ async function loadManual() {
 
     if (d.hormuz_daily_flow_mbpd != null) {
       setText('flow-val', d.hormuz_daily_flow_mbpd.toFixed(1));
-      setText('flow-normal', (d.hormuz_normal_flow_mbpd ?? 21).toFixed(1));
-      const pct = Math.round((d.hormuz_daily_flow_mbpd / (d.hormuz_normal_flow_mbpd ?? 21)) * 100);
-      setText('flow-pct', pct + '%');
-      const bar = document.getElementById('flow-bar');
-      if (bar) bar.style.width = pct + '%';
+      // 平常時流量は data/context.json 由来。表示側で 21 を仮定しない
+      const normal = d.hormuz_normal_flow_mbpd;
+      if (normal != null) {
+        setText('flow-normal', normal.toFixed(1));
+        const pct = Math.round((d.hormuz_daily_flow_mbpd / normal) * 100);
+        setText('flow-pct', pct + '%');
+        const bar = document.getElementById('flow-bar');
+        if (bar) bar.style.width = pct + '%';
+      } else {
+        setText('flow-normal', '—');
+        setText('flow-pct', '—%');
+      }
     }
+    applyContextNotice(d.context);
     if (d.flow_disruption_pct != null)
       setText('flow-disruption', d.flow_disruption_pct + '%');
     setText('flow-updated', fmtDate(d.updated_at));
@@ -653,10 +692,11 @@ async function loadManual() {
     const sc = d.scenario;
     if (sc) {
       const scenarios = [
-        { key: 'A_diplomacy_pct',       label: 'A: 外交解決',           color: 'var(--green)'  },
-        { key: 'B_partial_blockade_pct', label: 'B: 部分封鎖継続',       color: 'var(--yellow)' },
-        { key: 'C_full_blockade_pct',    label: 'C: 完全封鎖',           color: 'var(--accent)' },
-        { key: 'D_escalation_pct',       label: 'D: 軍事エスカレーション', color: 'var(--red)'    },
+        // 名称は hormuz-map のシナリオカード見出し・data/context.json の定義と一致させること
+        { key: 'A_diplomacy_pct',        label: 'A: 段階的MOU履行成功',     color: 'var(--green)'  },
+        { key: 'B_partial_blockade_pct', label: 'B: 膠着継続・外交不透明化', color: 'var(--yellow)' },
+        { key: 'C_full_blockade_pct',    label: 'C: 完全封鎖の制度化',       color: 'var(--accent)' },
+        { key: 'D_escalation_pct',       label: 'D: 全面対決・無期限封鎖',   color: 'var(--red)'    },
       ];
       const list = document.getElementById('scenario-list');
       if (list) list.innerHTML = scenarios.map(s => `

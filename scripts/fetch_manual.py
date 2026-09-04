@@ -61,10 +61,60 @@ def fetch_rss_news(max_items=40):
             print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
     return news_items[:max_items]
 
-def analyze_with_gemini(api_key, news_items):
+def load_context(path="data/context.json"):
+    """プロンプトに注入する前提を data/context.json から読み込む。
+
+    前提をコードに直書きすると、状況が変わっても誰かがコードを編集するまで
+    出力が追随しない。実際 2026-04-17 から 2026-09-04 まで 141 日間、
+    失効した停戦期限がプロンプトに残り続けた。前提はデータとして外に置く。
+    """
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def context_age_days(context):
+    """前提の基準日からの経過日数。基準日が読めない場合は None を返す。"""
+    raw = str(context.get("context_updated") or "")
+    try:
+        basis = datetime.strptime(raw, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+    jst = timezone(timedelta(hours=9))
+    return (datetime.now(jst).date() - basis).days
+
+
+def build_timeline_text(context):
+    """timeline を「- 日付: 事実（出典）」の行に整形する。"""
+    lines = []
+    for item in context.get("timeline", []):
+        date = item.get("date", "")
+        fact = item.get("fact", "")
+        source = item.get("source", "")
+        suffix = f"（出典: {source}）" if source else ""
+        lines.append(f"- {date}: {fact}{suffix}")
+    return "\n".join(lines) if lines else "- （前提となる事実が登録されていません）"
+
+
+def build_scenario_text(context):
+    """シナリオ定義を「キー: 説明」の行に整形する。"""
+    defs = context.get("scenario_definitions", {})
+    lines = []
+    for key, desc in defs.items():
+        if key.startswith("_"):
+            continue
+        lines.append(f"- {key}: {desc}")
+    return "\n".join(lines)
+
+
+def analyze_with_gemini(api_key, news_items, context):
     """Gemini API でニュースを分析してJSONを生成"""
     import time
     client = genai.Client(api_key=api_key)
+
+    normal_flow = context["normal_flow_mbpd"]["value"]
+    context_updated = context.get("context_updated", "不明")
+    timeline_text = build_timeline_text(context)
+    scenario_text = build_scenario_text(context)
 
     news_text = "\n".join([
         f"- {item['title']}: {item['description']}"
@@ -76,13 +126,13 @@ def analyze_with_gemini(api_key, news_items):
 以下の最新ニュースを分析して、JSON形式で回答してください。
 必ずJSON形式のみで返答し、説明文は不要です。
 
-【重要な背景知識】
-- 2026年4月13日にCENTCOMがホルムズ海峡封鎖を実施
-- 通常時のホルムズ通過量は約21百万バレル/日
+【確定した経緯】（基準日 {context_updated}・data/context.json より）
+{timeline_text}
+
+【流量に関する前提】
+- 通常時のホルムズ通過量は約{normal_flow}百万バレル/日
 - 封鎖前の通過量は約17〜18百万バレル/日
 - 現在は大幅に減少していると推定される
-- 米イラン間で停戦交渉が進行中（パキスタン仲介）
-- 停戦期限は2026年4月22日
 
 【最新ニュース】（{len(news_items)}件のニュース記事を分析）
 {news_text}
@@ -90,16 +140,14 @@ def analyze_with_gemini(api_key, news_items):
 【出力形式】
 {{
   "scenario": {{
-    "A_diplomacy_pct": <外交解決・封鎖解除シナリオの確率 0-100の整数>,
-    "B_partial_blockade_pct": <部分封鎖継続シナリオの確率 0-100の整数>,
-    "C_full_blockade_pct": <完全封鎖継続シナリオの確率 0-100の整数>,
-    "D_escalation_pct": <軍事エスカレーションシナリオの確率 0-100の整数>
+    "A_diplomacy_pct": <0-100の整数>,
+    "B_partial_blockade_pct": <0-100の整数>,
+    "C_full_blockade_pct": <0-100の整数>,
+    "D_escalation_pct": <0-100の整数>
   }},
   "hormuz_daily_flow_mbpd": <ホルムズ通過量 百万バレル/日 封鎖中は2〜10程度>,
-  "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": <流量disruption率 整数 = round((1 - hormuz_daily_flow_mbpd / 21.0) * 100)>,
-  "critical_date": "<次の重要日程 必ずYYYY-MM-DD形式 2026年以降の日付>",
-  "critical_note": "<重要日程の説明 日本語30文字以内>",
+  "hormuz_normal_flow_mbpd": {normal_flow},
+  "flow_disruption_pct": <流量disruption率 整数 = round((1 - hormuz_daily_flow_mbpd / {normal_flow}) * 100)>,
   "last_manual_note": "<最新状況メモ 日本語100文字以内 ホルムズ封鎖・イラン情勢に関する最新動向>",
   "ais_estimated_vessels": <整数。対象は緯度25.8〜27.0°N・経度55.6〜57.0°Eのバウンディングボックス内を【通過中】の船舶のみ。待機中・引き返し中・停泊中は除外。通常時は約80隻/日、封鎖中は通常比10〜30%（8〜24隻）が目安>,
   "ais_estimated_tankers": <整数。上記通過中船舶のうちタンカーのみ。通常時比率約60%、封鎖中は大幅減>,
@@ -108,10 +156,12 @@ def analyze_with_gemini(api_key, news_items):
   "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度の語は含めず根拠のみ。例：「DoD発表・Kpler推計より」>
 }}
 
+【シナリオの定義】（表示側のカード見出しと一致させてある。この定義に沿って確率を割り当てること）
+{scenario_text}
+
 【注意事項】
 - シナリオ確率の合計は必ず100になること
-- critical_dateは必ず2026年以降のYYYY-MM-DD形式
-- hormuz_daily_flow_mbpdは封鎖中なので21.0にはならない
+- hormuz_daily_flow_mbpdは封鎖中なので{normal_flow}にはならない
 - flow_disruption_pctはhormuz_daily_flow_mbpdから計算すること
 - last_manual_noteはホルムズ・イラン情勢に関する内容のみ記載
 - ais_estimated_vesselsは封鎖中のニュース・公開データから推計すること
@@ -145,14 +195,29 @@ def analyze_with_gemini(api_key, news_items):
     print("[Gemini] All retries failed.", file=sys.stderr)
     return None
 
-def build_manual_json(data):
-    """manual-update.json の形式に変換"""
+def build_manual_json(data, context):
+    """manual-update.json の形式に変換。
+
+    前提の基準日と経過日数を出力に含める。表示側はこれを見て
+    「前提が古い」ことを読者に伝えられる。含めなければ、前提の陳腐化は
+    誰にも気付かれないまま出力に効き続ける。
+    """
     jst = timezone(timedelta(hours=9))
     now = datetime.now(jst).isoformat(timespec="seconds")
+    age = context_age_days(context)
+    stale_after = context.get("stale_after_days")
     return {
         "updated_at": now,
         "auto_generated": True,
         "source": "Gemini AI自動分析（Google ニュース検索・BBC・Al Jazeera・NYT の公開RSS）",
+        "context": {
+            "updated": context.get("context_updated"),
+            "age_days": age,
+            "stale_after_days": stale_after,
+            "stale": (age is not None and stale_after is not None and age > stale_after),
+            "normal_flow_verified": context["normal_flow_mbpd"].get("verified", False),
+            "note": "この推計に与えた前提の基準日。data/context.json で管理している。",
+        },
         **data
     }
 
@@ -272,14 +337,25 @@ def main():
         print("[Manual] No news found. Skipping update.", file=sys.stderr)
         sys.exit(0)
 
+    context = load_context()
+    age = context_age_days(context)
+    stale_after = context.get("stale_after_days")
+    print(f"[Context] 前提の基準日: {context.get('context_updated')}（{age}日経過）")
+    if age is not None and stale_after is not None and age > stale_after:
+        print(
+            f"[Context] WARNING: 前提が {stale_after} 日を超えて更新されていません。"
+            "data/context.json を見直してください。",
+            file=sys.stderr,
+        )
+
     print("[Manual] Analyzing with Gemini...")
-    data = analyze_with_gemini(api_key, news_items)
+    data = analyze_with_gemini(api_key, news_items, context)
 
     if not data:
         print("[Manual] Gemini analysis failed. Skipping update.", file=sys.stderr)
         sys.exit(1)
 
-    manual = build_manual_json(data)
+    manual = build_manual_json(data, context)
     save_manual(manual)
 
     # AIS推計は実測とは別ファイル（data/ais-estimate.json）に保存する
@@ -288,7 +364,7 @@ def main():
     print("[Manual] Done.")
     print(f"  シナリオA: {data['scenario']['A_diplomacy_pct']}%")
     print(f"  流量: {data['hormuz_daily_flow_mbpd']} MBPD")
-    print(f"  重要日程: {data['critical_date']}")
+    print(f"  状況メモ: {data.get('last_manual_note', '—')}")
 
 if __name__ == "__main__":
     main()
