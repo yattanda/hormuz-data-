@@ -64,7 +64,7 @@
       "derivation": "manual"
     }
   },
-  "updated_iso": "2026-09-04T16:39:38+09:00",
+  "updated_iso": "2026-09-04T16:53:57+09:00",
   "stale_after_days": 45,
   "method": {
     "version": "2.0",
@@ -96,7 +96,7 @@
     "stats_data_id": "0004049328",
     "commodity": "原油及び粗油",
     "period": "2026-07",
-    "fetched_at": "2026-09-04T16:39:38+09:00"
+    "fetched_at": "2026-09-04T16:53:57+09:00"
   },
   "_audit": {
     "quantities_kl": {
