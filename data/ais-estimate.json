@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-09-04T09:31:15+09:00",
+  "updated_at": "2026-09-04T13:46:14+09:00",
   "measurement": "estimate",
   "source": "Gemini AI推計（ニュース・公開データより）",
   "model": "gemini-2.5-flash",
   "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
-  "estimated_vessels": 8,
+  "estimated_vessels": 10,
   "breakdown": {
-    "tanker": 1,
-    "cargo": 7,
+    "tanker": 2,
+    "cargo": 8,
     "other": 0
   },
   "confidence": "low",
-  "estimation_note": "交通量激減報道と過去データから推計",
+  "estimation_note": "報道記事からの定性情報と背景知識を基に推計",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
