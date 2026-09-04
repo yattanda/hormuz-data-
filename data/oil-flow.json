@@ -1,6 +1,6 @@
 {
   "_comment": "月次自動更新（財務省貿易統計・e-Stat API）。BPDは万バレル/日単位。tankers_week は VLCC 換算の必要隻数であり実寄港隻数ではない。prev_bpd は前回更新時の値。算出方法は docs/oil-flow-method.md を参照。note / status は現在どの表示側でも未使用。",
-  "updated": "2026年12月分（財務省貿易統計）",
+  "updated": "2026年7月分（財務省貿易統計）",
   "normal_total_bpd": 236,
   "routes": {
     "old": {
@@ -16,8 +16,8 @@
     "A": {
       "label": "ルートA（フジャイラ経由）",
       "color": "#ef4444",
-      "bpd": 0,
-      "tankers_week": 0,
+      "bpd": 69,
+      "tankers_week": 2,
       "prev_bpd": 0,
       "status": "red",
       "note": "5/4 VTTIターミナル直撃・火災。積み出し停止中。イランがフジャイラを「管理域」に宣言。ADCOPパイプライン終端が機能不全。再開時期未定。",
@@ -26,9 +26,9 @@
     "B": {
       "label": "ルートB（インブー・東西PL）",
       "color": "#4ade80",
-      "bpd": 0,
-      "tankers_week": 0,
-      "prev_bpd": 125,
+      "bpd": 68,
+      "tankers_week": 2,
+      "prev_bpd": 0,
       "status": "green",
       "note": "4/12全面復旧。主幹ルートとして安定稼働中。",
       "derivation": "estimated_from_trade_statistics"
@@ -36,9 +36,9 @@
     "C_US": {
       "label": "ルートC🇺🇸（米国）",
       "color": "#a78bfa",
-      "bpd": 0,
-      "tankers_week": 0,
-      "prev_bpd": 45,
+      "bpd": 89,
+      "tankers_week": 3,
+      "prev_bpd": 0,
       "status": "green",
       "note": "5月から本格到着フェーズ突入。アラスカ・メキシコ湾岸。昨年比4倍増ペース。",
       "derivation": "estimated_from_trade_statistics"
@@ -48,7 +48,7 @@
       "color": "#fb923c",
       "bpd": 0,
       "tankers_week": 0,
-      "prev_bpd": 12,
+      "prev_bpd": 0,
       "status": "orange",
       "note": "ブラジル・西アフリカ経由。本格化は6月以降。",
       "derivation": "estimated_from_trade_statistics"
@@ -64,7 +64,7 @@
       "derivation": "manual"
     }
   },
-  "updated_iso": "2026-09-04T16:32:24+09:00",
+  "updated_iso": "2026-09-04T16:34:05+09:00",
   "stale_after_days": 45,
   "method": {
     "version": "2.0",
@@ -95,19 +95,19 @@
     "provider": "財務省 普通貿易統計「概況品別国別表 輸入」（e-Stat API v3.0）",
     "stats_data_id": "0004049328",
     "commodity": "原油及び粗油",
-    "period": "2026-12",
-    "fetched_at": "2026-09-04T16:32:24+09:00"
+    "period": "2026-07",
+    "fetched_at": "2026-09-04T16:34:05+09:00"
   },
   "_audit": {
     "quantities_kl": {
-      "アラブ首長国連邦": 0,
-      "サウジアラビア": 0,
-      "アメリカ合衆国": 0,
+      "アラブ首長国連邦": 3379844,
+      "サウジアラビア": 3369820,
+      "アメリカ合衆国": 4393297,
       "ブラジル": 0,
       "ナイジェリア": 0,
       "アンゴラ": 0
     },
-    "mapped_total_bpd": 0.0,
+    "mapped_total_bpd": 226.1,
     "note": "quantities_kl は各相手国の原油輸入数量[kL]。ルート未対応国は集計に含めていない。"
   }
 }
