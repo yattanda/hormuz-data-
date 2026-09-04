@@ -29,6 +29,7 @@ import re
 import sys
 import json
 import calendar
+import unicodedata
 from datetime import datetime, timezone, timedelta
 
 import requests
@@ -246,7 +247,9 @@ def fetch_monthly(stats_data_id: str, resolved: dict):
         units = {str(v.get("$")).strip() for v in values
                  if v.get(month_attr) == resolved["unit_code"]}
         units = {u for u in units if u and u != "None"}
-        if units and not any(EXPECTED_UNIT in u.upper() for u in units):
+        # 実データの単位は全角の「ＫＬ」。NFKC で半角に正規化してから比較する。
+        normalized = {unicodedata.normalize("NFKC", u).upper() for u in units}
+        if units and not any(EXPECTED_UNIT in u for u in normalized):
             raise RuntimeError(
                 "数量の単位が想定（{}）と異なります: {}".format(EXPECTED_UNIT, sorted(units))
             )
