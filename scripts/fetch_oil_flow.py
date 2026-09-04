@@ -62,6 +62,9 @@ APP_ID = os.getenv("ESTAT_APP_ID")
 DRY_RUN = "--dry-run" in sys.argv
 
 # --table <statsDataId>: 特定の統計表を指定して確認する（検証用。--dry-run と併用）
+# --baseline: 平常比の分母（normal_total_bpd）を基準年から再計算する
+BASELINE_MODE = "--baseline" in sys.argv
+
 FORCE_TABLE = None
 if "--table" in sys.argv:
     _i = sys.argv.index("--table")
@@ -77,6 +80,7 @@ EXPECTED_UNIT = "KL"            # 想定する数量の単位。異なれば換�
 STALE_AFTER_DAYS = 45
 MAX_TABLES_TO_TRY = 2           # 当年表にデータが無い場合、前年表まで遡る
 MAX_YEARS_TO_TRY = 2            # 1つの表が複数年を含む場合、新しい方から試す年数
+BASELINE_YEAR = 2025            # 平常時総量の基準年（ホルムズ封鎖前の直近通年）
 
 JST = timezone(timedelta(hours=9))
 
@@ -294,7 +298,7 @@ def fetch_monthly(stats_data_id: str, resolved: dict, year: int):
     print("  月別合計[kL]: {}".format(
         {m: round(totals[m]) for m in sorted(totals)}))
     if not published:
-        return None, None
+        return None, None, by_month
 
     if DRY_RUN:
         print("")
@@ -314,7 +318,7 @@ def fetch_monthly(stats_data_id: str, resolved: dict, year: int):
     # 集計では 0 として扱いつつ _audit では 0 と区別できるようにする。
     quantities = {c: by_month[latest].get(c) for c in ALL_COUNTRIES}
     print("  公表済みの月: {} / 上限 {}月 → 採用 {}月".format(published, max_month, latest))
-    return quantities, latest
+    return quantities, latest, by_month
 
 
 def kl_to_man_bpd(kl: float, year: int, month: int) -> float:
@@ -347,7 +351,7 @@ def collect_latest_data():
         # 1つの表が複数年を含むことがある（例: 2021〜2025年）。
         # 時間軸を絞らないと年をまたいだ値が混ざるため、年ごとに取得する。
         for year in years[:MAX_YEARS_TO_TRY]:
-            quantities, month = fetch_monthly(table_id, resolved, year)
+            quantities, month, _ = fetch_monthly(table_id, resolved, year)
             if quantities:
                 return table_id, year, month, quantities
             print("  {}年には公表済みの月が無い".format(year))
@@ -357,6 +361,51 @@ def collect_latest_data():
     )
 
 
+def write_json(data):
+    """一時ファイルに書いてから差し替える（書き込み中の例外で原本を失わないため）。"""
+    if DRY_RUN:
+        print("--dry-run のため data/oil-flow.json は更新しません")
+        return
+    tmp = OUT_PATH + ".tmp"
+    with open(tmp, "w", encoding="utf-8", newline="\r\n") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    os.replace(tmp, OUT_PATH)
+
+
+def compute_baseline():
+    """封鎖前（BASELINE_YEAR）の6か国合計から平常時総量[万BPD]を算出する。
+
+    ダッシュボードの「平常比」の分母。分子がルート対応6か国の合計なので、
+    分母も同じ6か国・同じ式で揃える必要がある。
+    """
+    for table in find_tables():
+        table_id = table["@id"]
+        resolved = resolve_classes(table_id)
+        if BASELINE_YEAR not in resolved["years"]:
+            continue
+        print("基準年 {} を表 {} から算出".format(BASELINE_YEAR, table_id))
+        _, _, by_month = fetch_monthly(table_id, resolved, BASELINE_YEAR)
+
+        total_kl = 0.0
+        months = 0
+        for m in sorted(by_month):
+            s = sum(x for x in by_month[m].values() if x is not None)
+            if s > 0:
+                total_kl += s
+                months += 1
+        if months < 12:
+            raise RuntimeError(
+                "基準年 {} の公表月が {} か月しかありません".format(BASELINE_YEAR, months)
+            )
+
+        days = 366 if calendar.isleap(BASELINE_YEAR) else 365
+        man_bpd = total_kl * BBL_PER_KL / days / 10000
+        print("  年間合計 {:,.0f} kL / {} 日 → {:.1f} 万BPD".format(total_kl, days, man_bpd))
+        return round(man_bpd), total_kl, table_id
+    raise RuntimeError("基準年 {} を含む統計表が見つかりません".format(BASELINE_YEAR))
+
+
 def main():
     if not APP_ID:
         print("ESTAT_APP_ID が未設定です", file=sys.stderr)
@@ -364,6 +413,24 @@ def main():
 
     with open(OUT_PATH, encoding="utf-8") as f:
         current = json.load(f)
+
+    if BASELINE_MODE:
+        normal, total_kl, base_table = compute_baseline()
+        old_normal = current.get("normal_total_bpd")
+        current["normal_total_bpd"] = normal
+        current["normal_basis"] = {
+            "year": BASELINE_YEAR,
+            "countries": ALL_COUNTRIES,
+            "total_kl": round(total_kl),
+            "stats_data_id": base_table,
+            "formula": "normal_total_bpd = 年間合計[kL] × 6.28981 ÷ 年間日数 ÷ 10000",
+            "note": ("平常比の分母。分子がルート対応6か国の合計であるため、"
+                     "分母も同じ6か国・同じ式で揃えている。"),
+            "computed_at": datetime.now(JST).isoformat(timespec="seconds"),
+        }
+        write_json(current)
+        print("normal_total_bpd: {} → {}".format(old_normal, normal))
+        return
 
     table_id, year, month, quantities = collect_latest_data()
 
@@ -426,14 +493,7 @@ def main():
         "note": "quantities_kl は各相手国の原油輸入数量[kL]。null は当該月の貿易統計に該当する計上が無いこと（実績なし）を示し、集計では 0 として扱う。ルート未対応国は集計に含めていない。",
     }
 
-    if DRY_RUN:
-        print("--dry-run のため data/oil-flow.json は更新しません")
-    else:
-        tmp = OUT_PATH + ".tmp"
-        with open(tmp, "w", encoding="utf-8", newline="\r\n") as f:
-            json.dump(current, f, ensure_ascii=False, indent=2)
-            f.write("\n")
-        os.replace(tmp, OUT_PATH)
+    write_json(current)
 
     print("更新完了: {}年{}月分 / 統計表={}".format(year, month, table_id))
     for route in ROUTE_MAPPING:

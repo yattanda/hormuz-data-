@@ -14,6 +14,7 @@ on:
           - list
           - meta
           - dryrun
+          - baseline
       stats_data_id:
         description: 'command=meta / dryrun のときの統計表ID（dryrun は省略可）'
         required: false
@@ -22,6 +23,8 @@ on:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -36,7 +39,7 @@ jobs:
         run: pip install requests
 
       - name: Run diagnosis
-        if: inputs.command != 'dryrun'
+        if: inputs.command == 'list' || inputs.command == 'meta'
         env:
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
         run: |
@@ -52,3 +55,19 @@ jobs:
           else
             python scripts/fetch_oil_flow.py --dry-run
           fi
+
+      - name: Recompute baseline (normal_total_bpd)
+        if: inputs.command == 'baseline'
+        env:
+          ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+        run: |
+          python scripts/fetch_oil_flow.py --baseline
+
+      - name: Commit baseline
+        if: inputs.command == 'baseline'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/oil-flow.json
+          git diff --staged --quiet || git commit -m "chore: recompute normal_total_bpd $(date -u '+%Y-%m-%dT%H:%MZ')"
+          git push
