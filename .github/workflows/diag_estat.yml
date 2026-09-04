@@ -13,6 +13,7 @@ on:
         options:
           - list
           - meta
+          - dryrun
       stats_data_id:
         description: 'command=meta のときの統計表ID'
         required: false
@@ -35,7 +36,15 @@ jobs:
         run: pip install requests
 
       - name: Run diagnosis
+        if: inputs.command != 'dryrun'
         env:
           ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
         run: |
           python tools/diag_estat.py "${{ inputs.command }}" ${{ inputs.stats_data_id }}
+
+      - name: Dry-run fetch (国別×月別の内訳を表示。JSONは更新しない)
+        if: inputs.command == 'dryrun'
+        env:
+          ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+        run: |
+          python scripts/fetch_oil_flow.py --dry-run

@@ -58,6 +58,9 @@ def load_env_file():
 load_env_file()
 APP_ID = os.getenv("ESTAT_APP_ID")
 
+# --dry-run: JSON を書かず、取得した内訳だけを表示する（検証用）
+DRY_RUN = "--dry-run" in sys.argv
+
 STATS_CODE_TRADE = "00350300"   # 財務省貿易統計
 CRUDE_NAME = "原油及び粗油"      # 概況品目の名称（コードは年により桁数が変わりうる）
 
@@ -282,6 +285,19 @@ def fetch_monthly(stats_data_id: str, resolved: dict, year: int):
     if not published:
         return None, None
 
+    if DRY_RUN:
+        print("")
+        print("  === 国別×月別 原油輸入数量[kL] ===")
+        print("  {:14s}".format("国")
+              + "".join("{:>11s}".format(str(m) + "月") for m in sorted(by_month)))
+        for c in ALL_COUNTRIES:
+            row = "  {:14s}".format(c)
+            for m in sorted(by_month):
+                v = by_month[m].get(c)
+                row += "{:>11}".format("-" if v is None else format(round(v), ","))
+            print(row)
+        print("")
+
     latest = published[-1]
     quantities = {c: (by_month[latest].get(c) or 0.0) for c in ALL_COUNTRIES}
     print("  公表済みの月: {} / 上限 {}月 → 採用 {}月".format(published, max_month, latest))
@@ -389,11 +405,14 @@ def main():
         "note": "quantities_kl は各相手国の原油輸入数量[kL]。ルート未対応国は集計に含めていない。",
     }
 
-    tmp = OUT_PATH + ".tmp"
-    with open(tmp, "w", encoding="utf-8", newline="\r\n") as f:
-        json.dump(current, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    os.replace(tmp, OUT_PATH)
+    if DRY_RUN:
+        print("--dry-run のため data/oil-flow.json は更新しません")
+    else:
+        tmp = OUT_PATH + ".tmp"
+        with open(tmp, "w", encoding="utf-8", newline="\r\n") as f:
+            json.dump(current, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+        os.replace(tmp, OUT_PATH)
 
     print("更新完了: {}年{}月分 / 統計表={}".format(year, month, table_id))
     for route in ROUTE_MAPPING:
