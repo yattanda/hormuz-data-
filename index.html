@@ -221,7 +221,7 @@
     </div>
     <div class="card-sub">
       推定実通航数（ダーク船補正）: <strong id="ais-estimated">—</strong> 隻<br/>
-      <span style="font-size:0.63rem;">補正係数 ×<span id="ais-factor">—</span>（UANI/Kpler推定ベース）</span>
+      <span style="font-size:0.63rem;">補正係数 ×<span id="ais-factor">—</span><span id="ais-factor-basis"></span></span>
       <div id="ais-estnote" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     </div>
     <div class="card-footer">
@@ -432,10 +432,12 @@ function setText(id, val) {
   if (el) el.textContent = val;
 }
 
-// ダーク船補正係数（UANI/Kpler 推定ベース）。
+// ダーク船補正係数。正は data/context.json の dark_factor で、ここは読めなかったときの既定値。
 // 実測・推計のどちらにも同じ係数を掛けるため、データ側ではなくここに一元的に置く。
 // かつて fetch_ais.py と fetch_manual.py に 1.35 が二重定義されていた。
-const DARK_FACTOR = 1.35;
+let DARK_FACTOR = 1.35;
+// 係数の根拠表示。根拠が変われば表示も変わるよう、文言をコードに固定しない。
+let DARK_FACTOR_LABEL = '根拠未検証';
 
 // 実測値として採用できる鮮度の上限。cron は日次なので1日スキップまでは許容する。
 const ACTUAL_MAX_AGE_H = 48;
@@ -474,6 +476,16 @@ async function fetchJSON(name) {
   } catch (e) { console.warn('AIS fetch:', name, e); return null; }
 }
 
+// 補正係数とその根拠表示を data/context.json から取り込む。
+// verified が false の間は組織名などの帰属を出さず、未検証である旨だけを示す。
+function applyDarkFactor(ctx) {
+  const df = ctx && ctx.dark_factor;
+  if (df && typeof df.value === 'number') DARK_FACTOR = df.value;
+  if (df && typeof df.label === 'string') DARK_FACTOR_LABEL = df.label;
+  const el = document.getElementById('ais-factor-basis');
+  if (el) el.textContent = DARK_FACTOR_LABEL ? `（${DARK_FACTOR_LABEL}）` : '';
+}
+
 function setAisBadge(id, label, count, show) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -501,10 +513,12 @@ const CONFIDENCE_JA = { high: '高', medium: '中', low: '低' };
 
 async function loadAIS() {
   // 実測と推計は別ファイル。実測を優先し、使えないときだけ推計へフォールバックする。
-  const [snap, est] = await Promise.all([
+  const [snap, est, ctx] = await Promise.all([
     fetchJSON('ais-snapshot.json'),
-    fetchJSON('ais-estimate.json')
+    fetchJSON('ais-estimate.json'),
+    fetchJSON('context.json')
   ]);
+  applyDarkFactor(ctx);
 
   const useActual = actualIsUsable(snap);
   const d = useActual ? snap : est;

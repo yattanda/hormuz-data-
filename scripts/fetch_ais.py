@@ -270,7 +270,7 @@ def build_snapshot(vessels, reports, pages, truncated, coverage):
     """ais-snapshot.json の中身を組み立てる。
 
     このファイルには **実測値しか入れない**。
-    ダーク船補正（×1.35）のような推計は表示側で行い、実測と混ぜない。
+    ダーク船補正のような推計は表示側で行い、実測と混ぜない。
     """
     moving, stationary = split_by_speed(vessels)
     jst = timezone(timedelta(hours=9))

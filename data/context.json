@@ -13,6 +13,16 @@
     "todo": "EIA の一次資料にあたり、値と基準年を確認したうえで verified を true にする。それまでは出典未確認の概数として扱う。"
   },
 
+  "dark_factor": {
+    "_comment": "AIS 非検出（ダークシッピング）船舶を見込むための補正係数。index.html が検知隻数に掛けて「推定実通航数」を出す。値と帰属をここで一元管理し、表示側は verified を見て文言を切り替える。",
+    "value": 1.35,
+    "verified": false,
+    "label": "当サイト独自の暫定値・根拠未検証",
+    "basis": "2026-04-15 の data/ais-snapshot.json 初版に、値と「UANI/Kpler公開レポート推定ベース」という帰属が同時に書き込まれた。導出過程・参照レポート名・URL のいずれも記録されておらず、2026-09-04 の調査で UANI・Kpler がこの係数を公表した事実を確認できなかった。帰属表示は 2026-09-04 に削除した。",
+    "source_url": null,
+    "todo": "係数の設計自体を見直す。AIS 消灯率は時期によって大きく変動し（Kpler 集計として 2026-08 時点で約 8 割との報道がある）、固定倍率で近似できるかを含めて再検討する。出典と基準期間を確定できたら label と source_url を埋めて verified を true にする。"
+  },
+
   "scenario_definitions": {
     "_comment": "hormuz-map の docs/index.html にあるシナリオカード見出しと一致させること。JSON のキー名（A_diplomacy_pct 等）は既存の表示側との互換性のため変更しない。",
     "A_diplomacy_pct": "段階的MOU履行成功 — IMO避難計画の成立と核査察スケジュール合意を経て、ホルムズ主ルートが再開に向かう",
