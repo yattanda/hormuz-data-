@@ -1,7 +1,7 @@
 {
   "_comment": "月次自動更新（財務省貿易統計・e-Stat API）。BPDは万バレル/日単位。tankers_week は VLCC 換算の必要隻数であり実寄港隻数ではない。prev_bpd は前回更新時の値。算出方法は docs/oil-flow-method.md を参照。note / status は現在どの表示側でも未使用。",
   "updated": "2026年7月分（財務省貿易統計）",
-  "normal_total_bpd": 11,
+  "normal_total_bpd": 205,
   "routes": {
     "old": {
       "label": "旧ルート（ホルムズ本線）",
@@ -120,10 +120,10 @@
       "ナイジェリア",
       "アンゴラ"
     ],
-    "total_kl": 6124352,
-    "stats_data_id": "0004002163",
+    "total_kl": 118693707,
+    "stats_data_id": "0003425296",
     "formula": "normal_total_bpd = 年間合計[kL] × 6.28981 ÷ 年間日数 ÷ 10000",
     "note": "平常比の分母。分子がルート対応6か国の合計であるため、分母も同じ6か国・同じ式で揃えている。",
-    "computed_at": "2026-09-04T17:08:15+09:00"
+    "computed_at": "2026-09-04T17:09:39+09:00"
   }
 }
