@@ -1,0 +1,42 @@
+name: Update Japan Oil Flow (Monthly)
+
+# 財務省貿易統計の速報公表後に実行する。
+# 週次ではなく月次なのは、裏づけとなる公開統計が月次のため
+# （詳細: docs/oil-flow-method.md）
+on:
+  schedule:
+    - cron: '0 0 20 * *'   # 毎月20日 09:00 JST
+  workflow_dispatch:
+
+jobs:
+  fetch-oil-flow:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Fetch trade statistics and rebuild oil-flow.json
+        env:
+          ESTAT_APP_ID: ${{ secrets.ESTAT_APP_ID }}
+        run: |
+          python scripts/fetch_oil_flow.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/oil-flow.json
+          git diff --staged --quiet || git commit -m "chore: update oil-flow $(date -u '+%Y-%m-%dT%H:%MZ')"
+          git push
