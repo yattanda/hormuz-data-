@@ -137,12 +137,17 @@ def build_scenario_text(context):
     return "\n".join(lines)
 
 
-def analyze_with_gemini(api_key, news_items, context):
-    """Gemini API でニュースを分析してJSONを生成"""
-    import time
-    client = genai.Client(api_key=api_key)
+def build_prompt(news_items, context):
+    """Gemini へ渡すプロンプトを組み立てる。
 
+    数値レンジの誘導と「封鎖中」という状態の断定は置かない。現況は
+    【確定した経緯】と【最新ニュース】から読ませる。2026-09-05 以前は
+    「封鎖中は2〜10程度」「8〜24隻が目安」「根拠がなければ5〜15」等の
+    目安を与えており、同一入力の比較で推計隻数が実測 5 倍ぶん下振れして
+    いたため撤去した。
+    """
     normal_flow = context["normal_flow_mbpd"]["value"]
+    normal_vessels = context.get("normal_vessels_per_day", {}).get("value")
     context_updated = context.get("context_updated", "不明")
     timeline_text = build_timeline_text(context)
     scenario_text = build_scenario_text(context)
@@ -152,7 +157,14 @@ def analyze_with_gemini(api_key, news_items, context):
         for item in news_items
     ])
 
-    prompt = f"""
+    # 隻数の前提は表示側の「封鎖前比」の分母と同じ値を使う。
+    # 分子と分母で前提が違うと割合が読めなくなる。
+    vessels_line = (
+        f"- 通常時のホルムズ通過隻数は約{normal_vessels}隻/日（出典未確認の概数）\n"
+        if normal_vessels is not None else ""
+    )
+
+    return f"""
 あなたはホルムズ海峡・イラン情勢の専門アナリストです。
 以下の最新ニュースを分析して、JSON形式で回答してください。
 必ずJSON形式のみで返答し、説明文は不要です。
@@ -161,9 +173,8 @@ def analyze_with_gemini(api_key, news_items, context):
 {timeline_text}
 
 【流量に関する前提】
-- 通常時のホルムズ通過量は約{normal_flow}百万バレル/日
-- 封鎖前の通過量は約17〜18百万バレル/日
-- 現在は大幅に減少していると推定される
+- 通常時のホルムズ通過量は約{normal_flow}百万バレル/日（出典未確認の概数）
+{vessels_line}- 現在の水準は上記の経緯と最新ニュースから判断すること。あらかじめ増減の方向を仮定しない
 
 【最新ニュース】（{len(news_items)}件のニュース記事を分析）
 {news_text}
@@ -176,15 +187,15 @@ def analyze_with_gemini(api_key, news_items, context):
     "C_full_blockade_pct": <0-100の整数>,
     "D_escalation_pct": <0-100の整数>
   }},
-  "hormuz_daily_flow_mbpd": <ホルムズ通過量 百万バレル/日 封鎖中は2〜10程度>,
+  "hormuz_daily_flow_mbpd": <ホルムズ通過量 百万バレル/日。最新ニュースの記述を根拠に推計する>,
   "hormuz_normal_flow_mbpd": {normal_flow},
   "flow_disruption_pct": <流量disruption率 整数 = round((1 - hormuz_daily_flow_mbpd / {normal_flow}) * 100)>,
   "last_manual_note": "<最新状況メモ 日本語100文字以内 ホルムズ封鎖・イラン情勢に関する最新動向>",
-  "ais_estimated_vessels": <整数。対象は緯度25.8〜27.0°N・経度55.6〜57.0°Eのバウンディングボックス内を【通過中】の船舶のみ。待機中・引き返し中・停泊中は除外。通常時は約80隻/日、封鎖中は通常比10〜30%（8〜24隻）が目安>,
-  "ais_estimated_tankers": <整数。上記通過中船舶のうちタンカーのみ。通常時比率約60%、封鎖中は大幅減>,
+  "ais_estimated_vessels": <整数。対象は緯度25.8〜27.0°N・経度55.6〜57.0°Eのバウンディングボックス内を【通過中】の船舶のみ。待機中・引き返し中・停泊中は除外。最新ニュースの記述を根拠に推計する>,
+  "ais_estimated_tankers": <整数。上記通過中船舶のうちタンカーのみ>,
   "ais_estimated_cargo": <整数。上記通過中船舶のうち貨物船のみ>,
   "ais_confidence": "<high / medium / low のいずれか1語。推計の信頼度>",
-  "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度の語は含めず根拠のみ。例：「DoD発表・Kpler推計より」>
+  "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度の語は含めず根拠のみ>
 }}
 
 【シナリオの定義】（表示側のカード見出しと一致させてある。この定義に沿って確率を割り当てること）
@@ -192,17 +203,27 @@ def analyze_with_gemini(api_key, news_items, context):
 
 【注意事項】
 - シナリオ確率の合計は必ず100になること
-- hormuz_daily_flow_mbpdは封鎖中なので{normal_flow}にはならない
+- hormuz_daily_flow_mbpd と ais_estimated_vessels は、最新ニュースに現れる
+  具体的な記述（通過隻数・通過量・通航状況の報道）を根拠に推計すること。
+  報道が示す水準をそのまま反映し、目安の数値へ寄せないこと
+- 通常時の値をそのまま返さず、現在の水準として推計した値を返すこと
 - flow_disruption_pctはhormuz_daily_flow_mbpdから計算すること
 - last_manual_noteはホルムズ・イラン情勢に関する内容のみ記載
-- ais_estimated_vesselsは封鎖中のニュース・公開データから推計すること
 - ais_estimated_tankers + ais_estimated_cargo <= ais_estimated_vessels
 - ais_estimated_vesselsは「通過中」のみカウント。周辺待機・引き返し船は含めない
-- 封鎖中のタンカー比率は通常60%だが封鎖中は大幅に下がる可能性がある
-- 根拠となるニュースが見つからない場合はais_estimated_vesselsを5〜15の範囲で保守的に推計
+- 根拠となる報道が見つからない場合は、推測で数値を埋めずに
+  ais_confidence を low とし、ais_estimation_note にその旨を書くこと
 - ais_confidenceは必ず high / medium / low のいずれか1語のみ。文章にしない
 - 直接の根拠となる報道がなく背景知識からの外挿にとどまる場合は low とすること
 """
+
+
+def analyze_with_gemini(api_key, news_items, context):
+    """Gemini API でニュースを分析してJSONを生成"""
+    import time
+    client = genai.Client(api_key=api_key)
+
+    prompt = build_prompt(news_items, context)
 
     for attempt in range(3):  # 最大3回リトライ
         try:
