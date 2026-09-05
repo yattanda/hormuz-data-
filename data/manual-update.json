@@ -1,22 +1,28 @@
 {
-  "updated_at": "2026-09-04T13:46:14+09:00",
+  "updated_at": "2026-09-05T09:30:54+09:00",
   "auto_generated": true,
   "source": "Gemini AI自動分析（Google ニュース検索・BBC・Al Jazeera・NYT の公開RSS）",
-  "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 35
+  "context": {
+    "updated": "2026-09-04",
+    "age_days": 1,
+    "stale_after_days": 30,
+    "stale": false,
+    "normal_flow_verified": false,
+    "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
-  "hormuz_daily_flow_mbpd": 7.0,
+  "scenario": {
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 40,
+    "D_escalation_pct": 15
+  },
+  "hormuz_daily_flow_mbpd": 3.0,
   "hormuz_normal_flow_mbpd": 21.0,
-  "flow_disruption_pct": 67,
-  "critical_date": "2026-04-22",
-  "critical_note": "米イラン停戦交渉期限",
-  "last_manual_note": "米イラン間の軍事衝突が激化。米国は海峡の「完全支配」を主張し無期限封鎖を示唆。イランは封鎖条件を提示も、交渉は停滞。一部石油は流通か。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 2,
-  "ais_estimated_cargo": 8,
+  "flow_disruption_pct": 86,
+  "last_manual_note": "米がイランタンカーを攻撃し「タンカー・フォー・タンカー」方針を適用。副大統領は商船攻撃停止を対話条件に限定し、イランは追加要求を提示。海峡支配権を巡る米イランの対立が深まり、通過量は大幅減。",
+  "ais_estimated_vessels": 6,
+  "ais_estimated_tankers": 1,
+  "ais_estimated_cargo": 5,
   "ais_confidence": "low",
-  "ais_estimation_note": "報道記事からの定性情報と背景知識を基に推計"
+  "ais_estimation_note": "流量大幅減の報道に基づき推計"
 }
