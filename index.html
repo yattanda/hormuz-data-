@@ -326,7 +326,7 @@
 
   <!-- Card 6: 中東輸入依存度 -->
   <div class="card orange">
-    <div class="card-label">🌍 米国の中東原油輸入比率（EIA <span style="color:#fbbf24; font-size:0.85em; font-weight:700;">週次</span>）</div>
+    <div class="card-label">🌍 米国の中東原油輸入比率（EIA <span style="color:#fbbf24; font-size:0.85em; font-weight:700;">月次</span>）</div>
     <div style="display:flex;align-items:baseline;gap:4px;">
       <div class="card-value" id="me-import">—</div>
       <div class="card-unit">%</div>
@@ -345,7 +345,7 @@
 
   <!-- 🇯🇵 日本向け調達フロー カード -->
   <div class="card" style="border-color: rgba(56,189,248,0.3); grid-column: span 2;">
-    <div class="card-label">🇯🇵 日本向け調達フロー（<span style="color:#fbbf24; font-size:0.85em; font-weight:700;">週次</span>・6ルート）</div>
+    <div class="card-label">🇯🇵 日本向け調達フロー（<span style="color:#fbbf24; font-size:0.85em; font-weight:700;">月次</span>・6ルート）</div>
 
     <!-- 合計サマリー -->
     <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:4px;">
@@ -402,10 +402,15 @@
 </div>
 
 <footer>
+  <!-- 出典はページ読み込み時に各データファイルの source から組み立てる（renderFooterSources）。
+       ここに書いてあるのは JS が動かない場合のフォールバック。供給元が増えたら
+       データ側の source を直すこと。この文字列に足しても表示は変わらない。 -->
   <strong>データソース:</strong>
-  Gemini AI推計（ニュース・公開データより）/
-  EIA Open Data API（米国エネルギー省・公式統計）/
-  UANI・IEA・Argus Media（手動参照・引用）<br/>
+  <span id="footer-sources">Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）／ EIA Open Data API（米国エネルギー情報局・公式統計）／ 政府統計の総合窓口(e-Stat)（財務省 普通貿易統計）を加工して作成</span><br/>
+  <div id="footer-basis" style="margin:8px 0; padding:8px 10px; border:1px solid rgba(148,163,184,0.25); border-radius:4px;">
+    <div style="font-weight:700; margin-bottom:4px;">各データの基準日</div>
+    <div id="footer-basis-list" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2px 16px;">読み込み中…</div>
+  </div>
   <strong>免責:</strong> 通航船舶数はニュース・公開データに基づく推計値であり、AIS受信による実測値ではありません。投資判断等への利用はご自身の責任でお願いします。<br/>
   <strong>※ 推計に幅が生じる主な理由：</strong>
   ①封鎖・緊張による船舶のAIS意図的停止（ダークシッピング）により公開データ上も捕捉されないこと
@@ -432,6 +437,80 @@ function setText(id, val) {
   if (el) el.textContent = val;
 }
 
+/* ===== データソースと基準日の集約表示 =====
+ * footer を静的な文字列で持つ限り、供給元が変わっても誰かが書き換えるまで実態とずれる。
+ * 実際 2026-04-15 から約4か月半、参照していない機関名を出典として掲げ続けていた。
+ * 各ローダーに読み込んだデータから自己申告させ、footer はそれを描画するだけにする。
+ * 表示順は登録順（＝非同期の完了順）に依存させず FOOTER_ORDER で固定する。
+ */
+const SOURCE_REGISTRY = new Map();
+const FOOTER_ORDER = ['ais', 'flow', 'scenario', 'eia', 'eia-me', 'insurance', 'japan', 'context'];
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function registerSource(entry) {
+  SOURCE_REGISTRY.set(entry.key, entry);
+  renderFooterSources();
+}
+
+function orderedEntries() {
+  const keys = FOOTER_ORDER.filter(k => SOURCE_REGISTRY.has(k));
+  SOURCE_REGISTRY.forEach((_, k) => { if (!keys.includes(k)) keys.push(k); });
+  return keys.map(k => SOURCE_REGISTRY.get(k));
+}
+
+function renderFooterSources() {
+  const entries = orderedEntries();
+
+  const srcEl = document.getElementById('footer-sources');
+  if (srcEl) {
+    const seen = [];
+    entries.forEach(e => {
+      // 政府統計の利用規約に沿った attribution は先頭に「出典：」を含む。
+      // ここは既に「データソース:」の見出しの下なので重ねない。
+      const s = e.source ? e.source.replace(/^出典[:：]\s*/, '') : null;
+      if (s && !seen.includes(s)) seen.push(s);
+    });
+    // 1件も取得できなかった場合は静的なフォールバック文言を残す（空欄にしない）
+    if (seen.length) srcEl.textContent = seen.join(' ／ ');
+  }
+
+  const listEl = document.getElementById('footer-basis-list');
+  if (!listEl) return;
+  listEl.innerHTML = entries.map(e => {
+    const style = e.stale ? ' style="color:#fbbf24;"' : '';
+    const mark  = e.stale ? ' ⚠' : '';
+    return `<div${style}><span style="opacity:0.7;">${escapeHtml(e.label)}:</span> ${escapeHtml(e.basis || '—')}${mark}</div>`;
+  }).join('');
+}
+
+// 推計の前提（平常時流量・ダーク船補正係数・通常時隻数）の基準日。
+// これらは外部に供給元が無く data/context.json で手動管理しているため、
+// 出典欄には出さず基準日一覧にだけ載せる。
+function registerContextSource(ctx) {
+  if (!ctx) {
+    registerSource({ key: 'context', label: '推計の前提（平常時流量・補正係数）', source: null, basis: '取得できませんでした' });
+    return;
+  }
+  const basisDate = ctx.context_updated;
+  const limit = ctx.stale_after_days;
+  let stale = false;
+  if (basisDate && limit) {
+    const days = Math.floor((Date.now() - new Date(basisDate + 'T00:00:00+09:00').getTime()) / 86400000);
+    stale = days > limit;
+  }
+  registerSource({
+    key: 'context',
+    label: '推計の前提（平常時流量・補正係数・通常時隻数）',
+    source: null,
+    basis: basisDate ? `${basisDate} 基準（当サイトで手動管理・出典未確認）` : '—',
+    stale
+  });
+}
+
 // ダーク船補正係数。正は data/context.json の dark_factor で、ここは読めなかったときの既定値。
 // 実測・推計のどちらにも同じ係数を掛けるため、データ側ではなくここに一元的に置く。
 // かつて fetch_ais.py と fetch_manual.py に 1.35 が二重定義されていた。
@@ -443,7 +522,10 @@ let DARK_FACTOR_LABEL = '根拠未検証';
 const ACTUAL_MAX_AGE_H = 48;
 
 // 通常時の日間通航隻数。推計値の「封鎖前比」の分母に使う。
-const NORMAL_VESSELS_PER_DAY = 200;
+// 正は data/context.json の normal_vessels_per_day で、ここは読めなかったときの既定値。
+// この値には一次資料が記録されていない（経緯は context.json の basis を参照）。
+let NORMAL_VESSELS_PER_DAY = 200;
+let NORMAL_VESSELS_VERIFIED = false;
 
 function ageHours(iso) {
   if (!iso) return Infinity;
@@ -486,6 +568,14 @@ function applyDarkFactor(ctx) {
   if (el) el.textContent = DARK_FACTOR_LABEL ? `（${DARK_FACTOR_LABEL}）` : '';
 }
 
+// 「封鎖前比」の分母を data/context.json から取り込む。
+// verified が false の間は、分母が出典未確認であることを表示に出す。
+function applyNormalVessels(ctx) {
+  const nv = ctx && ctx.normal_vessels_per_day;
+  if (nv && typeof nv.value === 'number') NORMAL_VESSELS_PER_DAY = nv.value;
+  if (nv) NORMAL_VESSELS_VERIFIED = nv.verified === true;
+}
+
 function setAisBadge(id, label, count, show) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -519,6 +609,8 @@ async function loadAIS() {
     fetchJSON('context.json')
   ]);
   applyDarkFactor(ctx);
+  applyNormalVessels(ctx);
+  registerContextSource(ctx);
 
   const useActual = actualIsUsable(snap);
   const d = useActual ? snap : est;
@@ -535,6 +627,7 @@ async function loadAIS() {
     setText('ais-factor', DARK_FACTOR);
     setText('ais-source', '—');
     setText('ais-updated', '—');
+    registerSource({ key: 'ais', label: '通航船舶数', source: null, basis: '取得できませんでした' });
     if (estNote) estNote.style.display = 'none';
     return;
   }
@@ -575,7 +668,8 @@ async function loadAIS() {
 
     const pct = typeof count === 'number'
       ? Math.min(Math.round((count / NORMAL_VESSELS_PER_DAY) * 100), 100) : null;
-    setAisBar(pct, `封鎖前比（通常${NORMAL_VESSELS_PER_DAY}隻/日）`);
+    const denomNote = NORMAL_VESSELS_VERIFIED ? '' : '・出典未確認';
+    setAisBar(pct, `封鎖前比（通常${NORMAL_VESSELS_PER_DAY}隻/日${denomNote}）`);
 
     const conf = CONFIDENCE_JA[d.confidence] || '不明';
     setAisOrigin(`AI推計（信頼度: ${conf}）`, '#fbbf24', 'rgba(251,191,36,0.12)');
@@ -598,6 +692,12 @@ async function loadAIS() {
   setText('ais-factor', DARK_FACTOR);
   setText('ais-source', d.source ?? '—');
   setText('ais-updated', fmtDate(d.updated_at));
+  registerSource({
+    key: 'ais',
+    label: useActual ? '通航船舶数（実測）' : '通航船舶数（AI推計）',
+    source: d.source ?? null,
+    basis: fmtDate(d.updated_at)
+  });
 }
 
 async function loadEIA() {
@@ -623,7 +723,26 @@ async function loadEIA() {
       setText('me-updated', fmtDate(d.updated_at));
     }
     setText('eia-updated', fmtDate(d.updated_at));
-  } catch(e) { console.warn('EIA:', e); setText('wti-val','N/A'); }
+    // 出典文字列は同じでも、価格・在庫・生産は週次シリーズ、中東輸入比率は月次シリーズ。
+    // 基準日を一つにまとめると、月次の値が週次の鮮度で読まれてしまう。
+    registerSource({
+      key: 'eia',
+      label: '原油価格・米国在庫・生産（週次シリーズ）',
+      source: d.source ?? null,
+      basis: fmtDate(d.updated_at) + (d.series_week ? `（対象週 ${d.series_week}）` : '')
+    });
+    registerSource({
+      key: 'eia-me',
+      label: '米国の中東原油輸入比率（月次シリーズ）',
+      source: d.source ?? null,
+      basis: fmtDate(d.updated_at)
+    });
+  } catch(e) {
+    console.warn('EIA:', e);
+    setText('wti-val','N/A');
+    registerSource({ key: 'eia', label: '原油価格・米国在庫・生産（週次シリーズ）', source: null, basis: '取得できませんでした' });
+    registerSource({ key: 'eia-me', label: '米国の中東原油輸入比率（月次シリーズ）', source: null, basis: '取得できませんでした' });
+  }
 }
 
 // 推計に与えた前提（data/context.json）の鮮度と出典状況を読者に伝える。
@@ -701,7 +820,9 @@ async function loadManual() {
       }
     }
     setText('ins-source',  d.war_risk_premium_source ?? '—');
-    setText('ins-updated', fmtDate(d.updated_at));
+    // d.updated_at は Gemini による自動分析の実行時刻。保険料率は手動確認のみの項目なので、
+    // 値が無いままこれを出すと「手動確認時のみ更新 ／ 9/4」と読め、確認済みに見えてしまう。
+    setText('ins-updated', (insPct != null && insVerified) ? fmtDate(d.updated_at) : '未確認');
 
     const sc = d.scenario;
     if (sc) {
@@ -723,10 +844,26 @@ async function loadManual() {
         </div>`).join('');
     }
     setText('scenario-updated', fmtDate(d.updated_at));
-    setText('header-updated', `最終手動更新: ${fmtDate(d.updated_at)}`);
+    // 実体は Gemini による自動分析であり、人が手を入れた時刻ではない
+    setText('header-updated', `最終更新（AI自動分析）: ${fmtDate(d.updated_at)}`);
+
+    registerSource({ key: 'flow',     label: 'ホルムズ通過石油 推定流量', source: d.source ?? null, basis: fmtDate(d.updated_at) });
+    registerSource({ key: 'scenario', label: 'シナリオ確率',             source: d.source ?? null, basis: fmtDate(d.updated_at) });
+    registerSource({
+      key: 'insurance',
+      label: '戦争リスク保険料率',
+      source: (insPct != null && insVerified) ? (d.war_risk_premium_source ?? null) : null,
+      basis: (insPct != null && insVerified) ? fmtDate(d.updated_at) : '未確認（値を表示していません）'
+    });
 
 
-  } catch(e) { console.warn('Manual:', e); }
+  } catch(e) {
+    console.warn('Manual:', e);
+    const labels = { flow: 'ホルムズ通過石油 推定流量', scenario: 'シナリオ確率', insurance: '戦争リスク保険料率' };
+    Object.keys(labels).forEach(key => registerSource({
+      key, label: labels[key], source: null, basis: '取得できませんでした'
+    }));
+  }
 }
 // 埋め込み時はメインサイトリンクを非表示
 document.addEventListener('DOMContentLoaded', function() {
@@ -756,6 +893,7 @@ document.addEventListener('DOMContentLoaded', function() {
   } catch (e) {
     console.warn('oil-flow.json fetch failed:', e);
     document.getElementById('jf-total').textContent = 'N/A';
+    registerSource({ key: 'japan', label: '日本向け調達フロー（月次）', source: null, basis: '取得できませんでした' });
     return;
   }
 
@@ -791,6 +929,14 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   }
+
+  registerSource({
+    key: 'japan',
+    label: '日本向け調達フロー（月次）',
+    source: (data.source && data.source.attribution) || null,
+    basis: updated + (data.source && data.source.fetched_at ? ` ／ 取得 ${fmtDate(data.source.fetched_at)}` : ''),
+    stale: staleEl ? staleEl.style.display === 'block' : false
+  });
 
   const container = document.getElementById('jf-routes');
   const ORDER = ['old', 'A', 'B', 'C_US', 'C_GL', 'D'];

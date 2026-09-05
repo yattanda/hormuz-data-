@@ -92,7 +92,7 @@ def build_eia_json(data: dict) -> dict:
     now = datetime.now(jst).isoformat(timespec="seconds")
     return {
         "updated_at": now,
-        "source": "EIA Open Data API v2",
+        "source": "EIA Open Data API v2（米国エネルギー情報局・公式統計）",
         **data,
     }
 

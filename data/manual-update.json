@@ -1,7 +1,7 @@
 {
   "updated_at": "2026-09-05T09:30:54+09:00",
   "auto_generated": true,
-  "source": "Gemini AI自動分析（Google ニュース検索・BBC・Al Jazeera・NYT の公開RSS）",
+  "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-04",
     "age_days": 1,
@@ -10,6 +10,9 @@
     "normal_flow_verified": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
+  "war_risk_premium_manual": null,
+  "war_risk_premium_verified": false,
+  "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
     "B_partial_blockade_pct": 40,

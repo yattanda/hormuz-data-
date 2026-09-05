@@ -33,6 +33,13 @@ RSS_FEEDS = [
 ]
 
 
+# 出典表示に使う文字列。footer はこれを並べて「データソース」欄を組み立てるため、
+# 1件だけ読んでも供給元・モデル・入力が分かる形にする。表示側に文字列を置かない。
+GEMINI_SOURCE = (
+    "Gemini 2.5 Flash による推計"
+    "（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）"
+)
+
 KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait", "封鎖", "ホルムズ", "イラン"]
 
 def fetch_rss_news(max_items=40):
@@ -70,6 +77,30 @@ def load_context(path="data/context.json"):
     """
     with open(path, encoding="utf-8") as f:
         return json.load(f)
+
+
+# 手動でしか確認できない項目。Gemini には生成させない。
+# build_manual_json は毎回ファイルを作り直すため、明示的に引き継がないと
+# 手動で入れた値が翌日の自動更新で消える。実際 2026-05-15 に保険料率を
+# 「手動確認のみ」へ設計変更した後、3フィールドともファイルから失われ、
+# 表示は「手動確認時のみ更新 ／ （AIの実行時刻）」のまま空欄になっていた。
+MANUAL_ONLY_DEFAULTS = {
+    "war_risk_premium_manual": None,
+    "war_risk_premium_verified": False,
+    "war_risk_premium_source": None,
+}
+
+
+def load_existing_manual(path="data/manual-update.json"):
+    """既存の manual-update.json を読む。無い・壊れている場合は空 dict を返す。"""
+    try:
+        with open(path, encoding="utf-8") as f:
+            loaded = json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"[Manual] 既存ファイルを読めませんでした（手動項目は既定値になります）: {e}",
+              file=sys.stderr)
+        return {}
+    return loaded if isinstance(loaded, dict) else {}
 
 
 def context_age_days(context):
@@ -195,21 +226,26 @@ def analyze_with_gemini(api_key, news_items, context):
     print("[Gemini] All retries failed.", file=sys.stderr)
     return None
 
-def build_manual_json(data, context):
+def build_manual_json(data, context, previous=None):
     """manual-update.json の形式に変換。
 
     前提の基準日と経過日数を出力に含める。表示側はこれを見て
     「前提が古い」ことを読者に伝えられる。含めなければ、前提の陳腐化は
     誰にも気付かれないまま出力に効き続ける。
+
+    previous には既存ファイルの内容を渡す。手動確認でしか埋まらない項目
+    （MANUAL_ONLY_DEFAULTS）はここから引き継ぐ。
     """
     jst = timezone(timedelta(hours=9))
     now = datetime.now(jst).isoformat(timespec="seconds")
     age = context_age_days(context)
     stale_after = context.get("stale_after_days")
+    prev = previous or {}
+    carried = {k: prev.get(k, v) for k, v in MANUAL_ONLY_DEFAULTS.items()}
     return {
         "updated_at": now,
         "auto_generated": True,
-        "source": "Gemini AI自動分析（Google ニュース検索・BBC・Al Jazeera・NYT の公開RSS）",
+        "source": GEMINI_SOURCE,
         "context": {
             "updated": context.get("context_updated"),
             "age_days": age,
@@ -218,6 +254,8 @@ def build_manual_json(data, context):
             "normal_flow_verified": context["normal_flow_mbpd"].get("verified", False),
             "note": "この推計に与えた前提の基準日。data/context.json で管理している。",
         },
+        # 手動項目を data より先に置く。Gemini の出力がこれらを上書きしないようにする
+        **carried,
         **data
     }
 
@@ -296,7 +334,7 @@ def save_ais_estimate(data, path="data/ais-estimate.json"):
         "updated_at": now,
         # 実測か推計かを、source 文字列ではなくこのフィールドで判別する
         "measurement": "estimate",
-        "source": "Gemini AI推計（ニュース・公開データより）",
+        "source": GEMINI_SOURCE,
         "model": "gemini-2.5-flash",
         "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
         "estimated_vessels": vessels,
@@ -355,7 +393,7 @@ def main():
         print("[Manual] Gemini analysis failed. Skipping update.", file=sys.stderr)
         sys.exit(1)
 
-    manual = build_manual_json(data, context)
+    manual = build_manual_json(data, context, load_existing_manual())
     save_manual(manual)
 
     # AIS推計は実測とは別ファイル（data/ais-estimate.json）に保存する
