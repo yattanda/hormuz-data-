@@ -518,6 +518,32 @@ function registerContextSource(ctx) {
     basis: basisDate ? `${basisDate} 基準（${note}）` : '—',
     stale
   });
+  registerContextTimeline(ctx);
+}
+
+// 推計に与える現況認識（【確定した経緯】）の鮮度。
+// 前提値の基準日 context_updated は流量・隻数・係数を変えたときにしか動かず、
+// 経緯を追記しないまま日が経っても新しいままになる。別に測って表に出す。
+function registerContextTimeline(ctx) {
+  const dates = (ctx.timeline || [])
+    .map(e => e && e.date)
+    .filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d))
+    .sort();
+  const latest = dates.length ? dates[dates.length - 1] : null;
+  const limit = ctx.timeline_stale_after_days;
+  let stale = false;
+  let age = null;
+  if (latest) {
+    age = Math.floor((Date.now() - new Date(latest + 'T00:00:00+09:00').getTime()) / 86400000);
+    if (limit) stale = age > limit;
+  }
+  registerSource({
+    key: 'context-timeline',
+    label: '推計に与えた経緯（最新の事実）',
+    source: null,
+    basis: latest ? `${latest} まで（${age}日経過）` : '—',
+    stale
+  });
 }
 
 // ダーク船補正係数。正は data/context.json の dark_factor で、ここは読めなかったときの既定値。

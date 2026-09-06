@@ -114,6 +114,38 @@ def context_age_days(context):
     return (datetime.now(jst).date() - basis).days
 
 
+def timeline_latest_date(context):
+    """timeline に登録された事実のうち最も新しい日付。読めなければ None。"""
+    dates = []
+    for item in context.get("timeline", []):
+        try:
+            dates.append(datetime.strptime(str(item.get("date", "")), "%Y-%m-%d").date())
+        except ValueError:
+            continue
+    return max(dates) if dates else None
+
+
+def timeline_age_days(context):
+    """timeline の最新エントリからの経過日数。
+
+    context_updated は前提値（流量・隻数・係数）を変えたときに更新するもので、
+    timeline に事実を足さなくても新しいままになりうる。timeline は推計の
+    現況認識そのものを与えるため、鮮度を別に測る。
+    """
+    latest = timeline_latest_date(context)
+    if latest is None:
+        return None
+    jst = timezone(timedelta(hours=9))
+    return (datetime.now(jst).date() - latest).days
+
+
+def timeline_is_stale(context):
+    """timeline が閾値を超えて古いか。判定できない場合は False。"""
+    age = timeline_age_days(context)
+    limit = context.get("timeline_stale_after_days")
+    return age is not None and limit is not None and age > limit
+
+
 def build_timeline_text(context):
     """timeline を「- 日付: 事実（出典）」の行に整形する。"""
     lines = []
@@ -272,6 +304,7 @@ def build_manual_json(data, context, previous=None):
     now = datetime.now(jst).isoformat(timespec="seconds")
     age = context_age_days(context)
     stale_after = context.get("stale_after_days")
+    tl_latest = timeline_latest_date(context)
     prev = previous or {}
     carried = {k: prev.get(k, v) for k, v in MANUAL_ONLY_DEFAULTS.items()}
     return {
@@ -284,6 +317,12 @@ def build_manual_json(data, context, previous=None):
             "stale_after_days": stale_after,
             "stale": (age is not None and stale_after is not None and age > stale_after),
             "normal_flow_verified": context["normal_flow_mbpd"].get("verified", False),
+            "timeline_updated": (
+                tl_latest.isoformat() if tl_latest is not None else None
+            ),
+            "timeline_age_days": timeline_age_days(context),
+            "timeline_stale_after_days": context.get("timeline_stale_after_days"),
+            "timeline_stale": timeline_is_stale(context),
             "note": "この推計に与えた前提の基準日。data/context.json で管理している。",
         },
         # 手動項目を data より先に置く。Gemini の出力がこれらを上書きしないようにする
@@ -415,6 +454,21 @@ def main():
         print(
             f"[Context] WARNING: 前提が {stale_after} 日を超えて更新されていません。"
             "data/context.json を見直してください。",
+            file=sys.stderr,
+        )
+
+    tl_age = timeline_age_days(context)
+    tl_limit = context.get("timeline_stale_after_days")
+    tl_latest = timeline_latest_date(context)
+    print(
+        f"[Context] 経緯の最新: {tl_latest}"
+        f"（{tl_age}日経過 / 閾値 {tl_limit}日）"
+    )
+    if timeline_is_stale(context):
+        print(
+            f"[Context] WARNING: 経緯（timeline）が {tl_limit} 日を超えて追記されていません。"
+            "推計は古い現況認識のまま出力されます。data/context.json の timeline に"
+            "直近の事実を追記してください。",
             file=sys.stderr,
         )
 

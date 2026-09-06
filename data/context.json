@@ -2,6 +2,8 @@
   "_comment": "Gemini プロンプトに注入する前提を集約したファイル。scripts/fetch_manual.py が読み込む。ここを更新すれば Python コードを変更せずに前提を差し替えられる。値を変えたら context_updated も必ず更新すること。",
   "context_updated": "2026-09-05",
   "stale_after_days": 30,
+  "_comment_timeline_stale": "timeline に事実を追記しないまま経過してよい日数。context_updated は前提値（流量・隻数・係数）を変えたときにしか動かないため、経緯の陳腐化はこの閾値で別に検知する。超えると fetch_manual.py が警告を出し、manual-update.json の context.timeline_stale が true になる。",
+  "timeline_stale_after_days": 7,
 
   "normal_flow_mbpd": {
     "value": 20.9,
