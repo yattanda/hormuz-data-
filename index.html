@@ -220,8 +220,10 @@
       </div>
     </div>
     <div class="card-sub">
+      <div id="ais-darkblock">
       推定実通航数（ダーク船補正）: <strong id="ais-estimated">—</strong> 隻<br/>
       <span style="font-size:0.63rem;">補正係数 ×<span id="ais-factor">—</span><span id="ais-factor-basis"></span></span>
+      </div>
       <div id="ais-estnote" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     </div>
     <div class="card-footer">
@@ -490,7 +492,7 @@ function renderFooterSources() {
 // 推計の前提（平常時流量・ダーク船補正係数・通常時隻数）の基準日。
 // これらは外部に供給元が無く data/context.json で手動管理しているため、
 // 出典欄には出さず基準日一覧にだけ載せる。
-function registerContextSource(ctx) {
+function registerContextSource(ctx, darkApplied) {
   if (!ctx) {
     registerSource({ key: 'context', label: '推計の前提（平常時流量・補正係数）', source: null, basis: '取得できませんでした' });
     return;
@@ -507,13 +509,17 @@ function registerContextSource(ctx) {
   const unverified = [];
   if (ctx.normal_flow_mbpd && ctx.normal_flow_mbpd.verified !== true) unverified.push('平常時流量');
   if (ctx.normal_vessels_per_day && ctx.normal_vessels_per_day.verified !== true) unverified.push('通常時隻数');
-  if (ctx.dark_factor && ctx.dark_factor.verified !== true) unverified.push('補正係数');
+  // 補正係数は実測時にしか掛からない。掛けていない回に未確認と書くと、
+  // 表示に入っていない前提を入っているかのように読ませてしまう。
+  if (darkApplied && ctx.dark_factor && ctx.dark_factor.verified !== true) unverified.push('補正係数');
   const note = unverified.length
     ? `当サイトで手動管理・${unverified.join('／')}は出典未確認`
     : '当サイトで手動管理・一次資料で確認済み';
   registerSource({
     key: 'context',
-    label: '推計の前提（平常時流量・補正係数・通常時隻数）',
+    label: darkApplied
+      ? '推計の前提（平常時流量・補正係数・通常時隻数）'
+      : '推計の前提（平常時流量・通常時隻数）',
     source: null,
     basis: basisDate ? `${basisDate} 基準（${note}）` : '—',
     stale
@@ -603,6 +609,12 @@ function applyDarkFactor(ctx) {
   if (el) el.textContent = DARK_FACTOR_LABEL ? `（${DARK_FACTOR_LABEL}）` : '';
 }
 
+// 補正後の隻数は AIS 受信の実測が採れているときにだけ出す。
+function setDarkBlockVisible(visible) {
+  const el = document.getElementById('ais-darkblock');
+  if (el) el.style.display = visible ? '' : 'none';
+}
+
 // 「封鎖前比」の分母を data/context.json から取り込む。
 // verified が false の間は、分母が出典未確認であることを表示に出す。
 function applyNormalVessels(ctx) {
@@ -645,9 +657,9 @@ async function loadAIS() {
   ]);
   applyDarkFactor(ctx);
   applyNormalVessels(ctx);
-  registerContextSource(ctx);
-
   const useActual = actualIsUsable(snap);
+  registerContextSource(ctx, useActual);
+
   const d = useActual ? snap : est;
   const estNote = document.getElementById('ais-estnote');
 
@@ -658,8 +670,7 @@ async function loadAIS() {
     setAisBadge('ais-cargo',  '', null, false);
     setAisBadge('ais-other',  '', null, false);
     setAisBar(null, '—');
-    setText('ais-estimated', '—');
-    setText('ais-factor', DARK_FACTOR);
+    setDarkBlockVisible(false);
     setText('ais-source', '—');
     setText('ais-updated', '—');
     registerSource({ key: 'ais', label: '通航船舶数', source: null, basis: '取得できませんでした' });
@@ -716,6 +727,7 @@ async function loadAIS() {
       if (d.method) parts.push(d.method + '。');
       if (d.estimation_note) parts.push(`推計根拠: ${d.estimation_note}。`);
       parts.push(`信頼度: ${conf}。`);
+      parts.push('AIS受信の実測ではないため、ダーク船補正は適用していません。');
       if (snap && snap.fetch_ok !== true) parts.push('実測は未取得のため推計を表示しています。');
       else if (snap) parts.push('実測が採用条件を満たさないため推計を表示しています。');
       estNote.textContent = parts.join('');
@@ -723,8 +735,13 @@ async function loadAIS() {
   }
 
   setText('ais-count', count ?? '—');
-  setText('ais-estimated', typeof count === 'number' ? Math.round(count * DARK_FACTOR) : '—');
-  setText('ais-factor', DARK_FACTOR);
+  // ダーク船補正は AIS 受信の実測にだけ掛ける。AI推計は報道から「通過中の船舶数」そのものを
+  // 見積もっており、AIS で見えた分ではない。そこへ掛けると同じ暗数を二重に数えることになる。
+  setDarkBlockVisible(useActual);
+  if (useActual) {
+    setText('ais-estimated', typeof count === 'number' ? Math.round(count * DARK_FACTOR) : '—');
+    setText('ais-factor', DARK_FACTOR);
+  }
   setText('ais-source', d.source ?? '—');
   setText('ais-updated', fmtDate(d.updated_at));
   registerSource({

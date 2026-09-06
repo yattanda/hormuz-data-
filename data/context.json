@@ -34,13 +34,13 @@
   },
 
   "dark_factor": {
-    "_comment": "AIS 非検出（ダークシッピング）船舶を見込むための補正係数。index.html が検知隻数に掛けて「推定実通航数」を出す。値と帰属をここで一元管理し、表示側は verified を見て文言を切り替える。",
+    "_comment": "AIS 非検出（ダークシッピング）船舶を見込むための補正係数。index.html が AIS 受信の実測隻数に掛けて「推定実通航数」を出す。AI推計へのフォールバック時は掛けない（推計は報道から通過中の船舶数そのものを見積もっており、AIS で見えた分ではないため二重計上になる。2026-09-06 に是正）。値と帰属をここで一元管理し、表示側は verified を見て文言を切り替える。",
     "value": 1.35,
     "verified": false,
     "label": "当サイト独自の暫定値・根拠未検証",
     "basis": "2026-04-15 の data/ais-snapshot.json 初版に、値と「UANI/Kpler公開レポート推定ベース」という帰属が同時に書き込まれた。導出過程・参照レポート名・URL のいずれも記録されておらず、2026-09-04 の調査で UANI・Kpler がこの係数を公表した事実を確認できなかった。帰属表示は 2026-09-04 に削除した。",
     "source_url": null,
-    "todo": "係数の設計自体を見直す。AIS 消灯率は時期によって大きく変動し（Kpler 集計として 2026-08 時点で約 8 割との報道がある）、固定倍率で近似できるかを含めて再検討する。出典と基準期間を確定できたら label と source_url を埋めて verified を true にする。"
+    "todo": "値そのものが未検証。1.35 は AIS 消灯率 25.9% に相当するが、Lloyd's List Intelligence の Strait of Hormuz Brief（2026-07-29 発行・対象週 7/20-26）は全船種の 70% が AIS で追跡不能としており、直前3週の推移も 42% → 55% → 70% と上昇している。どの週の実測とも整合しない過小な値である。実測（VesselAPI）が復旧した時点で、消灯率 70% に対応する 3.33 を起点に再設定する。ただし Lloyd's の母集団は全船種・週次であり、当サイトの bbox 実測と一致する保証がないため、突き合わせは実測復旧後に行う。なお Kpler 集計の「2026-08 に 8 割超」（Al Jazeera 2026-08-20）は dark or otherwise unclassified routes の割合であって AIS 消灯率ではなく、Kpler はこれらの船を隻数に数えているため係数の根拠には使えない（2026-09-06 に確認）。出典と基準期間を確定できたら label と source_url を埋めて verified を true にする。参照: https://www.lloydslistintelligence.com/resources/blog/strait-of-hormuz-brief-29-july-2026"
   },
 
   "scenario_definitions": {
