@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-09-05T13:42:08+09:00",
+  "updated_at": "2026-09-06T09:30:57+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
   "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
-  "estimated_vessels": 12,
+  "estimated_vessels": 8,
   "breakdown": {
-    "tanker": 10,
-    "cargo": 2,
+    "tanker": 2,
+    "cargo": 6,
     "other": 0
   },
-  "confidence": "low",
-  "estimation_note": "通航隻数はKpler/Lloyds報道、船種内訳は海峡特性からの推計",
+  "confidence": "medium",
+  "estimation_note": "直近データからさらに減少、3ヶ月ぶり低水準と報道",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,

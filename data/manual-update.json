@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-05T13:42:08+09:00",
+  "updated_at": "2026-09-06T09:30:57+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 0,
+    "age_days": 1,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
@@ -15,17 +15,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 35,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 20
+    "B_partial_blockade_pct": 30,
+    "C_full_blockade_pct": 50,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 2.09,
+  "hormuz_daily_flow_mbpd": 1.672,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 90,
-  "last_manual_note": "米イラン衝突が再燃し、ホルムズ海峡でタンカー攻撃や相互攻撃が頻発。通航隻数は低水準が続き、経済疲弊が深刻化。外交は停滞。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 10,
-  "ais_estimated_cargo": 2,
-  "ais_confidence": "low",
-  "ais_estimation_note": "通航隻数はKpler/Lloyds報道、船種内訳は海峡特性からの推計"
+  "flow_disruption_pct": 92,
+  "last_manual_note": "米イラン間でタンカー攻撃の応酬が続き、米国は「無期限封鎖」を宣言。海峡通航量は3ヶ月ぶりの低水準に落ち込み、膠着状態が深化。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 6,
+  "ais_confidence": "medium",
+  "ais_estimation_note": "直近データからさらに減少、3ヶ月ぶり低水準と報道"
 }
