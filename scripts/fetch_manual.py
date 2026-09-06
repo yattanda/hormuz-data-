@@ -137,6 +137,13 @@ def build_scenario_text(context):
     return "\n".join(lines)
 
 
+def qualifier(entry):
+    """前提値に付ける但し書き。verified が真なら何も付けない。"""
+    if isinstance(entry, dict) and entry.get("verified") is True:
+        return ""
+    return "（出典未確認の概数）"
+
+
 def build_prompt(news_items, context):
     """Gemini へ渡すプロンプトを組み立てる。
 
@@ -148,6 +155,10 @@ def build_prompt(news_items, context):
     """
     normal_flow = context["normal_flow_mbpd"]["value"]
     normal_vessels = context.get("normal_vessels_per_day", {}).get("value")
+    # 一次資料で裏づけた前提まで「出典未確認」と書かない。
+    # 不当な但し書きは、その前提から離れた推計を誘発する。
+    flow_note = qualifier(context.get("normal_flow_mbpd"))
+    vessels_note = qualifier(context.get("normal_vessels_per_day"))
     context_updated = context.get("context_updated", "不明")
     timeline_text = build_timeline_text(context)
     scenario_text = build_scenario_text(context)
@@ -160,7 +171,7 @@ def build_prompt(news_items, context):
     # 隻数の前提は表示側の「封鎖前比」の分母と同じ値を使う。
     # 分子と分母で前提が違うと割合が読めなくなる。
     vessels_line = (
-        f"- 通常時のホルムズ通過隻数は約{normal_vessels}隻/日（出典未確認の概数）\n"
+        f"- 通常時のホルムズ通過隻数は約{normal_vessels}隻/日{vessels_note}\n"
         if normal_vessels is not None else ""
     )
 
@@ -173,7 +184,7 @@ def build_prompt(news_items, context):
 {timeline_text}
 
 【流量に関する前提】
-- 通常時のホルムズ通過量は約{normal_flow}百万バレル/日（出典未確認の概数）
+- 通常時のホルムズ通過量は約{normal_flow}百万バレル/日{flow_note}
 {vessels_line}- 現在の水準は上記の経緯と最新ニュースから判断すること。あらかじめ増減の方向を仮定しない
 
 【最新ニュース】（{len(news_items)}件のニュース記事を分析）
