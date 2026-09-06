@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-09-06T09:30:57+09:00",
+  "updated_at": "2026-09-06T13:51:04+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
   "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
-  "estimated_vessels": 8,
+  "estimated_vessels": 10,
   "breakdown": {
-    "tanker": 2,
-    "cargo": 6,
+    "tanker": 5,
+    "cargo": 5,
     "other": 0
   },
-  "confidence": "medium",
-  "estimation_note": "直近データからさらに減少、3ヶ月ぶり低水準と報道",
+  "confidence": "low",
+  "estimation_note": "通航隻数は3ヶ月ぶり低水準。AIS不明が多い。",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
