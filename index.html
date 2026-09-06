@@ -502,11 +502,20 @@ function registerContextSource(ctx) {
     const days = Math.floor((Date.now() - new Date(basisDate + 'T00:00:00+09:00').getTime()) / 86400000);
     stale = days > limit;
   }
+  // 一次資料で裏づけた項目まで「出典未確認」と書かないよう、
+  // context.json の verified を見て未検証の項目だけを名指しする。
+  const unverified = [];
+  if (ctx.normal_flow_mbpd && ctx.normal_flow_mbpd.verified !== true) unverified.push('平常時流量');
+  if (ctx.normal_vessels_per_day && ctx.normal_vessels_per_day.verified !== true) unverified.push('通常時隻数');
+  if (ctx.dark_factor && ctx.dark_factor.verified !== true) unverified.push('補正係数');
+  const note = unverified.length
+    ? `当サイトで手動管理・${unverified.join('／')}は出典未確認`
+    : '当サイトで手動管理・一次資料で確認済み';
   registerSource({
     key: 'context',
     label: '推計の前提（平常時流量・補正係数・通常時隻数）',
     source: null,
-    basis: basisDate ? `${basisDate} 基準（当サイトで手動管理・出典未確認）` : '—',
+    basis: basisDate ? `${basisDate} 基準（${note}）` : '—',
     stale
   });
 }
