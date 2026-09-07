@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-06T13:51:04+09:00",
+  "updated_at": "2026-09-07T09:30:54+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 1,
+    "age_days": 2,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-03",
-    "timeline_age_days": 3,
+    "timeline_age_days": 4,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -20,16 +20,16 @@
   "scenario": {
     "A_diplomacy_pct": 0,
     "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 50,
-    "D_escalation_pct": 30
+    "C_full_blockade_pct": 60,
+    "D_escalation_pct": 20
   },
-  "hormuz_daily_flow_mbpd": 1.8,
+  "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 91,
-  "last_manual_note": "米イラン間で報復が続き、米国は「無期限封鎖」を宣言し経済圧力を強化。イランは対話に応じず海峡閉鎖を主張。通航量は低水準で膠着状態。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 5,
-  "ais_estimated_cargo": 5,
-  "ais_confidence": "low",
-  "ais_estimation_note": "通航隻数は3ヶ月ぶり低水準。AIS不明が多い。"
+  "flow_disruption_pct": 88,
+  "last_manual_note": "米イラン間の対立が激化。米国は「無期限封鎖」を表明し、イランは「排除水域」設定と報復攻撃を示唆。外交は停滞し、通航量は低水準が続く。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 10,
+  "ais_estimated_cargo": 2,
+  "ais_confidence": "medium",
+  "ais_estimation_note": "9/3報道の隻数、AISダーク化考慮"
 }
