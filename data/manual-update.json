@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-08T09:31:02+09:00",
+  "updated_at": "2026-09-08T13:53:18+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 0,
-    "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 50
+    "B_partial_blockade_pct": 50,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 25
   },
-  "hormuz_daily_flow_mbpd": 1.9,
+  "hormuz_daily_flow_mbpd": 1.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 91,
-  "last_manual_note": "米国が「無期限封鎖」を宣言し、イランも「排他水域」設置を計画。軍事的・経済的緊張が高まり、通航隻数は3ヶ月ぶりの低水準に。",
-  "ais_estimated_vessels": 9,
-  "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 3,
+  "flow_disruption_pct": 93,
+  "last_manual_note": "米国の経済圧力とホルムズ封鎖継続に対し、イランは「排除ゾーン」設定や報復を警告。対話の兆しなく通航量は低水準が続く。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 2,
   "ais_confidence": "medium",
-  "ais_estimation_note": "通航隻数がさらに減少したため"
+  "ais_estimation_note": "直近の隻数データと更なる減少報道に基づき推計"
 }
