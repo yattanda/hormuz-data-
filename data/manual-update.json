@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-08T13:53:18+09:00",
+  "updated_at": "2026-09-09T09:31:03+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 3,
+    "age_days": 4,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-03",
-    "timeline_age_days": 5,
+    "timeline_age_days": 6,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 0,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 25,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 35,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 30
   },
-  "hormuz_daily_flow_mbpd": 1.5,
+  "hormuz_daily_flow_mbpd": 2.0,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 93,
-  "last_manual_note": "米国の経済圧力とホルムズ封鎖継続に対し、イランは「排除ゾーン」設定や報復を警告。対話の兆しなく通航量は低水準が続く。",
-  "ais_estimated_vessels": 10,
+  "flow_disruption_pct": 90,
+  "last_manual_note": "米国はホルムズ封鎖とイランタンカー攻撃を継続、イランは排他水域設定で対抗。外交停滞し緊張高まる中、通航隻数は低水準で推移。",
+  "ais_estimated_vessels": 12,
   "ais_estimated_tankers": 8,
-  "ais_estimated_cargo": 2,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "直近の隻数データと更なる減少報道に基づき推計"
+  "ais_estimated_cargo": 4,
+  "ais_confidence": "low",
+  "ais_estimation_note": "AIS不明船が多く隻数・内訳は推測"
 }
