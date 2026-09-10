@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-09T13:54:41+09:00",
+  "updated_at": "2026-09-10T09:30:57+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 4,
+    "age_days": 5,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-03",
-    "timeline_age_days": 6,
+    "timeline_age_days": 7,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 0,
-    "B_partial_blockade_pct": 25,
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 20,
     "C_full_blockade_pct": 35,
     "D_escalation_pct": 40
   },
-  "hormuz_daily_flow_mbpd": 2.09,
+  "hormuz_daily_flow_mbpd": 5.16,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 90,
-  "last_manual_note": "米イラン間でタンカー攻撃が応酬し、イランは「排除区域」宣言を計画。米国は「無期限封鎖」と経済圧力強化を表明し、対話は停止している。",
+  "flow_disruption_pct": 75,
+  "last_manual_note": "米イラン双方による報復激化とイランの排他的経済水域設定計画により、ホルムズ情勢は全面対決のリスクが高まっている。外交は停滞。",
   "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 8,
-  "ais_estimated_cargo": 4,
+  "ais_estimated_tankers": 9,
+  "ais_estimated_cargo": 3,
   "ais_confidence": "medium",
-  "ais_estimation_note": "通航隻数は直近報道値を採用"
+  "ais_estimation_note": "日平均通航隻数は報道あり。内訳は推測。"
 }
