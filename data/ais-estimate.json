@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-11T09:33:05+09:00",
+  "updated_at": "2026-09-11T13:53:05+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
@@ -11,7 +11,7 @@
     "other": 0
   },
   "confidence": "low",
-  "estimation_note": "9/3報道平均隻数とその後減速の報道から推計。AISダーク化も考慮。",
+  "estimation_note": "隻数は報道の9割減から更に減速を推定。内訳は推測。",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
