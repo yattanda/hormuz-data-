@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-12T09:31:43+09:00",
+  "updated_at": "2026-09-12T13:46:07+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 45
+    "B_partial_blockade_pct": 50,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 2.09,
+  "hormuz_daily_flow_mbpd": 2.1,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 90,
-  "last_manual_note": "米イラン軍事衝突激化、タンカー攻撃と報復応酬。フーシ派が紅海掌握、サウジパイプライン停止。原油高騰、ホルムズ通航減継続。",
+  "last_manual_note": "米国は「無期限封鎖」を脅威とし、イランは「排除水域」設定を計画。MOUは失効し、通航量は9割減で膠着状態。",
   "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 8,
-  "ais_estimated_cargo": 4,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "9/3確定情報に準拠。内訳は推定。"
+  "ais_estimated_tankers": 0,
+  "ais_estimated_cargo": 0,
+  "ais_confidence": "low",
+  "ais_estimation_note": "通航隻数報道あるもタンカー・貨物船の内訳不明"
 }
