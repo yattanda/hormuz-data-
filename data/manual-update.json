@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-11T13:53:05+09:00",
+  "updated_at": "2026-09-12T09:31:43+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 6,
+    "age_days": 7,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-03",
-    "timeline_age_days": 8,
+    "timeline_age_days": 9,
     "timeline_stale_after_days": 7,
     "timeline_stale": true,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 0,
-    "B_partial_blockade_pct": 35,
-    "C_full_blockade_pct": 45,
-    "D_escalation_pct": 20
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 45
   },
   "hormuz_daily_flow_mbpd": 2.09,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 90,
-  "last_manual_note": "米イラン間の報復が激化し、イランは排除区域設定を試み、米国はタンカー攻撃を継続。外交は停滞。",
-  "ais_estimated_vessels": 10,
+  "last_manual_note": "米イラン軍事衝突激化、タンカー攻撃と報復応酬。フーシ派が紅海掌握、サウジパイプライン停止。原油高騰、ホルムズ通航減継続。",
+  "ais_estimated_vessels": 12,
   "ais_estimated_tankers": 8,
-  "ais_estimated_cargo": 2,
-  "ais_confidence": "low",
-  "ais_estimation_note": "隻数は報道の9割減から更に減速を推定。内訳は推測。"
+  "ais_estimated_cargo": 4,
+  "ais_confidence": "medium",
+  "ais_estimation_note": "9/3確定情報に準拠。内訳は推定。"
 }
