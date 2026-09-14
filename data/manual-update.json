@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-14T09:31:07+09:00",
+  "updated_at": "2026-09-14T14:09:51+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 10,
+    "B_partial_blockade_pct": 20,
     "C_full_blockade_pct": 45,
-    "D_escalation_pct": 40
+    "D_escalation_pct": 30
   },
   "hormuz_daily_flow_mbpd": 2.09,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 90,
-  "last_manual_note": "米イラン衝突激化、ホルムズ海峡の封鎖とイランへの攻撃継続。外交対話は停滞し、通航量は低水準で推移。",
-  "ais_estimated_vessels": 13,
-  "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 7,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "確定経緯隻数を採用。内訳は推測"
+  "last_manual_note": "米イラン衝突継続。米国は封鎖を強化しイラン経済は疲弊。イランは商船攻撃・航行制限を主張し情勢緊迫。外交は停滞。",
+  "ais_estimated_vessels": 4,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 1,
+  "ais_confidence": "low",
+  "ais_estimation_note": "AISダーク船が大半との報道による推計"
 }
