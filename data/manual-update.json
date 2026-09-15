@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-15T09:31:12+09:00",
+  "updated_at": "2026-09-15T14:04:06+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 15,
+    "B_partial_blockade_pct": 45,
     "C_full_blockade_pct": 40,
-    "D_escalation_pct": 40
+    "D_escalation_pct": 10
   },
   "hormuz_daily_flow_mbpd": 2.6,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 88,
-  "last_manual_note": "外交停滞と強硬姿勢が続き、米国のタンカー攻撃でエスカレーションの兆候が鮮明。通航量は9割減で封鎖状態が深刻化している。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 10,
-  "ais_estimated_cargo": 2,
+  "last_manual_note": "米国の「タンカー・フォー・タンカー」方針適用で経済・軍事圧力が強化。外交は停滞し、海峡通航は9割減の膠着状態が続く。",
+  "ais_estimated_vessels": 6,
+  "ais_estimated_tankers": 5,
+  "ais_estimated_cargo": 1,
   "ais_confidence": "low",
-  "ais_estimation_note": "AISダーク船多く内訳不明。報道の総隻数で推計"
+  "ais_estimation_note": "1日平均通過隻数12隻から推計。内訳不明。"
 }
