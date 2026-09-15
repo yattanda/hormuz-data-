@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-14T14:09:51+09:00",
+  "updated_at": "2026-09-15T09:31:12+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 9,
+    "age_days": 10,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-03",
-    "timeline_age_days": 11,
+    "timeline_age_days": 12,
     "timeline_stale_after_days": 7,
     "timeline_stale": true,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 45,
-    "D_escalation_pct": 30
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 40,
+    "D_escalation_pct": 40
   },
-  "hormuz_daily_flow_mbpd": 2.09,
+  "hormuz_daily_flow_mbpd": 2.6,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 90,
-  "last_manual_note": "米イラン衝突継続。米国は封鎖を強化しイラン経済は疲弊。イランは商船攻撃・航行制限を主張し情勢緊迫。外交は停滞。",
-  "ais_estimated_vessels": 4,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 1,
+  "flow_disruption_pct": 88,
+  "last_manual_note": "外交停滞と強硬姿勢が続き、米国のタンカー攻撃でエスカレーションの兆候が鮮明。通航量は9割減で封鎖状態が深刻化している。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 10,
+  "ais_estimated_cargo": 2,
   "ais_confidence": "low",
-  "ais_estimation_note": "AISダーク船が大半との報道による推計"
+  "ais_estimation_note": "AISダーク船多く内訳不明。報道の総隻数で推計"
 }
