@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-15T14:04:06+09:00",
+  "updated_at": "2026-09-16T09:31:02+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 10,
+    "age_days": 11,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-03",
-    "timeline_age_days": 12,
+    "timeline_age_days": 13,
     "timeline_stale_after_days": 7,
     "timeline_stale": true,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 45,
+    "B_partial_blockade_pct": 25,
     "C_full_blockade_pct": 40,
-    "D_escalation_pct": 10
+    "D_escalation_pct": 30
   },
-  "hormuz_daily_flow_mbpd": 2.6,
+  "hormuz_daily_flow_mbpd": 2.09,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 88,
-  "last_manual_note": "米国の「タンカー・フォー・タンカー」方針適用で経済・軍事圧力が強化。外交は停滞し、海峡通航は9割減の膠着状態が続く。",
-  "ais_estimated_vessels": 6,
-  "ais_estimated_tankers": 5,
-  "ais_estimated_cargo": 1,
-  "ais_confidence": "low",
-  "ais_estimation_note": "1日平均通過隻数12隻から推計。内訳不明。"
+  "flow_disruption_pct": 90,
+  "last_manual_note": "USの「タンカー・フォー・タンカー」適用でイランタンカー攻撃。ホルムズ通航は9割減が続き、外交は停滞。全面衝突のリスク上昇。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 10,
+  "ais_estimated_cargo": 2,
+  "ais_confidence": "medium",
+  "ais_estimation_note": "通航隻数は報道に基づく。内訳は推定。"
 }
