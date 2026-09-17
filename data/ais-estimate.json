@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-17T09:31:11+09:00",
+  "updated_at": "2026-09-17T14:02:10+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
@@ -11,7 +11,7 @@
     "other": 0
   },
   "confidence": "low",
-  "estimation_note": "AIS可視隻数は報道。内訳は推測。",
+  "estimation_note": "AISデータが少なく内訳は推測",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
