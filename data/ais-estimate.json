@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-09-17T14:02:10+09:00",
+  "updated_at": "2026-09-18T09:31:07+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
   "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
   "estimated_vessels": 12,
   "breakdown": {
-    "tanker": 10,
-    "cargo": 2,
+    "tanker": 8,
+    "cargo": 4,
     "other": 0
   },
   "confidence": "low",
-  "estimation_note": "AISデータが少なく内訳は推測",
+  "estimation_note": "Kpler/Lloyd's Listの通航隻数を参照。タンカー・貨物船の内訳は推測。AISダーク化の指摘あり。",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,

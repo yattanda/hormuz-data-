@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-17T14:02:10+09:00",
+  "updated_at": "2026-09-18T09:31:07+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 12,
+    "age_days": 13,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-03",
-    "timeline_age_days": 14,
+    "timeline_age_days": 15,
     "timeline_stale_after_days": 7,
     "timeline_stale": true,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 25,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 35
+    "B_partial_blockade_pct": 60,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 2.61,
+  "hormuz_daily_flow_mbpd": 2.09,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 88,
-  "last_manual_note": "米軍がイランタンカーを攻撃し、ホルムズ海峡の通航隻数は通常時の1割程度で推移。米高官は強硬姿勢を維持し、外交は停滞している。",
+  "flow_disruption_pct": 90,
+  "last_manual_note": "米国のホルムズ海峡封鎖が継続中。イランタンカーへの攻撃や報復の応酬で緊張が高まる一方、外交努力も模索されているが、依然膠着状態。",
   "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 10,
-  "ais_estimated_cargo": 2,
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 4,
   "ais_confidence": "low",
-  "ais_estimation_note": "AISデータが少なく内訳は推測"
+  "ais_estimation_note": "Kpler/Lloyd's Listの通航隻数を参照。タンカー・貨物船の内訳は推測。AISダーク化の指摘あり。"
 }
