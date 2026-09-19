@@ -191,7 +191,11 @@ def build_prompt(news_items, context):
     # 不当な但し書きは、その前提から離れた推計を誘発する。
     flow_note = qualifier(context.get("normal_flow_mbpd"))
     vessels_note = qualifier(context.get("normal_vessels_per_day"))
-    context_updated = context.get("context_updated", "不明")
+    # 見出しには経緯の最新日を出す。context_updated は前提値（流量・隻数・係数）の
+    # 基準日で、経緯を足さなくても新しいままになるため、経緯の鮮度を誤認させる
+    # （2026-09-20 修正。以前は「基準日 2026-09-05」と出る一方で中身の最新は 9/3 だった）。
+    latest = timeline_latest_date(context)
+    timeline_latest = latest.isoformat() if latest else "不明"
     timeline_text = build_timeline_text(context)
     scenario_text = build_scenario_text(context)
 
@@ -212,7 +216,7 @@ def build_prompt(news_items, context):
 以下の最新ニュースを分析して、JSON形式で回答してください。
 必ずJSON形式のみで返答し、説明文は不要です。
 
-【確定した経緯】（基準日 {context_updated}・data/context.json より）
+【確定した経緯】（最新の事実 {timeline_latest} まで・data/context.json より）
 {timeline_text}
 
 【流量に関する前提】
