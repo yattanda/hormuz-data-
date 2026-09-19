@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-19T09:31:05+09:00",
+  "updated_at": "2026-09-19T13:47:24+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 60,
-    "C_full_blockade_pct": 20,
-    "D_escalation_pct": 10
+    "B_partial_blockade_pct": 70,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 5
   },
   "hormuz_daily_flow_mbpd": 2.6,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 88,
-  "last_manual_note": "米国の封鎖と経済圧力がイラン経済を打撃し、ホルムズ通航は低水準で膠着。外交努力は見られるが、具体的な進展は限定的。",
-  "ais_estimated_vessels": 13,
-  "ais_estimated_tankers": 9,
-  "ais_estimated_cargo": 4,
+  "last_manual_note": "米国はイラン国営タンカーを攻撃し「タンカー・フォー・タンカー」方針を適用。通航隻数は低水準が続き外交は停滞。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 10,
+  "ais_estimated_cargo": 2,
   "ais_confidence": "low",
-  "ais_estimation_note": "Kpler/Lloyd's集計とAIS不明船多数の報告に基づく"
+  "ais_estimation_note": "隻数は報道参照。内訳は推測。"
 }
