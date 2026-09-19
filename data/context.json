@@ -81,6 +81,46 @@
       "date": "2026-09-03",
       "fact": "ヴァンス副大統領が「イランとは話していない。商船への攻撃をやめない限り話すつもりもない」と述べ、対話再開の条件を商船攻撃の停止に限定した。同日ネタニヤフ首相はイラン体制転覆を「中心的使命」と発言した。",
       "source": "hormuz-map docs/data/news_data.json（The Times of Israel）"
+    },
+    {
+      "date": "2026-09-05",
+      "fact": "IRGC が米空母と誘導ミサイル駆逐艦に弾道ミサイルを発射した（米側に負傷者なし）。CENTCOM は報復として、カーグ島付近とオマーン湾でイランの原油タンカー3隻を攻撃し、2隻を航行不能にして1隻を破壊したと発表した。IRGC は米艦2隻が損傷して退避したと主張しており、双方の発表は食い違っている。",
+      "source": "Al Jazeera 2026-09-05（CENTCOM）（https://www.aljazeera.com/news/2026/9/5/us-says-it-hit-iran-oil-tankers-helping-finance-regional-proxies）"
+    },
+    {
+      "date": "2026-09-06",
+      "fact": "ホルムズ海峡の通航隻数は、Kpler のデータで9月5日が2隻、9月6日が6隻で、主にイラン側の航路を使った。10日移動平均は9月6日時点で10隻/日となり、5月以来の最低である（9月4日は15隻超、9月5日は約13隻）。",
+      "source": "Reuters 2026-09-06（Kpler）（https://boereport.com/2026/09/06/hormuz-traffic-dips-to-lowest-since-may-after-us-iranian-strikes-on-ships/）"
+    },
+    {
+      "date": "2026-09-10",
+      "fact": "サウジアラビアの東西原油パイプラインがリヤド州・マディーナ州でドローン攻撃を受け、サウジ・エネルギー省が予防措置として一時停止した。サウジ外務省はドローンがイラクから発射されたとした。同パイプラインはホルムズ海峡を迂回して紅海側のヤンブーへ原油を送る主要経路で、攻撃前は日量400万〜500万バレルを輸送していた。9月16日の Bloomberg 報道（匿名の関係者）によれば、損傷区間を迂回して数日内に能力の約半分を再開し、約6週間で全面復旧させる計画である。",
+      "source": "Arab News 2026-09-11（https://www.arabnews.com/saudi-arabia/saudi-arabia-condemns-drone-attack-from-iraq-after-east-west-pipeline-shut-as-precaution-3001403）/ Al Jazeera 2026-09-12（https://www.aljazeera.com/news/2026/9/12/saudi-arabia-shuts-critical-oil-pipeline-after-drone-attack-what-happened）/ Bloomberg 2026-09-16（https://www.ttnews.com/articles/saudis-resume-half-pipeline）"
+    },
+    {
+      "date": "2026-09-13",
+      "fact": "ゲシュム島沖でイランの貨物船が飛翔体の攻撃を受けて火災が発生し、UKMTO が被弾を確認した。イラン国営メディアによれば1人が死亡、4人が負傷した。同じ週末に被弾したパナマ籍タンカー「エル・ガイア」について、IRGC は機雷への接触を主張した。CENTCOM はこれを否定し、同船は先月イランのミサイルで航行不能になり、週末にオマーン沖でイランのドローンに再び攻撃され、地域のパートナーが曳航中だと発表した。",
+      "source": "France24 2026-09-14（UKMTO / イラン国営メディア）（https://www.france24.com/en/middle-east/20260914-iranian-ship-qeshm-island-tehran-hormuz）/ gCaptain 2026-09-14（CENTCOM）（https://gcaptain.com/u-s-rejects-irans-mine-claim-as-hormuz-shipping-threat-remains-severe/）"
+    },
+    {
+      "date": "2026-09-14",
+      "fact": "オマーンの仲介で予定されていた、イランと湾岸諸国による外相会合（ホルムズ海峡の通航管理を協議する場）が延期された。オマーン外相は「合意形成のため」と説明し、イラン外務省当局者は「一部地域諸国の要請」によるとした。サウジアラビアはイラン・オマーン間の合意案に修正を提出しており、バーレーンは対イラン国交がないことを理由に9月12日に不参加を表明していた。",
+      "source": "France24 2026-09-14（https://www.france24.com/en/middle-east/20260914-iranian-ship-qeshm-island-tehran-hormuz）/ Al Jazeera 2026-09-12（https://www.aljazeera.com/news/2026/9/12/bahrain-says-it-will-not-participate-in-irans-proposed-hormuz-meeting）"
+    },
+    {
+      "date": "2026-09-16",
+      "fact": "Reuters が伝えた速報の船舶データでは、9月15日のホルムズ海峡通航は4隻（入域2・出域2、前日は7隻、10日平均は18隻）で、うち3隻がイラン側の北側航路を使った。AIS を切った船は含まない。Windward は AIS 非発信船も含めて集計しており、9月15日が6隻、9月16日が12隻（うち11隻が AIS 非発信）だった。集計方法によって値が大きく異なる。",
+      "source": "Reuters 2026-09-16（https://www.marinelink.com/news/strait-hormuz-traffic-falls-four-ship-542975）/ Windward Daily Intelligence 2026-09-18（https://insights.windward.ai/）"
+    },
+    {
+      "date": "2026-09-16",
+      "fact": "アラグチ外相が北京で王毅外相と会談した。米イランの MOU は依然有効だとして米側に義務の履行を求め、オマーンとホルムズ海峡再開の計画で合意したと述べた。王毅外相は海峡の早期再開と MOU への早期復帰を求めた。アラグチ外相は9月13日には、オマーンとの合意は「海峡の再開を意味しない」とし、再開の条件は米国が MOU 上の義務に戻ることだと述べていた。",
+      "source": "新華社 2026-09-16（https://english.news.cn/20260916/5dbd35b69d23491db90825396fe0401b/c.html）/ Press TV 2026-09-13（https://www.presstv.co.uk/Detail/2026/09/13/776214/Oman-deal-will-not-mean-reopening-Strait-Hormuz-Iran-FM）"
+    },
+    {
+      "date": "2026-09-19",
+      "fact": "CENTCOM のクーパー司令官が動画声明で、過去2週間の原油・貨物・LNG の通航量は過去6カ月で最も多く、主要航路の機雷は除去済みで、ここ数カ月で10億バレル超の原油の湾外搬出を支援したと述べた。これは米軍の主張であり、独立系の通航隻数集計（Reuters の報じた速報データ・Windward）の水準とは大きく異なる。",
+      "source": "Tribune India 2026-09-19（CENTCOM 動画声明）（https://www.tribuneindia.com/news/centcom-commander/us-centcom-commander-reaffirms-joint-efforts-to-secure-strait-of-hormuz-navigation）/ Fox News ライブ 2026-09-19"
     }
   ],
 
