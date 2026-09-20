@@ -962,23 +962,45 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('jf-total-pct-label').textContent = pct + '%';
   document.getElementById('jf-updated').textContent        = updated;
 
-  // 鮮度チェック: updated_iso から stale_after_days を超えたら警告を出す。
-  // 自動更新が止まったことに気づかないまま古い値を出し続けた
-  // 2026-05〜09 の事象への対策（詳細: docs/oil-flow-method.md）。
+  // 鮮度チェック: 2つの止まり方をそれぞれ見る（詳細: docs/oil-flow-method.md）。
+  //  (1) 自動更新そのものが止まる → updated_iso が進まない。
+  //      気づかないまま古い値を出し続けた 2026-05〜09 の事象への対策。
+  //  (2) 自動更新は動いているが元データが進まない → source.period が進まない。
+  //      updated_iso は実行のたびに現在時刻へ書き換わるため (1) では検出できない。
+  //      2026-09-20 の月次実行がこれに当たった（8月分が未公表で7月分のまま）。
   const staleEl = document.getElementById('jf-stale');
   if (staleEl) {
+    const msgs = [];
+
     const iso   = data.updated_iso;
     const limit = data.stale_after_days || 45;
     if (!iso) {
-      staleEl.textContent = '⚠ このデータには更新日時が記録されていません';
-      staleEl.style.display = 'block';
+      msgs.push('⚠ このデータには更新日時が記録されていません');
     } else {
       const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
       if (days > limit) {
-        staleEl.textContent = '⚠ 自動更新が ' + days + ' 日間止まっています'
-                            + '（想定間隔 ' + limit + ' 日）。値は最新ではありません。';
-        staleEl.style.display = 'block';
+        msgs.push('⚠ 自動更新が ' + days + ' 日間止まっています'
+                + '（想定間隔 ' + limit + ' 日）。値は最新ではありません。');
       }
+    }
+
+    const period = data.source && data.source.period;   // "YYYY-MM"
+    const mLimit = data.source_stale_after_months || 3;
+    const pm = /^(\d{4})-(\d{2})$/.exec(period || '');
+    if (pm) {
+      const now = new Date();
+      const months = (now.getFullYear() - Number(pm[1])) * 12
+                   + (now.getMonth() + 1 - Number(pm[2]));
+      if (months > mLimit) {
+        msgs.push('⚠ 元データが ' + months + ' か月前のままです'
+                + '（最新は ' + Number(pm[1]) + '年' + Number(pm[2]) + '月分／想定 '
+                + mLimit + 'か月以内）。統計の公表が遅れているか、取得に失敗しています。');
+      }
+    }
+
+    if (msgs.length) {
+      staleEl.textContent = msgs.join(' ');
+      staleEl.style.display = 'block';
     }
   }
 

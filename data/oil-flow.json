@@ -66,6 +66,7 @@
   },
   "updated_iso": "2026-09-20T12:22:42+09:00",
   "stale_after_days": 45,
+  "source_stale_after_months": 3,
   "method": {
     "version": "2.0",
     "url": "https://github.com/yattanda/hormuz-data-/blob/main/docs/oil-flow-method.md",

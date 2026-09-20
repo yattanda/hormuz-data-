@@ -78,6 +78,10 @@ BBL_PER_KL = 6.28981            # 1キロリットルあたりのバレル数
 VLCC_CAPACITY_BBL = 2000000     # VLCC 1隻あたりの標準積載量（バレル）
 EXPECTED_UNIT = "KL"            # 想定する数量の単位。異なれば換算が狂うので中断する
 STALE_AFTER_DAYS = 45
+# 元データ（貿易統計の対象月）が何か月前まで許容できるか。
+# 概況品別国別表は公表が遅く、9月時点で最新が7月分といった2か月遅れは平常。
+# 3か月を超えたら、自動更新は動いていても元データが進んでいない可能性が高い。
+SOURCE_STALE_AFTER_MONTHS = 3
 MAX_TABLES_TO_TRY = 2           # 当年表にデータが無い場合、前年表まで遡る
 MAX_YEARS_TO_TRY = 2            # 1つの表が複数年を含む場合、新しい方から試す年数
 BASELINE_YEAR = 2025            # 平常時総量の基準年（ホルムズ封鎖前の直近通年）
@@ -487,6 +491,7 @@ def main():
     current["updated"] = "{}年{}月分（財務省貿易統計）".format(year, month)
     current["updated_iso"] = now.isoformat(timespec="seconds")
     current["stale_after_days"] = STALE_AFTER_DAYS
+    current["source_stale_after_months"] = SOURCE_STALE_AFTER_MONTHS
     current["method"] = {
         "version": "2.0",
         "url": METHOD_URL,
