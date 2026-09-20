@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-20T09:31:07+09:00",
+  "updated_at": "2026-09-20T14:03:41+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
@@ -10,8 +10,8 @@
     "cargo": 4,
     "other": 0
   },
-  "confidence": "medium",
-  "estimation_note": "複数データ源に差異あり、AISオフ船考慮で判断",
+  "confidence": "low",
+  "estimation_note": "WindwardデータとAIS非発信船考慮。内訳は推測。",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
