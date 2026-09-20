@@ -1,0 +1,11 @@
+# 改行コードの正規化。
+# scripts/fetch_oil_flow.py:386 と fetch_manual.py は CRLF でファイルを書く一方、
+# GitHub Actions（Linux・autocrlf 無効）は CRLF をそのままリポジトリに格納し、
+# Windows のローカル（core.autocrlf=true）は commit 時に LF へ正規化する。
+# その結果、1行しか変えていなくてもファイル全体が差分として出ることがあった
+# （2026-09-20 に data/oil-flow.json で発生）。
+# リポジトリ内は常に LF に正規化し、どちらから commit しても差分が最小になるようにする。
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
