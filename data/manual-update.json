@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-20T14:03:41+09:00",
+  "updated_at": "2026-09-21T09:31:02+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 15,
+    "age_days": 16,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-19",
-    "timeline_age_days": 1,
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 60,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 5
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 40,
+    "D_escalation_pct": 10
   },
   "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 88,
-  "last_manual_note": "米イラン衝突とホルムズ封鎖が継続。船舶攻撃やサウジパイプライン攻撃が発生。ホルムズ通航は9割減で外交は停滞。米軍は通航量を主張するが独立系データと乖離。",
+  "last_manual_note": "ホルムズ通航は極低水準。米イラン双方による船舶攻撃常態化、外交努力は停滞中。",
   "ais_estimated_vessels": 12,
   "ais_estimated_tankers": 8,
   "ais_estimated_cargo": 4,
   "ais_confidence": "low",
-  "ais_estimation_note": "WindwardデータとAIS非発信船考慮。内訳は推測。"
+  "ais_estimation_note": "Windward報道12隻を基に、タンカー・貨物船は推測"
 }
