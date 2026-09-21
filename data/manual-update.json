@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-21T14:10:17+09:00",
+  "updated_at": "2026-09-21T14:51:48+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -20,16 +20,16 @@
   "scenario": {
     "A_diplomacy_pct": 5,
     "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 15
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 2.508,
+  "hormuz_daily_flow_mbpd": 3.1,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 88,
-  "last_manual_note": "ホルムズ海峡の通航は極めて低水準で推移し、米イランの相互攻撃が常態化。外交は停滞し、封鎖は継続中。",
+  "flow_disruption_pct": 85,
+  "last_manual_note": "ホルムズ海峡の通航は大幅減継続。米イランの報復合戦が続き外交は停滞。サウジパイプライン攻撃で緊張増大。",
   "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 0,
-  "ais_estimated_cargo": 0,
-  "ais_confidence": "low",
-  "ais_estimation_note": "AIS非発信含む隻数は報道で乖離、内訳不明"
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 3,
+  "ais_confidence": "medium",
+  "ais_estimation_note": "WindwardのAIS非発信含むデータに基づく"
 }
