@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-22T09:31:05+09:00",
+  "updated_at": "2026-09-22T14:11:04+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 35,
+    "B_partial_blockade_pct": 55,
+    "C_full_blockade_pct": 30,
     "D_escalation_pct": 10
   },
   "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 88,
-  "last_manual_note": "ホルムズ通航量は9割減継続、米イランの船舶攻撃応酬激化。外交進展なく膠着状態。",
+  "last_manual_note": "ホルムズ通航隻数は依然低水準で推移。米イラン双方の攻撃継続、外交的解決も停滞。",
   "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 8,
+  "ais_estimated_tankers": 9,
   "ais_estimated_cargo": 3,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "WindwardのAIS非発信含む9/16データ"
+  "ais_confidence": "low",
+  "ais_estimation_note": "Windward集計(9/16)を元に推計。内訳は推定。"
 }
