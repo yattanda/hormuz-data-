@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-21T14:51:48+09:00",
+  "updated_at": "2026-09-22T09:31:05+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 16,
+    "age_days": 17,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-19",
-    "timeline_age_days": 2,
+    "timeline_age_days": 3,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -23,13 +23,13 @@
     "C_full_blockade_pct": 35,
     "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 3.1,
+  "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 85,
-  "last_manual_note": "ホルムズ海峡の通航は大幅減継続。米イランの報復合戦が続き外交は停滞。サウジパイプライン攻撃で緊張増大。",
+  "flow_disruption_pct": 88,
+  "last_manual_note": "ホルムズ通航量は9割減継続、米イランの船舶攻撃応酬激化。外交進展なく膠着状態。",
   "ais_estimated_vessels": 12,
   "ais_estimated_tankers": 8,
   "ais_estimated_cargo": 3,
   "ais_confidence": "medium",
-  "ais_estimation_note": "WindwardのAIS非発信含むデータに基づく"
+  "ais_estimation_note": "WindwardのAIS非発信含む9/16データ"
 }
