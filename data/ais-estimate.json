@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-09-22T14:11:04+09:00",
+  "updated_at": "2026-09-23T09:31:19+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
   "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
-  "estimated_vessels": 12,
+  "estimated_vessels": 18,
   "breakdown": {
-    "tanker": 9,
-    "cargo": 3,
-    "other": 0
+    "tanker": 0,
+    "cargo": 0,
+    "other": 18
   },
   "confidence": "low",
-  "estimation_note": "Windward集計(9/16)を元に推計。内訳は推定。",
+  "estimation_note": "ReutersのAIS発信船10日平均。内訳不明。",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,

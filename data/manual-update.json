@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-09-22T14:11:04+09:00",
+  "updated_at": "2026-09-23T09:31:19+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 17,
+    "age_days": 18,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-09-19",
-    "timeline_age_days": 3,
+    "timeline_age_days": 4,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 55,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 10
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 2.5,
+  "hormuz_daily_flow_mbpd": 2.09,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 88,
-  "last_manual_note": "ホルムズ通航隻数は依然低水準で推移。米イラン双方の攻撃継続、外交的解決も停滞。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 9,
-  "ais_estimated_cargo": 3,
+  "flow_disruption_pct": 90,
+  "last_manual_note": "ホルムズ封鎖と武力衝突が継続し、通航量は大幅減。米イラン対話条件に隔たり、外交不透明化。",
+  "ais_estimated_vessels": 18,
+  "ais_estimated_tankers": 0,
+  "ais_estimated_cargo": 0,
   "ais_confidence": "low",
-  "ais_estimation_note": "Windward集計(9/16)を元に推計。内訳は推定。"
+  "ais_estimation_note": "ReutersのAIS発信船10日平均。内訳不明。"
 }
