@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-24T09:31:08+09:00",
+  "updated_at": "2026-09-24T14:05:10+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 35,
-    "C_full_blockade_pct": 45,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 35
   },
-  "hormuz_daily_flow_mbpd": 3.762,
+  "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 82,
-  "last_manual_note": "ホルムズ海峡の通航隻数は開戦前の約8割減で低迷。イランは封鎖解除を再開条件とし、米側は拒否。サウジ東西パイプライン攻撃や船舶攻撃が続き情勢は緊迫。",
+  "flow_disruption_pct": 88,
+  "last_manual_note": "米イランの武力衝突が激化し、イランは海峡再開条件を提示する一方、排除ゾーン設定も示唆。外交は難航し、通航量は低水準で推移。",
   "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 6,
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 2,
   "ais_confidence": "low",
-  "ais_estimation_note": "集計に差。タンカー/貨物船内訳不明"
+  "ais_estimation_note": "AIS非発信船多く集計法で変動大。直近のWindwardデータ採用。"
 }
