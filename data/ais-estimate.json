@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-09-29T14:54:39+09:00",
+  "updated_at": "2026-09-30T09:31:10+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
   "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
-  "estimated_vessels": 15,
+  "estimated_vessels": 12,
   "breakdown": {
-    "tanker": 8,
+    "tanker": 7,
     "cargo": 5,
-    "other": 2
+    "other": 0
   },
   "confidence": "medium",
-  "estimation_note": "WindwardのAIS非発信船含む隻数にCENTCOM主張を考慮",
+  "estimation_note": "Windwardの直近データは12隻（AIS非発信含む）。",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
