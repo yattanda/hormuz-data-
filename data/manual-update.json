@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-02T09:31:09+09:00",
+  "updated_at": "2026-10-02T14:54:57+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 30,
-    "C_full_blockade_pct": 50,
-    "D_escalation_pct": 15
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 40
   },
-  "hormuz_daily_flow_mbpd": 2.09,
+  "hormuz_daily_flow_mbpd": 3.762,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 90,
-  "last_manual_note": "米イラン間接協議は決裂し、イランのロードマップは米に拒否。サウジパイプラインは一部復旧も、ホルムズ海峡での船舶攻撃は頻発し、通航は極めて低水準で膠着。外交解決の見通しは暗い。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 8,
-  "ais_estimated_cargo": 2,
+  "flow_disruption_pct": 82,
+  "last_manual_note": "米イラン間接協議継続も、米がイランのロードマップを拒否。ホルムズではタンカー攻撃が継続し緊張が高い。",
+  "ais_estimated_vessels": 18,
+  "ais_estimated_tankers": 12,
+  "ais_estimated_cargo": 4,
   "ais_confidence": "medium",
-  "ais_estimation_note": "Windward社9/16データに基づき推計。"
+  "ais_estimation_note": "Reutersの10日平均を基に推計"
 }
