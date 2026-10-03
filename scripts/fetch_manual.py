@@ -204,7 +204,7 @@ def build_prompt(news_items, context):
         for item in news_items
     ])
 
-    # 隻数の前提は表示側の「封鎖前比」の分母と同じ値を使う。
+    # 隻数の前提は表示側の「開戦前比」の分母と同じ値を使う。
     # 分子と分母で前提が違うと割合が読めなくなる。
     vessels_line = (
         f"- 通常時のホルムズ通過隻数は約{normal_vessels}隻/日{vessels_note}\n"

@@ -24,7 +24,7 @@
   },
 
   "normal_vessels_per_day": {
-    "_comment": "「封鎖前比」の分母。index.html が AI推計の隻数をこの値で割って割合を出す。scripts/fetch_manual.py のプロンプトも同じ値を参照する。",
+    "_comment": "「開戦前比」の分母。index.html が AI推計の隻数をこの値で割って割合を出す。scripts/fetch_manual.py のプロンプトも同じ値を参照する。",
     "value": 100,
     "unit": "隻/日",
     "verified": true,
@@ -47,8 +47,8 @@
     "_comment": "hormuz-map の docs/index.html にあるシナリオカード見出しと一致させること。JSON のキー名（A_diplomacy_pct 等）は既存の表示側との互換性のため変更しない。",
     "A_diplomacy_pct": "段階的MOU履行成功 — IMO避難計画の成立と核査察スケジュール合意を経て、ホルムズ主ルートが再開に向かう",
     "B_partial_blockade_pct": "膠着継続・外交不透明化 — 双方が決定打を欠いたまま拡大と沈静化を繰り返し、通航制限が長期化する",
-    "C_full_blockade_pct": "完全封鎖の制度化・経済疲弊深刻化 — 報復の応酬が恒常的な枠組みとして定着し、封鎖状態が制度化する",
-    "D_escalation_pct": "全面対決・無期限封鎖 — 交渉打ち切りから武力による海峡制圧、全面戦争の再開に至る"
+    "C_full_blockade_pct": "イラン・米国による二重封鎖の制度化・経済疲弊深刻化 — 報復の応酬が恒常的な枠組みとして定着し、イランによる通航制限と米軍の対イラン海上封鎖が制度化する",
+    "D_escalation_pct": "全面対決・ホルムズ海峡の無期限閉鎖 — 交渉打ち切りから武力による海峡制圧、全面戦争の再開に至る"
   },
 
   "timeline": [

@@ -215,7 +215,7 @@
              style="width:0%;background:linear-gradient(90deg,var(--accent),#fb923c)"></div>
       </div>
       <div class="flow-bar-label">
-        <span id="ais-bar-basis">封鎖前比（通常200隻/日）</span>
+        <span id="ais-bar-basis">開戦前比（通常200隻/日）</span>
         <span id="ais-bar-pct">—%</span>
       </div>
     </div>
@@ -562,7 +562,7 @@ let DARK_FACTOR_LABEL = '根拠未検証';
 // 実測値として採用できる鮮度の上限。cron は日次なので1日スキップまでは許容する。
 const ACTUAL_MAX_AGE_H = 48;
 
-// 通常時の日間通航隻数。推計値の「封鎖前比」の分母に使う。
+// 通常時の日間通航隻数。推計値の「開戦前比」の分母に使う。
 // 正は data/context.json の normal_vessels_per_day で、ここは読めなかったときの既定値。
 // この値には一次資料が記録されていない（経緯は context.json の basis を参照）。
 let NORMAL_VESSELS_PER_DAY = 200;
@@ -615,7 +615,7 @@ function setDarkBlockVisible(visible) {
   if (el) el.style.display = visible ? '' : 'none';
 }
 
-// 「封鎖前比」の分母を data/context.json から取り込む。
+// 「開戦前比」の分母を data/context.json から取り込む。
 // verified が false の間は、分母が出典未確認であることを表示に出す。
 function applyNormalVessels(ctx) {
   const nv = ctx && ctx.normal_vessels_per_day;
@@ -687,7 +687,7 @@ async function loadAIS() {
     setAisBadge('ais-cargo',  '停泊・漂泊', d.breakdown?.stationary, true);
     setAisBadge('ais-other',  '', null, false);
 
-    // 封鎖前比の分母は、この bbox・この取得方式での実測基準値が無いため使えない。
+    // 開戦前比の分母は、この bbox・この取得方式での実測基準値が無いため使えない。
     // 代わりに「うち移動中の割合」を示す。錨泊待機が増えるほど下がり、滞留の指標になる。
     const moving = d.breakdown?.moving;
     const pct = (count > 0 && typeof moving === 'number')
@@ -715,7 +715,7 @@ async function loadAIS() {
     const pct = typeof count === 'number'
       ? Math.min(Math.round((count / NORMAL_VESSELS_PER_DAY) * 100), 100) : null;
     const denomNote = NORMAL_VESSELS_VERIFIED ? '' : '・出典未確認';
-    setAisBar(pct, `封鎖前比（通常${NORMAL_VESSELS_PER_DAY}隻/日${denomNote}）`);
+    setAisBar(pct, `開戦前比（通常${NORMAL_VESSELS_PER_DAY}隻/日${denomNote}）`);
 
     const conf = CONFIDENCE_JA[d.confidence] || '不明';
     setAisOrigin(`AI推計（信頼度: ${conf}）`, '#fbbf24', 'rgba(251,191,36,0.12)');
@@ -882,8 +882,8 @@ async function loadManual() {
         // 名称は hormuz-map のシナリオカード見出し・data/context.json の定義と一致させること
         { key: 'A_diplomacy_pct',        label: 'A: 段階的MOU履行成功',     color: 'var(--green)'  },
         { key: 'B_partial_blockade_pct', label: 'B: 膠着継続・外交不透明化', color: 'var(--yellow)' },
-        { key: 'C_full_blockade_pct',    label: 'C: 完全封鎖の制度化',       color: 'var(--accent)' },
-        { key: 'D_escalation_pct',       label: 'D: 全面対決・無期限封鎖',   color: 'var(--red)'    },
+        { key: 'C_full_blockade_pct',    label: 'C: 二重封鎖（イラン・米国）の制度化', color: 'var(--accent)' },
+        { key: 'D_escalation_pct',       label: 'D: 全面対決・海峡の無期限閉鎖', color: 'var(--red)'    },
       ];
       const list = document.getElementById('scenario-list');
       if (list) list.innerHTML = scenarios.map(s => `
