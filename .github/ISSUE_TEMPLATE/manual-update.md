@@ -9,11 +9,11 @@ assignees: yattanda
 ## 📋 手動データ更新チェックリスト
 
 ### 🎯 シナリオ確率
-- [ ] `A_diplomacy_pct` 外交解決シナリオ確率（%）
-- [ ] `B_partial_blockade_pct` 部分封鎖シナリオ確率（%）
-- [ ] `C_full_blockade_pct` 完全封鎖シナリオ確率（%）
-- [ ] `D_escalation_pct` エスカレーションシナリオ確率（%）
-> 合計が **100%** になることを確認
+- [ ] `A_diplomacy_pct` シナリオ A：段階的MOU履行成功（%）
+- [ ] `B_partial_blockade_pct` シナリオ B：膠着継続・外交不透明化（%）
+- [ ] `C_full_blockade_pct` シナリオ C：イラン・米国による二重封鎖の制度化・経済疲弊深刻化（%）
+- [ ] `D_escalation_pct` シナリオ D：全面対決・ホルムズ海峡の無期限閉鎖（%）
+> 定義は `data/context.json` の `scenario_definitions` を正とする。合計が **100%** になることを確認
 
 ---
 
