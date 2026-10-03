@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-02T14:54:57+09:00",
+  "updated_at": "2026-10-03T09:31:18+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
   "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
-  "estimated_vessels": 18,
+  "estimated_vessels": 5,
   "breakdown": {
-    "tanker": 12,
-    "cargo": 4,
-    "other": 2
+    "tanker": 3,
+    "cargo": 2,
+    "other": 0
   },
-  "confidence": "medium",
-  "estimation_note": "Reutersの10日平均を基に推計",
+  "confidence": "low",
+  "estimation_note": "日次通航隻数とタンカー攻撃報告に基づく推測",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,

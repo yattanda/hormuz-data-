@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-02T14:54:57+09:00",
+  "updated_at": "2026-10-03T09:31:18+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 27,
+    "age_days": 28,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-09-29",
-    "timeline_age_days": 3,
+    "timeline_updated": "2026-10-01",
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 40
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 45,
+    "D_escalation_pct": 30
   },
-  "hormuz_daily_flow_mbpd": 3.762,
+  "hormuz_daily_flow_mbpd": 2.09,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 82,
-  "last_manual_note": "米イラン間接協議継続も、米がイランのロードマップを拒否。ホルムズではタンカー攻撃が継続し緊張が高い。",
-  "ais_estimated_vessels": 18,
-  "ais_estimated_tankers": 12,
-  "ais_estimated_cargo": 4,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "Reutersの10日平均を基に推計"
+  "flow_disruption_pct": 90,
+  "last_manual_note": "米イラン間接協議は進展なく、イランの提案をトランプが拒否し外交は停滞。9月末以降、ホルムズ海峡でのタンカー攻撃やサウジの石油インフラ攻撃が頻発し、軍事緊張は高まり通航は低水準を維持。",
+  "ais_estimated_vessels": 5,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 2,
+  "ais_confidence": "low",
+  "ais_estimation_note": "日次通航隻数とタンカー攻撃報告に基づく推測"
 }
