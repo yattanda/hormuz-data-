@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T09:31:08+09:00",
+  "updated_at": "2026-10-04T15:04:39+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
@@ -7,11 +7,11 @@
   "estimated_vessels": 12,
   "breakdown": {
     "tanker": 8,
-    "cargo": 3,
-    "other": 1
+    "cargo": 4,
+    "other": 0
   },
   "confidence": "medium",
-  "estimation_note": "Windwardデータ（9/16）と最近の攻撃情報を基に推計",
+  "estimation_note": "WindwardのAIS非発信含む9/16データ",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
