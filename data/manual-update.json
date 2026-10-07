@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-06T15:34:41+09:00",
+  "updated_at": "2026-10-07T15:13:03+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-09-05",
-    "age_days": 31,
+    "age_days": 32,
     "stale_after_days": 30,
     "stale": true,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-05",
+    "timeline_updated": "2026-10-06",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 30,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 35,
     "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 9.9,
+  "hormuz_daily_flow_mbpd": 1.67,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 53,
-  "last_manual_note": "米イラン間接協議は停滞し、イランの提案を米国が拒否。ホルムズのタンカー攻撃が継続し、IRGCが航行指示も出すなど緊張が続く。サウジの代替パイプラインは復旧。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 3,
+  "flow_disruption_pct": 92,
+  "last_manual_note": "米イラン間接協議継続もイランのロードマップは米に拒否。船舶攻撃頻発し、海峡通航は低水準。サウジ代替パイプラインは一部復旧。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 6,
   "ais_estimated_cargo": 2,
   "ais_confidence": "low",
-  "ais_estimation_note": "最新攻撃継続と過去データから推計"
+  "ais_estimation_note": "複数攻撃やIRGC命令後で隻数減と推測"
 }
