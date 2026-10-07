@@ -207,3 +207,58 @@ bbox（lon 55.6-57.0）の捕捉のほとんどが通航レーン（56.1E 以東
 - ただし **3-C（三値化）の構造は先に入れておく**。将来カバレッジが改善したときに、
   後から三値化を足すのはデータ構造変更を伴い高くつくため
 - `scripts/fetch_ais.py` の VesselAPI への書き換えは**当面不要**（AISstream.io 版のまま無効化を継続）
+
+---
+
+## 出典リンクの依頼と返信（2026-10-07）
+
+### 2026-10-07 0:38 受信（Bence / bence@vesselapi.com）
+
+**出典表示は引き続き不要。そのうえで、データを載せるサイトに vesselapi.com へのリンクを「お願い」として頼み始めた、という連絡。規約と許諾は変わらない。**
+
+原文の要所：
+
+```
+In September we wrote that attribution was not required, and that still stands.
+Since then we have started asking the sites that show our data for a credit in
+the form of a link to vesselapi.com, so that readers can find where the figures
+come from. Could I ask whether you would add that link beside the Hormuz vessel
+counts, or in the source notes you already keep? Any wording is fine, with the
+link on the VesselAPI name.
+
+It is not in our terms, and nothing about your permission changes if you would
+rather not. If the counts are not on the page yet, please take this as a request
+for whenever they are.
+```
+
+- 依頼の中身：通航隻数の横、または既存の出典注記に、「VesselAPI」の語へ vesselapi.com のリンクを張る。文言は自由
+- 規約には無い。断っても許諾は変わらない
+- まだ載せていなければ、載せるときの依頼として受け取ってほしい
+- メールのヘッダーは見ていない（差出人の名前とアドレスは 2026-09-04 の回答と同じ）
+
+### 2026-10-07 返信（送信済み、同じスレッド）
+
+```
+Hi Bence,
+
+Thank you for asking, and for leaving the choice open.
+
+The counts are not on the page. After your reply in September about coverage
+east of 56.1E, we decided not to publish figures from VesselAPI, and the vessel
+count currently shown on the site is an AI estimate, labelled as such. For that
+reason I would rather not put a VesselAPI credit beside it: it would suggest the
+figure comes from your data.
+
+If we start showing figures from your API, I will add a link to vesselapi.com on
+the VesselAPI name, beside the counts or in the source notes.
+
+Best regards,
+（署名は 2026-09-03 の照会と同じ表記）
+```
+
+### 判断と、今後守ること
+
+- **今のサイトにはリンクを付けない。**表示している「ホルムズ海峡 通航船舶数」は AI 推計で、VesselAPI の数値ではない。
+  横に VesselAPI のリンクを置くと、推計値が実測に見えて出自の明示に反する
+- **VesselAPI の実測値を載せるときは、「VesselAPI」の語に vesselapi.com へのリンクを張る**（隻数の横か出典注記）。
+  返信で約束した。上の「維持すること」の再開手順（カバレッジの再確認、Bence への再連絡）と一緒に行う
