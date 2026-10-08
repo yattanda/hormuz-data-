@@ -1,6 +1,14 @@
 {
-  "_comment": "Gemini プロンプトに注入する前提を集約したファイル。scripts/fetch_manual.py が読み込む。ここを更新すれば Python コードを変更せずに前提を差し替えられる。値を変えたら context_updated も必ず更新すること。",
-  "context_updated": "2026-09-05",
+  "_comment": "Gemini プロンプトに注入する前提を集約したファイル。scripts/fetch_manual.py が読み込む。ここを更新すれば Python コードを変更せずに前提を差し替えられる。値を変えたら context_updated も必ず更新すること。値を見直して据え置きと確かめたときも context_updated を更新し、何を確かめたかを context_review_log に1件足す（2026-10-08〜。見直しの記録が無いと、変える必要のない前提でも表示側に「更新されていません」の注意が出続ける）。",
+  "context_updated": "2026-10-08",
+  "context_review_log": [
+    {
+      "date": "2026-10-08",
+      "result": "値の変更なし（前回の変更は 2026-09-05）",
+      "checked": "normal_flow_mbpd：EIA の World Oil Transit Chokepoints を開いて確認。Last Updated は March 3, 2026、最新の期は 1H25 のままで、20.9 は現行の公表値。",
+      "not_rechecked": "normal_vessels_per_day（開戦前の水準で、時間の経過では変わらない値。IMO の月次データへの置き換えは todo のまま）。dark_factor（未検証のまま。実測の復旧後に再設定する todo のまま）。"
+    }
+  ],
   "stale_after_days": 30,
   "_comment_timeline_stale": "timeline に事実を追記しないまま経過してよい日数。context_updated は前提値（流量・隻数・係数）を変えたときにしか動かないため、経緯の陳腐化はこの閾値で別に検知する。超えると fetch_manual.py が警告を出し、manual-update.json の context.timeline_stale が true になる。",
   "timeline_stale_after_days": 7,
