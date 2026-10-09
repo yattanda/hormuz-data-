@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-08T15:20:59+09:00",
+  "updated_at": "2026-10-09T09:31:19+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 0,
+    "age_days": 1,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-10-07",
-    "timeline_age_days": 1,
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 60,
+    "B_partial_blockade_pct": 10,
     "C_full_blockade_pct": 30,
-    "D_escalation_pct": 5
+    "D_escalation_pct": 55
   },
-  "hormuz_daily_flow_mbpd": 2.0,
+  "hormuz_daily_flow_mbpd": 9.9,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 90,
-  "last_manual_note": "米イラン間の間接協議は継続するも米側はイランの提案を拒否。ホルムズ海峡での船舶攻撃が頻発し、通航は大幅に制限されたまま膠着状態が続く。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 8,
-  "ais_estimated_cargo": 2,
+  "flow_disruption_pct": 53,
+  "last_manual_note": "タンカー攻撃頻発、死傷者も発生。イランのロードマップは米国に拒否され外交は停滞。サウジパイプライン・ヤンブー港も攻撃を受け情勢は緊迫。",
+  "ais_estimated_vessels": 47,
+  "ais_estimated_tankers": 40,
+  "ais_estimated_cargo": 7,
   "ais_confidence": "medium",
-  "ais_estimation_note": "直近の攻撃増加で減少傾向と推測"
+  "ais_estimation_note": "Kpler流量データから隻数を換算"
 }
