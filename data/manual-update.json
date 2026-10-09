@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-09T09:31:19+09:00",
+  "updated_at": "2026-10-09T15:22:58+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 55
+    "B_partial_blockade_pct": 20,
+    "C_full_blockade_pct": 50,
+    "D_escalation_pct": 25
   },
-  "hormuz_daily_flow_mbpd": 9.9,
+  "hormuz_daily_flow_mbpd": 9.0,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 53,
-  "last_manual_note": "タンカー攻撃頻発、死傷者も発生。イランのロードマップは米国に拒否され外交は停滞。サウジパイプライン・ヤンブー港も攻撃を受け情勢は緊迫。",
-  "ais_estimated_vessels": 47,
-  "ais_estimated_tankers": 40,
-  "ais_estimated_cargo": 7,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "Kpler流量データから隻数を換算"
+  "flow_disruption_pct": 57,
+  "last_manual_note": "ホルムズ海峡でタンカー攻撃が頻発し死傷者も発生。イランは海峡閉鎖を主張し、米はブロック再開を宣言。外交は停滞。",
+  "ais_estimated_vessels": 5,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 2,
+  "ais_confidence": "low",
+  "ais_estimation_note": "直近の攻撃頻発で隻数激減と推計"
 }
