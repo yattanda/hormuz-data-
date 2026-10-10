@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-10T09:31:09+09:00",
+  "updated_at": "2026-10-10T15:04:33+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 5,
-    "D_escalation_pct": 40
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 60,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 5
   },
-  "hormuz_daily_flow_mbpd": 1.254,
+  "hormuz_daily_flow_mbpd": 9.9,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 94,
-  "last_manual_note": "ホルムズ海峡での船舶攻撃が連日発生し死傷者も出た。米イラン協議は進展なく、事態は緊迫度を増す。",
-  "ais_estimated_vessels": 6,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 2,
+  "flow_disruption_pct": 53,
+  "last_manual_note": "米イラン間の外交は停滞し、イランのロードマップは米国に拒否された。ホルムズ海峡ではタンカー攻撃が頻発し、リスクは依然高い。湾岸からの原油輸出量は戦前水準（イラン除く）に戻りつつあるが、約40%は海峡を迂回。",
+  "ais_estimated_vessels": 47,
+  "ais_estimated_tankers": 40,
+  "ais_estimated_cargo": 7,
   "ais_confidence": "medium",
-  "ais_estimation_note": "直近攻撃激化とAIS非発信船の多さから"
+  "ais_estimation_note": "Kplerの流量データから逆算、AIS非発信船も含む"
 }
