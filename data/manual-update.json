@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-09T15:22:58+09:00",
+  "updated_at": "2026-10-10T09:31:09+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 1,
+    "age_days": 2,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-07",
-    "timeline_age_days": 2,
+    "timeline_updated": "2026-10-09",
+    "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 50,
-    "D_escalation_pct": 25
+    "B_partial_blockade_pct": 50,
+    "C_full_blockade_pct": 5,
+    "D_escalation_pct": 40
   },
-  "hormuz_daily_flow_mbpd": 9.0,
+  "hormuz_daily_flow_mbpd": 1.254,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 57,
-  "last_manual_note": "ホルムズ海峡でタンカー攻撃が頻発し死傷者も発生。イランは海峡閉鎖を主張し、米はブロック再開を宣言。外交は停滞。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 3,
+  "flow_disruption_pct": 94,
+  "last_manual_note": "ホルムズ海峡での船舶攻撃が連日発生し死傷者も出た。米イラン協議は進展なく、事態は緊迫度を増す。",
+  "ais_estimated_vessels": 6,
+  "ais_estimated_tankers": 4,
   "ais_estimated_cargo": 2,
-  "ais_confidence": "low",
-  "ais_estimation_note": "直近の攻撃頻発で隻数激減と推計"
+  "ais_confidence": "medium",
+  "ais_estimation_note": "直近攻撃激化とAIS非発信船の多さから"
 }
