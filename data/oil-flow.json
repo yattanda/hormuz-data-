@@ -1,6 +1,6 @@
 {
   "_comment": "月次自動更新（財務省貿易統計・e-Stat API）。BPDは万バレル/日単位。tankers_week は VLCC 換算の必要隻数であり実寄港隻数ではない。prev_bpd は前回更新時の値。算出方法は docs/oil-flow-method.md を参照。note / status は現在どの表示側でも未使用。",
-  "updated": "2026年7月分（財務省貿易統計）",
+  "updated": "2026年8月分（財務省貿易統計）",
   "normal_total_bpd": 205,
   "routes": {
     "old": {
@@ -16,7 +16,7 @@
     "A": {
       "label": "ルートA（フジャイラ経由）",
       "color": "#ef4444",
-      "bpd": 69,
+      "bpd": 59,
       "tankers_week": 2,
       "prev_bpd": 69,
       "status": "red",
@@ -26,8 +26,8 @@
     "B": {
       "label": "ルートB（インブー・東西PL）",
       "color": "#4ade80",
-      "bpd": 68,
-      "tankers_week": 2,
+      "bpd": 85,
+      "tankers_week": 3,
       "prev_bpd": 68,
       "status": "green",
       "note": "4/12全面復旧。主幹ルートとして安定稼働中。",
@@ -36,7 +36,7 @@
     "C_US": {
       "label": "ルートC🇺🇸（米国）",
       "color": "#a78bfa",
-      "bpd": 89,
+      "bpd": 74,
       "tankers_week": 3,
       "prev_bpd": 89,
       "status": "green",
@@ -64,7 +64,7 @@
       "derivation": "manual"
     }
   },
-  "updated_iso": "2026-09-20T12:22:42+09:00",
+  "updated_iso": "2026-10-11T13:05:08+09:00",
   "stale_after_days": 45,
   "source_stale_after_months": 3,
   "method": {
@@ -96,19 +96,19 @@
     "provider": "財務省 普通貿易統計「概況品別国別表 輸入」（e-Stat API v3.0）",
     "stats_data_id": "0004049328",
     "commodity": "原油及び粗油",
-    "period": "2026-07",
-    "fetched_at": "2026-09-20T12:22:42+09:00"
+    "period": "2026-08",
+    "fetched_at": "2026-10-11T13:05:08+09:00"
   },
   "_audit": {
     "quantities_kl": {
-      "アラブ首長国連邦": 3379844,
-      "サウジアラビア": 3369820,
-      "アメリカ合衆国": 4393297,
+      "アラブ首長国連邦": 2890843,
+      "サウジアラビア": 4195365,
+      "アメリカ合衆国": 3658743,
       "ブラジル": null,
       "ナイジェリア": null,
       "アンゴラ": null
     },
-    "mapped_total_bpd": 226.1,
+    "mapped_total_bpd": 218.0,
     "note": "quantities_kl は各相手国の原油輸入数量[kL]。null は当該月の貿易統計に該当する計上が無いこと（実績なし）を示し、集計では 0 として扱う。ルート未対応国は集計に含めていない。"
   },
   "normal_basis": {
