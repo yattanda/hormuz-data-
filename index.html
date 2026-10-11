@@ -385,6 +385,7 @@
     <div class="card-footer" style="margin-top:8px;">
       <span class="dot-live"></span>
       月次自動更新 ／ 基準: <span id="jf-updated">—</span>
+      <div id="jf-next" style="font-size:0.6rem; color:#cbd5e1; margin-top:3px;"></div>
       <div id="jf-stale" style="display:none; font-size:0.6rem; color:#fbbf24; margin-top:3px;"></div>
       <div style="font-size:0.58rem; color:var(--muted); margin-top:2px;">
         出典: 政府統計の総合窓口(e-Stat)（財務省 普通貿易統計）を加工して作成 ／
@@ -826,6 +827,22 @@ function applyContextNotice(ctx) {
   }
 }
 
+function oilFlowNextUpdateText(period) {
+  // 次に出る対象月と、その公表時期の目安（対象月の翌月下旬〜翌々月上旬）を文にする。
+  // period は "YYYY-MM"。読めないときは空文字（何も出さない）。
+  const m = /^(\d{4})-(\d{2})$/.exec(period || '');
+  if (!m) return '';
+  const base = Number(m[1]) * 12 + Number(m[2]) - 1;      // 年×12＋月−1
+  const mon = n => (n % 12) + 1;
+  const next = base + 1, from = base + 2, to = base + 3;
+  const now = new Date();
+  // 目安（翌々月10日）を過ぎたら時期を書かない。過ぎた予定を出し続けないため
+  const due = new Date(Math.floor(to / 12), to % 12, 11);
+  const label = mon(next) + '月分';
+  if (now >= due) return '次回更新：' + label + '（公表され次第、自動で反映）';
+  return '次回更新：' + label + '（' + mon(from) + '月下旬〜' + mon(to) + '月上旬の公表後に自動で反映）';
+}
+
 async function loadManual() {
   try {
     const res = await fetch(`${BASE}/data/manual-update.json?t=${Date.now()}`);
@@ -961,6 +978,9 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('jf-total-bar').style.width      = Math.min(pct, 100) + '%';
   document.getElementById('jf-total-pct-label').textContent = pct + '%';
   document.getElementById('jf-updated').textContent        = updated;
+  // 次回の更新予定（更新漏れに見えないよう、次に出る月と時期の目安を書く）
+  const nextEl = document.getElementById('jf-next');
+  if (nextEl) nextEl.textContent = oilFlowNextUpdateText(data.source && data.source.period);
 
   // 鮮度チェック: 2つの止まり方をそれぞれ見る（詳細: docs/oil-flow-method.md）。
   //  (1) 自動更新そのものが止まる → updated_iso が進まない。
