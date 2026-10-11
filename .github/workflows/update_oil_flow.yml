@@ -1,11 +1,15 @@
 name: Update Japan Oil Flow (Monthly)
 
-# 財務省貿易統計の速報公表後に実行する。
-# 週次ではなく月次なのは、裏づけとなる公開統計が月次のため
+# 元の統計（財務省貿易統計・概況品別国別表）は月次だが、確認は毎日行う。
+# 国別の数量が e-Stat に入る日は月によって前後し（翌月の下旬〜翌々月の上旬）、
+# 月1回の実行だと、公表の直前に当たった月は次の実行まで1か月古いままになる
+# （毎月20日だった 2026-09-20 に実際に起きた。8月分が出たのはその後で、
+#   次の実行は 10/20 だった）。
+# 新しい月が出ていない日は、スクリプトが JSON を書き換えず、コミットもできない。
 # （詳細: docs/oil-flow-method.md）
 on:
   schedule:
-    - cron: '0 0 20 * *'   # 毎月20日 09:00 JST
+    - cron: '17 1 * * *'   # 毎日 10:17 JST（GitHub 側の遅延で数時間ずれることがある）
   workflow_dispatch:
 
 jobs:
@@ -38,5 +42,11 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add data/oil-flow.json
-          git diff --staged --quiet || git commit -m "chore: update oil-flow $(date -u '+%Y-%m-%dT%H:%MZ')"
+          if git diff --staged --quiet; then
+            echo "変更なし（新しい月は未公表）"
+            exit 0
+          fi
+          git commit -m "chore: update oil-flow $(date -u '+%Y-%m-%dT%H:%MZ')"
+          # 毎日の他のワークフローと push が重なっても落ちないようにする
+          git pull --rebase -q
           git push

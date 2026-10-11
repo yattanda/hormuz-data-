@@ -21,6 +21,8 @@ data/oil-flow.json の日本向け調達フローを算出して更新する。
   - 未公表の月を掴まないよう、実際に数値が入っている最新月を選ぶ
   - 年初は当年表にまだデータが無いため、1つ前の年の表へ遡る
   - 既存 JSON の label / color / note / 手動ルート（old, D）は保持する
+  - 対象月も数量も前回と同じなら、JSON を書き換えない（毎日実行するため）。
+    updated_iso は「最後に中身が変わった日時」になる
   - どのルートにも割り当てられない相手国の量は集計に含めない
 """
 
@@ -457,6 +459,23 @@ def main():
 
     table_id, year, month, quantities = collect_latest_data()
 
+    period = "{}-{:02d}".format(year, month)
+    prev_source = current.get("source") or {}
+    prev_audit = (current.get("_audit") or {}).get("quantities_kl")
+    same_period = prev_source.get("period") == period
+    new_audit = {c: (None if quantities.get(c) is None else round(quantities[c]))
+                 for c in ALL_COUNTRIES}
+
+    # 対象月も数量も前回と同じなら書き換えない。
+    # 毎日実行するので、ここで止めないと (1) 中身の無いコミットが毎日できる、
+    # (2) prev_bpd が当月の値で上書きされて「前回比」が 0 になる
+    # （2026-09-20 の実行で実際に起きた）。
+    if (same_period and prev_audit == new_audit
+            and prev_source.get("stats_data_id") == table_id):
+        print("変更なし: {}年{}月分のまま（新しい月は未公表）。"
+              "data/oil-flow.json は書き換えません".format(year, month))
+        return
+
     routes = current["routes"]
     audit_quantities = {}
     total_mapped = 0.0
@@ -467,7 +486,9 @@ def main():
         total_mapped += man_bpd
 
         entry = dict(routes.get(route, {}))
-        entry["prev_bpd"] = entry.get("bpd", 0)
+        # 同じ月の値が改定されただけ（速報→確報など）のときは、前月の値を残す
+        if not same_period:
+            entry["prev_bpd"] = entry.get("bpd", 0)
         entry["bpd"] = round(man_bpd)
         entry["tankers_week"] = man_bpd_to_tankers_week(man_bpd)
         entry["derivation"] = "estimated_from_trade_statistics"
@@ -485,7 +506,7 @@ def main():
     current["_comment"] = (
         "月次自動更新（財務省貿易統計・e-Stat API）。BPDは万バレル/日単位。"
         "tankers_week は VLCC 換算の必要隻数であり実寄港隻数ではない。"
-        "prev_bpd は前回更新時の値。算出方法は docs/oil-flow-method.md を参照。"
+        "prev_bpd は1つ前の対象月の値。算出方法は docs/oil-flow-method.md を参照。"
         "note / status は現在どの表示側でも未使用。"
     )
     current["updated"] = "{}年{}月分（財務省貿易統計）".format(year, month)
@@ -508,7 +529,7 @@ def main():
         "provider": "財務省 普通貿易統計「概況品別国別表 輸入」（e-Stat API v3.0）",
         "stats_data_id": table_id,
         "commodity": CRUDE_NAME,
-        "period": "{}-{:02d}".format(year, month),
+        "period": period,
         "fetched_at": now.isoformat(timespec="seconds"),
     }
     current["_audit"] = {

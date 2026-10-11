@@ -964,6 +964,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 鮮度チェック: 2つの止まり方をそれぞれ見る（詳細: docs/oil-flow-method.md）。
   //  (1) 自動更新そのものが止まる → updated_iso が進まない。
+  //      2026-10-11 から updated_iso は「最後に中身が変わった日時」
+  //      （確認は毎日・新しい月が無い日は JSON を書き換えない）。
   //      気づかないまま古い値を出し続けた 2026-05〜09 の事象への対策。
   //  (2) 自動更新は動いているが元データが進まない → source.period が進まない。
   //      updated_iso は実行のたびに現在時刻へ書き換わるため (1) では検出できない。
@@ -979,7 +981,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
       if (days > limit) {
-        msgs.push('⚠ 自動更新が ' + days + ' 日間止まっています'
+        msgs.push('⚠ データが ' + days + ' 日間更新されていません'
                 + '（想定間隔 ' + limit + ' 日）。値は最新ではありません。');
       }
     }
