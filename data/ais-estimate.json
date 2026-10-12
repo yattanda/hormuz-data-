@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-11T15:02:56+09:00",
+  "updated_at": "2026-10-12T09:31:11+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
   "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
-  "estimated_vessels": 5,
+  "estimated_vessels": 10,
   "breakdown": {
-    "tanker": 4,
-    "cargo": 1,
+    "tanker": 7,
+    "cargo": 3,
     "other": 0
   },
-  "confidence": "low",
-  "estimation_note": "最新隻数データ不足と攻撃激化を考慮し推計",
+  "confidence": "medium",
+  "estimation_note": "Kpler、Windward、UKMTO報告から推計",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,

@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-11T15:02:56+09:00",
+  "updated_at": "2026-10-12T09:31:11+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 3,
+    "age_days": 4,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-10",
+    "timeline_updated": "2026-10-11",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 40
+    "B_partial_blockade_pct": 50,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 10
   },
-  "hormuz_daily_flow_mbpd": 12.5,
+  "hormuz_daily_flow_mbpd": 9.9,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 40,
-  "last_manual_note": "米大統領がイランのロードマップを拒否し対話は停滞。ホルムズでは連日攻撃が発生し、米国は封鎖を強化、イランも新たな通航制限を主張し緊張が激化。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 4,
-  "ais_estimated_cargo": 1,
-  "ais_confidence": "low",
-  "ais_estimation_note": "最新隻数データ不足と攻撃激化を考慮し推計"
+  "flow_disruption_pct": 53,
+  "last_manual_note": "外交停滞の中、ホルムズ海峡での船舶攻撃は激化し、リヤド空港も被弾。原油輸出は迂回ルートで戦前レベルに回復するも、海峡通過は低調。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 7,
+  "ais_estimated_cargo": 3,
+  "ais_confidence": "medium",
+  "ais_estimation_note": "Kpler、Windward、UKMTO報告から推計"
 }
