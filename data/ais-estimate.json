@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-12T09:31:11+09:00",
+  "updated_at": "2026-10-12T15:12:41+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
@@ -10,8 +10,8 @@
     "cargo": 3,
     "other": 0
   },
-  "confidence": "medium",
-  "estimation_note": "Kpler、Windward、UKMTO報告から推計",
+  "confidence": "low",
+  "estimation_note": "攻撃頻度とAIS非発信考慮し推測",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
