@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-12T15:12:41+09:00",
+  "updated_at": "2026-10-13T09:31:30+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 4,
+    "age_days": 5,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-10-11",
-    "timeline_age_days": 1,
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 35,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 20
+    "B_partial_blockade_pct": 55,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 25
   },
-  "hormuz_daily_flow_mbpd": 9.9,
+  "hormuz_daily_flow_mbpd": 3.76,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 53,
-  "last_manual_note": "米イラン外交交渉は決裂し、ホルムズ海峡では連日の船舶攻撃が常態化。サウジ本土や迂回パイプラインへの攻撃も激化している。",
+  "flow_disruption_pct": 82,
+  "last_manual_note": "外交交渉は停滞し、米国はイランのロードマップを拒否。ホルムズ内外で商船攻撃がほぼ毎日発生し、サウジへの攻撃で戦域が拡大。迂回ルート活用で湾岸原油輸出は回復も通過量は低迷。",
   "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 7,
-  "ais_estimated_cargo": 3,
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 2,
   "ais_confidence": "low",
-  "ais_estimation_note": "攻撃頻度とAIS非発信考慮し推測"
+  "ais_estimation_note": "AIS非発信船多く推計困難。攻撃激化で減少仮定。"
 }
