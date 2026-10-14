@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-14T09:31:06+09:00",
+  "updated_at": "2026-10-14T14:05:26+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 60,
-    "C_full_blockade_pct": 25,
-    "D_escalation_pct": 10
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 20
   },
-  "hormuz_daily_flow_mbpd": 9.9,
+  "hormuz_daily_flow_mbpd": 12.4,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 53,
-  "last_manual_note": "米イラン間接協議は継続するも、イランの「7日間ロードマップ」を米国が拒否し膠着。ホルムズでの船舶攻撃、サウジへのフーシ派攻撃が頻発。湾岸からの原油輸出は戦前並みだが、海峡経由は半減。",
+  "flow_disruption_pct": 41,
+  "last_manual_note": "米国はイランのロードマップを拒否。連日の船舶攻撃やサウジ攻撃で緊張は急速に高まり、外交は停滞。二重封鎖が常態化する危機にある。",
   "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 10,
-  "ais_estimated_cargo": 2,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "9/16 Windward (AIS非発信含) 12隻"
+  "ais_estimated_tankers": 8,
+  "ais_estimated_cargo": 4,
+  "ais_confidence": "low",
+  "ais_estimation_note": "9月半ばのAIS非発信含む隻数とUKMTO報告を考慮"
 }
