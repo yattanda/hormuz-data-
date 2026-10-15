@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-14T14:05:26+09:00",
+  "updated_at": "2026-10-15T09:31:05+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 6,
+    "age_days": 7,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-13",
+    "timeline_updated": "2026-10-14",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 20
+    "A_diplomacy_pct": 0,
+    "B_partial_blockade_pct": 10,
+    "C_full_blockade_pct": 20,
+    "D_escalation_pct": 70
   },
-  "hormuz_daily_flow_mbpd": 12.4,
+  "hormuz_daily_flow_mbpd": 5.0,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 41,
-  "last_manual_note": "米国はイランのロードマップを拒否。連日の船舶攻撃やサウジ攻撃で緊張は急速に高まり、外交は停滞。二重封鎖が常態化する危機にある。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 8,
-  "ais_estimated_cargo": 4,
-  "ais_confidence": "low",
-  "ais_estimation_note": "9月半ばのAIS非発信含む隻数とUKMTO報告を考慮"
+  "flow_disruption_pct": 76,
+  "last_manual_note": "ホルムズ海峡で船舶への攻撃が頻発しコンテナ船が沈没。サウジの主要インフラ攻撃も続き、地域緊張は極めて高い。米イラン外交は停滞。",
+  "ais_estimated_vessels": 4,
+  "ais_estimated_tankers": 3,
+  "ais_estimated_cargo": 1,
+  "ais_confidence": "medium",
+  "ais_estimation_note": "攻撃激化と沈没で通過船減少"
 }
