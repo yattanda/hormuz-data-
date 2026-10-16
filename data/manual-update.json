@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-16T09:31:18+09:00",
+  "updated_at": "2026-10-16T13:44:49+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 35,
+    "A_diplomacy_pct": 1,
+    "B_partial_blockade_pct": 9,
     "C_full_blockade_pct": 30,
-    "D_escalation_pct": 30
+    "D_escalation_pct": 60
   },
-  "hormuz_daily_flow_mbpd": 8.5,
+  "hormuz_daily_flow_mbpd": 0.6,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 59,
-  "last_manual_note": "10月に入り船舶への攻撃が激化しコンテナ船沈没。サウジ重要インフラも攻撃され緊張が著しく高まる中、米イラン交渉は停滞。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 5,
-  "ais_estimated_cargo": 3,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "10月上旬の攻撃激化と船舶沈没を考慮し9月データから推計"
+  "flow_disruption_pct": 97,
+  "last_manual_note": "連日の船舶攻撃、沈没船発生でリスクが劇的に上昇。イランのロードマップ拒否により外交は停滞。サウジ重要施設への攻撃も激化し、全面衝突のリスクが非常に高い。",
+  "ais_estimated_vessels": 3,
+  "ais_estimated_tankers": 2,
+  "ais_estimated_cargo": 1,
+  "ais_confidence": "low",
+  "ais_estimation_note": "攻撃激化、沈没船発生を受け大幅減と推計。"
 }
