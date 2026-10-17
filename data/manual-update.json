@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-17T09:31:06+09:00",
+  "updated_at": "2026-10-17T13:42:52+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -23,13 +23,13 @@
     "C_full_blockade_pct": 40,
     "D_escalation_pct": 50
   },
-  "hormuz_daily_flow_mbpd": 1.0,
+  "hormuz_daily_flow_mbpd": 1.045,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 95,
-  "last_manual_note": "10月に入り船舶攻撃が連日激化しコンテナ船が沈没。サウジ本土への攻撃も頻発。外交は停滞し、全面衝突と二重封鎖の常態化が迫る。",
+  "last_manual_note": "船舶攻撃が連日発生しコンテナ船が沈没。外交は停滞、サウジへの攻撃も激化し全面対決リスクが最高潮。",
   "ais_estimated_vessels": 5,
   "ais_estimated_tankers": 3,
   "ais_estimated_cargo": 2,
   "ais_confidence": "low",
-  "ais_estimation_note": "直近の攻撃激化・沈没を受け推計"
+  "ais_estimation_note": "複数攻撃・沈没船から大幅減と判断"
 }

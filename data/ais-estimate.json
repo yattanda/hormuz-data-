@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-17T09:31:06+09:00",
+  "updated_at": "2026-10-17T13:42:52+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
@@ -11,7 +11,7 @@
     "other": 0
   },
   "confidence": "low",
-  "estimation_note": "直近の攻撃激化・沈没を受け推計",
+  "estimation_note": "複数攻撃・沈没船から大幅減と判断",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
