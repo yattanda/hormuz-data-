@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-18T13:49:04+09:00",
+  "updated_at": "2026-10-19T09:31:14+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 10,
+    "age_days": 11,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-17",
+    "timeline_updated": "2026-10-18",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 0,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 55
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 50
   },
-  "hormuz_daily_flow_mbpd": 1.0,
+  "hormuz_daily_flow_mbpd": 2.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 95,
-  "last_manual_note": "10月に入り船舶への攻撃が連日激化、コンテナ船沈没。サウジへの攻撃も多発し、情勢は全面対決へ傾斜。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 2,
+  "flow_disruption_pct": 88,
+  "last_manual_note": "船舶への攻撃が頻発しコンテナ船が沈没。イランのロードマップを米国が拒否し、外交は決裂状態。地域紛争のエスカレーションが深刻化している。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 6,
+  "ais_estimated_cargo": 4,
   "ais_confidence": "low",
-  "ais_estimation_note": "10月の攻撃激化と沈没船を考慮し推計"
+  "ais_estimation_note": "9/16 Windwardと10月攻撃激化考慮"
 }
