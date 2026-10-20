@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-19T13:56:55+09:00",
+  "updated_at": "2026-10-20T09:31:23+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 11,
+    "age_days": 12,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-10-18",
-    "timeline_age_days": 1,
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 45
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 60,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 5
   },
   "hormuz_daily_flow_mbpd": 9.9,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 53,
-  "last_manual_note": "イランのロードマップは米国に拒否され、ホルムズでは連日攻撃が発生しコンテナ船が沈没。サウジへの攻撃も継続中。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 7,
-  "ais_estimated_cargo": 3,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "9月流量と10月攻撃激化を考慮し推計。"
+  "last_manual_note": "ホルムズ海峡での船舶攻撃が連日発生しコンテナ船が沈没。米イラン双方、海峡支配を主張し交渉は難航。",
+  "ais_estimated_vessels": 7,
+  "ais_estimated_tankers": 5,
+  "ais_estimated_cargo": 2,
+  "ais_confidence": "low",
+  "ais_estimation_note": "複数報道に矛盾。攻撃激化と沈没で低水準と推計"
 }
