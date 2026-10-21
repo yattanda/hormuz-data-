@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-20T14:03:02+09:00",
+  "updated_at": "2026-10-21T09:31:17+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 12,
+    "age_days": 13,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-18",
-    "timeline_age_days": 2,
+    "timeline_updated": "2026-10-20",
+    "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 25,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 30
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 45
   },
-  "hormuz_daily_flow_mbpd": 7.0,
+  "hormuz_daily_flow_mbpd": 9.9,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 67,
-  "last_manual_note": "米イラン対話は膠着し、相互に海峡封鎖や通行料徴収を主張。船舶攻撃が頻発し沈没も発生、サウジインフラへの攻撃も続き地域情勢は深刻化。",
-  "ais_estimated_vessels": 7,
-  "ais_estimated_tankers": 4,
+  "flow_disruption_pct": 53,
+  "last_manual_note": "ホルムズ海峡での船舶攻撃が激化し、コンテナ船沈没も発生。米イラン外交は停滞し、米国は封鎖と課税を宣言。イランは海峡閉鎖を示唆し、地域緊張が高まっている。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 6,
   "ais_estimated_cargo": 2,
   "ais_confidence": "medium",
-  "ais_estimation_note": "9/16 Windwardデータを基に10月攻撃激化を考慮"
+  "ais_estimation_note": "9月半ばのAISデータと攻撃激化を考慮。"
 }
