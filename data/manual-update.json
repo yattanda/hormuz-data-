@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T09:31:26+09:00",
+  "updated_at": "2026-10-22T14:05:25+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 35,
-    "D_escalation_pct": 45
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 60,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 15
   },
   "hormuz_daily_flow_mbpd": 9.9,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 53,
-  "last_manual_note": "外交努力は不調で米国はイラン提案を拒否。ホルムズ内外での船舶攻撃が連日激化し、コンテナ船沈没、サウジ攻撃も拡大し、全面対決リスクが高い。",
-  "ais_estimated_vessels": 12,
-  "ais_estimated_tankers": 10,
-  "ais_estimated_cargo": 2,
-  "ais_confidence": "low",
-  "ais_estimation_note": "9月流量とWindward9/16データを根拠。"
+  "last_manual_note": "米イラン間接協議が続くも、イランの提案を米が拒否。ホルムズ内外での船舶攻撃が頻発し、サウジへの攻撃も激化。通航は大幅に制限されたまま。",
+  "ais_estimated_vessels": 10,
+  "ais_estimated_tankers": 6,
+  "ais_estimated_cargo": 3,
+  "ais_confidence": "medium",
+  "ais_estimation_note": "9月Kpler/Reuters/Windward及びIRGC主張等から推計"
 }
