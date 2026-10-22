@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-21T14:02:57+09:00",
+  "updated_at": "2026-10-22T09:31:26+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 13,
+    "age_days": 14,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-20",
+    "timeline_updated": "2026-10-21",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 30,
-    "C_full_blockade_pct": 45,
-    "D_escalation_pct": 20
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 35,
+    "D_escalation_pct": 45
   },
-  "hormuz_daily_flow_mbpd": 3.1,
+  "hormuz_daily_flow_mbpd": 9.9,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 85,
-  "last_manual_note": "ホルムズ海峡での船舶攻撃が頻発し沈没も発生、米イラン対話は膠着し情勢悪化。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 5,
-  "ais_estimated_cargo": 3,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "UKMTO警報、Windward9/16データ、攻撃頻度より推定"
+  "flow_disruption_pct": 53,
+  "last_manual_note": "外交努力は不調で米国はイラン提案を拒否。ホルムズ内外での船舶攻撃が連日激化し、コンテナ船沈没、サウジ攻撃も拡大し、全面対決リスクが高い。",
+  "ais_estimated_vessels": 12,
+  "ais_estimated_tankers": 10,
+  "ais_estimated_cargo": 2,
+  "ais_confidence": "low",
+  "ais_estimation_note": "9月流量とWindward9/16データを根拠。"
 }
