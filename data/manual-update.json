@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T09:31:14+09:00",
+  "updated_at": "2026-10-23T14:05:22+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 0,
-    "B_partial_blockade_pct": 10,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 60
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 40,
+    "D_escalation_pct": 15
   },
-  "hormuz_daily_flow_mbpd": 2.09,
+  "hormuz_daily_flow_mbpd": 11.3,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 90,
-  "last_manual_note": "連日の船舶攻撃が激化し、サウジ本土への攻撃も増加。外交は進展なく、衝突エスカレート傾向。",
+  "flow_disruption_pct": 46,
+  "last_manual_note": "ホルムズ海峡で船舶攻撃が頻発しコンテナ船が沈没。サウジへの攻撃も激化。米イラン外交は膠着。",
   "ais_estimated_vessels": 10,
   "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 3,
+  "ais_estimated_cargo": 2,
   "ais_confidence": "medium",
-  "ais_estimation_note": "9月初旬の9割減データと攻撃激化"
+  "ais_estimation_note": "攻撃頻発・沈没で隻数減少。流量報道との整合性に注意。"
 }

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T09:31:14+09:00",
+  "updated_at": "2026-10-23T14:05:22+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
@@ -7,11 +7,11 @@
   "estimated_vessels": 10,
   "breakdown": {
     "tanker": 6,
-    "cargo": 3,
-    "other": 1
+    "cargo": 2,
+    "other": 2
   },
   "confidence": "medium",
-  "estimation_note": "9月初旬の9割減データと攻撃激化",
+  "estimation_note": "攻撃頻発・沈没で隻数減少。流量報道との整合性に注意。",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
