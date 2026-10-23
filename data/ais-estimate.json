@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T14:05:25+09:00",
+  "updated_at": "2026-10-23T09:31:14+09:00",
   "measurement": "estimate",
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "gemini-2.5-flash",
@@ -11,7 +11,7 @@
     "other": 1
   },
   "confidence": "medium",
-  "estimation_note": "9月Kpler/Reuters/Windward及びIRGC主張等から推計",
+  "estimation_note": "9月初旬の9割減データと攻撃激化",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
