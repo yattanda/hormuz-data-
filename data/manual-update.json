@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-23T14:05:22+09:00",
+  "updated_at": "2026-10-24T09:31:23+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 15,
+    "age_days": 16,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-21",
+    "timeline_updated": "2026-10-22",
     "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -19,17 +19,17 @@
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 40,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 15
+    "B_partial_blockade_pct": 50,
+    "C_full_blockade_pct": 25,
+    "D_escalation_pct": 20
   },
-  "hormuz_daily_flow_mbpd": 11.3,
+  "hormuz_daily_flow_mbpd": 7.9,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 46,
-  "last_manual_note": "ホルムズ海峡で船舶攻撃が頻発しコンテナ船が沈没。サウジへの攻撃も激化。米イラン外交は膠着。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 6,
+  "flow_disruption_pct": 62,
+  "last_manual_note": "10月のホルムズ攻撃件数は過去最高を記録し、沈没船も発生。米イラン交渉は停滞し、緊張は継続。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 5,
   "ais_estimated_cargo": 2,
   "ais_confidence": "medium",
-  "ais_estimation_note": "攻撃頻発・沈没で隻数減少。流量報道との整合性に注意。"
+  "ais_estimation_note": "9月実績と10月攻撃激化を考慮し推計"
 }
