@@ -119,28 +119,39 @@ def where(start, end=None):
     return clause
 
 
-def fetch_daily(today):
-    # PortWatch の遅れ（約1週間・止まれば更に）のぶん、多めに取ってから切る
-    start = (today - timedelta(days=DAILY_DAYS + STALE_AFTER_DAYS * 2)).isoformat()
+def fetch_latest_date():
     body = query({
-        "where": where(start),
+        "where": "portid = '{}'".format(PORT_ID),
+        "outFields": "date",
+        "orderByFields": "date DESC",
+        "resultRecordCount": 1,
+    })
+    features = body.get("features") or []
+    if not features:
+        raise FetchError(3, "{} の行がありません（海峡の ID が変わった可能性）".format(PORT_ID))
+    return date.fromisoformat(features[0]["attributes"]["date"])
+
+
+def fetch_daily():
+    # 範囲は今日からではなく最新の行から数える。今日から数えると、PortWatch の
+    # 更新が止まったあいだも先頭の行が1つずつ落ち、中身の無いコミットが毎日できる
+    latest = fetch_latest_date()
+    first = latest - timedelta(days=DAILY_DAYS - 1)
+    body = query({
+        "where": where(first.isoformat(), latest.isoformat()),
         "outFields": ",".join(DAILY_FIELDS),
         "orderByFields": "date ASC",
         "resultRecordCount": 1000,
     })
     rows = [f["attributes"] for f in body.get("features", [])]
     if not rows:
-        raise FetchError(3, "直近 {} 日の行がありません（海峡の ID が変わった可能性）".format(DAILY_DAYS))
+        raise FetchError(3, "{}〜{} の行がありません".format(first, latest))
     missing = [k for k in DAILY_FIELDS if k not in rows[0]]
     if missing:
         raise FetchError(3, "項目がありません: {}".format(missing))
     if rows[0]["portname"] != PORT_NAME:
         raise FetchError(3, "{} の名前が {} ではありません: {}".format(
             PORT_ID, PORT_NAME, rows[0]["portname"]))
-    # 範囲は今日からではなく最新の行から数える。今日から数えると、新しい行が
-    # 入らない日も先頭の行が1つずつ落ちて、中身の無いコミットが毎日できる
-    first = (date.fromisoformat(rows[-1]["date"]) - timedelta(days=DAILY_DAYS - 1)).isoformat()
-    rows = [r for r in rows if r["date"] >= first]
     return [{
         "date": r["date"],
         "total": r["n_total"],
@@ -272,7 +283,7 @@ def save(snapshot, path=OUT_PATH):
 def main():
     today = datetime.now(timezone.utc).date()
     try:
-        daily = fetch_daily(today)
+        daily = fetch_daily()
         baselines = {key: fetch_baseline(*span) for key, span in BASELINES.items()}
     except FetchError as e:
         print("[PortWatch] ERROR: {}".format(e), file=sys.stderr)
