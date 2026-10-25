@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-25T09:31:23+09:00",
+  "updated_at": "2026-10-25T13:58:49+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
@@ -20,16 +20,16 @@
   "scenario": {
     "A_diplomacy_pct": 5,
     "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 45,
-    "D_escalation_pct": 35
+    "C_full_blockade_pct": 40,
+    "D_escalation_pct": 40
   },
-  "hormuz_daily_flow_mbpd": 9.9,
+  "hormuz_daily_flow_mbpd": 7.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 53,
-  "last_manual_note": "10月に入りホルムズ海峡での攻撃が激化し、沈没船も発生。米イラン外交は決裂、地域衝突が拡大している。",
-  "ais_estimated_vessels": 8,
-  "ais_estimated_tankers": 6,
-  "ais_estimated_cargo": 2,
+  "flow_disruption_pct": 64,
+  "last_manual_note": "10月に船舶攻撃が過去最高を記録し沈没船も発生。米イラン間接協議は決裂し、外交は停滞。地域の軍事緊張が極度に高まっている。",
+  "ais_estimated_vessels": 35,
+  "ais_estimated_tankers": 20,
+  "ais_estimated_cargo": 10,
   "ais_confidence": "medium",
-  "ais_estimation_note": "9月平均と10月攻撃激化からの推計"
+  "ais_estimation_note": "Kplerの9月データと10月の攻撃激化を考慮し推計"
 }
