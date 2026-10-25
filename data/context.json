@@ -1,12 +1,18 @@
 {
   "_comment": "Gemini プロンプトに注入する前提を集約したファイル。scripts/fetch_manual.py が読み込む。ここを更新すれば Python コードを変更せずに前提を差し替えられる。値を変えたら context_updated も必ず更新すること。値を見直して据え置きと確かめたときも context_updated を更新し、何を確かめたかを context_review_log に1件足す（2026-10-08〜。見直しの記録が無いと、変える必要のない前提でも表示側に「更新されていません」の注意が出続ける）。",
-  "context_updated": "2026-10-08",
+  "context_updated": "2026-10-25",
   "context_review_log": [
     {
       "date": "2026-10-08",
       "result": "値の変更なし（前回の変更は 2026-09-05）",
       "checked": "normal_flow_mbpd：EIA の World Oil Transit Chokepoints を開いて確認。Last Updated は March 3, 2026、最新の期は 1H25 のままで、20.9 は現行の公表値。",
       "not_rechecked": "normal_vessels_per_day（開戦前の水準で、時間の経過では変わらない値。IMO の月次データへの置き換えは todo のまま）。dark_factor（未検証のまま。実測の復旧後に再設定する todo のまま）。"
+    },
+    {
+      "date": "2026-10-25",
+      "result": "シナリオの定義を変更：判定日（90日後・scenario_horizon_days）と判定の順（scenario_rule：D → A → C → B）を足し、4つが重ならず必ずどれかに当たる形にした。数値の前提は変更なし",
+      "checked": "scenario_definitions・scenario_horizon_days・scenario_rule",
+      "not_rechecked": "normal_flow_mbpd・normal_vessels_per_day・dark_factor（2026-10-08 の見直しのまま）"
     }
   ],
   "stale_after_days": 30,
@@ -51,12 +57,15 @@
     "todo": "値そのものが未検証。1.35 は AIS 消灯率 25.9% に相当するが、Lloyd's List Intelligence の Strait of Hormuz Brief（2026-07-29 発行・対象週 7/20-26）は全船種の 70% が AIS で追跡不能としており、直前3週の推移も 42% → 55% → 70% と上昇している。どの週の実測とも整合しない過小な値である。実測（VesselAPI）が復旧した時点で、消灯率 70% に対応する 3.33 を起点に再設定する。ただし Lloyd's の母集団は全船種・週次であり、当サイトの bbox 実測と一致する保証がないため、突き合わせは実測復旧後に行う。なお Kpler 集計の「2026-08 に 8 割超」（Al Jazeera 2026-08-20）は dark or otherwise unclassified routes の割合であって AIS 消灯率ではなく、Kpler はこれらの船を隻数に数えているため係数の根拠には使えない（2026-09-06 に確認）。出典と基準期間を確定できたら label と source_url を埋めて verified を true にする。参照: https://www.lloydslistintelligence.com/resources/blog/strait-of-hormuz-brief-29-july-2026"
   },
 
+  "scenario_horizon_days": 90,
+  "_comment_scenario_horizon": "確率は「今日から scenario_horizon_days 日後（判定日）にどのシナリオに当たるか」として答えさせる。期間を決めないと問いが一つに定まらず、回ごとに解釈が変わる（2026-10-25 導入）。",
+  "scenario_rule": "判定日に、D → A → C → B の順で最初に当てはまるもの1つに当たる。4つは重ならず、必ずどれか1つに当たる。",
   "scenario_definitions": {
-    "_comment": "hormuz-map の docs/index.html にあるシナリオカード見出しと一致させること。JSON のキー名（A_diplomacy_pct 等）は既存の表示側との互換性のため変更しない。",
-    "A_diplomacy_pct": "段階的MOU履行成功 — IMO避難計画の成立と核査察スケジュール合意を経て、ホルムズ主ルートが再開に向かう",
-    "B_partial_blockade_pct": "膠着継続・外交不透明化 — 双方が決定打を欠いたまま拡大と沈静化を繰り返し、通航制限が長期化する",
-    "C_full_blockade_pct": "イラン・米国による二重封鎖の制度化・経済疲弊深刻化 — 報復の応酬が恒常的な枠組みとして定着し、イランによる通航制限と米軍の対イラン海上封鎖が制度化する",
-    "D_escalation_pct": "全面対決・ホルムズ海峡の無期限閉鎖 — 交渉打ち切りから武力による海峡制圧、全面戦争の再開に至る"
+    "_comment": "hormuz-map の docs/hormuz/index.html にあるシナリオカード見出しと一致させること。見出しは「—」の前。JSON のキー名（A_diplomacy_pct 等）は既存の表示側との互換性のため変更しない。",
+    "A_diplomacy_pct": "段階的MOU履行成功 — D に当たらず、判定日の時点で、米国とイランの合意（MOU など）に基づいてホルムズ海峡の主ルートの商船の通航が再開している（条件付き・段階的な再開を含む）",
+    "B_partial_blockade_pct": "膠着継続・外交不透明化 — D・A・C のどれにも当たらない。通航の制限は続いているが、公式の協議や仲介を通じたやり取りは続いている",
+    "C_full_blockade_pct": "イラン・米国による二重封鎖の制度化・経済疲弊深刻化 — D・A に当たらず、判定日の時点で、イランによる通航の制限と米軍の対イラン海上封鎖がどちらも続き、公式の協議や仲介を通じたやり取りが30日以上ない",
+    "D_escalation_pct": "全面対決・ホルムズ海峡の無期限閉鎖 — 判定日までに、米国とイランの間で大規模な直接の戦闘（全面戦争の再開、または武力による海峡の制圧）が起きる。起きればその後の状態にかかわらず D"
   },
 
   "timeline": [

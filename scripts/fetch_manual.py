@@ -247,10 +247,28 @@ def build_timeline_text(context):
     return "\n".join(lines) if lines else "- （前提となる事実が登録されていません）"
 
 
+def scenario_judgment_date(context):
+    """シナリオの判定日（今日 JST から scenario_horizon_days 日後）。期間が無ければ None。"""
+    days = context.get("scenario_horizon_days")
+    if not isinstance(days, int) or days <= 0:
+        return None
+    jst = timezone(timedelta(hours=9))
+    return datetime.now(jst).date() + timedelta(days=days)
+
+
 def build_scenario_text(context):
-    """シナリオ定義を「キー: 説明」の行に整形する。"""
+    """シナリオ定義を、判定日・判定の順と「キー: 説明」の行に整形する。"""
     defs = context.get("scenario_definitions", {})
     lines = []
+    judgment = scenario_judgment_date(context)
+    if judgment is not None:
+        lines.append(
+            f"- 判定日：{judgment.isoformat()}（今日から{context['scenario_horizon_days']}日後）。"
+            "各シナリオの確率は「判定日にそのシナリオに当たる確率」として答えること"
+        )
+    rule = context.get("scenario_rule")
+    if rule:
+        lines.append(f"- 判定の順：{rule}")
     for key, desc in defs.items():
         if key.startswith("_"):
             continue
@@ -331,7 +349,8 @@ def build_prompt(news_items, context):
   "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度の語は含めず根拠のみ>
 }}
 
-【シナリオの定義】（表示側のカード見出しと一致させてある。この定義に沿って確率を割り当てること）
+【シナリオの定義】（表示側のカード見出しと一致させてある。この定義と判定の順に沿って確率を割り当てること。
+現状がどのシナリオに近いかではなく、判定日にどれに当たるかを見積もること）
 {scenario_text}
 
 【注意事項】
@@ -529,6 +548,14 @@ def build_manual_json(data, context, previous=None):
             "timeline_stale_after_days": context.get("timeline_stale_after_days"),
             "timeline_stale": timeline_is_stale(context),
             "note": "この推計に与えた前提の基準日。data/context.json で管理している。",
+        },
+        # 確率が「いつの時点の話か」。表示側はこれで判定日を出す
+        "scenario_horizon": {
+            "days": context.get("scenario_horizon_days"),
+            "judgment_date": (
+                scenario_judgment_date(context).isoformat()
+                if scenario_judgment_date(context) is not None else None
+            ),
         },
         # 手動項目を data より先に置く。Gemini の出力がこれらを上書きしないようにする
         **carried,
