@@ -61,6 +61,9 @@ jobs:
           echo "token length: ${#CLAUDE_CODE_OAUTH_TOKEN}"
           case "$CLAUDE_CODE_OAUTH_TOKEN" in sk-ant-oat*) echo "prefix: sk-ant-oat" ;; *) echo "prefix: other" ;; esac
           case "$CLAUDE_CODE_OAUTH_TOKEN" in *[[:space:]]*) echo "contains whitespace: yes" ;; *) echo "contains whitespace: no" ;; esac
+          echo "--- stripped"
+          T=$(printf %s "$CLAUDE_CODE_OAUTH_TOKEN" | tr -d '[:space:]'); echo "stripped length: ${#T}"
+          echo "Reply with OK" | CLAUDE_CODE_OAUTH_TOKEN="$T" claude -p --output-format json | grep -o '"result":"[^"]*"' | head -c 200; echo
           echo "--- plain"
           echo "Reply with OK" | claude -p --output-format json | head -c 400; echo
           echo "--- with flags"
