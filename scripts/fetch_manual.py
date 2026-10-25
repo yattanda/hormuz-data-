@@ -1,19 +1,28 @@
 """
 fetch_manual.py
 RSSフィードから最新ニュースを取得し、
-Google Gemini API で分析して
+生成AI（既定は Claude・--backend で Gemini も選べる）で分析して
 data/manual-update.json を自動更新する。
 
 必要環境変数:
-  GEMINI_API_KEY : Google Gemini API キー
+  CLAUDE_CODE_OAUTH_TOKEN : Claude のサブスクの認証（既定の claude のとき）
+  GEMINI_API_KEY          : Google Gemini API キー（--backend gemini のとき）
 """
 
+import argparse
+import html
 import json
 import os
+import re
+import statistics
+import subprocess
 import sys
+import time
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
+from email.utils import parsedate_to_datetime
 from google import genai
 from google.genai import types
 
@@ -33,40 +42,115 @@ RSS_FEEDS = [
 ]
 
 
-# 出典表示に使う文字列。footer はこれを並べて「データソース」欄を組み立てるため、
-# 1件だけ読んでも供給元・モデル・入力が分かる形にする。表示側に文字列を置かない。
-GEMINI_SOURCE = (
-    "Gemini 2.5 Flash による推計"
-    "（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）"
-)
-
 KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait", "封鎖", "ホルムズ", "イラン"]
 
-def fetch_rss_news(max_items=40):
-    """RSSフィードからホルムズ関連ニュースを取得"""
-    news_items = []
+# 入力に使う記事の条件。2026-10-25 までは先頭のフィードだけで上限の40件に達し、
+# 残り8本は読まれていなかった。並びも関連度順で、中央値18日・最大102日前の
+# 見出しが入っていた（10/25 の実測）。フィードごとに上限を設けて全フィードから取り、
+# 期間で絞ってから新しい順に並べる。
+MAX_AGE_DAYS = 7
+PER_FEED_MAX = 12
+
+# 媒体名を持たないフィード（<source> が無い）の表示名
+FEED_LABELS = {
+    "www.aljazeera.com": "Al Jazeera",
+    "feeds.bbci.co.uk": "BBC",
+    "rss.nytimes.com": "New York Times",
+}
+
+
+def parse_pub_date(raw):
+    """RSS の pubDate を UTC の datetime にする。読めない場合は None。"""
+    try:
+        dt = parsedate_to_datetime(raw)
+    except (TypeError, ValueError, IndexError):
+        return None
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
+def clean_text(raw):
+    """HTML のタグと実体参照を取り除き、空白を1つにまとめる。"""
+    text = re.sub(r"<[^>]+>", " ", raw or "")
+    return re.sub(r"\s+", " ", html.unescape(text)).strip()
+
+
+def title_key(title):
+    """重複判定用の見出し。Google ニュースが末尾に付ける「 - 媒体名」を除く。"""
+    base = re.sub(r"\s+-\s+[^-]+$", "", title or "")
+    return re.sub(r"\W+", "", base).lower()
+
+
+def fetch_feed(url, now, max_age_days):
+    """1本のフィードから、期間内でキーワードに合う記事を新しい順に返す。"""
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=10) as response:
+        root = ET.parse(response).getroot()
+    host = urllib.parse.urlparse(url).hostname or ""
+    items = []
+    for item in root.iter("item"):
+        title = clean_text(item.findtext("title", ""))
+        desc = clean_text(item.findtext("description", ""))
+        published = parse_pub_date(item.findtext("pubDate", ""))
+        # 日付の無い記事は新しさを確かめられないので使わない
+        if not title or published is None:
+            continue
+        if (now - published) > timedelta(days=max_age_days):
+            continue
+        if not any(kw.lower() in f"{title} {desc}".lower() for kw in KEYWORDS):
+            continue
+        # Google ニュースの description は見出しとリンクの繰り返しで、中身が無い
+        if title_key(desc).startswith(title_key(title)):
+            desc = ""
+        source = clean_text(item.findtext("source", "")) or FEED_LABELS.get(host, host)
+        items.append({
+            "title": title,
+            "description": desc[:200],
+            "source": source,
+            "published": published,
+        })
+    items.sort(key=lambda x: x["published"], reverse=True)
+    return items
+
+
+def fetch_rss_news(max_items=40, max_age_days=MAX_AGE_DAYS, per_feed_max=PER_FEED_MAX):
+    """全フィードからホルムズ関連の記事を集め、重複を除いて新しい順に返す。"""
+    now = datetime.now(timezone.utc)
+    collected = []
     for url in RSS_FEEDS:
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=10) as response:
-                tree = ET.parse(response)
-                root = tree.getroot()
-                for item in root.iter("item"):
-                    title = item.findtext("title", "")
-                    desc = item.findtext("description", "")
-                    pub_date = item.findtext("pubDate", "")
-                    text = f"{title} {desc}"
-                    if any(kw.lower() in text.lower() for kw in KEYWORDS):
-                        news_items.append({
-                            "title": title,
-                            "description": desc[:200],
-                            "pubDate": pub_date
-                        })
-            if len(news_items) >= max_items:
-                break
+            items = fetch_feed(url, now, max_age_days)
         except Exception as e:
             print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
-    return news_items[:max_items]
+            continue
+        print(f"[RSS] {len(items):3d} 件（期間内・該当）: {url[:70]}")
+        collected.extend(items[:per_feed_max])
+
+    seen = set()
+    unique = []
+    for item in sorted(collected, key=lambda x: x["published"], reverse=True):
+        key = title_key(item["title"])
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(item)
+
+    news = unique[:max_items]
+    if news:
+        ages = sorted((now - n["published"]).total_seconds() / 86400 for n in news)
+        print(f"[RSS] 採用 {len(news)} 件（重複除去前 {len(collected)} 件）"
+              f" / 古さ 中央値 {ages[len(ages) // 2]:.1f} 日・最大 {ages[-1]:.1f} 日")
+    return news
+
+
+def format_news_line(item):
+    """プロンプトに入れる1行。日付と媒体を先に置き、新しさと出所を読めるようにする。"""
+    date = item["published"].astimezone(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+    body = f": {item['description']}" if item["description"] else ""
+    return f"- [{date}・{item['source']}] {item['title']}{body}"
 
 def load_context(path="data/context.json"):
     """プロンプトに注入する前提を data/context.json から読み込む。
@@ -158,10 +242,28 @@ def build_timeline_text(context):
     return "\n".join(lines) if lines else "- （前提となる事実が登録されていません）"
 
 
+def scenario_judgment_date(context):
+    """シナリオの判定日（今日 JST から scenario_horizon_days 日後）。期間が無ければ None。"""
+    days = context.get("scenario_horizon_days")
+    if not isinstance(days, int) or days <= 0:
+        return None
+    jst = timezone(timedelta(hours=9))
+    return datetime.now(jst).date() + timedelta(days=days)
+
+
 def build_scenario_text(context):
-    """シナリオ定義を「キー: 説明」の行に整形する。"""
+    """シナリオ定義を、判定日・判定の順と「キー: 説明」の行に整形する。"""
     defs = context.get("scenario_definitions", {})
     lines = []
+    judgment = scenario_judgment_date(context)
+    if judgment is not None:
+        lines.append(
+            f"- 判定日：{judgment.isoformat()}（今日から{context['scenario_horizon_days']}日後）。"
+            "各シナリオの確率は「判定日にそのシナリオに当たる確率」として答えること"
+        )
+    rule = context.get("scenario_rule")
+    if rule:
+        lines.append(f"- 判定の順：{rule}")
     for key, desc in defs.items():
         if key.startswith("_"):
             continue
@@ -199,10 +301,7 @@ def build_prompt(news_items, context):
     timeline_text = build_timeline_text(context)
     scenario_text = build_scenario_text(context)
 
-    news_text = "\n".join([
-        f"- {item['title']}: {item['description']}"
-        for item in news_items
-    ])
+    news_text = "\n".join(format_news_line(item) for item in news_items)
 
     # 隻数の前提は表示側の「開戦前比」の分母と同じ値を使う。
     # 分子と分母で前提が違うと割合が読めなくなる。
@@ -245,7 +344,8 @@ def build_prompt(news_items, context):
   "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度の語は含めず根拠のみ>
 }}
 
-【シナリオの定義】（表示側のカード見出しと一致させてある。この定義に沿って確率を割り当てること）
+【シナリオの定義】（表示側のカード見出しと一致させてある。この定義と判定の順に沿って確率を割り当てること。
+現状がどのシナリオに近いかではなく、判定日にどれに当たるかを見積もること）
 {scenario_text}
 
 【注意事項】
@@ -265,36 +365,249 @@ def build_prompt(news_items, context):
 """
 
 
-def analyze_with_gemini(api_key, news_items, context):
-    """Gemini API でニュースを分析してJSONを生成"""
-    import time
-    client = genai.Client(api_key=api_key)
+class QuotaExhausted(Exception):
+    """推計に使う API・サブスクの利用枠を使い切った。"""
 
-    prompt = build_prompt(news_items, context)
 
-    for attempt in range(3):  # 最大3回リトライ
+def parse_json_text(text):
+    """モデルの返答から JSON を取り出す（コードフェンスで囲まれていても読む）。"""
+    text = (text or "").strip()
+    if "```json" in text:
+        text = text.split("```json")[1].split("```")[0].strip()
+    elif "```" in text:
+        text = text.split("```")[1].split("```")[0].strip()
+    return json.loads(text)
+
+
+def with_retries(label, call):
+    """call() を最大3回試す。利用枠切れは再試行せずに QuotaExhausted を投げる。"""
+    for attempt in range(3):
         try:
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt
-            )
-            text = response.text.strip()
-            if "```json" in text:
-                text = text.split("```json")[1].split("```")[0].strip()
-            elif "```" in text:
-                text = text.split("```")[1].split("```")[0].strip()
-            return json.loads(text)
+            return call()
+        except QuotaExhausted:
+            raise
         except Exception as e:
-            print(f"[Gemini] Attempt {attempt+1} failed: {e}", file=sys.stderr)
+            print(f"[{label}] Attempt {attempt+1} failed: {e}", file=sys.stderr)
+            # Gemini の無料枠は1日20回（gemini-2.5-flash・2026-10-25 の 429 の応答）。
+            # 使い切ったあとの再試行は枠を回復させず、待つ時間だけがかかる（10/25 の測定で約1時間）
+            if "RESOURCE_EXHAUSTED" in str(e):
+                raise QuotaExhausted(str(e)) from e
             if attempt < 2:
                 wait = (attempt + 1) * 30  # 30秒→60秒待機
-                print(f"[Gemini] Waiting {wait}s before retry...", file=sys.stderr)
+                print(f"[{label}] Waiting {wait}s before retry...", file=sys.stderr)
                 time.sleep(wait)
-
-    print("[Gemini] All retries failed.", file=sys.stderr)
+    print(f"[{label}] All retries failed.", file=sys.stderr)
     return None
 
-def build_manual_json(data, context, previous=None):
+
+GEMINI_MODEL = "gemini-2.5-flash"
+
+
+def analyze_with_gemini(api_key, news_items, context, prompt=None):
+    """Gemini API でニュースを分析してJSONを生成（1回分）"""
+    client = genai.Client(api_key=api_key)
+
+    if prompt is None:
+        prompt = build_prompt(news_items, context)
+
+    def call():
+        response = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(response_mime_type="application/json"),
+        )
+        return parse_json_text(response.text)
+
+    return with_retries("Gemini", call)
+
+
+# Claude は Claude Code の CLI を、サブスクの認証（CLAUDE_CODE_OAUTH_TOKEN）で呼ぶ。
+# ツールは使わせず（--tools ""）、プロンプトに入れた材料だけで答えさせる。
+CLAUDE_MODEL = os.environ.get("SCENARIO_CLAUDE_MODEL", "opus")
+CLAUDE_SYSTEM = "あなたは中東情勢と海上輸送の専門アナリストです。指示された JSON だけを返し、説明文やコードフェンスは書きません。"
+CLAUDE_TIMEOUT_SEC = 600
+
+
+def analyze_with_claude(prompt, model=CLAUDE_MODEL):
+    """Claude（Claude Code の CLI）でニュースを分析してJSONを生成（1回分）"""
+    cmd = ["claude", "-p", "--tools", "", "--model", model, "--output-format", "json",
+           "--no-session-persistence", "--system-prompt", CLAUDE_SYSTEM]
+
+    # 登録した値に改行が混じることがある（2026-10-25：setup-token の出力の折り返しごと
+    # 貼られ、"Not logged in" になった）。トークンに空白は含まれないので取り除いて渡す
+    token = re.sub(r"\s+", "", os.environ.get("CLAUDE_CODE_OAUTH_TOKEN", ""))
+    env = dict(os.environ, CLAUDE_CODE_OAUTH_TOKEN=token)
+
+    def call():
+        r = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
+                           encoding="utf-8", timeout=CLAUDE_TIMEOUT_SEC, env=env)
+        try:
+            out = json.loads(r.stdout)
+        except json.JSONDecodeError:
+            raise RuntimeError(f"exit {r.returncode}: {(r.stderr or r.stdout)[:300]}")
+        if out.get("is_error"):
+            msg = str(out.get("result") or out.get("subtype"))
+            # 利用上限とログインの失敗は、再試行しても直らない
+            if any(w in msg.lower() for w in ("limit", "not logged in", "authenticate")):
+                raise QuotaExhausted(msg)
+            raise RuntimeError(msg)
+        return parse_json_text(out.get("result"))
+
+    return with_retries("Claude", call)
+
+
+# 推計に使うモデル。表示側の出典と ais-estimate.json の model はここから作る。
+# 2026-10-25 に Gemini から Claude（opus）へ切り替えた。同じ入力で1回ずつ5回答えさせた幅が
+# Gemini は最大60ポイント、Claude は最大7ポイントだった（tools/diag_scenario_noise.py）。
+# Claude が失敗した日は Gemini に切り替えず、更新しない（振れの大きい値を混ぜないため）
+BACKENDS = {
+    "gemini": {"label": "Gemini 2.5 Flash", "model": GEMINI_MODEL},
+    "claude": {"label": f"Claude（{CLAUDE_MODEL}）", "model": f"claude-{CLAUDE_MODEL}"},
+}
+
+
+def source_text(backend):
+    """出典表示の文字列。1件だけ読んでも供給元・モデル・入力が分かる形にする。"""
+    return (f"{BACKENDS[backend]['label']} による推計"
+            "（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）")
+
+
+def make_estimator(backend):
+    """backend の1回分の推計関数 prompt -> dict|None を返す。"""
+    if backend == "gemini":
+        api_key = os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            raise SystemExit("[Manual] ERROR: GEMINI_API_KEY not set.")
+        return lambda prompt: analyze_with_gemini(api_key, None, None, prompt=prompt)
+    if backend == "claude":
+        if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
+            raise SystemExit("[Manual] ERROR: CLAUDE_CODE_OAUTH_TOKEN not set.")
+        return analyze_with_claude
+    raise SystemExit(f"[Manual] ERROR: unknown backend {backend}")
+
+
+SCENARIO_KEYS = ("A_diplomacy_pct", "B_partial_blockade_pct", "C_full_blockade_pct", "D_escalation_pct")
+
+# 1回の推計は乱数の影響が大きい。9/7〜10/25 の98回では、B が1回ごとに中央値で
+# 20ポイント動いていた（同じ日の朝と昼でも同じ幅）。同じ入力で複数回答えさせ、
+# 中央値を採る。値を出す最低の回数に満たないときは更新しない（前回の値を残す）。
+SAMPLES = 5
+MIN_SAMPLES = 3
+SAMPLE_INTERVAL_SEC = 5
+
+
+def round_to_total(values, total=100):
+    """合計が total になるよう整数に丸める（最大剰余法）。"""
+    s = sum(values)
+    if s <= 0:
+        return [0] * len(values)
+    scaled = [v * total / s for v in values]
+    floors = [int(x) for x in scaled]
+    order = sorted(range(len(values)), key=lambda i: scaled[i] - floors[i], reverse=True)
+    for i in order[: total - sum(floors)]:
+        floors[i] += 1
+    return floors
+
+
+def sample_scenario(sample):
+    """1回分の出力からシナリオ確率を取り出し、合計100に揃える。不正なら None。"""
+    sc = sample.get("scenario") if isinstance(sample, dict) else None
+    if not isinstance(sc, dict):
+        return None
+    try:
+        values = [float(sc[k]) for k in SCENARIO_KEYS]
+    except (KeyError, TypeError, ValueError):
+        return None
+    if any(v < 0 for v in values) or sum(values) <= 0:
+        return None
+    return round_to_total(values)
+
+
+def collect_samples(estimate, news_items, context, n=SAMPLES):
+    """同じプロンプトで n 回答えさせ、確率が読めた回だけ返す。estimate は make_estimator の戻り値。"""
+    prompt = build_prompt(news_items, context)
+    samples = []
+    for i in range(n):
+        if i:
+            time.sleep(SAMPLE_INTERVAL_SEC)
+        try:
+            data = estimate(prompt)
+        except QuotaExhausted:
+            print(f"[Estimate] 回 {i + 1}: 利用枠を使い切ったため、残りの回は行いません", file=sys.stderr)
+            break
+        if data is None or sample_scenario(data) is None:
+            print(f"[Estimate] 回 {i + 1}: 確率が読めないため除外", file=sys.stderr)
+            continue
+        samples.append(data)
+        print(f"[Estimate] 回 {i + 1}: {dict(zip('ABCD', sample_scenario(data)))}")
+    return samples
+
+
+def median_number(samples, key, cast=float):
+    vals = []
+    for s in samples:
+        try:
+            vals.append(cast(s[key]))
+        except (KeyError, TypeError, ValueError):
+            continue
+    return statistics.median(vals) if vals else None
+
+
+def aggregate_samples(samples, context):
+    """複数回の出力を1つにまとめる。
+
+    数値は回ごとの中央値。文章（状況メモ・推計根拠）は、確率が中央値に
+    いちばん近い回のものを使う（数値と文章の組み合わせを崩さないため）。
+    """
+    vectors = [sample_scenario(s) for s in samples]
+    medians = [statistics.median(v[i] for v in vectors) for i in range(len(SCENARIO_KEYS))]
+    # 回ごとに別のシナリオへ寄せた答えが並ぶと、中央値がすべて 0 になりうる
+    # （例：A 100%・A 100%・B 100%・B 100%・C 100%）。確率として成り立たないので出さない
+    if sum(medians) <= 0:
+        return None
+    scenario = round_to_total(medians)
+    nearest = min(range(len(samples)),
+                  key=lambda j: sum(abs(a - b) for a, b in zip(vectors[j], medians)))
+    base = dict(samples[nearest])
+
+    normal_flow = context["normal_flow_mbpd"]["value"]
+    flow = median_number(samples, "hormuz_daily_flow_mbpd")
+    if flow is not None:
+        base["hormuz_daily_flow_mbpd"] = round(flow, 1)
+        base["flow_disruption_pct"] = round((1 - flow / normal_flow) * 100)
+    base["hormuz_normal_flow_mbpd"] = normal_flow
+
+    vessels = median_number(samples, "ais_estimated_vessels", int)
+    tankers = median_number(samples, "ais_estimated_tankers", int)
+    cargo = median_number(samples, "ais_estimated_cargo", int)
+    if vessels is not None:
+        vessels = round(vessels)
+        tankers = min(round(tankers or 0), vessels)
+        cargo = min(round(cargo or 0), vessels - tankers)
+        base.update(ais_estimated_vessels=vessels, ais_estimated_tankers=tankers,
+                    ais_estimated_cargo=cargo)
+
+    base["scenario"] = dict(zip(SCENARIO_KEYS, scenario))
+    base["scenario_range"] = {
+        k: [min(v[i] for v in vectors), max(v[i] for v in vectors)]
+        for i, k in enumerate(SCENARIO_KEYS)
+    }
+    base["scenario_samples"] = len(samples)
+    return base
+
+
+def updated_today(path="data/manual-update.json"):
+    """既存ファイルが今日（JST）すでに更新されているか。"""
+    prev = load_existing_manual(path)
+    raw = str(prev.get("updated_at") or "")
+    try:
+        at = datetime.fromisoformat(raw)
+    except ValueError:
+        return False
+    jst = timezone(timedelta(hours=9))
+    return at.astimezone(jst).date() == datetime.now(jst).date()
+
+def build_manual_json(data, context, previous=None, backend="gemini"):
     """manual-update.json の形式に変換。
 
     前提の基準日と経過日数を出力に含める。表示側はこれを見て
@@ -314,7 +627,7 @@ def build_manual_json(data, context, previous=None):
     return {
         "updated_at": now,
         "auto_generated": True,
-        "source": GEMINI_SOURCE,
+        "source": source_text(backend),
         "context": {
             "updated": context.get("context_updated"),
             "age_days": age,
@@ -328,6 +641,14 @@ def build_manual_json(data, context, previous=None):
             "timeline_stale_after_days": context.get("timeline_stale_after_days"),
             "timeline_stale": timeline_is_stale(context),
             "note": "この推計に与えた前提の基準日。data/context.json で管理している。",
+        },
+        # 確率が「いつの時点の話か」。表示側はこれで判定日を出す
+        "scenario_horizon": {
+            "days": context.get("scenario_horizon_days"),
+            "judgment_date": (
+                scenario_judgment_date(context).isoformat()
+                if scenario_judgment_date(context) is not None else None
+            ),
         },
         # 手動項目を data より先に置く。Gemini の出力がこれらを上書きしないようにする
         **carried,
@@ -386,7 +707,7 @@ def strip_confidence(note):
     return text.strip() or "Gemini AI推計"
 
 
-def save_ais_estimate(data, path="data/ais-estimate.json"):
+def save_ais_estimate(data, path="data/ais-estimate.json", backend="gemini"):
     """Gemini 推計を data/ais-estimate.json に保存する。
 
     **実測ファイル data/ais-snapshot.json には決して書かない。**
@@ -409,9 +730,9 @@ def save_ais_estimate(data, path="data/ais-estimate.json"):
         "updated_at": now,
         # 実測か推計かを、source 文字列ではなくこのフィールドで判別する
         "measurement": "estimate",
-        "source": GEMINI_SOURCE,
-        "model": "gemini-2.5-flash",
-        "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
+        "source": source_text(backend),
+        "model": BACKENDS[backend]["model"],
+        "method": f"公開RSS報道を {BACKENDS[backend]['label']} が分析した推計",
         "estimated_vessels": vessels,
         "breakdown": {
             "tanker": tankers,
@@ -436,11 +757,30 @@ def save_ais_estimate(data, path="data/ais-estimate.json"):
     print(f"[AIS] Saved estimate to {path}")
     print(f"  推定船舶数: {vessels} 隻（信頼度: {confidence}）")
 
-def main():
-    api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        print("[Manual] ERROR: GEMINI_API_KEY not set.", file=sys.stderr)
-        sys.exit(1)
+def parse_args(argv=None):
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--skip-if-updated-today", action="store_true",
+                   help="今日（JST）すでに更新済みなら何もしない（GitHub の予約実行＝予備の回で使う）")
+    p.add_argument("--dry-run", action="store_true",
+                   help="ファイルを書かず、結果を表示するだけ")
+    p.add_argument("--backend", choices=sorted(BACKENDS),
+                   default=os.environ.get("SCENARIO_BACKEND") or "claude",
+                   help="推計に使うモデル（既定は環境変数 SCENARIO_BACKEND、無ければ claude）")
+    p.add_argument("--samples", type=int, default=SAMPLES,
+                   help=f"同じ入力で答えさせる回数（既定 {SAMPLES}）")
+    return p.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+
+    # 09:30 の cron-job.org の起動が本番、遅れて動く GitHub の予約実行は予備。
+    # 予備の回が毎日上書きすると、昼に確率が入れ替わる（2026-10-25 まで）。
+    if args.skip_if_updated_today and updated_today():
+        print("[Manual] 今日はすでに更新済みのため、予備の実行は何もしません。")
+        sys.exit(0)
+
+    estimate = make_estimator(args.backend)
 
     print("[Manual] Fetching RSS news...")
     news_items = fetch_rss_news(max_items=40)
@@ -476,18 +816,31 @@ def main():
             file=sys.stderr,
         )
 
-    print("[Manual] Analyzing with Gemini...")
-    data = analyze_with_gemini(api_key, news_items, context)
-
-    if not data:
-        print("[Manual] Gemini analysis failed. Skipping update.", file=sys.stderr)
+    print(f"[Manual] Analyzing with {BACKENDS[args.backend]['label']}（{args.samples} 回）...")
+    samples = collect_samples(estimate, news_items, context, n=args.samples)
+    need = min(MIN_SAMPLES, args.samples)
+    if len(samples) < need:
+        print(f"[Manual] 確率が読めた回が {len(samples)} 回で、{need} 回に足りません。"
+              "更新しません（前回の値を残します）。", file=sys.stderr)
         sys.exit(1)
 
-    manual = build_manual_json(data, context, load_existing_manual())
+    data = aggregate_samples(samples, context)
+    if data is None:
+        print("[Manual] 回ごとの答えが割れ、中央値の合計が 0 になりました。更新しません（前回の値を残します）。",
+              file=sys.stderr)
+        sys.exit(1)
+    print(f"[Manual] 中央値: {data['scenario']} / 幅: {data['scenario_range']}")
+
+    if args.dry_run:
+        print("[Manual] --dry-run のため書き込みません。")
+        print(json.dumps(data, ensure_ascii=False, indent=2))
+        return
+
+    manual = build_manual_json(data, context, load_existing_manual(), backend=args.backend)
     save_manual(manual)
 
     # AIS推計は実測とは別ファイル（data/ais-estimate.json）に保存する
-    save_ais_estimate(data)
+    save_ais_estimate(data, backend=args.backend)
 
     print("[Manual] Done.")
     print(f"  シナリオA: {data['scenario']['A_diplomacy_pct']}%")

@@ -2,6 +2,9 @@ name: Diagnose e-Stat classification codes
 
 # fetch_oil_flow.py が使う分類コードを、実際のAPIレスポンスで確認するための
 # 手動実行専用ワークフロー。ローカルに appId を置かずに済ませるためのもの。
+# command=scenario_noise は、シナリオ確率のばらつきを測る（tools/diag_scenario_noise.py・
+# ファイルは書かない）。workflow_dispatch は default ブランチにあるファイルしか起動できないため、
+# 別のワークフローにせずここに置く。
 on:
   workflow_dispatch:
     inputs:
@@ -15,10 +18,15 @@ on:
           - meta
           - dryrun
           - baseline
+          - scenario_noise
       stats_data_id:
         description: 'command=meta / dryrun のときの統計表ID（dryrun は省略可）'
         required: false
         default: ''
+      noise_args:
+        description: 'command=scenario_noise のときの引数'
+        required: false
+        default: '--variants new1:gemini,new1:claude --runs 5'
 
 jobs:
   diagnose:
@@ -36,7 +44,19 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests google-genai
+
+      - name: Install Claude Code CLI
+        if: inputs.command == 'scenario_noise'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Measure scenario probability noise
+        if: inputs.command == 'scenario_noise'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          python tools/diag_scenario_noise.py ${{ inputs.noise_args }}
 
       - name: Run diagnosis
         if: inputs.command == 'list' || inputs.command == 'meta'
