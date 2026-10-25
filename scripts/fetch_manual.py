@@ -432,16 +432,22 @@ def analyze_with_claude(prompt, model=CLAUDE_MODEL):
     cmd = ["claude", "-p", "--tools", "", "--model", model, "--output-format", "json",
            "--no-session-persistence", "--system-prompt", CLAUDE_SYSTEM]
 
+    # 登録した値に改行が混じることがある（2026-10-25：setup-token の出力の折り返しごと
+    # 貼られ、"Not logged in" になった）。トークンに空白は含まれないので取り除いて渡す
+    token = re.sub(r"\s+", "", os.environ.get("CLAUDE_CODE_OAUTH_TOKEN", ""))
+    env = dict(os.environ, CLAUDE_CODE_OAUTH_TOKEN=token)
+
     def call():
         r = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
-                           encoding="utf-8", timeout=CLAUDE_TIMEOUT_SEC)
+                           encoding="utf-8", timeout=CLAUDE_TIMEOUT_SEC, env=env)
         try:
             out = json.loads(r.stdout)
         except json.JSONDecodeError:
             raise RuntimeError(f"exit {r.returncode}: {(r.stderr or r.stdout)[:300]}")
         if out.get("is_error"):
             msg = str(out.get("result") or out.get("subtype"))
-            if "limit" in msg.lower():
+            # 利用上限とログインの失敗は、再試行しても直らない
+            if any(w in msg.lower() for w in ("limit", "not logged in", "authenticate")):
                 raise QuotaExhausted(msg)
             raise RuntimeError(msg)
         return parse_json_text(out.get("result"))
