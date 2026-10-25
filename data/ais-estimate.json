@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-25T13:58:49+09:00",
+  "updated_at": "2026-10-25T17:57:13+09:00",
   "measurement": "estimate",
-  "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
-  "model": "gemini-2.5-flash",
-  "method": "公開RSS報道を Gemini 2.5 Flash が分析した推計",
-  "estimated_vessels": 35,
+  "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
+  "model": "claude-opus",
+  "method": "公開RSS報道を Claude（opus） が分析した推計",
+  "estimated_vessels": 6,
   "breakdown": {
-    "tanker": 20,
-    "cargo": 10,
-    "other": 5
+    "tanker": 4,
+    "cargo": 1,
+    "other": 1
   },
-  "confidence": "medium",
-  "estimation_note": "Kplerの9月データと10月の攻撃激化を考慮し推計",
+  "confidence": "low",
+  "estimation_note": "日10〜15隻通航報道から滞在時間で換算",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,

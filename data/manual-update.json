@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-10-25T13:58:49+09:00",
+  "updated_at": "2026-10-25T17:57:13+09:00",
   "auto_generated": true,
-  "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
+  "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
-    "updated": "2026-10-08",
-    "age_days": 17,
+    "updated": "2026-10-25",
+    "age_days": 0,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
@@ -14,22 +14,45 @@
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
+  "scenario_horizon": {
+    "days": 90,
+    "judgment_date": "2027-01-23"
+  },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 5,
-    "B_partial_blockade_pct": 15,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 40
+    "A_diplomacy_pct": 14,
+    "B_partial_blockade_pct": 38,
+    "C_full_blockade_pct": 13,
+    "D_escalation_pct": 35
   },
-  "hormuz_daily_flow_mbpd": 7.5,
+  "hormuz_daily_flow_mbpd": 8.0,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 64,
-  "last_manual_note": "10月に船舶攻撃が過去最高を記録し沈没船も発生。米イラン間接協議は決裂し、外交は停滞。地域の軍事緊張が極度に高まっている。",
-  "ais_estimated_vessels": 35,
-  "ais_estimated_tankers": 20,
-  "ais_estimated_cargo": 10,
-  "ais_confidence": "medium",
-  "ais_estimation_note": "Kplerの9月データと10月の攻撃激化を考慮し推計"
+  "flow_disruption_pct": 62,
+  "last_manual_note": "10月はホルムズで商船攻撃が過去最多。米国は封鎖の長期継続を表明し、再攻撃を検討中。イランは封鎖解除と引き換えの海峡再開を提案した。原油は116〜117ドル。",
+  "ais_estimated_vessels": 6,
+  "ais_estimated_tankers": 4,
+  "ais_estimated_cargo": 1,
+  "ais_confidence": "low",
+  "ais_estimation_note": "日10〜15隻通航報道から滞在時間で換算",
+  "scenario_range": {
+    "A_diplomacy_pct": [
+      14,
+      15
+    ],
+    "B_partial_blockade_pct": [
+      36,
+      40
+    ],
+    "C_full_blockade_pct": [
+      10,
+      15
+    ],
+    "D_escalation_pct": [
+      35,
+      37
+    ]
+  },
+  "scenario_samples": 5
 }
