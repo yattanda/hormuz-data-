@@ -19,6 +19,7 @@ on:
           - dryrun
           - baseline
           - scenario_noise
+          - claude_check
       stats_data_id:
         description: 'command=meta / dryrun のときの統計表ID（dryrun は省略可）'
         required: false
@@ -47,8 +48,23 @@ jobs:
         run: pip install requests google-genai
 
       - name: Install Claude Code CLI
-        if: inputs.command == 'scenario_noise'
+        if: inputs.command == 'scenario_noise' || inputs.command == 'claude_check'
         run: npm install -g @anthropic-ai/claude-code
+
+      # Claude の認証の切り分け（値は表示しない。長さと先頭の形だけ）
+      - name: Check Claude login
+        if: inputs.command == 'claude_check'
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          claude --version
+          echo "token length: ${#CLAUDE_CODE_OAUTH_TOKEN}"
+          case "$CLAUDE_CODE_OAUTH_TOKEN" in sk-ant-oat*) echo "prefix: sk-ant-oat" ;; *) echo "prefix: other" ;; esac
+          case "$CLAUDE_CODE_OAUTH_TOKEN" in *[[:space:]]*) echo "contains whitespace: yes" ;; *) echo "contains whitespace: no" ;; esac
+          echo "--- plain"
+          echo "Reply with OK" | claude -p --output-format json | head -c 400; echo
+          echo "--- with flags"
+          echo "Reply with OK" | claude -p --tools "" --model opus --output-format json --no-session-persistence --system-prompt "Reply briefly." | head -c 400; echo
 
       - name: Measure scenario probability noise
         if: inputs.command == 'scenario_noise'
