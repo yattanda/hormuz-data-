@@ -24,9 +24,16 @@ jobs:
         run: |
           pip install google-genai
 
+      # 推計に使うモデルはリポジトリの変数 SCENARIO_BACKEND（gemini / claude。未設定なら gemini）
+      - name: Install Claude Code CLI
+        if: vars.SCENARIO_BACKEND == 'claude'
+        run: npm install -g @anthropic-ai/claude-code
+
       - name: Fetch and analyze news
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          SCENARIO_BACKEND: ${{ vars.SCENARIO_BACKEND }}
         # 本番は 09:30 JST の cron-job.org からの起動（workflow_dispatch）。
         # GitHub の予約実行は数時間遅れて動く予備なので、今日すでに更新済みなら何もしない
         run: |
