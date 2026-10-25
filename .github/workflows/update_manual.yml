@@ -27,8 +27,14 @@ jobs:
       - name: Fetch and analyze news
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        # 本番は 09:30 JST の cron-job.org からの起動（workflow_dispatch）。
+        # GitHub の予約実行は数時間遅れて動く予備なので、今日すでに更新済みなら何もしない
         run: |
-          python scripts/fetch_manual.py
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python scripts/fetch_manual.py --skip-if-updated-today
+          else
+            python scripts/fetch_manual.py
+          fi
 
       - name: Commit and push
         run: |

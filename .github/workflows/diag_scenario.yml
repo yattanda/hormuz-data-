@@ -1,0 +1,51 @@
+name: Diagnose scenario probability noise
+
+# シナリオ確率のばらつきを、同じ入力で繰り返し答えさせて測る手動実行専用のワークフロー。
+# ファイルは書かず、コミットもしない（tools/diag_scenario_noise.py）。
+on:
+  workflow_dispatch:
+    inputs:
+      variants:
+        description: '比べる形（legacy・new1・newN をカンマ区切り）'
+        required: true
+        default: 'legacy,new1,newN'
+      runs:
+        description: 'legacy・new1 の回数'
+        required: true
+        default: '5'
+      samples:
+        description: 'newN の1回あたりの回数'
+        required: true
+        default: '5'
+      repeats:
+        description: 'newN を繰り返す回数'
+        required: true
+        default: '3'
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install google-genai
+
+      - name: Measure
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python tools/diag_scenario_noise.py \
+            --variants "${{ inputs.variants }}" \
+            --runs "${{ inputs.runs }}" \
+            --samples "${{ inputs.samples }}" \
+            --repeats "${{ inputs.repeats }}"
