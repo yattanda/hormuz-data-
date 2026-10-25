@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-10-24T13:49:31+09:00",
+  "updated_at": "2026-10-25T09:31:23+09:00",
   "auto_generated": true,
   "source": "Gemini 2.5 Flash による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-08",
-    "age_days": 16,
+    "age_days": 17,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-10-22",
-    "timeline_age_days": 2,
+    "timeline_age_days": 3,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
@@ -18,18 +18,18 @@
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 20,
-    "C_full_blockade_pct": 40,
-    "D_escalation_pct": 30
+    "A_diplomacy_pct": 5,
+    "B_partial_blockade_pct": 15,
+    "C_full_blockade_pct": 45,
+    "D_escalation_pct": 35
   },
-  "hormuz_daily_flow_mbpd": 8.5,
+  "hormuz_daily_flow_mbpd": 9.9,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 59,
-  "last_manual_note": "10月はホルムズ攻撃が最多記録しタンカー沈没も発生。サウジへのフーシ派攻撃が頻発。米イラン外交は停滞。",
-  "ais_estimated_vessels": 10,
-  "ais_estimated_tankers": 8,
+  "flow_disruption_pct": 53,
+  "last_manual_note": "10月に入りホルムズ海峡での攻撃が激化し、沈没船も発生。米イラン外交は決裂、地域衝突が拡大している。",
+  "ais_estimated_vessels": 8,
+  "ais_estimated_tankers": 6,
   "ais_estimated_cargo": 2,
   "ais_confidence": "medium",
-  "ais_estimation_note": "Windwardデータと10月攻撃激化考慮"
+  "ais_estimation_note": "9月平均と10月攻撃激化からの推計"
 }
