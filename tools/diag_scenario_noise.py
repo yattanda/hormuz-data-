@@ -122,7 +122,11 @@ def main():
             for r in range(args.repeats):
                 samples = fm.collect_samples(estimator(model), new_news, context, n=args.samples)
                 if len(samples) >= min(fm.MIN_SAMPLES, args.samples):
-                    vec = list(fm.aggregate_samples(samples, context)["scenario"].values())
+                    agg = fm.aggregate_samples(samples, context)
+                    if agg is None:
+                        print(f"  中央値 {r + 1}: 答えが割れて合計 0 のため出せず")
+                        continue
+                    vec = list(agg["scenario"].values())
                     print(f"  中央値 {r + 1}: {vec}")
                     vecs.append(vec)
         else:

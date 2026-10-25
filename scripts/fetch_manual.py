@@ -561,6 +561,10 @@ def aggregate_samples(samples, context):
     """
     vectors = [sample_scenario(s) for s in samples]
     medians = [statistics.median(v[i] for v in vectors) for i in range(len(SCENARIO_KEYS))]
+    # 回ごとに別のシナリオへ寄せた答えが並ぶと、中央値がすべて 0 になりうる
+    # （例：A 100%・A 100%・B 100%・B 100%・C 100%）。確率として成り立たないので出さない
+    if sum(medians) <= 0:
+        return None
     scenario = round_to_total(medians)
     nearest = min(range(len(samples)),
                   key=lambda j: sum(abs(a - b) for a, b in zip(vectors[j], medians)))
@@ -821,6 +825,10 @@ def main(argv=None):
         sys.exit(1)
 
     data = aggregate_samples(samples, context)
+    if data is None:
+        print("[Manual] 回ごとの答えが割れ、中央値の合計が 0 になりました。更新しません（前回の値を残します）。",
+              file=sys.stderr)
+        sys.exit(1)
     print(f"[Manual] 中央値: {data['scenario']} / 幅: {data['scenario_range']}")
 
     if args.dry_run:
