@@ -7,7 +7,7 @@ diag_scenario_noise.py
   new1   : 新しい入力（全フィード・直近7日・新しい順）で1回ずつ
   newN   : 新しい入力で --samples 回答えさせた中央値（本番と同じ形）を --repeats 回
 
-使い方（GEMINI_API_KEY が要るので Actions の diag_scenario.yml から動かす）:
+使い方（GEMINI_API_KEY が要るので Actions の diag_estat.yml を command=scenario_noise で動かす）:
   python tools/diag_scenario_noise.py --variants legacy,new1,newN --runs 5 --samples 5 --repeats 3
 """
 
