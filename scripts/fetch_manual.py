@@ -1,11 +1,12 @@
 """
 fetch_manual.py
 RSSフィードから最新ニュースを取得し、
-Google Gemini API で分析して
+生成AI（既定は Claude・--backend で Gemini も選べる）で分析して
 data/manual-update.json を自動更新する。
 
 必要環境変数:
-  GEMINI_API_KEY : Google Gemini API キー
+  CLAUDE_CODE_OAUTH_TOKEN : Claude のサブスクの認証（既定の claude のとき）
+  GEMINI_API_KEY          : Google Gemini API キー（--backend gemini のとき）
 """
 
 import argparse
@@ -455,7 +456,10 @@ def analyze_with_claude(prompt, model=CLAUDE_MODEL):
     return with_retries("Claude", call)
 
 
-# 推計に使うモデル。表示側の出典と ais-estimate.json の model はここから作る
+# 推計に使うモデル。表示側の出典と ais-estimate.json の model はここから作る。
+# 2026-10-25 に Gemini から Claude（opus）へ切り替えた。同じ入力で1回ずつ5回答えさせた幅が
+# Gemini は最大60ポイント、Claude は最大7ポイントだった（tools/diag_scenario_noise.py）。
+# Claude が失敗した日は Gemini に切り替えず、更新しない（振れの大きい値を混ぜないため）
 BACKENDS = {
     "gemini": {"label": "Gemini 2.5 Flash", "model": GEMINI_MODEL},
     "claude": {"label": f"Claude（{CLAUDE_MODEL}）", "model": f"claude-{CLAUDE_MODEL}"},
@@ -756,8 +760,8 @@ def parse_args(argv=None):
     p.add_argument("--dry-run", action="store_true",
                    help="ファイルを書かず、結果を表示するだけ")
     p.add_argument("--backend", choices=sorted(BACKENDS),
-                   default=os.environ.get("SCENARIO_BACKEND") or "gemini",
-                   help="推計に使うモデル（既定は環境変数 SCENARIO_BACKEND、無ければ gemini）")
+                   default=os.environ.get("SCENARIO_BACKEND") or "claude",
+                   help="推計に使うモデル（既定は環境変数 SCENARIO_BACKEND、無ければ claude）")
     p.add_argument("--samples", type=int, default=SAMPLES,
                    help=f"同じ入力で答えさせる回数（既定 {SAMPLES}）")
     return p.parse_args(argv)

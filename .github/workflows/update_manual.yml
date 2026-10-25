@@ -1,4 +1,4 @@
-name: Update Manual Data (Gemini AI)
+name: Update Manual Data (AI estimate)
 
 on:
   schedule:
@@ -24,9 +24,9 @@ jobs:
         run: |
           pip install google-genai
 
-      # 推計に使うモデルはリポジトリの変数 SCENARIO_BACKEND（gemini / claude。未設定なら gemini）
+      # 推計に使うモデルはリポジトリの変数 SCENARIO_BACKEND（claude / gemini。未設定なら claude）
       - name: Install Claude Code CLI
-        if: vars.SCENARIO_BACKEND == 'claude'
+        if: vars.SCENARIO_BACKEND != 'gemini'
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Fetch and analyze news
