@@ -10,9 +10,11 @@ name: Update AIS Snapshot (VesselAPI)
 #     カバレッジの実在を確認したうえで採用（ユニーク21隻／うち移動中5隻）。
 #
 # 現在このワークフローは【無効】。
-#   理由: VesselAPI のデータを公開サイトに表示することが利用規約上許されるかを
-#         提供元に照会中（2026-09-03 送信・回答待ち。tools/vesselapi-inquiry.md 参照）。
-#         回答を待たずに公開表示を始めない。
+#   理由: 規約は 2026-09-04 の回答で許諾されたが、通航レーンのカバレッジが薄く、
+#         数値が交通量ではなくカバレッジを表してしまうため、2026-09-05 に採用を見送った
+#         （tools/README.md「採用は見送った」・tools/vesselapi-inquiry.md）。
+#   通航数の実測は 2026-10-25 から IMF PortWatch（update_portwatch.yml）で取る
+#   （docs/data-sources-redesign.md）。
 #   有効化手順: 下の schedule のコメントを外し、jobs.fetch-ais.if の行を削除する。
 #              あわせて GitHub Secret に VESSELAPI_API_KEY を登録すること。
 #

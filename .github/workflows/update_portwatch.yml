@@ -1,0 +1,45 @@
+name: Update PortWatch (Hormuz transits)
+
+# IMF PortWatch のホルムズ海峡の日次通航数・積載量（推定）を取得する。
+# 元のデータは約1週間遅れで、週1回まとめて入るとみられる（曜日は未確認）。
+# 確認は毎日行い、新しい行が無い日はスクリプトが JSON を書き換えず、コミットもできない。
+# キーは不要（公開の ArcGIS Feature Service）。
+# （詳細: docs/data-sources-redesign.md §5-1・scripts/fetch_portwatch.py）
+on:
+  schedule:
+    - cron: '43 1 * * *'   # 毎日 10:43 JST（GitHub 側の遅延で数時間ずれることがある）
+  workflow_dispatch:
+
+jobs:
+  fetch-portwatch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      # 標準ライブラリだけで動くので、依存の導入は無い
+      - name: Fetch PortWatch and rebuild portwatch-hormuz.json
+        run: |
+          python scripts/fetch_portwatch.py
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/portwatch-hormuz.json
+          if git diff --staged --quiet; then
+            echo "変更なし（新しい行は未公表）"
+            exit 0
+          fi
+          git commit -m "chore: update portwatch-hormuz $(date -u '+%Y-%m-%dT%H:%MZ')"
+          # 毎日の他のワークフローと push が重なっても落ちないようにする
+          git pull --rebase -q
+          git push
