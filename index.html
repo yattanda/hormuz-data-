@@ -314,10 +314,11 @@
 
   <!-- Card 5: シナリオ確率 -->
   <div class="card green" id="card5-scenario">
-    <div class="card-label">📊 シナリオ確率（現在の推定）</div>
+    <div class="card-label">📊 シナリオ確率（90日後の判定日の推定）</div>
     <div class="scenario-list" id="scenario-list">
       <div style="opacity:0.4;font-size:0.8rem;">読み込み中…</div>
     </div>
+    <div id="scenario-meta" style="display:none;margin-top:4px;font-size:0.58rem;color:var(--muted);line-height:1.5;"></div>
     <div id="ctx-note-scenario" style="display:none;margin-top:8px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     <div class="card-footer">
      <span class="dot-live"></span>
@@ -894,6 +895,10 @@ async function loadManual() {
     setText('ins-updated', (insPct != null && insVerified) ? fmtDate(d.updated_at) : '未確認');
 
     const sc = d.scenario;
+    const rangeTitle = key => {
+      const r = d.scenario_range && d.scenario_range[key];
+      return Array.isArray(r) ? ` title="${d.scenario_samples}回の推定の幅 ${r[0]}〜${r[1]}%"` : '';
+    };
     if (sc) {
       const scenarios = [
         // 名称は hormuz-map のシナリオカード見出し・data/context.json の定義と一致させること
@@ -909,8 +914,19 @@ async function loadManual() {
           <div class="scenario-bar-bg">
             <div class="scenario-bar-fill" style="width:${sc[s.key]??0}%;background:${s.color};"></div>
           </div>
-          <div class="scenario-pct" style="color:${s.color};">${sc[s.key]??0}%</div>
+          <div class="scenario-pct" style="color:${s.color};"${rangeTitle(s.key)}>${sc[s.key]??0}%</div>
         </div>`).join('');
+      // 判定日（何日後の話か）と、同じ入力で複数回推定させたときの幅（fetch_manual.py が保存する）
+      const meta = document.getElementById('scenario-meta');
+      const h = d.scenario_horizon;
+      const parts = [];
+      if (h && h.judgment_date) parts.push(`判定日 ${h.judgment_date.replace(/-/g, '/')}（推定日から${h.days}日後）`);
+      if (d.scenario_samples > 1 && d.scenario_range) {
+        parts.push(`${d.scenario_samples}回の推定の中央値・幅 ` + scenarios
+          .filter(s => Array.isArray(d.scenario_range[s.key]))
+          .map(s => `${s.label[0]} ${d.scenario_range[s.key][0]}〜${d.scenario_range[s.key][1]}%`).join(' '));
+      }
+      if (meta) { meta.textContent = parts.join(' ／ '); meta.style.display = parts.length ? 'block' : 'none'; }
     }
     setText('scenario-updated', fmtDate(d.updated_at));
     // 実体は Gemini による自動分析であり、人が手を入れた時刻ではない
