@@ -107,10 +107,15 @@ def fetch_feed(url, now, max_age_days):
         if title_key(desc).startswith(title_key(title)):
             desc = ""
         source = clean_text(item.findtext("source", "")) or FEED_LABELS.get(host, host)
+        # 媒体のドメイン。Google ニュースは <source url="https://www.reuters.com"> で元の媒体を示す。
+        # 報道値の許可リスト（REPORTED_SOURCE_DOMAINS）の照合に使う
+        source_el = item.find("source")
+        source_url = source_el.get("url", "") if source_el is not None else ""
         items.append({
             "title": title,
             "description": desc[:200],
             "source": source,
+            "domain": (urllib.parse.urlparse(source_url).hostname or host).lower(),
             "link": (item.findtext("link", "") or "").strip(),
             "published": published,
         })
@@ -360,6 +365,29 @@ REPORTED_METRICS = {
 }
 MAX_REPORTED_FIGURES = 10
 
+# 報道値として採る媒体（ドメイン → 表示名）。運営者が 2026-10-26 に決めた。
+# 引用が記事にあることはコードで確かめられるが、媒体の信頼性は確かめられないため、名の通った
+# 報道機関・海運専門紙に限る。Google ニュースの検索結果には出所のはっきりしないサイトも入る。
+# サブドメイン（www.・uk. など）も含めて照合する。足すときは docs/data-sources-redesign.md §5-2 にも書く。
+REPORTED_SOURCE_DOMAINS = {
+    "reuters.com": "Reuters",
+    "bloomberg.com": "Bloomberg",
+    "lloydslist.com": "Lloyd's List",
+    "lloydslistintelligence.com": "Lloyd's List Intelligence",
+    "aljazeera.com": "Al Jazeera",
+    "bbc.com": "BBC",
+    "bbc.co.uk": "BBC",
+    "ft.com": "Financial Times",
+    "nytimes.com": "New York Times",
+    "apnews.com": "AP",
+}
+
+
+def allowed_source(item):
+    """記事の媒体が許可リストにあるか。"""
+    domain = (item.get("domain") or "").lower()
+    return any(domain == d or domain.endswith("." + d) for d in REPORTED_SOURCE_DOMAINS)
+
 
 def normalize_text(text):
     """引用の照合用。全角半角・空白・引用符・大文字小文字の違いを吸収する。"""
@@ -394,6 +422,7 @@ def article_ref(item):
     """表示と記録に使う記事の情報。"""
     return {
         "source": item["source"],
+        "domain": item.get("domain") or None,
         "title": item["title"],
         "link": item.get("link") or None,
         "published": jst_date(item["published"]),
@@ -408,10 +437,11 @@ def verify_reported_figures(samples, news_items):
     - item が入力記事の番号の範囲内にある
     - quote がその記事の見出しか説明文にそのまま含まれる
     - value の数字が quote の中にある
+    - 記事の媒体が許可リスト（REPORTED_SOURCE_DOMAINS）にある
     引用が原文にあることは確かめられるが、数字の意味（何の量か）が metric と合っているかは
     確かめられない。表示側では引用文もあわせて出す。
     """
-    found, dropped = {}, 0
+    found, dropped, off_list = {}, 0, set()
     for sample in samples:
         figs = sample.get("reported_figures") if isinstance(sample, dict) else None
         for f in figs if isinstance(figs, list) else []:
@@ -427,6 +457,10 @@ def verify_reported_figures(samples, news_items):
                 dropped += 1
                 continue
             item = news_items[number - 1]
+            if not allowed_source(item):
+                off_list.add(item.get("domain") or item["source"])
+                dropped += 1
+                continue
             haystacks = (normalize_text(item["title"]), normalize_text(item["description"]))
             if not any(normalize_text(quote) in h for h in haystacks) or not value_in_quote(value, quote, metric):
                 dropped += 1
@@ -437,6 +471,8 @@ def verify_reported_figures(samples, news_items):
                               "quote": quote, **article_ref(item)}
     figures = sorted(found.values(), key=lambda x: x["published"], reverse=True)[:MAX_REPORTED_FIGURES]
     print(f"[Reported] 採用 {len(figures)} 件・不採用 {dropped} 件（{len(samples)} 回分）")
+    if off_list:
+        print(f"[Reported] 許可リストに無い媒体のため捨てた: {', '.join(sorted(off_list))}")
     return figures
 
 
