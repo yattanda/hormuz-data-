@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-25T17:57:13+09:00",
+  "updated_at": "2026-10-26T09:32:46+09:00",
   "measurement": "estimate",
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "claude-opus",
   "method": "公開RSS報道を Claude（opus） が分析した推計",
-  "estimated_vessels": 6,
+  "estimated_vessels": 4,
   "breakdown": {
-    "tanker": 4,
+    "tanker": 3,
     "cargo": 1,
-    "other": 1
+    "other": 0
   },
   "confidence": "low",
-  "estimation_note": "日10〜15隻通航報道から滞在時間で換算",
+  "estimation_note": "最新報道に隻数なし、9月集計から外挿",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,

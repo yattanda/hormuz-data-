@@ -1,57 +1,57 @@
 {
-  "updated_at": "2026-10-25T17:57:13+09:00",
+  "updated_at": "2026-10-26T09:32:46+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-25",
-    "age_days": 0,
+    "age_days": 1,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-22",
-    "timeline_age_days": 3,
+    "timeline_updated": "2026-10-24",
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-01-23"
+    "judgment_date": "2027-01-24"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 14,
-    "B_partial_blockade_pct": 38,
-    "C_full_blockade_pct": 13,
-    "D_escalation_pct": 35
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 35,
+    "C_full_blockade_pct": 14,
+    "D_escalation_pct": 41
   },
-  "hormuz_daily_flow_mbpd": 8.0,
+  "hormuz_daily_flow_mbpd": 7.0,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 62,
-  "last_manual_note": "10月はホルムズで商船攻撃が過去最多。米国は封鎖の長期継続を表明し、再攻撃を検討中。イランは封鎖解除と引き換えの海峡再開を提案した。原油は116〜117ドル。",
-  "ais_estimated_vessels": 6,
-  "ais_estimated_tankers": 4,
+  "flow_disruption_pct": 67,
+  "last_manual_note": "米イスラエルが対イラン攻撃再開を計画。米は在サウジ外交官に退避を命じ、原油は116ドルで4月来の高値。10月は海峡で商船被弾が続き、協議は停滞している。",
+  "ais_estimated_vessels": 4,
+  "ais_estimated_tankers": 3,
   "ais_estimated_cargo": 1,
   "ais_confidence": "low",
-  "ais_estimation_note": "日10〜15隻通航報道から滞在時間で換算",
+  "ais_estimation_note": "最新報道に隻数なし、9月集計から外挿",
   "scenario_range": {
     "A_diplomacy_pct": [
-      14,
-      15
+      10,
+      12
     ],
     "B_partial_blockade_pct": [
-      36,
-      40
+      33,
+      38
     ],
     "C_full_blockade_pct": [
-      10,
+      12,
       15
     ],
     "D_escalation_pct": [
-      35,
-      37
+      37,
+      42
     ]
   },
   "scenario_samples": 5
