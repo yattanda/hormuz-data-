@@ -1,6 +1,7 @@
 {
   "_comment": "シナリオ確率の採点に使う「判定日に当たったシナリオ」の記録（docs/data-sources-redesign.md §5-4）。判定日が来たら運営者が手で足す。scripts/score_scenarios.py が data/scenario-log.jsonl と照らして多クラスの Brier スコアを出す。最初の判定日は 2027-01-23。",
-  "_how_to": "outcomes に1件ずつ足す。from〜to（両端を含む・JST の日付）の判定日はすべて scenario に当たったとみなす。to を省くと from の1日だけ。scenario は A_diplomacy_pct・B_partial_blockade_pct・C_full_blockade_pct・D_escalation_pct のどれか1つ（data/context.json の scenario_rule の順 D → A → C → B で判定）。basis に判定の理由、sources に根拠の出典を書く。期間は重ねない。",
+  "_how_to": "outcomes に1件ずつ足す。from〜to（両端を含む・JST の日付）の日はすべて、その日に判定したら scenario に当たるとみなす。to を省くと from の1日だけ。scenario は A_diplomacy_pct・B_partial_blockade_pct・C_full_blockade_pct・D_escalation_pct のどれか1つ（data/context.json の scenario_rule の順 D → A → C → B で判定）。D の「判定日までに」は「その日までの90日に」と読む。basis に判定の理由、sources に根拠の出典を書く。期間は重ねない。",
+  "_status_quo": "同じ表を「予測した日の現状」にも使う。比べる相手の「現状のまま」（予測した日の当たりに100%）を出すため、判定日（2027-01-23〜）だけでなく、記録の始まりの 2026-10-25 からの日も埋める。過去の日は後からまとめて足してよい（2026-10-26 運営者）。",
   "_example": {
     "from": "2027-01-23",
     "to": "2027-01-31",

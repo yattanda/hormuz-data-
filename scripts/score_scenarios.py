@@ -6,10 +6,15 @@ score_scenarios.py
   当たりの記録: data/scenario-outcomes.json（判定日が来たら運営者が手で足す）
 
 Brier スコアは 4つのシナリオについて (確率 − 当たりなら1・外れなら0)² を足したもの。
-0 が満点、2 が最悪。次の2つと比べる。
-  - 一様      : 各25%（いつも 0.75）
+0 が満点、2 が最悪。次の3つと比べる。
+  - 一様        : 各25%（いつも 0.75）
   - 前の日のまま: 1つ前の記録の確率を、その日の予想としたもの
                   （毎日の見直しが当たり具合を良くしているか）
+  - 現状のまま  : 予測した日 F の当たり（F に判定したら当たるシナリオ）に 100% を置いたもの
+                  （「90日後も今と同じ」より当たっているか）。F の当たりが記録されている日だけ
+
+当たりの記録は「その日に判定したら当たるシナリオ」を日ごとに持つ1つの表で、判定日の当たりと
+予測した日の現状の両方に使う。D の「判定日までに」は「その日までの90日（horizon_days）に」と読む。
 
 同じ判定日の記録が複数あるとき（手動で再実行した日など）は、最後の1行を使う。
 ファイルは書かない。採点が貯まるまでは、確率の精度を表示で主張しない。
@@ -46,7 +51,9 @@ def load_log(path):
             except (json.JSONDecodeError, KeyError, TypeError, ValueError) as e:
                 print(f"[Score] WARN: {path} の {n} 行目を読めないため飛ばしました（{e}）", file=sys.stderr)
                 continue
-            by_date[judgment] = {"judgment_date": judgment, "at": row.get("at"), "scenario": probs}
+            horizon = int(row.get("horizon_days") or 90)
+            by_date[judgment] = {"judgment_date": judgment, "forecast_date": judgment - timedelta(days=horizon),
+                                 "at": row.get("at"), "scenario": probs}
     return [by_date[d] for d in sorted(by_date)]
 
 
@@ -78,21 +85,29 @@ def brier(probs, outcome):
 def score(log, outcomes):
     """判定日に当たりが記録されている予測を採点する。
 
-    3つを同じ日の集まりで比べるため、1つ前の記録が無い最初の1行は採点に入れない。
+    一様・前の日のままと同じ日の集まりで比べるため、1つ前の記録が無い最初の1行は採点に入れない。
+    現状のまま（status_quo）は、予測した日の当たりが記録されている行だけ値を持つ（無ければ None）。
     """
     rows = []
     for prev, cur in zip(log, log[1:]):
         outcome = outcomes.get(cur["judgment_date"])
         if outcome is None:
             continue
+        status = outcomes.get(cur["forecast_date"])
         rows.append({
             "judgment_date": cur["judgment_date"].isoformat(),
             "outcome": outcome,
             "model": brier(cur["scenario"], outcome),
             "uniform": brier(UNIFORM, outcome),
             "persistence": brier(prev["scenario"], outcome),
+            "status_quo": brier({k: 100 if k == status else 0 for k in SCENARIO_KEYS}, outcome) if status else None,
         })
     return rows
+
+
+def skill(model, other):
+    """1 − 予測の Brier ÷ 比べる相手の Brier。正なら相手より良い。相手が満点なら出せない。"""
+    return 1 - model / other if other else None
 
 
 def summarize(rows):
@@ -100,13 +115,23 @@ def summarize(rows):
     if not n:
         return None
     mean = {k: sum(r[k] for r in rows) / n for k in ("model", "uniform", "persistence")}
+    sq = [r for r in rows if r["status_quo"] is not None]
+    sq_mean = ({"model": sum(r["model"] for r in sq) / len(sq), "status_quo": sum(r["status_quo"] for r in sq) / len(sq)}
+               if sq else None)
     return {
         "n": n,
         "mean": mean,
-        # 1 − 予測の Brier ÷ 比べる相手の Brier。正なら相手より良い
-        "skill_vs_uniform": 1 - mean["model"] / mean["uniform"],
-        "skill_vs_persistence": (1 - mean["model"] / mean["persistence"]) if mean["persistence"] else None,
+        "skill_vs_uniform": skill(mean["model"], mean["uniform"]),
+        "skill_vs_persistence": skill(mean["model"], mean["persistence"]),
+        # 現状のままは、予測した日の当たりがある日だけで比べる（Claude の推計も同じ日だけで平均し直す）
+        "status_quo_n": len(sq),
+        "status_quo_mean": sq_mean,
+        "skill_vs_status_quo": skill(sq_mean["model"], sq_mean["status_quo"]) if sq_mean else None,
     }
+
+
+def fmt_skill(v):
+    return f"{v:+.3f}" if v is not None else "—"
 
 
 def report(log, outcomes, rows, summary):
@@ -124,9 +149,16 @@ def report(log, outcomes, rows, summary):
         "| 予想 | 平均 Brier | 予測の技能（1 − 予測 ÷ 相手） |",
         "|---|---|---|",
         f"| Claude の推計 | {m['model']:.3f} | — |",
-        f"| 一様（各25%） | {m['uniform']:.3f} | {summary['skill_vs_uniform']:+.3f} |",
-        f"| 前の日のまま | {m['persistence']:.3f} | "
-        + (f"{summary['skill_vs_persistence']:+.3f}" if summary["skill_vs_persistence"] is not None else "—") + " |",
+        f"| 一様（各25%） | {m['uniform']:.3f} | {fmt_skill(summary['skill_vs_uniform'])} |",
+        f"| 前の日のまま | {m['persistence']:.3f} | {fmt_skill(summary['skill_vs_persistence'])} |",
+    ]
+    sq = summary["status_quo_mean"]
+    if sq:
+        lines.append(f"| 現状のまま（予測した日の当たりに100%・{summary['status_quo_n']} 日） | {sq['status_quo']:.3f}"
+                     f"（同じ日の Claude {sq['model']:.3f}） | {fmt_skill(summary['skill_vs_status_quo'])} |")
+    else:
+        lines.append("| 現状のまま（予測した日の当たりに100%） | 予測した日の当たりが未記録 | — |")
+    lines += [
         "",
         "技能が正なら、その相手より当たっている。日々の予測は判定日が1日ずつずれるだけで中身が近く、"
         "互いに独立ではない。日数が少ないうちは差を読み過ぎない。",
