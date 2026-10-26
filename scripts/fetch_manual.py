@@ -2,7 +2,7 @@
 fetch_manual.py
 RSSフィードから最新ニュースを取得し、
 生成AI（既定は Claude・--backend で Gemini も選べる）で分析して
-data/manual-update.json を自動更新する。
+data/manual-update.json を自動更新し、シナリオ確率を data/scenario-log.jsonl に1行足す。
 
 必要環境変数:
   CLAUDE_CODE_OAUTH_TOKEN : Claude のサブスクの認証（既定の claude のとき）
@@ -557,11 +557,12 @@ def prices_in_note(text):
     return prices
 
 
-def verify_note_sentences(sample, news_items, reference_prices):
+def verify_note_sentences(sample, news_items, reference_prices, price_warnings=None):
     """状況メモの文を確かめ、通った文だけを根拠の記事つきで返す（docs/data-sources-redesign.md §5-3）。
 
     - items が無い文・範囲外の番号を含む文は捨てる
     - 「○ドル」が EIA の最新の WTI・Brent のどちらからも ±10% を超えて離れていたら、その文を捨てて WARN
+      （price_warnings にリストを渡すと、捨てた文を足す。scripts/check_consistency.py が要約に出す）
     - 合計 NOTE_MAX_CHARS 字を超える分の文は捨てる
     """
     raw = sample.get("note_sentences") if isinstance(sample, dict) else None
@@ -584,6 +585,8 @@ def verify_note_sentences(sample, news_items, reference_prices):
         if off:
             print(f"[Note] WARN: 価格 {off} が EIA の {reference_prices} から ±{NOTE_PRICE_TOLERANCE:.0%} を超えるため文を捨てました: {text[:40]}",
                   file=sys.stderr)
+            if price_warnings is not None:
+                price_warnings.append({"text": text, "prices": off, "reference_prices": reference_prices})
             continue
         if total + len(text) > NOTE_MAX_CHARS:
             continue
@@ -895,6 +898,37 @@ def save_manual(data, path="data/manual-update.json"):
     print(f"[Manual] Saved to {path}")
 
 
+SCENARIO_LOG_PATH = "data/scenario-log.jsonl"
+
+
+def scenario_log_entry(manual, news_count, backend):
+    """予測の記録の1行（docs/data-sources-redesign.md §5-4）。
+
+    採点（scripts/score_scenarios.py）は judgment_date ごとに、判定日に当たったシナリオと
+    照らす。git の履歴からも復元できるが、採点に使いやすい形で持つ。
+    """
+    return {
+        "at": manual["updated_at"],
+        "judgment_date": manual["scenario_horizon"]["judgment_date"],
+        "horizon_days": manual["scenario_horizon"]["days"],
+        "scenario": manual["scenario"],
+        "scenario_range": manual["scenario_range"],
+        "samples": manual["scenario_samples"],
+        "news_items": news_count,
+        "backend": backend,
+        "model": BACKENDS[backend]["model"],
+    }
+
+
+def append_scenario_log(entry, path=SCENARIO_LOG_PATH):
+    """予測の記録に1行足す。1行ずつ足すだけなので、既存の行は書き換えない。"""
+    line = json.dumps(entry, ensure_ascii=False, separators=(",", ":"))
+    line.encode("utf-8")  # 書き込む前にエンコード可能なことを確かめる
+    with open(path, "a", encoding="utf-8", newline="\n") as f:
+        f.write(line + "\n")
+    print(f"[Manual] {path} に1行足しました（判定日 {entry['judgment_date']}）")
+
+
 def parse_args(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--skip-if-updated-today", action="store_true",
@@ -971,8 +1005,12 @@ def main(argv=None):
     print(f"[Manual] 中央値: {data['scenario']} / 幅: {data['scenario_range']}")
 
     data["reported_figures"] = verify_reported_figures(samples, news_items)
-    sentences = verify_note_sentences(samples[nearest_sample(samples)], news_items, load_reference_prices())
+    price_warnings = []
+    sentences = verify_note_sentences(samples[nearest_sample(samples)], news_items, load_reference_prices(),
+                                      price_warnings)
     data["note_sentences"] = sentences
+    # 価格が EIA と食い違って捨てた文。表示には使わず、scripts/check_consistency.py が WARN に出す
+    data["note_price_warnings"] = price_warnings
     # 互換のため、確かめた文をつないだものを今までどおり持つ（どこにも表示していない。2026-10-26 確認）
     data["last_manual_note"] = "".join(s["text"] for s in sentences)
 
@@ -983,6 +1021,7 @@ def main(argv=None):
 
     manual = build_manual_json(data, context, load_existing_manual(), backend=args.backend)
     save_manual(manual)
+    append_scenario_log(scenario_log_entry(manual, len(news_items), args.backend))
 
     # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった。
     # 通航数は IMF PortWatch で測る（scripts/fetch_portwatch.py）。ファイルは記録として残す

@@ -1,0 +1,13 @@
+{
+  "_comment": "シナリオ確率の採点に使う「判定日に当たったシナリオ」の記録（docs/data-sources-redesign.md §5-4）。判定日が来たら運営者が手で足す。scripts/score_scenarios.py が data/scenario-log.jsonl と照らして多クラスの Brier スコアを出す。最初の判定日は 2027-01-23。",
+  "_how_to": "outcomes に1件ずつ足す。from〜to（両端を含む・JST の日付）の判定日はすべて scenario に当たったとみなす。to を省くと from の1日だけ。scenario は A_diplomacy_pct・B_partial_blockade_pct・C_full_blockade_pct・D_escalation_pct のどれか1つ（data/context.json の scenario_rule の順 D → A → C → B で判定）。basis に判定の理由、sources に根拠の出典を書く。期間は重ねない。",
+  "_example": {
+    "from": "2027-01-23",
+    "to": "2027-01-31",
+    "scenario": "B_partial_blockade_pct",
+    "basis": "通航の制限が続き、オマーンの仲介による協議も続いている",
+    "sources": [{"name": "媒体名", "url": "https://example.com/", "published": "2027-01-23"}],
+    "recorded_at": "2027-02-01"
+  },
+  "outcomes": []
+}
