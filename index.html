@@ -253,6 +253,7 @@
         <a href="https://github.com/yattanda/hormuz-data-/blob/main/docs/hormuz-flow-method.md" target="_blank" rel="noopener" style="color:var(--muted);">算出方法</a></div>
       <div id="flow-capnote" style="display:none;font-size:0.63rem;margin-top:4px;"></div>
       <div id="ctx-note-flow" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
+      <div id="flow-reported" style="display:none;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,0.08);font-size:0.62rem;line-height:1.55;"></div>
     </div>
     <div class="card-footer" style="flex-wrap:wrap;">
      <span class="dot-live"></span>
@@ -304,10 +305,10 @@
         ※船籍・積荷・旗国・航路により大幅変動
       </span>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" style="flex-wrap:wrap;">
      <span>✏️</span>
-     手動確認時のみ更新 ／ <span id="ins-updated">—</span>
-    <div style="font-size:0.58rem;color:var(--muted);margin-top:2px;">確認先候補: S&amp;P Global / Caixin / Lloyd's List</div>
+     <span style="flex:1;min-width:0;">手動確認または報道から自動 ／ <span id="ins-updated">—</span></span>
+    <div style="flex-basis:100%;font-size:0.58rem;color:var(--muted);margin-top:2px;">確認先候補: S&amp;P Global / Caixin / Lloyd's List</div>
 </div>
   </div>
 
@@ -565,8 +566,9 @@ async function fetchJSON(name) {
   } catch (e) { console.warn('fetch:', name, e); return null; }
 }
 
-// PortWatch の日付は UTC の暦日（"YYYY-MM-DD"）。時刻を持たないので JST に直さない。
-function fmtUtcDay(ymd) {
+// "YYYY-MM-DD" の暦日を M/D にする。PortWatch の日付（UTC）も報道の日付（JST）も時刻を持たないので、
+// 時間帯の変換はしない。
+function fmtMonthDay(ymd) {
   const m = /^\d{4}-(\d{2})-(\d{2})$/.exec(ymd || '');
   return m ? `${Number(m[1])}/${Number(m[2])}` : '—';
 }
@@ -636,7 +638,7 @@ async function loadPortWatch() {
   const age = daysSinceUtcDay(pw.latest_date);
   const stale = age > PORTWATCH_STALE_DAYS;
   const [from, to] = (w.period || '').split('/');
-  const periodText = `${fmtUtcDay(from)}〜${fmtUtcDay(to)}（UTC）`;
+  const periodText = `${fmtMonthDay(from)}〜${fmtMonthDay(to)}（UTC）`;
   const staleMsg = stale
     ? `⚠️ PortWatch の最新の行が ${pw.latest_date}（${age}日前）のままです。取得が止まっている可能性があります。`
     : '';
@@ -662,7 +664,7 @@ async function loadPortWatch() {
 
   const last = (pw.daily || []).find(r => r.date === pw.latest_date);
   setText('pw-latest', last
-    ? `最新日 ${fmtUtcDay(last.date)}（UTC）：${last.total}隻（タンカー${last.tanker}・貨物船${last.cargo}）`
+    ? `最新日 ${fmtMonthDay(last.date)}（UTC）：${last.total}隻（タンカー${last.tanker}・貨物船${last.cargo}）`
     : '');
 
   // 追跡できない割合は数値に掛けず、報道値を出典つきで文章にだけ示す（設計書 Q4）
@@ -776,18 +778,54 @@ function oilFlowNextUpdateText(period) {
   return '次回更新：' + label + '（' + mon(from) + '月下旬〜' + mon(to) + '月上旬の公表後に自動で反映）';
 }
 
+// 報道から拾った数字。fetch_manual.py の verify_reported_figures が、引用が記事の見出しか説明文に
+// そのままあり、値が引用の中にあることを確かめたものだけが入る。新しい記事の順。
+function reportedOf(figs, metrics) {
+  return (Array.isArray(figs) ? figs : [])
+    .filter(f => f && metrics.includes(f.metric) && typeof f.value === 'number' && f.quote);
+}
+
+function reportedSourceHtml(f) {
+  const label = `${escapeHtml(f.source || '—')}・${fmtMonthDay(f.published)}`;
+  return /^https?:\/\//.test(f.link || '')
+    ? `<a href="${escapeHtml(f.link)}" target="_blank" rel="noopener" style="color:var(--muted);">${label}</a>`
+    : label;
+}
+
+const REPORTED_FLOW_LABELS = { flow_mbpd: ['流量', '百万BPD'], transits_per_day: ['通航', '隻/日'] };
+
+// カード2の下に報道値を最大2件。無い日は出さない（docs/data-sources-redesign.md §5-2）。
+// 数字の意味が種類と合っているかはコードで確かめられないため、引用文もあわせて出す。
+function renderReportedFlow(figs) {
+  const el = document.getElementById('flow-reported');
+  if (!el) return;
+  const list = reportedOf(figs, Object.keys(REPORTED_FLOW_LABELS)).slice(0, 2);
+  el.style.display = list.length ? 'block' : 'none';
+  el.innerHTML = list.length
+    ? '<div style="font-weight:700;color:var(--muted);">報道値（記事の見出し・説明文から）</div>' + list.map(f => {
+        const [name, unit] = REPORTED_FLOW_LABELS[f.metric];
+        return `<div style="margin-top:3px;">${name} ${f.value} ${unit}（${reportedSourceHtml(f)}）`
+          + `<br/><span style="opacity:0.7;">“${escapeHtml(f.quote)}”</span></div>`;
+      }).join('')
+    : '';
+}
+
 async function loadManual() {
   try {
     const res = await fetch(`${BASE}/data/manual-update.json?t=${Date.now()}`);
     if (!res.ok) throw new Error('fetch error');
     const d = await res.json();
 
-    // AI の流量推計（hormuz_daily_flow_mbpd・flow_disruption_pct）は 2026-10 の見直し（PR 2）から表示しない。
-    // 欄はプロンプトから外すまで（PR 3）ファイルに残る。
+    // AI の流量推計は 2026-10 の見直しでやめた。カード2は PortWatch（loadPortWatch）と、ここで出す報道値。
     applyContextNotice(d.context);
 
-    const insPct = d.war_risk_premium_manual;
+    renderReportedFlow(d.reported_figures);
+
+    // 保険料率：手動で確かめた値を優先し、無ければ報道から拾った値（docs/data-sources-redesign.md §5-5 (b)）
+    const insManual = d.war_risk_premium_manual;
     const insVerified = d.war_risk_premium_verified === true;
+    const insReported = insManual == null ? (reportedOf(d.reported_figures, ['war_risk_premium_pct'])[0] || null) : null;
+    const insPct = insManual ?? (insReported ? insReported.value : null);
     if (insPct != null) {
       setText('ins-val',  insPct.toFixed(2));
       setText('ins-val2', insPct.toFixed(2) + '%');
@@ -796,18 +834,30 @@ async function loadManual() {
     }
     const badge = document.getElementById('ins-badge');
     if (badge) {
-      if (insPct != null && insVerified) {
+      if (insManual != null && insVerified) {
         badge.textContent = '✓ 確認済み';
         badge.style.color = '#4ade80';
+      } else if (insReported) {
+        badge.textContent = '報道値';
+        badge.style.color = '#fbbf24';
       } else {
         badge.textContent = '— 未確認';
         badge.style.color = '#94a3b8';
       }
     }
-    setText('ins-source',  d.war_risk_premium_source ?? '—');
-    // d.updated_at は生成AI による自動分析の実行時刻。保険料率は手動確認のみの項目なので、
-    // 値が無いままこれを出すと「手動確認時のみ更新 ／ 9/4」と読め、確認済みに見えてしまう。
-    setText('ins-updated', (insPct != null && insVerified) ? fmtDate(d.updated_at) : '未確認');
+    const insSrcEl = document.getElementById('ins-source');
+    if (insSrcEl) {
+      if (insReported) {
+        insSrcEl.innerHTML = reportedSourceHtml(insReported);
+        insSrcEl.title = insReported.quote;
+      } else {
+        insSrcEl.textContent = d.war_risk_premium_source ?? '—';
+      }
+    }
+    // d.updated_at は生成AI による自動分析の実行時刻。値が無いままこれを出すと
+    // 「手動確認時のみ更新 ／ 9/4」と読め、確認済みに見えてしまう。報道値は記事の日付を出す。
+    setText('ins-updated', (insManual != null && insVerified) ? fmtDate(d.updated_at)
+      : insReported ? `報道 ${fmtMonthDay(insReported.published)}` : '未確認');
 
     const sc = d.scenario;
     const rangeTitle = key => {
@@ -851,8 +901,10 @@ async function loadManual() {
     registerSource({
       key: 'insurance',
       label: '戦争リスク保険料率',
-      source: (insPct != null && insVerified) ? (d.war_risk_premium_source ?? null) : null,
-      basis: (insPct != null && insVerified) ? fmtDate(d.updated_at) : '未確認（値を表示していません）'
+      source: (insManual != null && insVerified) ? (d.war_risk_premium_source ?? null) : null,
+      basis: (insManual != null && insVerified) ? fmtDate(d.updated_at)
+        : insReported ? `報道値 ${insReported.published}（${insReported.source}）`
+        : '未確認（値を表示していません）'
     });
 
 

@@ -18,6 +18,7 @@ import statistics
 import subprocess
 import sys
 import time
+import unicodedata
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -41,6 +42,16 @@ RSS_FEEDS = [
     "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml",
 ]
 
+# 報道値（reported_figures）を拾うための追加の検索。海運の専門紙・石油の専門機関・追跡会社を名指しする
+# （2026-10-26。上の9本だけでは、許可リストの媒体で数字の入った見出しがほとんど無かった）。
+# シナリオ確率の入力を押し出さないよう、上の9本の採用分（MAX_ITEMS 件）はそのままにして、
+# 許可リストの媒体の記事だけを FIGURE_MAX_ITEMS 件まで後ろに足す。
+FIGURE_FEEDS = [
+    "https://news.google.com/rss/search?q=Hormuz+%28Kpler+OR+Vortexa+OR+%22Lloyd%27s+List%22%29&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=Hormuz+%28site%3Alloydslist.com+OR+site%3Atradewindsnews.com+OR+site%3Asplash247.com+OR+site%3Agcaptain.com%29&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=Hormuz+%28site%3Aspglobal.com+OR+site%3Aargusmedia.com+OR+site%3Akpler.com+OR+site%3Avortexa.com%29&hl=en-US&gl=US&ceid=US:en",
+]
+
 
 KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait", "封鎖", "ホルムズ", "イラン"]
 
@@ -50,6 +61,9 @@ KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait"
 # 期間で絞ってから新しい順に並べる。
 MAX_AGE_DAYS = 7
 PER_FEED_MAX = 12
+MAX_ITEMS = 40
+FIGURE_PER_FEED_MAX = 6
+FIGURE_MAX_ITEMS = 12
 
 # 媒体名を持たないフィード（<source> が無い）の表示名
 FEED_LABELS = {
@@ -106,10 +120,16 @@ def fetch_feed(url, now, max_age_days):
         if title_key(desc).startswith(title_key(title)):
             desc = ""
         source = clean_text(item.findtext("source", "")) or FEED_LABELS.get(host, host)
+        # 媒体のドメイン。Google ニュースは <source url="https://www.reuters.com"> で元の媒体を示す。
+        # 報道値の許可リスト（REPORTED_SOURCE_DOMAINS）の照合に使う
+        source_el = item.find("source")
+        source_url = source_el.get("url", "") if source_el is not None else ""
         items.append({
             "title": title,
             "description": desc[:200],
             "source": source,
+            "domain": (urllib.parse.urlparse(source_url).hostname or host).lower(),
+            "link": (item.findtext("link", "") or "").strip(),
             "published": published,
         })
     items.sort(key=lambda x: x["published"], reverse=True)
@@ -146,11 +166,45 @@ def fetch_rss_news(max_items=40, max_age_days=MAX_AGE_DAYS, per_feed_max=PER_FEE
     return news
 
 
-def format_news_line(item):
-    """プロンプトに入れる1行。日付と媒体を先に置き、新しさと出所を読めるようにする。"""
-    date = item["published"].astimezone(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+def fetch_figure_news(existing, max_items=FIGURE_MAX_ITEMS, max_age_days=MAX_AGE_DAYS,
+                      per_feed_max=FIGURE_PER_FEED_MAX):
+    """FIGURE_FEEDS から、許可リストの媒体の記事を新しい順に返す。existing と同じ見出しは除く。"""
+    now = datetime.now(timezone.utc)
+    seen = {title_key(n["title"]) for n in existing}
+    collected = []
+    for url in FIGURE_FEEDS:
+        try:
+            items = fetch_feed(url, now, max_age_days)
+        except Exception as e:
+            print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
+            continue
+        allowed = [i for i in items if allowed_source(i)]
+        print(f"[RSS] {len(items):3d} 件（期間内・該当）・許可リスト {len(allowed):3d} 件: {url[:70]}")
+        collected.extend(allowed[:per_feed_max])
+    extra = []
+    for item in sorted(collected, key=lambda x: x["published"], reverse=True):
+        key = title_key(item["title"])
+        if key in seen:
+            continue
+        seen.add(key)
+        extra.append(item)
+    extra = extra[:max_items]
+    print(f"[RSS] 報道値用に追加 {len(extra)} 件")
+    return extra
+
+
+def format_news_line(item, number):
+    """プロンプトに入れる1行。番号・日付・媒体を先に置く。
+
+    番号は reported_figures・note_sentences が根拠の記事を指すのに使う（1 始まり）。
+    """
+    date = jst_date(item["published"])
     body = f": {item['description']}" if item["description"] else ""
-    return f"- [{date}・{item['source']}] {item['title']}{body}"
+    return f"[{number}] [{date}・{item['source']}] {item['title']}{body}"
+
+
+def jst_date(dt):
+    return dt.astimezone(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
 
 def load_context(path="data/context.json"):
     """プロンプトに注入する前提を data/context.json から読み込む。
@@ -271,28 +325,19 @@ def build_scenario_text(context):
     return "\n".join(lines)
 
 
-def qualifier(entry):
-    """前提値に付ける但し書き。verified が真なら何も付けない。"""
-    if isinstance(entry, dict) and entry.get("verified") is True:
-        return ""
-    return "（出典未確認の概数）"
-
-
 def build_prompt(news_items, context):
-    """Gemini へ渡すプロンプトを組み立てる。
+    """推計に渡すプロンプトを組み立てる。
 
     数値レンジの誘導と「封鎖中」という状態の断定は置かない。現況は
     【確定した経緯】と【最新ニュース】から読ませる。2026-09-05 以前は
     「封鎖中は2〜10程度」「8〜24隻が目安」「根拠がなければ5〜15」等の
     目安を与えており、同一入力の比較で推計隻数が実測 5 倍ぶん下振れして
     いたため撤去した。
+
+    通航隻数と流量は 2026-10 の見直しで AI に推計させるのをやめた（IMF PortWatch で測る。
+    docs/data-sources-redesign.md）。代わりに、記事に書かれた数字を原文の引用つきで
+    抜き出させる（reported_figures）。抜き出した値は verify_reported_figures で確かめる。
     """
-    normal_flow = context["normal_flow_mbpd"]["value"]
-    normal_vessels = context.get("normal_vessels_per_day", {}).get("value")
-    # 一次資料で裏づけた前提まで「出典未確認」と書かない。
-    # 不当な但し書きは、その前提から離れた推計を誘発する。
-    flow_note = qualifier(context.get("normal_flow_mbpd"))
-    vessels_note = qualifier(context.get("normal_vessels_per_day"))
     # 見出しには経緯の最新日を出す。context_updated は前提値（流量・隻数・係数）の
     # 基準日で、経緯を足さなくても新しいままになるため、経緯の鮮度を誤認させる
     # （2026-09-20 修正。以前は「基準日 2026-09-05」と出る一方で中身の最新は 9/3 だった）。
@@ -301,14 +346,8 @@ def build_prompt(news_items, context):
     timeline_text = build_timeline_text(context)
     scenario_text = build_scenario_text(context)
 
-    news_text = "\n".join(format_news_line(item) for item in news_items)
-
-    # 隻数の前提は表示側の「開戦前比」の分母と同じ値を使う。
-    # 分子と分母で前提が違うと割合が読めなくなる。
-    vessels_line = (
-        f"- 通常時のホルムズ通過隻数は約{normal_vessels}隻/日{vessels_note}\n"
-        if normal_vessels is not None else ""
-    )
+    news_text = "\n".join(format_news_line(item, i) for i, item in enumerate(news_items, 1))
+    metrics_text = "\n".join(f"  - {k}: {v['desc']}（単位: {v['unit']}）" for k, v in REPORTED_METRICS.items())
 
     return f"""
 あなたはホルムズ海峡・イラン情勢の専門アナリストです。
@@ -318,11 +357,7 @@ def build_prompt(news_items, context):
 【確定した経緯】（最新の事実 {timeline_latest} まで・data/context.json より）
 {timeline_text}
 
-【流量に関する前提】
-- 通常時のホルムズ通過量は約{normal_flow}百万バレル/日{flow_note}
-{vessels_line}- 現在の水準は上記の経緯と最新ニュースから判断すること。あらかじめ増減の方向を仮定しない
-
-【最新ニュース】（{len(news_items)}件のニュース記事を分析）
+【最新ニュース】（{len(news_items)}件。先頭の [番号] が記事番号）
 {news_text}
 
 【出力形式】
@@ -333,36 +368,229 @@ def build_prompt(news_items, context):
     "C_full_blockade_pct": <0-100の整数>,
     "D_escalation_pct": <0-100の整数>
   }},
-  "hormuz_daily_flow_mbpd": <ホルムズ通過量 百万バレル/日。最新ニュースの記述を根拠に推計する>,
-  "hormuz_normal_flow_mbpd": {normal_flow},
-  "flow_disruption_pct": <流量disruption率 整数 = round((1 - hormuz_daily_flow_mbpd / {normal_flow}) * 100)>,
-  "last_manual_note": "<最新状況メモ 日本語100文字以内 ホルムズ封鎖・イラン情勢に関する最新動向>",
-  "ais_estimated_vessels": <整数。対象は緯度25.8〜27.0°N・経度55.6〜57.0°Eのバウンディングボックス内を【通過中】の船舶のみ。待機中・引き返し中・停泊中は除外。最新ニュースの記述を根拠に推計する>,
-  "ais_estimated_tankers": <整数。上記通過中船舶のうちタンカーのみ>,
-  "ais_estimated_cargo": <整数。上記通過中船舶のうち貨物船のみ>,
-  "ais_confidence": "<high / medium / low のいずれか1語。推計の信頼度>",
-  "ais_estimation_note": <推計根拠を30文字以内で記載。信頼度の語は含めず根拠のみ>
+  "reported_figures": [
+    {{"metric": "<下の4種類のどれか>", "value": <数>, "quote": "<その数字を含む部分を、記事の見出しか説明文から一字一句そのまま>", "item": <記事番号>}}
+  ],
+  "note_sentences": [
+    {{"text": "<最新状況メモの1文。日本語>", "items": [<その文の根拠の記事番号>]}}
+  ]
 }}
 
 【シナリオの定義】（表示側のカード見出しと一致させてある。この定義と判定の順に沿って確率を割り当てること。
 現状がどのシナリオに近いかではなく、判定日にどれに当たるかを見積もること）
 {scenario_text}
 
+【reported_figures の種類】
+{metrics_text}
+
 【注意事項】
 - シナリオ確率の合計は必ず100になること
-- hormuz_daily_flow_mbpd と ais_estimated_vessels は、最新ニュースに現れる
-  具体的な記述（通過隻数・通過量・通航状況の報道）を根拠に推計すること。
-  報道が示す水準をそのまま反映し、目安の数値へ寄せないこと
-- 通常時の値をそのまま返さず、現在の水準として推計した値を返すこと
-- flow_disruption_pctはhormuz_daily_flow_mbpdから計算すること
-- last_manual_noteはホルムズ・イラン情勢に関する内容のみ記載
-- ais_estimated_tankers + ais_estimated_cargo <= ais_estimated_vessels
-- ais_estimated_vesselsは「通過中」のみカウント。周辺待機・引き返し船は含めない
-- 根拠となる報道が見つからない場合は、推測で数値を埋めずに
-  ais_confidence を low とし、ais_estimation_note にその旨を書くこと
-- ais_confidenceは必ず high / medium / low のいずれか1語のみ。文章にしない
-- 直接の根拠となる報道がなく背景知識からの外挿にとどまる場合は low とすること
+- reported_figures には、最新ニュースの見出しか説明文に数字として書かれているものだけを入れる。
+  推計・換算・外挿・背景知識による補完はしない。該当が無ければ空の配列 [] にする
+- quote は原文のまま（英語なら英語のまま）。翻訳・要約・言い換えをしない。省略記号も入れない
+- value は quote の中の数字と同じ値にする。flow_mbpd だけは百万バレル/日に直してよい（例：800,000 barrels → 0.8）
+- ホルムズ海峡（とその周辺の湾岸の航路）についての数字だけを入れる。他の海峡・世界全体・イランの輸出量などは入れない
+- note_sentences はホルムズ・イラン情勢の最新動向を、合計100文字以内・1〜3文で書く
+- note_sentences の各文には、その内容が書かれている記事の番号を items に必ず入れる。
+  記事に書かれていない内容（【確定した経緯】だけにある事実・推測・背景知識）は書かない
 """
+
+
+# reported_figures の種類。プロンプトの説明と、表示側の単位の正本。
+REPORTED_METRICS = {
+    "flow_mbpd": {"desc": "ホルムズ海峡を通る石油の量", "unit": "百万バレル/日"},
+    "transits_per_day": {"desc": "ホルムズ海峡を1日に通航する船の数", "unit": "隻/日"},
+    "untracked_share_pct": {"desc": "ホルムズ周辺で AIS を切っている・追跡できない船の割合", "unit": "%"},
+    "war_risk_premium_pct": {"desc": "ホルムズ・湾岸向けの戦争リスク保険料率（船価に対する割合）", "unit": "%"},
+}
+MAX_REPORTED_FIGURES = 10
+
+# 報道値として採る媒体（ドメイン → 表示名）。運営者が 2026-10-26 に決めた（8媒体・のちに14媒体を追加）。
+# 引用が記事にあることはコードで確かめられるが、媒体の信頼性は確かめられないため、名の通った
+# 報道機関・海運専門紙に限る。Google ニュースの検索結果には出所のはっきりしないサイトも入る。
+# サブドメイン（www.・uk. など）も含めて照合する。足すときは docs/data-sources-redesign.md §5-2 にも書く。
+REPORTED_SOURCE_DOMAINS = {
+    "reuters.com": "Reuters",
+    "bloomberg.com": "Bloomberg",
+    "lloydslist.com": "Lloyd's List",
+    "lloydslistintelligence.com": "Lloyd's List Intelligence",
+    "aljazeera.com": "Al Jazeera",
+    "bbc.com": "BBC",
+    "bbc.co.uk": "BBC",
+    "ft.com": "Financial Times",
+    "nytimes.com": "New York Times",
+    "apnews.com": "AP",
+    # 2026-10-26 に足した（運営者）。大手の報道機関
+    "wsj.com": "Wall Street Journal",
+    "washingtonpost.com": "Washington Post",
+    "theguardian.com": "The Guardian",
+    "cnbc.com": "CNBC",
+    # 海運の専門紙・海事の報道
+    "gcaptain.com": "gCaptain",
+    "tradewindsnews.com": "TradeWinds",
+    "splash247.com": "Splash247",
+    "usni.org": "USNI News",
+    # 石油の価格・流量の専門機関と、船の追跡会社
+    "spglobal.com": "S&P Global",
+    "argusmedia.com": "Argus",
+    "kpler.com": "Kpler",
+    "vortexa.com": "Vortexa",
+    # 公的機関
+    "eia.gov": "EIA",
+    "iea.org": "IEA",
+}
+
+
+def allowed_source(item):
+    """記事の媒体が許可リストにあるか。"""
+    domain = (item.get("domain") or "").lower()
+    return any(domain == d or domain.endswith("." + d) for d in REPORTED_SOURCE_DOMAINS)
+
+
+def normalize_text(text):
+    """引用の照合用。全角半角・空白・引用符・大文字小文字の違いを吸収する。"""
+    text = unicodedata.normalize("NFKC", str(text or ""))
+    text = text.translate(str.maketrans({"‘": "'", "’": "'", "“": '"', "”": '"'}))
+    return re.sub(r"\s+", " ", text).strip().lower()
+
+
+def numbers_in(text):
+    """文字列に現れる数を返す（3桁区切りのカンマは外す）。"""
+    nums = []
+    for raw in re.findall(r"\d+(?:,\d{3})*(?:\.\d+)?", unicodedata.normalize("NFKC", str(text or ""))):
+        try:
+            nums.append(float(raw.replace(",", "")))
+        except ValueError:
+            continue
+    return nums
+
+
+def value_in_quote(value, quote, metric):
+    """value が quote の中の数と一致するか。flow_mbpd は千・百万の位取りの違いを許す。"""
+    scales = (1, 1e3, 1e6) if metric == "flow_mbpd" else (1,)
+    for n in numbers_in(quote):
+        for k in scales:
+            target = value * k
+            if abs(n - target) <= 1e-6 * max(1.0, abs(target)):
+                return True
+    return False
+
+
+def article_ref(item):
+    """表示と記録に使う記事の情報。"""
+    return {
+        "source": item["source"],
+        "domain": item.get("domain") or None,
+        "title": item["title"],
+        "link": item.get("link") or None,
+        "published": jst_date(item["published"]),
+    }
+
+
+def verify_reported_figures(samples, news_items):
+    """全回の reported_figures を集め、コードで確かめて通ったものだけを返す。
+
+    確かめること（docs/data-sources-redesign.md §5-2）：
+    - metric が決めた種類のどれか・value が数である
+    - item が入力記事の番号の範囲内にある
+    - quote がその記事の見出しか説明文にそのまま含まれる
+    - value の数字が quote の中にある
+    - 記事の媒体が許可リスト（REPORTED_SOURCE_DOMAINS）にある
+    引用が原文にあることは確かめられるが、数字の意味（何の量か）が metric と合っているかは
+    確かめられない。表示側では引用文もあわせて出す。
+    """
+    found, dropped, off_list = {}, 0, set()
+    for sample in samples:
+        figs = sample.get("reported_figures") if isinstance(sample, dict) else None
+        for f in figs if isinstance(figs, list) else []:
+            try:
+                metric = f["metric"]
+                value = float(f["value"])
+                quote = str(f["quote"]).strip()
+                number = int(f["item"])
+            except (KeyError, TypeError, ValueError):
+                dropped += 1
+                continue
+            if metric not in REPORTED_METRICS or not quote or not 1 <= number <= len(news_items):
+                dropped += 1
+                continue
+            item = news_items[number - 1]
+            if not allowed_source(item):
+                off_list.add(item.get("domain") or item["source"])
+                dropped += 1
+                continue
+            haystacks = (normalize_text(item["title"]), normalize_text(item["description"]))
+            if not any(normalize_text(quote) in h for h in haystacks) or not value_in_quote(value, quote, metric):
+                dropped += 1
+                continue
+            key = (metric, value, number)
+            if key not in found:
+                found[key] = {"metric": metric, "value": value, "unit": REPORTED_METRICS[metric]["unit"],
+                              "quote": quote, **article_ref(item)}
+    figures = sorted(found.values(), key=lambda x: x["published"], reverse=True)[:MAX_REPORTED_FIGURES]
+    print(f"[Reported] 採用 {len(figures)} 件・不採用 {dropped} 件（{len(samples)} 回分）")
+    if off_list:
+        print(f"[Reported] 許可リストに無い媒体のため捨てた: {', '.join(sorted(off_list))}")
+    return figures
+
+
+NOTE_MAX_CHARS = 100
+# 状況メモの価格の検査で許す EIA の週次価格との差（±10%）。EIA は週次なので急変した週は外れうる。
+NOTE_PRICE_TOLERANCE = 0.10
+
+
+def load_reference_prices(path="data/eia-weekly.json"):
+    """状況メモの価格の検査に使う EIA の最新の WTI・Brent。読めなければ空。"""
+    try:
+        with open(path, encoding="utf-8") as f:
+            d = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return []
+    return [v for v in (d.get("wti_price_usd"), d.get("brent_price_usd")) if isinstance(v, (int, float)) and v > 0]
+
+
+def prices_in_note(text):
+    """文中の「○ドル」「○〜○ドル」の数。「○万ドル」などの金額は拾わない。"""
+    prices = []
+    for a, b in re.findall(r"(\d+(?:\.\d+)?)(?:\s*[〜~～\-–]\s*(\d+(?:\.\d+)?))?\s*ドル", unicodedata.normalize("NFKC", text)):
+        prices.extend(float(x) for x in (a, b) if x)
+    return prices
+
+
+def verify_note_sentences(sample, news_items, reference_prices):
+    """状況メモの文を確かめ、通った文だけを根拠の記事つきで返す（docs/data-sources-redesign.md §5-3）。
+
+    - items が無い文・範囲外の番号を含む文は捨てる
+    - 「○ドル」が EIA の最新の WTI・Brent のどちらからも ±10% を超えて離れていたら、その文を捨てて WARN
+    - 合計 NOTE_MAX_CHARS 字を超える分の文は捨てる
+    """
+    raw = sample.get("note_sentences") if isinstance(sample, dict) else None
+    kept, total = [], 0
+    for s in raw if isinstance(raw, list) else []:
+        text = str(s.get("text") or "").strip() if isinstance(s, dict) else ""
+        items = s.get("items") if isinstance(s, dict) else None
+        if not text or not isinstance(items, list) or not items:
+            print(f"[Note] 根拠の記事番号が無い文を捨てました: {text[:40]}", file=sys.stderr)
+            continue
+        try:
+            numbers = sorted({int(n) for n in items})
+        except (TypeError, ValueError):
+            numbers = [0]
+        if not all(1 <= n <= len(news_items) for n in numbers):
+            print(f"[Note] 範囲外の記事番号を含む文を捨てました: {text[:40]}", file=sys.stderr)
+            continue
+        off = [p for p in prices_in_note(text)
+               if reference_prices and all(abs(p - r) / r > NOTE_PRICE_TOLERANCE for r in reference_prices)]
+        if off:
+            print(f"[Note] WARN: 価格 {off} が EIA の {reference_prices} から ±{NOTE_PRICE_TOLERANCE:.0%} を超えるため文を捨てました: {text[:40]}",
+                  file=sys.stderr)
+            continue
+        if total + len(text) > NOTE_MAX_CHARS:
+            continue
+        total += len(text)
+        kept.append({"text": text, "items": numbers,
+                     "sources": [article_ref(news_items[n - 1]) for n in numbers]})
+    return kept
 
 
 class QuotaExhausted(Exception):
@@ -553,11 +781,20 @@ def median_number(samples, key, cast=float):
     return statistics.median(vals) if vals else None
 
 
-def aggregate_samples(samples, context):
-    """複数回の出力を1つにまとめる。
+def nearest_sample(samples):
+    """確率が中央値にいちばん近い回の番号。文章（状況メモ）はこの回のものを使う。"""
+    vectors = [sample_scenario(s) for s in samples]
+    medians = [statistics.median(v[i] for v in vectors) for i in range(len(SCENARIO_KEYS))]
+    return min(range(len(samples)),
+               key=lambda j: sum(abs(a - b) for a, b in zip(vectors[j], medians)))
 
-    数値は回ごとの中央値。文章（状況メモ・推計根拠）は、確率が中央値に
-    いちばん近い回のものを使う（数値と文章の組み合わせを崩さないため）。
+
+def aggregate_samples(samples, context):
+    """複数回の出力からシナリオ確率をまとめる（回ごとの中央値・幅・回数）。
+
+    文章と報道値はここでは扱わない（verify_note_sentences・verify_reported_figures が
+    入力記事と照らして確かめてから足す）。モデルの出力をそのまま載せないため、
+    返す dict はここで決めたキーだけにする。
     """
     vectors = [sample_scenario(s) for s in samples]
     medians = [statistics.median(v[i] for v in vectors) for i in range(len(SCENARIO_KEYS))]
@@ -565,35 +802,14 @@ def aggregate_samples(samples, context):
     # （例：A 100%・A 100%・B 100%・B 100%・C 100%）。確率として成り立たないので出さない
     if sum(medians) <= 0:
         return None
-    scenario = round_to_total(medians)
-    nearest = min(range(len(samples)),
-                  key=lambda j: sum(abs(a - b) for a, b in zip(vectors[j], medians)))
-    base = dict(samples[nearest])
-
-    normal_flow = context["normal_flow_mbpd"]["value"]
-    flow = median_number(samples, "hormuz_daily_flow_mbpd")
-    if flow is not None:
-        base["hormuz_daily_flow_mbpd"] = round(flow, 1)
-        base["flow_disruption_pct"] = round((1 - flow / normal_flow) * 100)
-    base["hormuz_normal_flow_mbpd"] = normal_flow
-
-    vessels = median_number(samples, "ais_estimated_vessels", int)
-    tankers = median_number(samples, "ais_estimated_tankers", int)
-    cargo = median_number(samples, "ais_estimated_cargo", int)
-    if vessels is not None:
-        vessels = round(vessels)
-        tankers = min(round(tankers or 0), vessels)
-        cargo = min(round(cargo or 0), vessels - tankers)
-        base.update(ais_estimated_vessels=vessels, ais_estimated_tankers=tankers,
-                    ais_estimated_cargo=cargo)
-
-    base["scenario"] = dict(zip(SCENARIO_KEYS, scenario))
-    base["scenario_range"] = {
-        k: [min(v[i] for v in vectors), max(v[i] for v in vectors)]
-        for i, k in enumerate(SCENARIO_KEYS)
+    return {
+        "scenario": dict(zip(SCENARIO_KEYS, round_to_total(medians))),
+        "scenario_range": {
+            k: [min(v[i] for v in vectors), max(v[i] for v in vectors)]
+            for i, k in enumerate(SCENARIO_KEYS)
+        },
+        "scenario_samples": len(samples),
     }
-    base["scenario_samples"] = len(samples)
-    return base
 
 
 def updated_today(path="data/manual-update.json"):
@@ -633,7 +849,6 @@ def build_manual_json(data, context, previous=None, backend="gemini"):
             "age_days": age,
             "stale_after_days": stale_after,
             "stale": (age is not None and stale_after is not None and age > stale_after),
-            "normal_flow_verified": context["normal_flow_mbpd"].get("verified", False),
             "timeline_updated": (
                 tl_latest.isoformat() if tl_latest is not None else None
             ),
@@ -650,7 +865,7 @@ def build_manual_json(data, context, previous=None, backend="gemini"):
                 if scenario_judgment_date(context) is not None else None
             ),
         },
-        # 手動項目を data より先に置く。Gemini の出力がこれらを上書きしないようにする
+        # 手動項目を data より先に置く。推計の出力がこれらを上書きしないようにする
         **carried,
         **data
     }
@@ -680,83 +895,6 @@ def save_manual(data, path="data/manual-update.json"):
     print(f"[Manual] Saved to {path}")
 
 
-def parse_confidence(data):
-    """信頼度を high / medium / low に正規化する。
-
-    ais_confidence を優先し、無ければ ais_estimation_note 末尾の "(low)" 形式を拾う。
-    プロンプト変更前の出力形式が返ってきても壊れないようにするための二段構え。
-    判定できない場合は最も保守的な low を採る。
-    """
-    raw = str(data.get("ais_confidence") or "").strip().lower()
-    if raw in ("high", "medium", "low"):
-        return raw
-
-    note = str(data.get("ais_estimation_note") or "").lower()
-    for level in ("high", "medium", "low"):
-        if f"({level})" in note:
-            return level
-    return "low"
-
-
-def strip_confidence(note):
-    """推計根拠の文末に付いた "(low)" 等を取り除く。信頼度は別フィールドで持つ。"""
-    text = str(note or "").strip()
-    for level in ("high", "medium", "low", "High", "Medium", "Low"):
-        for token in (f"({level})", f"（{level}）"):
-            text = text.replace(token, "")
-    return text.strip() or "Gemini AI推計"
-
-
-def save_ais_estimate(data, path="data/ais-estimate.json", backend="gemini"):
-    """Gemini 推計を data/ais-estimate.json に保存する。
-
-    **実測ファイル data/ais-snapshot.json には決して書かない。**
-    かつて両者が同じファイルを交互に上書きし、実測と推計が区別できない状態が
-    2026-04〜09 にわたって続いた。生成元とファイルを1対1に保つことが本関数の要件。
-
-    ダーク船補正はここでは掛けない。補正は推計であり、
-    実測・推計の双方に同じ係数を適用する必要があるため、表示側で一元的に扱う。
-    """
-    jst = timezone(timedelta(hours=9))
-    now = datetime.now(jst).isoformat(timespec="seconds")
-
-    vessels = data.get("ais_estimated_vessels", 0)
-    tankers = data.get("ais_estimated_tankers", 0)
-    cargo = data.get("ais_estimated_cargo", 0)
-    confidence = parse_confidence(data)
-    reason = strip_confidence(data.get("ais_estimation_note"))
-
-    estimate = {
-        "updated_at": now,
-        # 実測か推計かを、source 文字列ではなくこのフィールドで判別する
-        "measurement": "estimate",
-        "source": source_text(backend),
-        "model": BACKENDS[backend]["model"],
-        "method": f"公開RSS報道を {BACKENDS[backend]['label']} が分析した推計",
-        "estimated_vessels": vessels,
-        "breakdown": {
-            "tanker": tankers,
-            "cargo": cargo,
-            "other": max(0, vessels - tankers - cargo),
-        },
-        "confidence": confidence,
-        "estimation_note": reason,
-        "bbox": {
-            "lat_bottom": 25.8,
-            "lat_top": 27.0,
-            "lon_left": 55.6,
-            "lon_right": 57.0,
-        },
-        "note": (
-            "AIS 受信による実測値ではない。報道・公開データから生成AIが推計した値であり、"
-            "実測が取得できない場合の代替として表示される。"
-        ),
-    }
-
-    write_json(estimate, path)
-    print(f"[AIS] Saved estimate to {path}")
-    print(f"  推定船舶数: {vessels} 隻（信頼度: {confidence}）")
-
 def parse_args(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--skip-if-updated-today", action="store_true",
@@ -783,7 +921,8 @@ def main(argv=None):
     estimate = make_estimator(args.backend)
 
     print("[Manual] Fetching RSS news...")
-    news_items = fetch_rss_news(max_items=40)
+    news_items = fetch_rss_news(max_items=MAX_ITEMS)
+    news_items += fetch_figure_news(news_items)
     print(f"[Manual] Found {len(news_items)} relevant articles.")
 
     if not news_items:
@@ -831,6 +970,12 @@ def main(argv=None):
         sys.exit(1)
     print(f"[Manual] 中央値: {data['scenario']} / 幅: {data['scenario_range']}")
 
+    data["reported_figures"] = verify_reported_figures(samples, news_items)
+    sentences = verify_note_sentences(samples[nearest_sample(samples)], news_items, load_reference_prices())
+    data["note_sentences"] = sentences
+    # 互換のため、確かめた文をつないだものを今までどおり持つ（どこにも表示していない。2026-10-26 確認）
+    data["last_manual_note"] = "".join(s["text"] for s in sentences)
+
     if args.dry_run:
         print("[Manual] --dry-run のため書き込みません。")
         print(json.dumps(data, ensure_ascii=False, indent=2))
@@ -839,13 +984,13 @@ def main(argv=None):
     manual = build_manual_json(data, context, load_existing_manual(), backend=args.backend)
     save_manual(manual)
 
-    # AIS推計は実測とは別ファイル（data/ais-estimate.json）に保存する
-    save_ais_estimate(data, backend=args.backend)
+    # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった。
+    # 通航数は IMF PortWatch で測る（scripts/fetch_portwatch.py）。ファイルは記録として残す
 
     print("[Manual] Done.")
     print(f"  シナリオA: {data['scenario']['A_diplomacy_pct']}%")
-    print(f"  流量: {data['hormuz_daily_flow_mbpd']} MBPD")
-    print(f"  状況メモ: {data.get('last_manual_note', '—')}")
+    print(f"  報道値: {len(data['reported_figures'])} 件")
+    print(f"  状況メモ: {data['last_manual_note'] or '—'}")
 
 if __name__ == "__main__":
     main()
