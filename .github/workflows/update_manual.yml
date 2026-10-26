@@ -56,6 +56,16 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった（PortWatch で測る）
-          git add data/manual-update.json
+          # 予測の記録（data/scenario-log.jsonl）は推計のたびに1行増える。採点に使う（scripts/score_scenarios.py）
+          git add data/manual-update.json data/scenario-log.jsonl
           git diff --staged --quiet || git commit -m "chore: update manual $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
+
+      # 食い違いの検査と採点。WARN はこの実行の要約に出す。推計が失敗した日も、
+      # 今あるファイルで検査する。ここが失敗してもワークフローは止めない
+      - name: Check consistency
+        if: always()
+        continue-on-error: true
+        run: |
+          python scripts/check_consistency.py || echo "::warning::check_consistency.py が失敗しました"
+          python scripts/score_scenarios.py || echo "::warning::score_scenarios.py が失敗しました"
