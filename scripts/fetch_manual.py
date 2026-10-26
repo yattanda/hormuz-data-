@@ -365,7 +365,7 @@ REPORTED_METRICS = {
 }
 MAX_REPORTED_FIGURES = 10
 
-# 報道値として採る媒体（ドメイン → 表示名）。運営者が 2026-10-26 に決めた。
+# 報道値として採る媒体（ドメイン → 表示名）。運営者が 2026-10-26 に決めた（8媒体・のちに14媒体を追加）。
 # 引用が記事にあることはコードで確かめられるが、媒体の信頼性は確かめられないため、名の通った
 # 報道機関・海運専門紙に限る。Google ニュースの検索結果には出所のはっきりしないサイトも入る。
 # サブドメイン（www.・uk. など）も含めて照合する。足すときは docs/data-sources-redesign.md §5-2 にも書く。
@@ -380,6 +380,24 @@ REPORTED_SOURCE_DOMAINS = {
     "ft.com": "Financial Times",
     "nytimes.com": "New York Times",
     "apnews.com": "AP",
+    # 2026-10-26 に足した（運営者）。大手の報道機関
+    "wsj.com": "Wall Street Journal",
+    "washingtonpost.com": "Washington Post",
+    "theguardian.com": "The Guardian",
+    "cnbc.com": "CNBC",
+    # 海運の専門紙・海事の報道
+    "gcaptain.com": "gCaptain",
+    "tradewindsnews.com": "TradeWinds",
+    "splash247.com": "Splash247",
+    "usni.org": "USNI News",
+    # 石油の価格・流量の専門機関と、船の追跡会社
+    "spglobal.com": "S&P Global",
+    "argusmedia.com": "Argus",
+    "kpler.com": "Kpler",
+    "vortexa.com": "Vortexa",
+    # 公的機関
+    "eia.gov": "EIA",
+    "iea.org": "IEA",
 }
 
 
