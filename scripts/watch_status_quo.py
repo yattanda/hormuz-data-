@@ -9,7 +9,11 @@ AI の毎日の「今日判定したら当たるシナリオ」の見立て（sc
 - 同じ変化（X → Y）の Issue が開いているか、閉じてから DISMISS_DAYS 日以内なら、新しく立てない
   （運営者が「変化ではない」と閉じた翌日に、同じ Issue が立ち続けないように）
 - 記録がまだ1行も無いあいだは Issue を立てず、要約に「現状の記録がありません」と出す
-- --dry-run では Issue を立てず、要約に「立てるはずだった」と出す
+- Issue は運営者（ASSIGNEE）に割り当て、本文の先頭で言及する。メールだけでは見逃しうるため、
+  GitHub Mobile のプッシュ通知（割り当て・言及）でも届くようにする（2026-10-26 運営者）
+- 見張りの Issue が REMIND_AFTER_DAYS 日以上開いたままなら、催促のコメントを1回だけ足す
+  （足したかはコメントの印で照合）。要約にも「未対応の Issue があります」と出す
+- --dry-run では Issue もコメントも足さず、要約に「立てるはずだった」「催促するはずだった」と出す
 - 失敗しても終了コードは 0（ワークフローは止めない）
 
   python scripts/watch_status_quo.py [--data-dir DIR] [--extra-entry PATH] [--dry-run]
@@ -29,6 +33,9 @@ from score_scenarios import SCENARIO_KEYS, load_outcomes, today_jst
 
 LABEL = "scenario-status"
 DISMISS_DAYS = 7
+ASSIGNEE = "yattanda"
+REMIND_AFTER_DAYS = 3
+REMINDER_MARKER = f"<!-- {LABEL}-reminder -->"
 JST = timezone(timedelta(hours=9))
 
 
@@ -120,19 +127,55 @@ def gh(*args, input_text=None):
     return r.stdout
 
 
-def existing_issue(change, today):
-    """同じ変化の Issue のうち、開いているもの・閉じて DISMISS_DAYS 日以内のものを返す。無ければ None。"""
+def list_issues():
+    """見張りのラベルの Issue（開いている・閉じた両方）。本文の印の無いものは除く。"""
     issues = json.loads(gh("issue", "list", "--label", LABEL, "--state", "all", "--limit", "100",
-                           "--json", "number,state,body,closedAt,url") or "[]")
+                           "--json", "number,state,body,createdAt,closedAt,url,comments") or "[]")
+    return [i for i in issues if f"<!-- {LABEL}: " in (i.get("body") or "")]
+
+
+def jst_day(iso):
+    return datetime.fromisoformat(iso.replace("Z", "+00:00")).astimezone(JST).date()
+
+
+def existing_issue(change, today, issues):
+    """同じ変化の Issue のうち、開いているもの・閉じて DISMISS_DAYS 日以内のものを返す。無ければ None。"""
     for i in issues:
         if marker(change) not in (i.get("body") or ""):
             continue
         if i.get("state") == "OPEN":
             return i
         closed = i.get("closedAt")
-        if closed and (today - datetime.fromisoformat(closed.replace("Z", "+00:00")).astimezone(JST).date()).days <= DISMISS_DAYS:
+        if closed and (today - jst_day(closed)).days <= DISMISS_DAYS:
             return i
     return None
+
+
+def remind(issues, today, dry_run):
+    """REMIND_AFTER_DAYS 日以上開いている見張りの Issue に、催促のコメントを1回だけ足す。要約の行を返す。"""
+    lines = []
+    for i in issues:
+        if i.get("state") != "OPEN":
+            continue
+        days = (today - jst_day(i["createdAt"])).days
+        if days < REMIND_AFTER_DAYS:
+            continue
+        lines.append(f"- 未対応の Issue があります（{days}日）：{i.get('url')}")
+        if any(REMINDER_MARKER in (c.get("body") or "") for c in i.get("comments") or []):
+            lines.append("  - 催促は済み（同じ Issue への催促は1回まで）")
+            continue
+        body = (f"@{ASSIGNEE} この Issue が{days}日開いたままです。現状が変わったかを判断し、"
+                "`data/scenario-outcomes.json` に記録するか、変化ではなければ閉じてください。"
+                f"催促はこの1回だけです。\n\n{REMINDER_MARKER}")
+        if dry_run:
+            lines.append("  - 試し実行のため、催促のコメントは足しません（足すはずだった）")
+            continue
+        try:
+            gh("issue", "comment", str(i["number"]), "--body-file", "-", input_text=body)
+            lines.append(f"  - @{ASSIGNEE} に催促のコメントを足しました")
+        except (RuntimeError, OSError) as e:
+            lines.append(f"  - 催促のコメントを足せませんでした：{e}")
+    return lines
 
 
 def issue_text(result, names):
@@ -140,6 +183,8 @@ def issue_text(result, names):
     first = result["days"][0][0]
     title = f"現状のシナリオが {names[x][0]} → {names[y][0]} に変わった可能性（{first}〜{result['days'][-1][0]}）"
     lines = [
+        f"@{ASSIGNEE} 現状の記録の見直しをお願いします。",
+        "",
         f"AI の毎日の見立て（今日判定したら当たるシナリオ）が、記録した現状 **{names[x]}** と2日続けて違い、"
         f"どちらも **{names[y]}** を指しています。",
         "",
@@ -182,33 +227,39 @@ def run(data_dir, extra_entry, dry_run, today):
         outcomes = load_outcomes(os.path.join(data_dir, "scenario-outcomes.json"), today)
     except (OSError, json.JSONDecodeError, SystemExit) as e:
         lines.append(f"- 現状の記録を読めません：{e}")
+        outcomes = None
+    result = None
+    if outcomes is not None:
+        result = evaluate(load_entries(os.path.join(data_dir, "scenario-log.jsonl"), extra_entry), outcomes)
+        lines.append(f"- {result['message']}")
+    # 記録がまだ無いあいだは Issue が立たないので、gh を呼ばずに終える
+    if not outcomes:
         return "\n".join(lines)
-    entries = load_entries(os.path.join(data_dir, "scenario-log.jsonl"), extra_entry)
-    result = evaluate(entries, outcomes)
-    lines.append(f"- {result['message']}")
-    if not result["open"]:
-        return "\n".join(lines)
-    names = scenario_names(os.path.join(data_dir, "context.json"))
-    title, body = issue_text(result, names)
     try:
-        found = existing_issue(result["change"], today)
+        issues = list_issues()
     except (RuntimeError, OSError, json.JSONDecodeError, ValueError) as e:
-        lines.append(f"- 既存の Issue を調べられないため、立てません：{e}")
+        lines.append(f"- Issue を調べられないため、立てず催促もしません：{e}")
         return "\n".join(lines)
-    if found:
-        state = "開いている" if found.get("state") == "OPEN" else f"{DISMISS_DAYS}日以内に閉じた"
-        lines.append(f"- 同じ変化の Issue が{state}ため、新しく立てません：{found.get('url')}")
-    elif dry_run:
-        lines.append(f"- 試し実行のため立てません。立てるはずだった Issue：{title}")
-        print(body)
-    else:
-        try:
-            gh("label", "create", LABEL, "--color", "D93F0B", "--force",
-               "--description", "現状のシナリオの見張り（scripts/watch_status_quo.py）")
-            url = gh("issue", "create", "--title", title, "--label", LABEL, "--body-file", "-", input_text=body).strip()
-            lines.append(f"- Issue を立てました：{url}")
-        except (RuntimeError, OSError) as e:
-            lines.append(f"- Issue を立てられませんでした：{e}")
+    if result["open"]:
+        names = scenario_names(os.path.join(data_dir, "context.json"))
+        title, body = issue_text(result, names)
+        found = existing_issue(result["change"], today, issues)
+        if found:
+            state = "開いている" if found.get("state") == "OPEN" else f"{DISMISS_DAYS}日以内に閉じた"
+            lines.append(f"- 同じ変化の Issue が{state}ため、新しく立てません：{found.get('url')}")
+        elif dry_run:
+            lines.append(f"- 試し実行のため立てません。立てるはずだった Issue：{title}")
+            print(body)
+        else:
+            try:
+                gh("label", "create", LABEL, "--color", "D93F0B", "--force",
+                   "--description", "現状のシナリオの見張り（scripts/watch_status_quo.py）")
+                url = gh("issue", "create", "--title", title, "--label", LABEL, "--assignee", ASSIGNEE,
+                         "--body-file", "-", input_text=body).strip()
+                lines.append(f"- Issue を立てました（@{ASSIGNEE} に割り当て）：{url}")
+            except (RuntimeError, OSError) as e:
+                lines.append(f"- Issue を立てられませんでした：{e}")
+    lines += remind(issues, today, dry_run)
     return "\n".join(lines)
 
 
