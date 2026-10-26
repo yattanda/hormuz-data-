@@ -26,7 +26,7 @@ import argparse
 import json
 import os
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 SCENARIO_KEYS = ("A_diplomacy_pct", "B_partial_blockade_pct", "C_full_blockade_pct", "D_escalation_pct")
 UNIFORM = {k: 100 / len(SCENARIO_KEYS) for k in SCENARIO_KEYS}
@@ -57,14 +57,29 @@ def load_log(path):
     return [by_date[d] for d in sorted(by_date)]
 
 
-def load_outcomes(path):
-    """当たりの記録を {判定日: シナリオのキー} にする。期間が重なっていたら止める。"""
+def today_jst():
+    return datetime.now(timezone(timedelta(hours=9))).date()
+
+
+def load_outcomes(path, today=None):
+    """当たりの記録を {日付: シナリオのキー} にする。
+
+    いちばん新しい期間（from が最も遅いもの）は to を省ける。省いたら「今日まで続く」とみなす。
+    それ以外の期間で to を省いたとき・期間が重なっていたときは止める。
+    """
+    today = today or today_jst()
     with open(path, encoding="utf-8") as f:
         records = json.load(f).get("outcomes") or []
+    latest_from = max((r["from"] for r in records), default=None)
     result = {}
     for r in records:
         start = date.fromisoformat(r["from"])
-        end = date.fromisoformat(r.get("to") or r["from"])
+        if r.get("to"):
+            end = date.fromisoformat(r["to"])
+        elif r["from"] == latest_from:
+            end = max(today, start)
+        else:
+            raise SystemExit(f"[Score] ERROR: いちばん新しい期間のほかは to を省けません: {r}")
         if r["scenario"] not in SCENARIO_KEYS or end < start:
             raise SystemExit(f"[Score] ERROR: 当たりの記録が不正です: {r}")
         d = start
@@ -170,13 +185,15 @@ def parse_args(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--log", default="data/scenario-log.jsonl")
     p.add_argument("--outcomes", default="data/scenario-outcomes.json")
+    p.add_argument("--today", type=date.fromisoformat, default=None,
+                   help="to を省いた期間の終わり（既定は今日 JST）。試験用")
     return p.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
     log = load_log(args.log)
-    outcomes = load_outcomes(args.outcomes)
+    outcomes = load_outcomes(args.outcomes, args.today)
     rows = score(log, outcomes)
     text = report(log, outcomes, rows, summarize(rows))
     print(text)

@@ -342,6 +342,8 @@ def build_prompt(news_items, context):
     timeline_latest = latest.isoformat() if latest else "不明"
     timeline_text = build_timeline_text(context)
     scenario_text = build_scenario_text(context)
+    jst = timezone(timedelta(hours=9))
+    today = datetime.now(jst).date().isoformat()
 
     news_text = "\n".join(format_news_line(item, i) for i, item in enumerate(news_items, 1))
     metrics_text = "\n".join(f"  - {k}: {v['desc']}（単位: {v['unit']}）" for k, v in REPORTED_METRICS.items())
@@ -370,7 +372,8 @@ def build_prompt(news_items, context):
   ],
   "note_sentences": [
     {{"text": "<最新状況メモの1文。日本語>", "items": [<その文の根拠の記事番号>]}}
-  ]
+  ],
+  "status_quo": {{"scenario": "<今日 {today} に判定したら当たるシナリオのキー1つ（A_diplomacy_pct など）>", "items": [<根拠の記事番号>], "reason": "<理由。日本語で60字以内>"}}
 }}
 
 【シナリオの定義】（表示側のカード見出しと一致させてある。この定義と判定の順に沿って確率を割り当てること。
@@ -390,6 +393,9 @@ def build_prompt(news_items, context):
 - note_sentences はホルムズ・イラン情勢の最新動向を、合計100文字以内・1〜3文で書く
 - note_sentences の各文には、その内容が書かれている記事の番号を items に必ず入れる。
   記事に書かれていない内容（【確定した経緯】だけにある事実・推測・背景知識）は書かない
+- status_quo は確率とは別の問い。判定日ではなく「今日 {today} を判定日としたら、どのシナリオに当たるか」を
+  シナリオの定義と判定の順で1つ選ぶ。D の「判定日までに」は「今日までの90日に」と読む。
+  items には、そう判断した根拠の記事番号を必ず入れる
 """
 
 
@@ -529,6 +535,49 @@ def verify_reported_figures(samples, news_items):
     if off_list:
         print(f"[Reported] 許可リストに無い媒体のため捨てた: {', '.join(sorted(off_list))}")
     return figures
+
+
+# 現状の見立ての根拠として残す記事の上限
+MAX_STATUS_SOURCES = 5
+
+
+def verify_status_quo(samples, news_items):
+    """各回の status_quo（今日判定したら当たるシナリオ）を確かめ、多数決で1つにまとめる
+    （docs/data-sources-redesign.md §5-4）。
+
+    - scenario が SCENARIO_KEYS のどれでもない回・items が無いか範囲外の番号を含む回は数えない
+    - 数えた回が MIN_SAMPLES に満たないか、最多が同数で並んだら scenario は None（不定）。
+      判定の順（D → A → C → B）で決めると、割れた日ほど D に寄るため使わない
+    採点の正解には使わない（AI の予想を AI の答えで採点しないため）。見張り
+    （scripts/watch_status_quo.py）が、記録済みの現状との食い違いを知らせるのに使う。
+    """
+    votes, valid = {}, []
+    for sample in samples:
+        sq = sample.get("status_quo") if isinstance(sample, dict) else None
+        if not isinstance(sq, dict) or sq.get("scenario") not in SCENARIO_KEYS:
+            continue
+        try:
+            numbers = sorted({int(n) for n in sq.get("items") or []})
+        except (TypeError, ValueError):
+            continue
+        if not numbers or not all(1 <= n <= len(news_items) for n in numbers):
+            continue
+        votes[sq["scenario"]] = votes.get(sq["scenario"], 0) + 1
+        valid.append((sq["scenario"], numbers, str(sq.get("reason") or "").strip()))
+    top = max(votes.values()) if votes else 0
+    leaders = [k for k, n in votes.items() if n == top]
+    winner = leaders[0] if len(leaders) == 1 and len(valid) >= MIN_SAMPLES else None
+    chosen = [v for v in valid if v[0] == winner]
+    numbers = sorted({n for _, nums, _ in chosen for n in nums})[:MAX_STATUS_SOURCES]
+    result = {
+        "scenario": winner,
+        "votes": {k: votes[k] for k in SCENARIO_KEYS if k in votes},
+        "valid_samples": len(valid),
+        "reason": chosen[0][2] if chosen else None,
+        "sources": [article_ref(news_items[n - 1]) for n in numbers],
+    }
+    print(f"[StatusQuo] 見立て: {winner or '不定'}（{result['votes']}・数えた回 {len(valid)}/{len(samples)}）")
+    return result
 
 
 NOTE_MAX_CHARS = 100
@@ -887,12 +936,13 @@ def save_manual(data, path="data/manual-update.json"):
 SCENARIO_LOG_PATH = "data/scenario-log.jsonl"
 
 
-def scenario_log_entry(manual, news_count, model_id=None):
+def scenario_log_entry(manual, news_count, model_id=None, status_quo_ai=None):
     """予測の記録の1行（docs/data-sources-redesign.md §5-4）。
 
     採点（scripts/score_scenarios.py）は judgment_date ごとに、判定日に当たったシナリオと
     照らす。git の履歴からも復元できるが、採点に使いやすい形で持つ。
     model は CLI が返した実際のモデル ID（取れなかった日は None）、model_requested は指定した別名。
+    status_quo_ai は AI の「今日判定したら当たるシナリオ」の見立て（verify_status_quo）。採点の正解には使わない。
     """
     return {
         "at": manual["updated_at"],
@@ -904,6 +954,7 @@ def scenario_log_entry(manual, news_count, model_id=None):
         "news_items": news_count,
         "model": model_id,
         "model_requested": CLAUDE_MODEL,
+        "status_quo_ai": status_quo_ai,
     }
 
 
@@ -922,6 +973,8 @@ def parse_args(argv=None):
                    help="今日（JST）すでに更新済みなら何もしない（GitHub の予約実行＝予備の回で使う）")
     p.add_argument("--dry-run", action="store_true",
                    help="ファイルを書かず、結果を表示するだけ")
+    p.add_argument("--dry-run-entry", metavar="PATH",
+                   help="--dry-run のとき、予測の記録に足すはずだった1行を PATH に書く（見張りの試し実行用）")
     p.add_argument("--samples", type=int, default=SAMPLES,
                    help=f"同じ入力で答えさせる回数（既定 {SAMPLES}）")
     return p.parse_args(argv)
@@ -999,14 +1052,22 @@ def main(argv=None):
     # 互換のため、確かめた文をつないだものを今までどおり持つ（どこにも表示していない。2026-10-26 確認）
     data["last_manual_note"] = "".join(s["text"] for s in sentences)
 
+    status_quo_ai = verify_status_quo(samples, news_items)
+
+    manual = build_manual_json(data, context, load_existing_manual())
+    entry = scenario_log_entry(manual, len(news_items), model_id, status_quo_ai)
+
     if args.dry_run:
         print("[Manual] --dry-run のため書き込みません。")
         print(json.dumps(data, ensure_ascii=False, indent=2))
+        if args.dry_run_entry:
+            # リポジトリの外（Actions の RUNNER_TEMP など）に置き、見張りの試し実行が読む
+            write_json(entry, args.dry_run_entry)
+            print(f"[Manual] 予測の記録に足すはずだった1行を {args.dry_run_entry} に書きました")
         return
 
-    manual = build_manual_json(data, context, load_existing_manual())
     save_manual(manual)
-    append_scenario_log(scenario_log_entry(manual, len(news_items), model_id))
+    append_scenario_log(entry)
 
     # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった。
     # 通航数は IMF PortWatch で測る（scripts/fetch_portwatch.py）。ファイルは記録として残す

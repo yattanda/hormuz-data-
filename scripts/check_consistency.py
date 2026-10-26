@@ -11,9 +11,10 @@ check_consistency.py
 | 状況メモの価格   | EIA の最新の WTI・Brent のどちらからも ±10% を超えて離れた「○ドル」 |
 | シナリオの幅     | 5回の幅が 20pt を超えた（PR #18 の実測は最大7pt） |
 
-ファイルは書かない（要約への追記を除く）。
+あわせて、その日の AI の現状の見立てと記録した現状の一致・不一致を1行出す（Issue で知らせるのは
+scripts/watch_status_quo.py）。ファイルは書かない（要約への追記を除く）。
 
-  python scripts/check_consistency.py [--data-dir DIR] [--today YYYY-MM-DD]
+  python scripts/check_consistency.py [--data-dir DIR] [--today YYYY-MM-DD] [--extra-entry PATH]
 """
 
 import argparse
@@ -23,6 +24,8 @@ import re
 import sys
 import unicodedata
 from datetime import date, datetime, timedelta, timezone
+
+from watch_status_quo import today_line
 
 PORTWATCH_STALE_DAYS = 14
 ZERO_RUN_DAYS = 7
@@ -146,7 +149,7 @@ def run_checks(data_dir, today):
     return results
 
 
-def report(results, today):
+def report(results, today, extra_lines=()):
     n_warn = sum(len(w) for _, w, _ in results)
     n_error = sum(1 for _, _, e in results if e)
     lines = [f"## 食い違いの検査（{today}・WARN {n_warn} 件" + (f"・検査できない {n_error} 件" if n_error else "") + "）", "",
@@ -154,6 +157,8 @@ def report(results, today):
     for name, warns, error in results:
         status = f"検査できない（{error}）" if error else (f"WARN {len(warns)} 件" if warns else "OK")
         lines.append(f"| {name} | {status} |")
+    if extra_lines:
+        lines += [""] + [f"- {l}" for l in extra_lines]
     details = [(name, w) for name, warns, _ in results for w in warns]
     if details:
         lines += ["", "### WARN", ""] + [f"- **{name}**：{w}" for name, w in details]
@@ -166,13 +171,15 @@ def parse_args(argv=None):
     p.add_argument("--today", type=date.fromisoformat,
                    default=datetime.now(timezone(timedelta(hours=9))).date(),
                    help="基準の日（既定は今日 JST）。試験用")
+    p.add_argument("--extra-entry", metavar="PATH",
+                   help="試し実行で予測の記録に足すはずだった1行（fetch_manual.py --dry-run-entry）")
     return p.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
     results = run_checks(args.data_dir, args.today)
-    text = report(results, args.today)
+    text = report(results, args.today, [today_line(args.data_dir, args.extra_entry, args.today)])
     print(text)
     # GitHub Actions の注釈。実行の画面の上に出る
     if os.environ.get("GITHUB_ACTIONS"):

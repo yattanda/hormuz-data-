@@ -1,10 +1,9 @@
 {
   "_comment": "シナリオ確率の採点に使う「判定日に当たったシナリオ」の記録（docs/data-sources-redesign.md §5-4）。判定日が来たら運営者が手で足す。scripts/score_scenarios.py が data/scenario-log.jsonl と照らして多クラスの Brier スコアを出す。最初の判定日は 2027-01-23。",
-  "_how_to": "outcomes に1件ずつ足す。from〜to（両端を含む・JST の日付）の日はすべて、その日に判定したら scenario に当たるとみなす。to を省くと from の1日だけ。scenario は A_diplomacy_pct・B_partial_blockade_pct・C_full_blockade_pct・D_escalation_pct のどれか1つ（data/context.json の scenario_rule の順 D → A → C → B で判定）。D の「判定日までに」は「その日までの90日に」と読む。basis に判定の理由、sources に根拠の出典を書く。期間は重ねない。",
-  "_status_quo": "同じ表を「予測した日の現状」にも使う。比べる相手の「現状のまま」（予測した日の当たりに100%）を出すため、判定日（2027-01-23〜）だけでなく、記録の始まりの 2026-10-25 からの日も埋める。過去の日は後からまとめて足してよい（2026-10-26 運営者）。",
+  "_how_to": "outcomes に1件ずつ足す。from〜to（両端を含む・JST の日付）の日はすべて、その日に判定したら scenario に当たるとみなす。いちばん新しい期間は to を省いてよく、省いたら「今日まで続く」とみなす（それ以外の期間で to を省くと scripts/score_scenarios.py が止まる）。現状が変わったら、今の期間に to（変わる前の日）を書き、変わった日を from にした期間を足す。scenario は A_diplomacy_pct・B_partial_blockade_pct・C_full_blockade_pct・D_escalation_pct のどれか1つ（data/context.json の scenario_rule の順 D → A → C → B で判定）。D の「判定日までに」は「その日までの90日に」と読む。basis に判定の理由、sources に根拠の出典を書く。期間は重ねない。",
+  "_status_quo": "同じ表を「予測した日の現状」にも使う。比べる相手の「現状のまま」（予測した日の当たりに100%）を出すため、判定日（2027-01-23〜）だけでなく、記録の始まりの 2026-10-25 からの日も埋める（2026-10-26 運営者）。正解は運営者が決める。AI の毎日の見立て（scenario-log.jsonl の status_quo_ai）は使わない。見立てがこの表と2日続けて違ったときだけ、scripts/watch_status_quo.py が GitHub の Issue（ラベル scenario-status）で知らせる。",
   "_example": {
     "from": "2027-01-23",
-    "to": "2027-01-31",
     "scenario": "B_partial_blockade_pct",
     "basis": "通航の制限が続き、オマーンの仲介による協議も続いている",
     "sources": [{"name": "媒体名", "url": "https://example.com/", "published": "2027-01-23"}],

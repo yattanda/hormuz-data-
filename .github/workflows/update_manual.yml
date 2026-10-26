@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write  # 現状の見張り（scripts/watch_status_quo.py）が Issue を立てる
 
     steps:
       - name: Checkout repository
@@ -38,7 +39,8 @@ jobs:
           if [ "${{ github.event_name }}" = "schedule" ]; then
             python scripts/fetch_manual.py --skip-if-updated-today
           elif [ "${{ inputs.dry_run }}" = "true" ]; then
-            python scripts/fetch_manual.py --dry-run
+            # 予測の記録には書かず、足すはずだった1行をリポジトリの外に置く（見張りの試し実行が読む）
+            python scripts/fetch_manual.py --dry-run --dry-run-entry "$RUNNER_TEMP/scenario-log-entry.json"
           else
             python scripts/fetch_manual.py
           fi
@@ -60,5 +62,22 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          python scripts/check_consistency.py || echo "::warning::check_consistency.py が失敗しました"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            EXTRA="--extra-entry $RUNNER_TEMP/scenario-log-entry.json"
+          fi
+          python scripts/check_consistency.py $EXTRA || echo "::warning::check_consistency.py が失敗しました"
           python scripts/score_scenarios.py || echo "::warning::score_scenarios.py が失敗しました"
+
+      # 現状の見張り：AI の見立てが記録した現状と2日続けて違ったら Issue で知らせる。
+      # 試し実行では立てず、要約に「立てるはずだった」と出す
+      - name: Watch status quo
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python scripts/watch_status_quo.py --dry-run --extra-entry "$RUNNER_TEMP/scenario-log-entry.json"
+          else
+            python scripts/watch_status_quo.py
+          fi || echo "::warning::watch_status_quo.py が失敗しました"
