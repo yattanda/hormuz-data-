@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '30 0 * * *'  # 毎日 09:30 JST
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '試し実行（ファイルを書かず、コミットもしない。結果はログに出す）'
+        type: boolean
+        default: false
 
 jobs:
   fetch-manual:
@@ -39,11 +44,14 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
             python scripts/fetch_manual.py --skip-if-updated-today
+          elif [ "${{ inputs.dry_run }}" = "true" ]; then
+            python scripts/fetch_manual.py --dry-run
           else
             python scripts/fetch_manual.py
           fi
 
       - name: Commit and push
+        if: inputs.dry_run != true
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
