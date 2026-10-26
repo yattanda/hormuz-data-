@@ -42,6 +42,16 @@ RSS_FEEDS = [
     "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml",
 ]
 
+# 報道値（reported_figures）を拾うための追加の検索。海運の専門紙・石油の専門機関・追跡会社を名指しする
+# （2026-10-26。上の9本だけでは、許可リストの媒体で数字の入った見出しがほとんど無かった）。
+# シナリオ確率の入力を押し出さないよう、上の9本の採用分（MAX_ITEMS 件）はそのままにして、
+# 許可リストの媒体の記事だけを FIGURE_MAX_ITEMS 件まで後ろに足す。
+FIGURE_FEEDS = [
+    "https://news.google.com/rss/search?q=Hormuz+%28Kpler+OR+Vortexa+OR+%22Lloyd%27s+List%22%29&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=Hormuz+%28site%3Alloydslist.com+OR+site%3Atradewindsnews.com+OR+site%3Asplash247.com+OR+site%3Agcaptain.com%29&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=Hormuz+%28site%3Aspglobal.com+OR+site%3Aargusmedia.com+OR+site%3Akpler.com+OR+site%3Avortexa.com%29&hl=en-US&gl=US&ceid=US:en",
+]
+
 
 KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait", "封鎖", "ホルムズ", "イラン"]
 
@@ -51,6 +61,9 @@ KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait"
 # 期間で絞ってから新しい順に並べる。
 MAX_AGE_DAYS = 7
 PER_FEED_MAX = 12
+MAX_ITEMS = 40
+FIGURE_PER_FEED_MAX = 6
+FIGURE_MAX_ITEMS = 12
 
 # 媒体名を持たないフィード（<source> が無い）の表示名
 FEED_LABELS = {
@@ -151,6 +164,33 @@ def fetch_rss_news(max_items=40, max_age_days=MAX_AGE_DAYS, per_feed_max=PER_FEE
         print(f"[RSS] 採用 {len(news)} 件（重複除去前 {len(collected)} 件）"
               f" / 古さ 中央値 {ages[len(ages) // 2]:.1f} 日・最大 {ages[-1]:.1f} 日")
     return news
+
+
+def fetch_figure_news(existing, max_items=FIGURE_MAX_ITEMS, max_age_days=MAX_AGE_DAYS,
+                      per_feed_max=FIGURE_PER_FEED_MAX):
+    """FIGURE_FEEDS から、許可リストの媒体の記事を新しい順に返す。existing と同じ見出しは除く。"""
+    now = datetime.now(timezone.utc)
+    seen = {title_key(n["title"]) for n in existing}
+    collected = []
+    for url in FIGURE_FEEDS:
+        try:
+            items = fetch_feed(url, now, max_age_days)
+        except Exception as e:
+            print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
+            continue
+        allowed = [i for i in items if allowed_source(i)]
+        print(f"[RSS] {len(items):3d} 件（期間内・該当）・許可リスト {len(allowed):3d} 件: {url[:70]}")
+        collected.extend(allowed[:per_feed_max])
+    extra = []
+    for item in sorted(collected, key=lambda x: x["published"], reverse=True):
+        key = title_key(item["title"])
+        if key in seen:
+            continue
+        seen.add(key)
+        extra.append(item)
+    extra = extra[:max_items]
+    print(f"[RSS] 報道値用に追加 {len(extra)} 件")
+    return extra
 
 
 def format_news_line(item, number):
@@ -881,7 +921,8 @@ def main(argv=None):
     estimate = make_estimator(args.backend)
 
     print("[Manual] Fetching RSS news...")
-    news_items = fetch_rss_news(max_items=40)
+    news_items = fetch_rss_news(max_items=MAX_ITEMS)
+    news_items += fetch_figure_news(news_items)
     print(f"[Manual] Found {len(news_items)} relevant articles.")
 
     if not news_items:
