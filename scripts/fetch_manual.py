@@ -1,12 +1,11 @@
 """
 fetch_manual.py
 RSSフィードから最新ニュースを取得し、
-生成AI（既定は Claude・--backend で Gemini も選べる）で分析して
+生成AI（Claude・Claude Code の CLI）で分析して
 data/manual-update.json を自動更新し、シナリオ確率を data/scenario-log.jsonl に1行足す。
 
 必要環境変数:
-  CLAUDE_CODE_OAUTH_TOKEN : Claude のサブスクの認証（既定の claude のとき）
-  GEMINI_API_KEY          : Google Gemini API キー（--backend gemini のとき）
+  CLAUDE_CODE_OAUTH_TOKEN : Claude のサブスクの認証
 """
 
 import argparse
@@ -24,8 +23,6 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
-from google import genai
-from google.genai import types
 
 # RSS フィードリスト
 RSS_FEEDS = [
@@ -217,7 +214,7 @@ def load_context(path="data/context.json"):
         return json.load(f)
 
 
-# 手動でしか確認できない項目。Gemini には生成させない。
+# 手動でしか確認できない項目。推計（AI）には生成させない。
 # build_manual_json は毎回ファイルを作り直すため、明示的に引き継がないと
 # 手動で入れた値が翌日の自動更新で消える。実際 2026-05-15 に保険料率を
 # 「手動確認のみ」へ設計変更した後、3フィールドともファイルから失われ、
@@ -619,37 +616,12 @@ def with_retries(label, call):
             raise
         except Exception as e:
             print(f"[{label}] Attempt {attempt+1} failed: {e}", file=sys.stderr)
-            # Gemini の無料枠は1日20回（gemini-2.5-flash・2026-10-25 の 429 の応答）。
-            # 使い切ったあとの再試行は枠を回復させず、待つ時間だけがかかる（10/25 の測定で約1時間）
-            if "RESOURCE_EXHAUSTED" in str(e):
-                raise QuotaExhausted(str(e)) from e
             if attempt < 2:
                 wait = (attempt + 1) * 30  # 30秒→60秒待機
                 print(f"[{label}] Waiting {wait}s before retry...", file=sys.stderr)
                 time.sleep(wait)
     print(f"[{label}] All retries failed.", file=sys.stderr)
     return None
-
-
-GEMINI_MODEL = "gemini-2.5-flash"
-
-
-def analyze_with_gemini(api_key, news_items, context, prompt=None):
-    """Gemini API でニュースを分析してJSONを生成（1回分）"""
-    client = genai.Client(api_key=api_key)
-
-    if prompt is None:
-        prompt = build_prompt(news_items, context)
-
-    def call():
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=prompt,
-            config=types.GenerateContentConfig(response_mime_type="application/json"),
-        )
-        return parse_json_text(response.text)
-
-    return with_retries("Gemini", call)
 
 
 # Claude は Claude Code の CLI を、サブスクの認証（CLAUDE_CODE_OAUTH_TOKEN）で呼ぶ。
@@ -682,39 +654,53 @@ def analyze_with_claude(prompt, model=CLAUDE_MODEL):
             if any(w in msg.lower() for w in ("limit", "not logged in", "authenticate")):
                 raise QuotaExhausted(msg)
             raise RuntimeError(msg)
-        return parse_json_text(out.get("result"))
+        data = parse_json_text(out.get("result"))
+        if isinstance(data, dict):
+            # 別名（opus など）が指した実際のモデル ID。予測の記録に残す（採点の系列が
+            # モデルの入れ替わりで混ざらないように）。aggregate_samples は決めたキーしか
+            # 返さないので、この欄は manual-update.json には載らない
+            data["_model_ids"] = model_ids_in(out)
+        return data
 
     return with_retries("Claude", call)
 
 
-# 推計に使うモデル。表示側の出典と ais-estimate.json の model はここから作る。
+def model_ids_in(out):
+    """CLI の出力 JSON の modelUsage から、出力トークンの多い順にモデル ID を返す。無ければ空。"""
+    usage = out.get("modelUsage") if isinstance(out, dict) else None
+    if not isinstance(usage, dict):
+        return []
+    def tokens(k):
+        v = usage[k]
+        return v.get("outputTokens", 0) if isinstance(v, dict) else 0
+    return sorted(usage, key=tokens, reverse=True)
+
+
+def sample_model_id(samples):
+    """各回でいちばん多く出力したモデル ID のうち、回数の多いもの。取れなければ None。"""
+    ids = [s["_model_ids"][0] for s in samples if isinstance(s, dict) and s.get("_model_ids")]
+    return max(set(ids), key=ids.count) if ids else None
+
+
+# 推計に使うモデル。表示側の出典はここから作る。
 # 2026-10-25 に Gemini から Claude（opus）へ切り替えた。同じ入力で1回ずつ5回答えさせた幅が
 # Gemini は最大60ポイント、Claude は最大7ポイントだった（tools/diag_scenario_noise.py）。
-# Claude が失敗した日は Gemini に切り替えず、更新しない（振れの大きい値を混ぜないため）
-BACKENDS = {
-    "gemini": {"label": "Gemini 2.5 Flash", "model": GEMINI_MODEL},
-    "claude": {"label": f"Claude（{CLAUDE_MODEL}）", "model": f"claude-{CLAUDE_MODEL}"},
-}
+# Gemini の経路は 2026-10-26 に外した（docs/data-sources-redesign.md Q8）。
+# Claude が失敗した日は更新しない（前回の値を残す）
+CLAUDE_LABEL = f"Claude（{CLAUDE_MODEL}）"
 
 
-def source_text(backend):
+def source_text():
     """出典表示の文字列。1件だけ読んでも供給元・モデル・入力が分かる形にする。"""
-    return (f"{BACKENDS[backend]['label']} による推計"
+    return (f"{CLAUDE_LABEL} による推計"
             "（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）")
 
 
-def make_estimator(backend):
-    """backend の1回分の推計関数 prompt -> dict|None を返す。"""
-    if backend == "gemini":
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            raise SystemExit("[Manual] ERROR: GEMINI_API_KEY not set.")
-        return lambda prompt: analyze_with_gemini(api_key, None, None, prompt=prompt)
-    if backend == "claude":
-        if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
-            raise SystemExit("[Manual] ERROR: CLAUDE_CODE_OAUTH_TOKEN not set.")
-        return analyze_with_claude
-    raise SystemExit(f"[Manual] ERROR: unknown backend {backend}")
+def make_estimator(model=CLAUDE_MODEL):
+    """1回分の推計関数 prompt -> dict|None を返す。model は Claude のモデル名（opus・sonnet など）。"""
+    if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
+        raise SystemExit("[Manual] ERROR: CLAUDE_CODE_OAUTH_TOKEN not set.")
+    return lambda prompt: analyze_with_claude(prompt, model=model)
 
 
 SCENARIO_KEYS = ("A_diplomacy_pct", "B_partial_blockade_pct", "C_full_blockade_pct", "D_escalation_pct")
@@ -826,7 +812,7 @@ def updated_today(path="data/manual-update.json"):
     jst = timezone(timedelta(hours=9))
     return at.astimezone(jst).date() == datetime.now(jst).date()
 
-def build_manual_json(data, context, previous=None, backend="gemini"):
+def build_manual_json(data, context, previous=None):
     """manual-update.json の形式に変換。
 
     前提の基準日と経過日数を出力に含める。表示側はこれを見て
@@ -846,7 +832,7 @@ def build_manual_json(data, context, previous=None, backend="gemini"):
     return {
         "updated_at": now,
         "auto_generated": True,
-        "source": source_text(backend),
+        "source": source_text(),
         "context": {
             "updated": context.get("context_updated"),
             "age_days": age,
@@ -901,11 +887,12 @@ def save_manual(data, path="data/manual-update.json"):
 SCENARIO_LOG_PATH = "data/scenario-log.jsonl"
 
 
-def scenario_log_entry(manual, news_count, backend):
+def scenario_log_entry(manual, news_count, model_id=None):
     """予測の記録の1行（docs/data-sources-redesign.md §5-4）。
 
     採点（scripts/score_scenarios.py）は judgment_date ごとに、判定日に当たったシナリオと
     照らす。git の履歴からも復元できるが、採点に使いやすい形で持つ。
+    model は CLI が返した実際のモデル ID（取れなかった日は None）、model_requested は指定した別名。
     """
     return {
         "at": manual["updated_at"],
@@ -915,8 +902,8 @@ def scenario_log_entry(manual, news_count, backend):
         "scenario_range": manual["scenario_range"],
         "samples": manual["scenario_samples"],
         "news_items": news_count,
-        "backend": backend,
-        "model": BACKENDS[backend]["model"],
+        "model": model_id,
+        "model_requested": CLAUDE_MODEL,
     }
 
 
@@ -935,9 +922,6 @@ def parse_args(argv=None):
                    help="今日（JST）すでに更新済みなら何もしない（GitHub の予約実行＝予備の回で使う）")
     p.add_argument("--dry-run", action="store_true",
                    help="ファイルを書かず、結果を表示するだけ")
-    p.add_argument("--backend", choices=sorted(BACKENDS),
-                   default=os.environ.get("SCENARIO_BACKEND") or "claude",
-                   help="推計に使うモデル（既定は環境変数 SCENARIO_BACKEND、無ければ claude）")
     p.add_argument("--samples", type=int, default=SAMPLES,
                    help=f"同じ入力で答えさせる回数（既定 {SAMPLES}）")
     return p.parse_args(argv)
@@ -952,7 +936,7 @@ def main(argv=None):
         print("[Manual] 今日はすでに更新済みのため、予備の実行は何もしません。")
         sys.exit(0)
 
-    estimate = make_estimator(args.backend)
+    estimate = make_estimator()
 
     print("[Manual] Fetching RSS news...")
     news_items = fetch_rss_news(max_items=MAX_ITEMS)
@@ -989,7 +973,7 @@ def main(argv=None):
             file=sys.stderr,
         )
 
-    print(f"[Manual] Analyzing with {BACKENDS[args.backend]['label']}（{args.samples} 回）...")
+    print(f"[Manual] Analyzing with {CLAUDE_LABEL}（{args.samples} 回）...")
     samples = collect_samples(estimate, news_items, context, n=args.samples)
     need = min(MIN_SAMPLES, args.samples)
     if len(samples) < need:
@@ -1002,7 +986,8 @@ def main(argv=None):
         print("[Manual] 回ごとの答えが割れ、中央値の合計が 0 になりました。更新しません（前回の値を残します）。",
               file=sys.stderr)
         sys.exit(1)
-    print(f"[Manual] 中央値: {data['scenario']} / 幅: {data['scenario_range']}")
+    model_id = sample_model_id(samples)
+    print(f"[Manual] 中央値: {data['scenario']} / 幅: {data['scenario_range']} / モデル: {model_id or '不明'}")
 
     data["reported_figures"] = verify_reported_figures(samples, news_items)
     price_warnings = []
@@ -1019,9 +1004,9 @@ def main(argv=None):
         print(json.dumps(data, ensure_ascii=False, indent=2))
         return
 
-    manual = build_manual_json(data, context, load_existing_manual(), backend=args.backend)
+    manual = build_manual_json(data, context, load_existing_manual())
     save_manual(manual)
-    append_scenario_log(scenario_log_entry(manual, len(news_items), args.backend))
+    append_scenario_log(scenario_log_entry(manual, len(news_items), model_id))
 
     # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった。
     # 通航数は IMF PortWatch で測る（scripts/fetch_portwatch.py）。ファイルは記録として残す

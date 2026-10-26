@@ -1,5 +1,5 @@
 {
-  "_comment": "Gemini プロンプトに注入する前提を集約したファイル。scripts/fetch_manual.py が読み込む。ここを更新すれば Python コードを変更せずに前提を差し替えられる。値を変えたら context_updated も必ず更新すること。値を見直して据え置きと確かめたときも context_updated を更新し、何を確かめたかを context_review_log に1件足す（2026-10-08〜。見直しの記録が無いと、変える必要のない前提でも表示側に「更新されていません」の注意が出続ける）。",
+  "_comment": "推計（Claude）のプロンプトに注入する前提を集約したファイル。scripts/fetch_manual.py が読み込む。ここを更新すれば Python コードを変更せずに前提を差し替えられる。値を変えたら context_updated も必ず更新すること。値を見直して据え置きと確かめたときも context_updated を更新し、何を確かめたかを context_review_log に1件足す（2026-10-08〜。見直しの記録が無いと、変える必要のない前提でも表示側に「更新されていません」の注意が出続ける）。",
   "context_updated": "2026-10-26",
   "context_review_log": [
     {
