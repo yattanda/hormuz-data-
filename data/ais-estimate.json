@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-10-26T09:32:46+09:00",
+  "updated_at": "2026-10-27T09:32:00+09:00",
   "measurement": "estimate",
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "claude-opus",
   "method": "公開RSS報道を Claude（opus） が分析した推計",
-  "estimated_vessels": 4,
+  "estimated_vessels": 6,
   "breakdown": {
-    "tanker": 3,
-    "cargo": 1,
+    "tanker": 4,
+    "cargo": 2,
     "other": 0
   },
   "confidence": "low",
-  "estimation_note": "最新報道に隻数なし、9月集計から外挿",
+  "estimation_note": "9月の10〜18隻/日と10月の攻撃激化から外挿",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
