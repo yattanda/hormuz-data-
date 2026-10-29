@@ -21,7 +21,8 @@ PortWatch について（2026-10-25 に確認）:
 
 終了コード:
   0  取得成功（中身が前回と同じならファイルを書かない）
-  3  想定外のレスポンス（項目名・海峡の ID が変わった、行が無い 等）
+  3  想定外のレスポンス（項目名・海峡の ID が変わった、行が無い、
+     ArcGIS のエラー応答が試し直しても続いた 等）
   4  接続エラー・HTTP エラー
 
   ※ 0 以外を返した場合はファイルを書かない。前回値がそのまま残り、
@@ -76,7 +77,7 @@ STAT_FIELDS = {"total": "n_total", "tanker": "n_tanker", "cargo": "n_cargo",
                "capacity_tanker_t": "capacity_tanker"}
 
 TIMEOUT_SEC = 60
-RETRIES = 3
+RETRIES = 5
 JST = timezone(timedelta(hours=9))
 OUT_PATH = "data/portwatch-hormuz.json"
 
@@ -96,19 +97,27 @@ def query(params):
     params = dict(params, f="json")
     url = BASE + "?" + urllib.parse.urlencode(params)
     last = None
+    arcgis_error = None
     for attempt in range(1, RETRIES + 1):
+        if attempt > 1:
+            time.sleep(5 * (attempt - 1))
         try:
             with urllib.request.urlopen(url, timeout=TIMEOUT_SEC) as res:
                 body = json.loads(res.read().decode("utf-8"))
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
             last = e
             print("[PortWatch] 取得に失敗（{}/{}）: {}".format(attempt, RETRIES, e))
-            time.sleep(5 * attempt)
             continue
-        # ArcGIS はエラーでも HTTP 200 で {"error": {...}} を返す
+        # ArcGIS はエラーでも HTTP 200 で {"error": {...}} を返す。
+        # 同じ問い合わせが通ったり 400 になったりすることがあるので、試し直す
+        # （2026-10-29：定時と手動の実行がともに 400 で失敗。手元では8回に1回ほど 400）
         if "error" in body:
-            raise FetchError(3, "ArcGIS のエラー応答: {}".format(body["error"]))
+            arcgis_error = body["error"]
+            print("[PortWatch] ArcGIS のエラー応答（{}/{}）: {}".format(attempt, RETRIES, arcgis_error))
+            continue
         return body
+    if arcgis_error is not None:
+        raise FetchError(3, "ArcGIS のエラー応答: {}".format(arcgis_error))
     raise FetchError(4, "接続できませんでした: {}".format(last))
 
 
