@@ -1,53 +1,53 @@
 {
-  "updated_at": "2026-10-28T09:32:04+09:00",
+  "updated_at": "2026-10-29T09:31:49+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-25",
-    "age_days": 3,
+    "age_days": 4,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-10-24",
-    "timeline_age_days": 4,
+    "timeline_age_days": 5,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-01-26"
+    "judgment_date": "2027-01-27"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 14,
-    "B_partial_blockade_pct": 36,
+    "B_partial_blockade_pct": 38,
     "C_full_blockade_pct": 10,
-    "D_escalation_pct": 40
+    "D_escalation_pct": 38
   },
-  "hormuz_daily_flow_mbpd": 4.0,
+  "hormuz_daily_flow_mbpd": 7.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 81,
-  "last_manual_note": "イランが10/26に海峡の全面封鎖を宣言し、10月は商船被弾が過去最悪の月となった。米イスラエルは攻撃再開を計画中と報じられる。サウジ・トルコ・パキスタンがテヘランで仲介したが停戦に至らなかった。",
-  "ais_estimated_vessels": 5,
-  "ais_estimated_tankers": 3,
+  "flow_disruption_pct": 64,
+  "last_manual_note": "10月は船舶被弾が最多。米国は不要な通航の回避を勧告。中間選挙後の対イラン攻撃準備が報じられる。イランは7日間案で仲介と接触を続けるが、米側は和平協議を否定。",
+  "ais_estimated_vessels": 6,
+  "ais_estimated_tankers": 4,
   "ais_estimated_cargo": 1,
   "ais_confidence": "low",
-  "ais_estimation_note": "10月の隻数報道なし・9月値と封鎖宣言から外挿",
+  "ais_estimation_note": "最新隻数報道なし。9月の日10〜18隻から外挿",
   "scenario_range": {
     "A_diplomacy_pct": [
-      14,
+      12,
       15
     ],
     "B_partial_blockade_pct": [
-      34,
-      39
+      35,
+      40
     ],
     "C_full_blockade_pct": [
-      10,
-      12
+      8,
+      11
     ],
     "D_escalation_pct": [
       35,
