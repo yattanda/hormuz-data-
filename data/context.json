@@ -308,6 +308,16 @@
       "date": "2026-10-23",
       "fact": "UKMTOは警報182（10/26 09:20 UTC発行）で、ホルムズ海峡内で出港中のタンカーが正体不明の飛翔体を受けて航行不能になったとの確認された遅れての報告を公表した。乗組員は無事で、被害の評価と環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はなく、gCaptainは発生を10/23 08:39 UTCと書く。",
       "source": "UKMTO 警報182（公式サイト Recent Incidents・2026-10-26 09:20 UTC 発行。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-10-26（https://gcaptain.com/tanker-disabled-in-strait-of-hormuz-attack-another-vessel-reported-on-fire-in-persian-gulf/）"
+    },
+    {
+      "date": "2026-10-29",
+      "fact": "UKMTOは警報185（10/29 06:29 UTC発行）で、オマーン・カサブの北9海里のホルムズ海峡で第三者の船の船長が別の船の炎上を目撃したと発表し、続報で、地域当局がその船をダウ船と特定し、海上の保安上の事案に巻き込まれて大きな火災が起き、傾いて沈没したこと、乗組員は安全に退避したことを伝えた。本文に発生時刻・原因・攻撃主体の記載はない。",
+      "source": "UKMTO 警報185（公式サイト Recent Incidents・2026-10-29 06:29 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-10-29（https://www.arabnews.pk/world/iran-claims-four-tankers-hit-mines-in-hormuz-as-dhow-crew-rescued-3005544）"
+    },
+    {
+      "date": "2026-10-29",
+      "fact": "UKMTOは警報186（10/29 17:51 UTC発行）で、会社保安責任者からの連絡として、ホルムズ海峡を出る通過を終える際にタンカーが正体不明の飛翔体を受けたと発表した。乗組員の負傷と環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報186（公式サイト Recent Incidents・2026-10-29 17:51 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Anews 2026-10-29（https://www.anews.com.tr/middle-east/2026/10/29/oil-tanker-struck-by-unknown-projectile-in-strait-of-hormuz-uk-maritime-agency）"
     }
   ],
 
