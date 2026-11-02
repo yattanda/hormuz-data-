@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-11-01T09:32:02+09:00",
+  "updated_at": "2026-11-02T09:32:04+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-25",
-    "age_days": 7,
+    "age_days": 8,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-10-31",
+    "timeline_updated": "2026-11-01",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -16,42 +16,42 @@
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-01-30"
+    "judgment_date": "2027-01-31"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 24,
-    "B_partial_blockade_pct": 36,
+    "A_diplomacy_pct": 30,
+    "B_partial_blockade_pct": 35,
     "C_full_blockade_pct": 10,
-    "D_escalation_pct": 30
+    "D_escalation_pct": 25
   },
   "hormuz_daily_flow_mbpd": 8.5,
   "hormuz_normal_flow_mbpd": 20.9,
   "flow_disruption_pct": 59,
-  "last_manual_note": "10月の商船攻撃は開戦以来最多で、IRGCは機雷接触を主張。米の対イラン封鎖は続き、転進は144隻。カタール仲介の2日間再開案を協議中だが、中間選挙後の米軍攻撃再開も懸念される。",
+  "last_manual_note": "10月末からタンカーへの飛翔体・吸着爆弾攻撃が相次ぎ、IRGCは触雷を主張。米代表団はカタールで協議中で、イランは2日での海峡再開案を提示。米中間選挙後の攻撃再開が懸念される。",
   "ais_estimated_vessels": 5,
   "ais_estimated_tankers": 3,
   "ais_estimated_cargo": 1,
   "ais_confidence": "low",
-  "ais_estimation_note": "9月の日10〜18隻からの外挿で11月実測なし",
+  "ais_estimation_note": "9月の日次通航十数隻からの外挿で11月の実数なし",
   "scenario_range": {
     "A_diplomacy_pct": [
-      24,
-      25
+      28,
+      30
     ],
     "B_partial_blockade_pct": [
       35,
-      38
+      37
     ],
     "C_full_blockade_pct": [
-      8,
+      9,
       10
     ],
     "D_escalation_pct": [
-      30,
-      32
+      25,
+      25
     ]
   },
   "scenario_samples": 5

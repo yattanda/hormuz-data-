@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-01T09:32:02+09:00",
+  "updated_at": "2026-11-02T09:32:04+09:00",
   "measurement": "estimate",
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "claude-opus",
@@ -11,7 +11,7 @@
     "other": 1
   },
   "confidence": "low",
-  "estimation_note": "9月の日10〜18隻からの外挿で11月実測なし",
+  "estimation_note": "9月の日次通航十数隻からの外挿で11月の実数なし",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
