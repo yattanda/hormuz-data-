@@ -343,6 +343,16 @@
       "date": "2026-11-01",
       "fact": "UKMTOは警報191（Attack・11/1 18:15 UTC発行）で、ホルムズ海峡内で商船の船長がVHF 16チャンネルのMaydayを中継し、別の船が正体不明の飛翔体を受けたと発表した。本文に発生時刻・船名・被害・攻撃主体の記載はなく、当局が調査中。",
       "source": "UKMTO 警報191（公式サイト Recent Incidents・2026-11-01 18:15 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-11-01（https://www.arabnews.com/middle-east/uk-agency-reports-vessel-strike-in-hormuz-irans-guards-say-tankers-hit-mines-3009316）"
+    },
+    {
+      "date": "2026-11-02",
+      "fact": "UKMTOは警報192（11/2 01:40 UTC発行）で、サウジアラビアのラスアルカフジの東72海里のペルシャ湾を南東へ航行中のタンカーが、左舷に正体不明の飛翔体2発を受けたと発表した。乗組員は全員無事で、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報192（公式サイト Recent Incidents・2026-11-02 01:40 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Middle East Eye 2026-11-02（https://www.middleeasteye.net/live-blog/live-blog-update/ukmto-says-vessel-hit-two-projectiles-near-saudi-arabia）"
+    },
+    {
+      "date": "2026-11-02",
+      "fact": "UKMTOは警報193（11/2 18:49 UTC発行）で、オマーンのリマの北東9海里で、船長の報告として、船が正体不明の飛翔体を受けて右舷に穴が開いたと発表した。船と乗組員は無事で、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はなく、本文の警報番号は「192-26」と誤記されている。",
+      "source": "UKMTO 警報193（公式サイト Recent Incidents・2026-11-02 18:49 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Gulf News 2026-11-02（https://gulfnews.com/world/mena/vessel-struck-near-strait-of-hormuz-maritime-agency-1.500733362）"
     }
   ],
 
