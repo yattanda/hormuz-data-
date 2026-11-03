@@ -353,6 +353,26 @@
       "date": "2026-11-02",
       "fact": "UKMTOは警報193（11/2 18:49 UTC発行）で、オマーンのリマの北東9海里で、船長の報告として、船が正体不明の飛翔体を受けて右舷に穴が開いたと発表した。船と乗組員は無事で、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はなく、本文の警報番号は「192-26」と誤記されている。",
       "source": "UKMTO 警報193（公式サイト Recent Incidents・2026-11-02 18:49 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Gulf News 2026-11-02（https://gulfnews.com/world/mena/vessel-struck-near-strait-of-hormuz-maritime-agency-1.500733362）"
+    },
+    {
+      "date": "2026-11-03",
+      "fact": "UKMTOは警報194（11/3 13:16 UTC発行）で、インド政府の報告として、インド人乗組員のダウ船が海峡を出る途中で攻撃を受け、オマーン王立海軍が生存した乗組員を救助したと発表した。船の状態は不明。本文に船名・死者・発生時刻・攻撃主体の記載はない。",
+      "source": "UKMTO 警報194（公式サイト Recent Incidents・2026-11-03 13:16 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-03",
+      "fact": "インド外務省は、オマーンのリマ付近で11/2夕方にインド船籍の商船MSV AL JUSUFIが攻撃を受け、乗船していたインド人14人のうち13人が救助され、1人が死亡したと発表した。ソノワル海運相は救助したのはオマーン沿岸警備隊だと述べた（UKMTO警報194は救助したのをオマーン王立海軍としている）。攻撃主体は記事に示されていない。警報194とMSV AL JUSUFIが同じ事案かは、警報の本文に船名がなく確認できていない。",
+      "source": "Khaleej Times 2026-11-03（インド外務省の声明。https://www.khaleejtimes.com/world/asia/indian-sailor-killed-rescued-vessel-attacked-off-oman-coast）"
+    },
+    {
+      "date": "2026-11-03",
+      "fact": "UKMTOは警報195（11/3 21:08 UTC発行）で、オマーンのリマの北東14海里で、タンカーの会社保安責任者の報告として、船が正体不明の飛翔体2発を機関室に受けたと発表した。死傷者と環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報195（公式サイト Recent Incidents・2026-11-03 21:08 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-02",
+      "fact": "米当局者2人によると、米軍は11/2（月）にイランのQeshm島を限定的に攻撃した。当局者は、IRGCが過去数週間、ホルムズ海峡の上空で米軍の有人機・無人機を繰り返し標的にして撃ってきたことへの自衛で、イランでの大規模な戦闘の再開ではないと説明した。CENTCOM・国防総省の公式発表は確認されていない。",
+      "source": "NBC News 2026-11-02 公開・11-03 更新（米当局者2人の話。https://www.nbcnews.com/world/iran/us-conducted-defensive-strikes-iranian-targets-strait-hormuz-us-offici-rcna607161）"
     }
   ],
 
