@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-11-03T09:32:08+09:00",
+  "updated_at": "2026-11-04T09:32:07+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-25",
-    "age_days": 9,
+    "age_days": 10,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-11-02",
+    "timeline_updated": "2026-11-03",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -16,42 +16,42 @@
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-01"
+    "judgment_date": "2027-02-02"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 34,
-    "B_partial_blockade_pct": 34,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 22
+    "A_diplomacy_pct": 29,
+    "B_partial_blockade_pct": 33,
+    "C_full_blockade_pct": 9,
+    "D_escalation_pct": 29
   },
-  "hormuz_daily_flow_mbpd": 9.0,
+  "hormuz_daily_flow_mbpd": 8.0,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 57,
-  "last_manual_note": "米イランが集中協議中で、イランは封鎖解除なら2日で海峡を再開すると提案。和平案の草案が出て原油は8%急落。一方で船舶への攻撃は続き、ネタニヤフ首相は追加攻撃を求めている。",
-  "ais_estimated_vessels": 5,
+  "flow_disruption_pct": 62,
+  "last_manual_note": "米軍がゲシュム島を限定攻撃したが、カタール仲介の協議は継続。イランは合意すれば2日で海峡を再開すると提示した。商船への飛翔体攻撃は続き、中間選挙後の戦闘再開リスクが残る。",
+  "ais_estimated_vessels": 4,
   "ais_estimated_tankers": 3,
   "ais_estimated_cargo": 1,
   "ais_confidence": "low",
-  "ais_estimation_note": "最新の隻数報道なし、9月の集計から外挿",
+  "ais_estimation_note": "最新の隻数報道なし。9月実測と攻撃多発から外挿",
   "scenario_range": {
     "A_diplomacy_pct": [
-      34,
-      37
+      25,
+      30
     ],
     "B_partial_blockade_pct": [
-      31,
-      37
+      33,
+      38
     ],
     "C_full_blockade_pct": [
-      8,
+      7,
       10
     ],
     "D_escalation_pct": [
-      20,
-      24
+      25,
+      30
     ]
   },
   "scenario_samples": 5
