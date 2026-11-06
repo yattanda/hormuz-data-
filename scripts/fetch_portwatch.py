@@ -77,7 +77,15 @@ STAT_FIELDS = {"total": "n_total", "tanker": "n_tanker", "cargo": "n_cargo",
                "capacity_tanker_t": "capacity_tanker"}
 
 TIMEOUT_SEC = 60
-RETRIES = 5
+# ArcGIS は同じ問い合わせが通ったり 400 になったりする（2026-11-06 の手元の試しでは
+# 最初の1回で通るのは3〜4割）。しかもエラーの応答にも Cache-Control: max-age=30 が付いて
+# 配信の途中でキャッシュされることがあり、30秒以内に取り直すと同じエラーが返る
+# （X-Cache: TCP_HIT を確認）。間をキャッシュより長くあけ、回数を多めにとる。
+# 外れは時間でかたまって続く（11/6 の手元の実行で9回続けて外れ10回目で通った）ので、
+# 後の回ほど間を広げる。最大で 35秒×3＋60秒×8 ≒ 10分（問い合わせは1回の実行で4つ）
+RETRIES = 12
+RETRY_WAIT_SEC = 35        # 2〜4回目の前（キャッシュの30秒より長く）
+RETRY_WAIT_LONG_SEC = 60   # 5回目以降の前
 JST = timezone(timedelta(hours=9))
 OUT_PATH = "data/portwatch-hormuz.json"
 
@@ -100,7 +108,7 @@ def query(params):
     arcgis_error = None
     for attempt in range(1, RETRIES + 1):
         if attempt > 1:
-            time.sleep(5 * (attempt - 1))
+            time.sleep(RETRY_WAIT_SEC if attempt <= 4 else RETRY_WAIT_LONG_SEC)
         try:
             with urllib.request.urlopen(url, timeout=TIMEOUT_SEC) as res:
                 body = json.loads(res.read().decode("utf-8"))
@@ -110,7 +118,10 @@ def query(params):
             continue
         # ArcGIS はエラーでも HTTP 200 で {"error": {...}} を返す。
         # 同じ問い合わせが通ったり 400 になったりすることがあるので、試し直す
-        # （2026-10-29：定時と手動の実行がともに 400 で失敗。手元では8回に1回ほど 400）
+        # （2026-10-29：定時と手動の実行がともに 400 で失敗。10/31〜11/5 は定時7回のうち4回、
+        # 5秒〜20秒あけた5回がすべて外れた。間がキャッシュの30秒より短かったため。上の RETRIES）
+        # URL に毎回違う値を足してキャッシュを避けると、かえって通りにくい（11/6 の試し：
+        # 足さない 7/10・8/10、足す 1/10・4/10。通った応答のキャッシュも使えなくなるため）
         if "error" in body:
             arcgis_error = body["error"]
             print("[PortWatch] ArcGIS のエラー応答（{}/{}）: {}".format(attempt, RETRIES, arcgis_error))
@@ -129,16 +140,19 @@ def where(start, end=None):
 
 
 def fetch_latest_date():
+    # orderByFields と resultRecordCount を一緒に付けると 400 になりやすかった（2026-11-06 の
+    # 1秒おき12回の試し：並べて1件取る形は 0/12、統計の max は 12/12）。ただし統計の形でも
+    # 外れが続く時間はあるので、決め手は上の試し直し。最新日は統計で取る
     body = query({
         "where": "portid = '{}'".format(PORT_ID),
-        "outFields": "date",
-        "orderByFields": "date DESC",
-        "resultRecordCount": 1,
+        "outStatistics": json.dumps([{"statisticType": "max", "onStatisticField": "date",
+                                      "outStatisticFieldName": "latest"}]),
     })
     features = body.get("features") or []
-    if not features:
+    latest = features[0]["attributes"].get("latest") if features else None
+    if not latest:
         raise FetchError(3, "{} の行がありません（海峡の ID が変わった可能性）".format(PORT_ID))
-    return date.fromisoformat(features[0]["attributes"]["date"])
+    return date.fromisoformat(latest)
 
 
 def fetch_daily():
@@ -146,13 +160,15 @@ def fetch_daily():
     # 更新が止まったあいだも先頭の行が1つずつ落ち、中身の無いコミットが毎日できる
     latest = fetch_latest_date()
     first = latest - timedelta(days=DAILY_DAYS - 1)
+    # 並べ替えと件数の指定は付けない（上の fetch_latest_date の注記）。並べるのはこちらで行う。
+    # 行は DAILY_DAYS（60）ほどで、サービスの上限（maxRecordCount 1000）には届かない
     body = query({
         "where": where(first.isoformat(), latest.isoformat()),
         "outFields": ",".join(DAILY_FIELDS),
-        "orderByFields": "date ASC",
-        "resultRecordCount": 1000,
     })
-    rows = [f["attributes"] for f in body.get("features", [])]
+    if body.get("exceededTransferLimit"):
+        raise FetchError(3, "{}〜{} の行がサービスの上限を超えました（一部しか返っていない）".format(first, latest))
+    rows = sorted((f["attributes"] for f in body.get("features", [])), key=lambda r: r["date"])
     if not rows:
         raise FetchError(3, "{}〜{} の行がありません".format(first, latest))
     missing = [k for k in DAILY_FIELDS if k not in rows[0]]
