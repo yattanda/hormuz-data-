@@ -8,11 +8,14 @@ name: Update PortWatch (Hormuz transits)
 on:
   schedule:
     - cron: '43 1 * * *'   # 毎日 10:43 JST（GitHub 側の遅延で数時間ずれることがある）
+    - cron: '43 13 * * *'  # 毎日 22:43 JST。ArcGIS の断続的な 400 で朝の回が外れても、その日のうちに取り直す
   workflow_dispatch:
 
 jobs:
   fetch-portwatch:
     runs-on: ubuntu-latest
+    # 試し直しは問い合わせ1つで最大約10分（scripts/fetch_portwatch.py の RETRIES）、1回の実行で4つ
+    timeout-minutes: 50
     permissions:
       contents: write
 
