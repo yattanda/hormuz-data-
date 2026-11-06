@@ -194,48 +194,46 @@
 
 <div class="grid">
 
-  <!-- Card 1: AIS通航船舶数 -->
+  <!-- Card 1: 日次通航数（IMF PortWatch） -->
   <div class="card orange">
-    <div class="card-label">🛥 ホルムズ海峡 通航船舶数（当日）</div>
+    <div class="card-label">🛥 ホルムズ海峡 日次通航数（7日平均）</div>
     <div style="margin:5px 0 3px;">
-      <span id="ais-origin" style="display:inline-block;padding:2px 7px;border-radius:3px;font-size:0.6rem;font-weight:700;border:1px solid transparent;">—</span>
+      <span id="pw-origin" style="display:inline-block;padding:2px 7px;border-radius:3px;font-size:0.6rem;font-weight:700;border:1px solid transparent;">—</span>
     </div>
     <div style="display:flex;align-items:baseline;gap:6px;">
-      <div class="card-value" id="ais-count">—</div>
-      <div class="card-unit">隻</div>
+      <div class="card-value" id="pw-count">—</div>
+      <div class="card-unit">隻/日</div>
     </div>
     <div style="margin-top:6px;">
-      <span class="badge badge-orange" id="ais-tanker">タンカー — 隻</span>
-      <span class="badge badge-blue"   id="ais-cargo">貨物船 — 隻</span>
-      <span class="badge badge-green"  id="ais-other">その他 — 隻</span>
+      <span class="badge badge-orange" id="pw-tanker">タンカー — 隻</span>
+      <span class="badge badge-blue"   id="pw-cargo">貨物船 — 隻</span>
     </div>
     <div class="flow-bar-wrap">
       <div class="flow-bar-bg">
-        <div class="flow-bar-fill" id="ais-bar"
+        <div class="flow-bar-fill" id="pw-bar"
              style="width:0%;background:linear-gradient(90deg,var(--accent),#fb923c)"></div>
       </div>
       <div class="flow-bar-label">
-        <span id="ais-bar-basis">開戦前比（通常200隻/日）</span>
-        <span id="ais-bar-pct">—%</span>
+        <span id="pw-bar-basis">2025年平均比</span>
+        <span id="pw-bar-pct">—%</span>
       </div>
     </div>
     <div class="card-sub">
-      <div id="ais-darkblock">
-      推定実通航数（ダーク船補正）: <strong id="ais-estimated">—</strong> 隻<br/>
-      <span style="font-size:0.63rem;">補正係数 ×<span id="ais-factor">—</span><span id="ais-factor-basis"></span></span>
-      </div>
-      <div id="ais-estnote" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
+      <div id="pw-latest"></div>
+      <div style="font-size:0.63rem;margin-top:4px;">AIS で捕捉した通航だけを数えた下限です。AIS を切った船は含みません。</div>
+      <div id="pw-untracked" style="font-size:0.63rem;margin-top:4px;"></div>
+      <div id="pw-stale" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" style="flex-wrap:wrap;">
      <span class="dot-live"></span>
-     出典: <span id="ais-source">—</span> ／ 最終更新: <span id="ais-updated">—</span>
-    <div style="font-size:0.58rem;color:var(--muted);margin-top:2px;">🕙 毎日 09:30 JST 自動実行</div>
+     <span style="flex:1;min-width:0;">出典: IMF PortWatch を加工して作成 ／ 対象日: <span id="pw-period">—</span></span>
+    <div style="flex-basis:100%;font-size:0.58rem;color:var(--muted);margin-top:2px;">🕙 週1回更新（IMF PortWatch・約1週間遅れ）</div>
 </div>
   </div>
 
-  <!-- Card 2: 通航量BPD -->
+  <!-- Card 2: AIS で見えた石油流量（IMF PortWatch のタンカー積載量から） -->
   <div class="card red">
-    <div class="card-label">🛢 ホルムズ通過石油 推定流量</div>
+    <div class="card-label">🛢 ホルムズ通過石油 AIS で見えた流量</div>
     <div style="display:flex;align-items:baseline;gap:6px;">
       <div class="card-value" id="flow-val">—</div>
       <div class="card-unit">百万BPD</div>
@@ -246,19 +244,20 @@
              style="width:0%;background:linear-gradient(90deg,var(--red),#f87171)"></div>
       </div>
       <div class="flow-bar-label">
-        <span>通常時 <span id="flow-normal">21.0</span> 百万BPD 比</span>
+        <span>平常時 <span id="flow-normal">—</span> 百万BPD 比</span>
         <span id="flow-pct">—%</span>
       </div>
     </div>
     <div class="card-sub">
-      供給途絶: <strong id="flow-disruption" style="color:var(--red)">—%</strong><br/>
-      <span style="font-size:0.63rem;">出典: <span id="flow-source">—</span></span>
+      <div style="font-size:0.63rem;">タンカー積載量（PortWatch の推定）の 2025年上半期比 × 平常時流量（EIA）。AIS を切ったタンカーは含まない下限です。
+        <a href="https://github.com/yattanda/hormuz-data-/blob/main/docs/hormuz-flow-method.md" target="_blank" rel="noopener" style="color:var(--muted);">算出方法</a></div>
+      <div id="flow-capnote" style="display:none;font-size:0.63rem;margin-top:4px;"></div>
       <div id="ctx-note-flow" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     </div>
-    <div class="card-footer">
+    <div class="card-footer" style="flex-wrap:wrap;">
      <span class="dot-live"></span>
-     🤖 自動更新（生成AI）／ <span id="flow-updated">—</span>
-    <div style="font-size:0.58rem;color:var(--muted);margin-top:2px;">🕙 毎日 09:30 JST 自動実行</div>
+     <span style="flex:1;min-width:0;">出典: IMF PortWatch を加工して作成（平常時流量は EIA）／ 対象日: <span id="flow-period">—</span></span>
+    <div style="flex-basis:100%;font-size:0.58rem;color:var(--muted);margin-top:2px;">🕙 週1回更新（IMF PortWatch・約1週間遅れ）</div>
 </div>
   </div>
 
@@ -415,11 +414,11 @@
     <div style="font-weight:700; margin-bottom:4px;">各データの基準日</div>
     <div id="footer-basis-list" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2px 16px;">読み込み中…</div>
   </div>
-  <strong>免責:</strong> 通航船舶数はニュース・公開データに基づく推計値であり、AIS受信による実測値ではありません。投資判断等への利用はご自身の責任でお願いします。<br/>
-  <strong>※ 推計に幅が生じる主な理由：</strong>
-  ①封鎖・緊張による船舶のAIS意図的停止（ダークシッピング）により公開データ上も捕捉されないこと
-  ②公表・報道されるまでの時間差。
-  <strong>数値は日次の目安であり、確定値ではありません。</strong><br/>
+  <strong>免責:</strong> 通航数と石油流量は IMF PortWatch の AIS 集計に基づく下限で、AIS を切った船（ダークシッピング）は含みません。積載量は PortWatch が喫水などから推定した値です。シナリオ確率と状況メモは生成AIによる推定・要約です。投資判断等への利用はご自身の責任でお願いします。<br/>
+  <strong>※ 数値が実態とずれる主な理由：</strong>
+  ①封鎖・緊張による船舶のAIS意図的停止により公開データ上も捕捉されないこと
+  ②PortWatch の公表が約1週間遅れること。
+  <strong>数値は目安であり、確定値ではありません。</strong><br/>
   <a id="main-site-link" href="https://chokepointlab.com/hormuz/" target="_blank">← メインサイト「ホルムズ海峡危機マップ」に戻る</a>
 </footer>
 <script>
@@ -448,7 +447,7 @@ function setText(id, val) {
  * 表示順は登録順（＝非同期の完了順）に依存させず FOOTER_ORDER で固定する。
  */
 const SOURCE_REGISTRY = new Map();
-const FOOTER_ORDER = ['ais', 'flow', 'scenario', 'eia', 'eia-me', 'insurance', 'japan', 'context'];
+const FOOTER_ORDER = ['portwatch', 'flow', 'scenario', 'eia', 'eia-me', 'insurance', 'japan', 'context'];
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c =>
@@ -491,12 +490,13 @@ function renderFooterSources() {
   }).join('');
 }
 
-// 推計の前提（平常時流量・ダーク船補正係数・通常時隻数）の基準日。
-// これらは外部に供給元が無く data/context.json で手動管理しているため、
-// 出典欄には出さず基準日一覧にだけ載せる。
-function registerContextSource(ctx, darkApplied) {
+// 比の分母（平常時流量・通常時隻数）の基準日。
+// data/context.json で手動管理しているため、出典欄には出さず基準日一覧にだけ載せる。
+// ダーク船補正係数は 2026-10 の見直し（PR 2）から表示に使っていない（設計書 Q4）。
+function registerContextSource(ctx) {
+  const label = '比の分母（平常時流量・通常時隻数）';
   if (!ctx) {
-    registerSource({ key: 'context', label: '推計の前提（平常時流量・補正係数）', source: null, basis: '取得できませんでした' });
+    registerSource({ key: 'context', label, source: null, basis: '取得できませんでした' });
     return;
   }
   const basisDate = ctx.context_updated;
@@ -511,17 +511,12 @@ function registerContextSource(ctx, darkApplied) {
   const unverified = [];
   if (ctx.normal_flow_mbpd && ctx.normal_flow_mbpd.verified !== true) unverified.push('平常時流量');
   if (ctx.normal_vessels_per_day && ctx.normal_vessels_per_day.verified !== true) unverified.push('通常時隻数');
-  // 補正係数は実測時にしか掛からない。掛けていない回に未確認と書くと、
-  // 表示に入っていない前提を入っているかのように読ませてしまう。
-  if (darkApplied && ctx.dark_factor && ctx.dark_factor.verified !== true) unverified.push('補正係数');
   const note = unverified.length
     ? `当サイトで手動管理・${unverified.join('／')}は出典未確認`
     : '当サイトで手動管理・一次資料で確認済み';
   registerSource({
     key: 'context',
-    label: darkApplied
-      ? '推計の前提（平常時流量・補正係数・通常時隻数）'
-      : '推計の前提（平常時流量・通常時隻数）',
+    label,
     source: null,
     basis: basisDate ? `${basisDate} 基準（${note}）` : '—',
     stale
@@ -554,86 +549,51 @@ function registerContextTimeline(ctx) {
   });
 }
 
-// ダーク船補正係数。正は data/context.json の dark_factor で、ここは読めなかったときの既定値。
-// 実測・推計のどちらにも同じ係数を掛けるため、データ側ではなくここに一元的に置く。
-// かつて fetch_ais.py と fetch_manual.py に 1.35 が二重定義されていた。
-let DARK_FACTOR = 1.35;
-// 係数の根拠表示。根拠が変われば表示も変わるよう、文言をコードに固定しない。
-let DARK_FACTOR_LABEL = '根拠未検証';
+// PortWatch の取得が止まったとみなす日数。元のデータは約1週間遅れで週1回まとめて入るため、
+// 最新の行が 7〜13日前なのは平常。fetch_portwatch.py の WARN と同じ 14日で切る。
+const PORTWATCH_STALE_DAYS = 14;
 
-// 実測値として採用できる鮮度の上限。cron は日次なので1日スキップまでは許容する。
-const ACTUAL_MAX_AGE_H = 48;
-
-// 通常時の日間通航隻数。推計値の「開戦前比」の分母に使う。
-// 正は data/context.json の normal_vessels_per_day で、ここは読めなかったときの既定値。
-// この値には一次資料が記録されていない（経緯は context.json の basis を参照）。
-let NORMAL_VESSELS_PER_DAY = 200;
-let NORMAL_VESSELS_VERIFIED = false;
-
-function ageHours(iso) {
-  if (!iso) return Infinity;
-  const t = Date.parse(iso);
-  if (Number.isNaN(t)) return Infinity;
-  return (Date.now() - t) / 3600000;
-}
-
-/**
- * 実測スナップショットを採用してよいかを判定する。
- *
- * 「取得成功かつ0隻」には (1)本当に船がいない (2)API側の障害 の2つの原因があり、
- * 誤って (2) を「通航ゼロ」と表示すると重大な誤報になる。
- * fetch_ais.py が対照海域で API の生存を確認できたときだけ 0 隻を実測として扱う。
- */
-function actualIsUsable(d) {
-  if (!d || d.measurement !== 'actual') return false;
-  if (d.fetch_ok !== true) return false;
-  if (typeof d.vessels_detected !== 'number') return false;
-  if (ageHours(d.updated_at) > ACTUAL_MAX_AGE_H) return false;
-  if (d.vessels_detected === 0 && d.coverage_verified !== true) return false;
-  return true;
-}
+// 石油流量の比の分母に使う PortWatch の基準期間。平常時流量（EIA）が 2025年上半期の値なので、
+// タンカー積載量も同じ期にそろえる（2025年通年との差は約3%。docs/hormuz-flow-method.md）。
+const FLOW_BASELINE_KEY = '2025H1';
 
 async function fetchJSON(name) {
   try {
     const res = await fetch(`${BASE}/data/${name}?t=${Date.now()}`);
     if (!res.ok) return null;
     return await res.json();
-  } catch (e) { console.warn('AIS fetch:', name, e); return null; }
+  } catch (e) { console.warn('fetch:', name, e); return null; }
 }
 
-// 補正係数とその根拠表示を data/context.json から取り込む。
-// verified が false の間は組織名などの帰属を出さず、未検証である旨だけを示す。
-function applyDarkFactor(ctx) {
-  const df = ctx && ctx.dark_factor;
-  if (df && typeof df.value === 'number') DARK_FACTOR = df.value;
-  if (df && typeof df.label === 'string') DARK_FACTOR_LABEL = df.label;
-  const el = document.getElementById('ais-factor-basis');
-  if (el) el.textContent = DARK_FACTOR_LABEL ? `（${DARK_FACTOR_LABEL}）` : '';
+// PortWatch の日付は UTC の暦日（"YYYY-MM-DD"）。時刻を持たないので JST に直さない。
+function fmtUtcDay(ymd) {
+  const m = /^\d{4}-(\d{2})-(\d{2})$/.exec(ymd || '');
+  return m ? `${Number(m[1])}/${Number(m[2])}` : '—';
 }
 
-// 補正後の隻数は AIS 受信の実測が採れているときにだけ出す。
-function setDarkBlockVisible(visible) {
-  const el = document.getElementById('ais-darkblock');
-  if (el) el.style.display = visible ? '' : 'none';
+function daysSinceUtcDay(ymd) {
+  const t = Date.parse(ymd + 'T00:00:00Z');
+  return Number.isNaN(t) ? Infinity : Math.floor((Date.now() - t) / 86400000);
 }
 
-// 「開戦前比」の分母を data/context.json から取り込む。
-// verified が false の間は、分母が出典未確認であることを表示に出す。
-function applyNormalVessels(ctx) {
-  const nv = ctx && ctx.normal_vessels_per_day;
-  if (nv && typeof nv.value === 'number') NORMAL_VESSELS_PER_DAY = nv.value;
-  if (nv) NORMAL_VESSELS_VERIFIED = nv.verified === true;
+// 比は 10% 未満だと整数に丸めると 0% や 1% に潰れるため、小数1桁まで出す。
+function fmtPct(pct) {
+  return pct < 10 ? pct.toFixed(1) : String(Math.round(pct));
 }
 
-function setAisBadge(id, label, count, show) {
+function setBadge(id, label, val) {
   const el = document.getElementById(id);
-  if (!el) return;
-  el.style.display = show ? '' : 'none';
-  if (show) el.textContent = `${label} ${count ?? '—'} 隻`;
+  if (el) el.textContent = `${label} ${typeof val === 'number' ? val.toFixed(1) : '—'} 隻`;
 }
 
-function setAisOrigin(text, color, bg) {
-  const el = document.getElementById('ais-origin');
+function setBar(barId, pctId, pct) {
+  setText(pctId, pct == null ? '—%' : fmtPct(pct) + '%');
+  const bar = document.getElementById(barId);
+  if (bar) bar.style.width = (pct == null ? 0 : Math.min(pct, 100)) + '%';
+}
+
+function setOrigin(id, text, color, bg) {
+  const el = document.getElementById(id);
   if (!el) return;
   el.textContent = text;
   el.style.color = color;
@@ -641,117 +601,108 @@ function setAisOrigin(text, color, bg) {
   el.style.borderColor = color;
 }
 
-function setAisBar(pct, basisLabel) {
-  setText('ais-bar-basis', basisLabel);
-  setText('ais-bar-pct', pct == null ? '—%' : pct + '%');
-  const bar = document.getElementById('ais-bar');
-  if (bar) bar.style.width = (pct == null ? 0 : pct) + '%';
+function setNote(id, text) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.style.display = text ? 'block' : 'none';
 }
 
-const CONFIDENCE_JA = { high: '高', medium: '中', low: '低' };
-
-async function loadAIS() {
-  // 実測と推計は別ファイル。実測を優先し、使えないときだけ推計へフォールバックする。
-  const [snap, est, ctx] = await Promise.all([
-    fetchJSON('ais-snapshot.json'),
-    fetchJSON('ais-estimate.json'),
+/**
+ * カード1（日次通航数）とカード2（AIS で見えた流量）。どちらも data/portwatch-hormuz.json の
+ * 直近7日の平均から出す。取れないときに AI 推計で埋めない（docs/data-sources-redesign.md §4）。
+ */
+async function loadPortWatch() {
+  const [pw, ctx] = await Promise.all([
+    fetchJSON('portwatch-hormuz.json'),
     fetchJSON('context.json')
   ]);
-  applyDarkFactor(ctx);
-  applyNormalVessels(ctx);
-  const useActual = actualIsUsable(snap);
-  registerContextSource(ctx, useActual);
+  registerContextSource(ctx);
 
-  const d = useActual ? snap : est;
-  const estNote = document.getElementById('ais-estnote');
-
-  if (!d) {
-    setText('ais-count', 'N/A');
-    setAisOrigin('データ取得不可', '#f87171', 'rgba(248,113,113,0.12)');
-    setAisBadge('ais-tanker', '', null, false);
-    setAisBadge('ais-cargo',  '', null, false);
-    setAisBadge('ais-other',  '', null, false);
-    setAisBar(null, '—');
-    setDarkBlockVisible(false);
-    setText('ais-source', '—');
-    setText('ais-updated', '—');
-    registerSource({ key: 'ais', label: '通航船舶数', source: null, basis: '取得できませんでした' });
-    if (estNote) estNote.style.display = 'none';
+  const w = pw && pw.window;
+  if (!w || typeof w.total !== 'number' || !pw.latest_date) {
+    setText('pw-count', 'N/A');
+    setOrigin('pw-origin', 'データ取得不可', '#f87171', 'rgba(248,113,113,0.12)');
+    setText('flow-val', 'N/A');
+    ['portwatch', 'flow'].forEach(key => registerSource({
+      key,
+      label: key === 'flow' ? 'ホルムズ通過石油 AIS で見えた流量' : '日次通航数（7日平均）',
+      source: null,
+      basis: '取得できませんでした'
+    }));
     return;
   }
 
-  let count;
+  const age = daysSinceUtcDay(pw.latest_date);
+  const stale = age > PORTWATCH_STALE_DAYS;
+  const [from, to] = (w.period || '').split('/');
+  const periodText = `${fmtUtcDay(from)}〜${fmtUtcDay(to)}（UTC）`;
+  const staleMsg = stale
+    ? `⚠️ PortWatch の最新の行が ${pw.latest_date}（${age}日前）のままです。取得が止まっている可能性があります。`
+    : '';
 
-  if (useActual) {
-    count = d.vessels_detected;
-    // VesselAPI の bbox 応答は船種を返さないため、内訳は動静（移動中／停泊）で示す
-    setAisBadge('ais-tanker', '移動中',     d.breakdown?.moving,     true);
-    setAisBadge('ais-cargo',  '停泊・漂泊', d.breakdown?.stationary, true);
-    setAisBadge('ais-other',  '', null, false);
+  // --- カード1：日次通航数 ---
+  setText('pw-count', w.total.toFixed(1));
+  setBadge('pw-tanker', 'タンカー', w.tanker);
+  setBadge('pw-cargo',  '貨物船',   w.cargo);
+  if (stale) setOrigin('pw-origin', '取得が止まっています', '#fbbf24', 'rgba(251,191,36,0.12)');
+  else       setOrigin('pw-origin', '実測（AIS で捕捉した分・下限）', '#4ade80', 'rgba(74,222,128,0.12)');
 
-    // 開戦前比の分母は、この bbox・この取得方式での実測基準値が無いため使えない。
-    // 代わりに「うち移動中の割合」を示す。錨泊待機が増えるほど下がり、滞留の指標になる。
-    const moving = d.breakdown?.moving;
-    const pct = (count > 0 && typeof moving === 'number')
-      ? Math.round((moving / count) * 100) : 0;
-    setAisBar(pct, 'うち移動中の割合');
-
-    setAisOrigin('実測（AIS受信）', '#4ade80', 'rgba(74,222,128,0.12)');
-
-    if (estNote) {
-      if (count === 0) {
-        estNote.style.display = 'block';
-        estNote.textContent =
-          '※ 通航 0 隻。同時刻に対照海域で船舶を取得できており、受信系統は正常です。';
-      } else {
-        estNote.style.display = 'none';
-        estNote.textContent = '';
-      }
-    }
+  // 分母は context.json の normal_vessels_per_day（PortWatch の 2025年平均）。分子と同じ出典にそろえる。
+  // 読めなかったときは既定値で割らず、比を出さない。
+  const nv = ctx && ctx.normal_vessels_per_day;
+  if (nv && typeof nv.value === 'number' && nv.value > 0) {
+    const note = nv.verified === true ? '' : '・出典未確認';
+    setText('pw-bar-basis', `2025年平均比（${nv.value}隻/日・PortWatch${note}）`);
+    setBar('pw-bar', 'pw-bar-pct', w.total / nv.value * 100);
   } else {
-    count = d.estimated_vessels;
-    setAisBadge('ais-tanker', 'タンカー', d.breakdown?.tanker, true);
-    setAisBadge('ais-cargo',  '貨物船',   d.breakdown?.cargo,  true);
-    setAisBadge('ais-other',  'その他',   d.breakdown?.other,  true);
-
-    const pct = typeof count === 'number'
-      ? Math.min(Math.round((count / NORMAL_VESSELS_PER_DAY) * 100), 100) : null;
-    const denomNote = NORMAL_VESSELS_VERIFIED ? '' : '・出典未確認';
-    setAisBar(pct, `開戦前比（通常${NORMAL_VESSELS_PER_DAY}隻/日${denomNote}）`);
-
-    const conf = CONFIDENCE_JA[d.confidence] || '不明';
-    setAisOrigin(`AI推計（信頼度: ${conf}）`, '#fbbf24', 'rgba(251,191,36,0.12)');
-
-    // 推計であること・生成手段・前提を必ず明示する（編集方針 第3節）
-    if (estNote) {
-      estNote.style.display = 'block';
-      const parts = ['※ AIS受信による実測値ではありません。'];
-      if (d.method) parts.push(d.method + '。');
-      if (d.estimation_note) parts.push(`推計根拠: ${d.estimation_note}。`);
-      parts.push(`信頼度: ${conf}。`);
-      parts.push('AIS受信の実測ではないため、ダーク船補正は適用していません。');
-      if (snap && snap.fetch_ok !== true) parts.push('実測は未取得のため推計を表示しています。');
-      else if (snap) parts.push('実測が採用条件を満たさないため推計を表示しています。');
-      estNote.textContent = parts.join('');
-    }
+    setText('pw-bar-basis', '2025年平均比（分母を取得できませんでした）');
+    setBar('pw-bar', 'pw-bar-pct', null);
   }
 
-  setText('ais-count', count ?? '—');
-  // ダーク船補正は AIS 受信の実測にだけ掛ける。AI推計は報道から「通過中の船舶数」そのものを
-  // 見積もっており、AIS で見えた分ではない。そこへ掛けると同じ暗数を二重に数えることになる。
-  setDarkBlockVisible(useActual);
-  if (useActual) {
-    setText('ais-estimated', typeof count === 'number' ? Math.round(count * DARK_FACTOR) : '—');
-    setText('ais-factor', DARK_FACTOR);
+  const last = (pw.daily || []).find(r => r.date === pw.latest_date);
+  setText('pw-latest', last
+    ? `最新日 ${fmtUtcDay(last.date)}（UTC）：${last.total}隻（タンカー${last.tanker}・貨物船${last.cargo}）`
+    : '');
+
+  // 追跡できない割合は数値に掛けず、報道値を出典つきで文章にだけ示す（設計書 Q4）
+  const u = ctx && ctx.untracked_share_reported;
+  setText('pw-untracked', (u && typeof u.value === 'number')
+    ? `参考：${u.source_name} によると、${u.period_label}は全船種の約${u.value}%が AIS で追跡できませんでした（${u.published} 公表）。`
+    : '');
+  setNote('pw-stale', staleMsg);
+  setText('pw-period', periodText);
+
+  // --- カード2：AIS で見えた流量 = 平常時流量 × 直近7日のタンカー積載量 ÷ 基準期間のタンカー積載量 ---
+  const base = pw.baselines && pw.baselines[FLOW_BASELINE_KEY];
+  const nf = ctx && ctx.normal_flow_mbpd;
+  if (base && base.capacity_tanker_t > 0 && nf && typeof nf.value === 'number'
+      && typeof w.capacity_tanker_t === 'number') {
+    const ratio = w.capacity_tanker_t / base.capacity_tanker_t;
+    setText('flow-val', (nf.value * ratio).toFixed(2));
+    setText('flow-normal', nf.value.toFixed(1));
+    setBar('flow-bar', 'flow-pct', ratio * 100);
+  } else {
+    setText('flow-val', 'N/A');
+    setText('flow-normal', '—');
+    setBar('flow-bar', 'flow-pct', null);
   }
-  setText('ais-source', d.source ?? '—');
-  setText('ais-updated', fmtDate(d.updated_at));
-  registerSource({
-    key: 'ais',
-    label: useActual ? '通航船舶数（実測）' : '通航船舶数（AI推計）',
-    source: d.source ?? null,
-    basis: fmtDate(d.updated_at)
-  });
+  // PortWatch は通航があっても積載量を 0 で返す日がある（2026-10-15 など）。0 のまま平均に入るので、
+  // その日があった週は流量が低めに出ることを書く。
+  const nocap = w.tanker_days_without_capacity;
+  setNote('flow-capnote', nocap > 0
+    ? `※ 対象の${w.days}日のうち${nocap}日は、タンカーの通航があったのに積載量が推定されていません（0 として計算）。`
+    : '');
+  const flowNotes = [];
+  if (staleMsg) flowNotes.push(staleMsg);
+  if (nf && nf.verified !== true) flowNotes.push('平常時流量は出典未確認の概数です。');
+  setNote('ctx-note-flow', flowNotes.join(' '));
+  setText('flow-period', periodText);
+
+  const basis = `対象日 ${from}〜${to}（UTC）`;
+  const source = pw.attribution_ja ?? pw.source ?? null;
+  registerSource({ key: 'portwatch', label: '日次通航数（7日平均）',             source, basis, stale });
+  registerSource({ key: 'flow',      label: 'ホルムズ通過石油 AIS で見えた流量', source, basis, stale });
 }
 
 async function loadEIA() {
@@ -801,31 +752,12 @@ async function loadEIA() {
 
 // 推計に与えた前提（data/context.json）の鮮度と出典状況を読者に伝える。
 // 前提が古くなっても表示が何も変わらなければ、陳腐化は誰にも気付かれない。
+// カード2（流量）は PortWatch から出すので、ここで扱うのはシナリオ確率だけ。
 function applyContextNotice(ctx) {
-  const flowEl = document.getElementById('ctx-note-flow');
-  const scEl   = document.getElementById('ctx-note-scenario');
-  if (!ctx) {
-    [flowEl, scEl].forEach(el => { if (el) el.style.display = 'none'; });
-    return;
-  }
-
-  const stale = ctx.stale === true && ctx.updated;
-  const staleMsg = stale
+  const stale = ctx && ctx.stale === true && ctx.updated;
+  setNote('ctx-note-scenario', stale
     ? `⚠️ この推計に与えた前提は ${ctx.updated} 基準で、${ctx.age_days} 日更新されていません。`
-    : '';
-
-  if (scEl) {
-    scEl.textContent = staleMsg;
-    scEl.style.display = staleMsg ? 'block' : 'none';
-  }
-  if (flowEl) {
-    const parts = [];
-    if (staleMsg) parts.push(staleMsg);
-    if (ctx.normal_flow_verified === false)
-      parts.push('通常時流量は出典未確認の概数です。');
-    flowEl.textContent = parts.join(' ');
-    flowEl.style.display = parts.length ? 'block' : 'none';
-  }
+    : '');
 }
 
 function oilFlowNextUpdateText(period) {
@@ -850,26 +782,9 @@ async function loadManual() {
     if (!res.ok) throw new Error('fetch error');
     const d = await res.json();
 
-    if (d.hormuz_daily_flow_mbpd != null) {
-      setText('flow-val', d.hormuz_daily_flow_mbpd.toFixed(1));
-      // 平常時流量は data/context.json 由来。表示側で 21 を仮定しない
-      const normal = d.hormuz_normal_flow_mbpd;
-      if (normal != null) {
-        setText('flow-normal', normal.toFixed(1));
-        const pct = Math.round((d.hormuz_daily_flow_mbpd / normal) * 100);
-        setText('flow-pct', pct + '%');
-        const bar = document.getElementById('flow-bar');
-        if (bar) bar.style.width = pct + '%';
-      } else {
-        setText('flow-normal', '—');
-        setText('flow-pct', '—%');
-      }
-    }
+    // AI の流量推計（hormuz_daily_flow_mbpd・flow_disruption_pct）は 2026-10 の見直し（PR 2）から表示しない。
+    // 欄はプロンプトから外すまで（PR 3）ファイルに残る。
     applyContextNotice(d.context);
-    if (d.flow_disruption_pct != null)
-      setText('flow-disruption', d.flow_disruption_pct + '%');
-    setText('flow-updated', fmtDate(d.updated_at));
-    setText('flow-source',  d.source ?? '—');
 
     const insPct = d.war_risk_premium_manual;
     const insVerified = d.war_risk_premium_verified === true;
@@ -932,7 +847,6 @@ async function loadManual() {
     // 実体は生成AI による自動分析であり、人が手を入れた時刻ではない
     setText('header-updated', `最終更新（AI自動分析）: ${fmtDate(d.updated_at)}`);
 
-    registerSource({ key: 'flow',     label: 'ホルムズ通過石油 推定流量', source: d.source ?? null, basis: fmtDate(d.updated_at) });
     registerSource({ key: 'scenario', label: 'シナリオ確率',             source: d.source ?? null, basis: fmtDate(d.updated_at) });
     registerSource({
       key: 'insurance',
@@ -944,7 +858,7 @@ async function loadManual() {
 
   } catch(e) {
     console.warn('Manual:', e);
-    const labels = { flow: 'ホルムズ通過石油 推定流量', scenario: 'シナリオ確率', insurance: '戦争リスク保険料率' };
+    const labels = { scenario: 'シナリオ確率', insurance: '戦争リスク保険料率' };
     Object.keys(labels).forEach(key => registerSource({
       key, label: labels[key], source: null, basis: '取得できませんでした'
     }));
@@ -963,7 +877,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 (async function init() {
-  await Promise.all([loadAIS(), loadEIA(), loadManual()]);
+  await Promise.all([loadPortWatch(), loadEIA(), loadManual()]);
 })();
 </script>
 
