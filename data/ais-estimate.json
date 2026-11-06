@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T09:32:09+09:00",
+  "updated_at": "2026-11-06T09:32:11+09:00",
   "measurement": "estimate",
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "model": "claude-opus",
@@ -11,7 +11,7 @@
     "other": 0
   },
   "confidence": "low",
-  "estimation_note": "11月の隻数報道なし、9月集計から外挿",
+  "estimation_note": "9月の約10隻/日から外挿、11月実測なし",
   "bbox": {
     "lat_bottom": 25.8,
     "lat_top": 27.0,
