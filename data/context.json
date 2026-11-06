@@ -383,6 +383,16 @@
       "date": "2026-11-05",
       "fact": "UKMTOは警報196（Attack・11/5 08:19 UTC発行）で、カタールのMadinat ash Shamalの北50海里のペルシャ湾中部で、タンカーが正体不明の飛翔体2発を受けたと発表した。乗組員の状況・被害・環境への影響は発表時点で未確認。本文に発生時刻・船名・攻撃主体の記載はない。Dawn（ロイター引用）は発生を11/4 23:20 UTCと伝え、公式の日時欄（11/5 08:00 UTC）と約8時間半の差がある。",
       "source": "UKMTO 警報196（公式サイト Recent Incidents・2026-11-05 08:19 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Dawn 2026-11-05（ロイター引用。https://www.dawn.com/news/2042327）"
+    },
+    {
+      "date": "2026-11-05",
+      "fact": "マーシャル諸島籍のタンカーMT Velos Sapphireが、空荷でバーレーンへ向かう途中の湾内で、ミサイル攻撃によるとみられる爆発を受け、当初行方不明とされた船員1人が船内で死亡しているのが見つかった。火災は消し止められ、他にけが人はいない。Arab Newsは攻撃主体を書いておらず、UKMTOの警報196との関係も記事に示されていない。",
+      "source": "Arab News 2026-11-06（https://www.arabnews.com/middle-east/seafarer-killed-in-suspected-missile-attack-on-tanker-in-gulf-3010185）"
+    },
+    {
+      "date": "2026-11-06",
+      "fact": "UKMTOは警報197（Attack・11/6 12:06 UTC発行）で、遅れての報告として、オマーン・ハサブの東16海里で、ホルムズ海峡を出るタンカーの船長が左舷の喫水線での爆発を報告したと発表した。乗組員は全員無事で、船は自力で航行を続けている。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報197（公式サイト Recent Incidents・2026-11-06 12:06 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-11-06（https://www.arabnews.com/middle-east/tanker-reports-explosion-near-omans-khasab-while-transiting-strait-of-hormuz-ukmto-says-3010151）"
     }
   ],
 
