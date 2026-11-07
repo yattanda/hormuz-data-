@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-11-06T09:32:11+09:00",
+  "updated_at": "2026-11-07T09:32:13+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-25",
-    "age_days": 12,
+    "age_days": 13,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
-    "timeline_updated": "2026-11-05",
+    "timeline_updated": "2026-11-06",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -16,42 +16,42 @@
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-04"
+    "judgment_date": "2027-02-05"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 30,
-    "B_partial_blockade_pct": 38,
-    "C_full_blockade_pct": 7,
+    "A_diplomacy_pct": 34,
+    "B_partial_blockade_pct": 33,
+    "C_full_blockade_pct": 8,
     "D_escalation_pct": 25
   },
-  "hormuz_daily_flow_mbpd": 7.0,
+  "hormuz_daily_flow_mbpd": 8.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 67,
-  "last_manual_note": "中間選挙後もホルムズでタンカー攻撃が続き、米軍はゲシュム島を限定攻撃した。カタール仲介の協議は継続し、イランは合意すれば2日で海峡を再開すると表明。トランプ氏は破壊を警告。",
+  "flow_disruption_pct": 59,
+  "last_manual_note": "中間選挙で与党大敗後、カタール仲介で協議続く。イランは合意時2日で海峡再開と提示し核提案も検討。一方でタンカー被弾が続き、米はQeshm島を攻撃",
   "ais_estimated_vessels": 4,
   "ais_estimated_tankers": 3,
   "ais_estimated_cargo": 1,
   "ais_confidence": "low",
-  "ais_estimation_note": "9月の約10隻/日から外挿、11月実測なし",
+  "ais_estimation_note": "日10隻前後の報道と通過時間から推計",
   "scenario_range": {
     "A_diplomacy_pct": [
-      27,
-      30
+      30,
+      34
     ],
     "B_partial_blockade_pct": [
-      35,
-      38
+      33,
+      40
     ],
     "C_full_blockade_pct": [
       7,
-      10
+      9
     ],
     "D_escalation_pct": [
-      25,
-      28
+      19,
+      27
     ]
   },
   "scenario_samples": 5
