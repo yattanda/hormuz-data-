@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-29T17:01:38+09:00",
+  "fetched_at": "2026-11-08T03:19:40+09:00",
   "measurement": "actual",
   "source": "IMF PortWatch（Daily Chokepoint Transit Calls）",
   "source_url": "https://portwatch.imf.org/datasets/3da2b9ca97684916b75c4013f95d18ab_0/about",
@@ -10,15 +10,15 @@
     "portid": "chokepoint6",
     "portname": "Strait of Hormuz"
   },
-  "latest_date": "2026-10-25",
+  "latest_date": "2026-11-01",
   "window": {
-    "period": "2026-10-19/2026-10-25",
+    "period": "2026-10-26/2026-11-01",
     "days": 7,
-    "total": 3.3,
-    "tanker": 0.9,
-    "cargo": 2.4,
-    "capacity_tanker_t": 6154,
-    "tanker_days_without_capacity": 4
+    "total": 4.4,
+    "tanker": 1.4,
+    "cargo": 3.0,
+    "capacity_tanker_t": 14207,
+    "tanker_days_without_capacity": 3
   },
   "baselines": {
     "2025": {
@@ -39,62 +39,6 @@
     }
   },
   "daily": [
-    {
-      "date": "2026-08-27",
-      "total": 2,
-      "tanker": 2,
-      "cargo": 0,
-      "capacity_tanker_t": 4989,
-      "capacity_t": 4989
-    },
-    {
-      "date": "2026-08-28",
-      "total": 7,
-      "tanker": 0,
-      "cargo": 7,
-      "capacity_tanker_t": 0,
-      "capacity_t": 151980
-    },
-    {
-      "date": "2026-08-29",
-      "total": 3,
-      "tanker": 1,
-      "cargo": 2,
-      "capacity_tanker_t": 9744,
-      "capacity_t": 10089
-    },
-    {
-      "date": "2026-08-30",
-      "total": 6,
-      "tanker": 2,
-      "cargo": 4,
-      "capacity_tanker_t": 42932,
-      "capacity_t": 70732
-    },
-    {
-      "date": "2026-08-31",
-      "total": 3,
-      "tanker": 1,
-      "cargo": 2,
-      "capacity_tanker_t": 0,
-      "capacity_t": 28355
-    },
-    {
-      "date": "2026-09-01",
-      "total": 4,
-      "tanker": 1,
-      "cargo": 3,
-      "capacity_tanker_t": 14589,
-      "capacity_t": 63309
-    },
-    {
-      "date": "2026-09-02",
-      "total": 3,
-      "tanker": 1,
-      "cargo": 2,
-      "capacity_tanker_t": 45387,
-      "capacity_t": 115187
-    },
     {
       "date": "2026-09-03",
       "total": 2,
@@ -516,6 +460,62 @@
       "total": 2,
       "tanker": 1,
       "cargo": 1,
+      "capacity_tanker_t": 0,
+      "capacity_t": 0
+    },
+    {
+      "date": "2026-10-26",
+      "total": 5,
+      "tanker": 2,
+      "cargo": 3,
+      "capacity_tanker_t": 0,
+      "capacity_t": 55078
+    },
+    {
+      "date": "2026-10-27",
+      "total": 4,
+      "tanker": 0,
+      "cargo": 4,
+      "capacity_tanker_t": 0,
+      "capacity_t": 13505
+    },
+    {
+      "date": "2026-10-28",
+      "total": 3,
+      "tanker": 2,
+      "cargo": 1,
+      "capacity_tanker_t": 13569,
+      "capacity_t": 13569
+    },
+    {
+      "date": "2026-10-29",
+      "total": 3,
+      "tanker": 1,
+      "cargo": 2,
+      "capacity_tanker_t": 0,
+      "capacity_t": 78111
+    },
+    {
+      "date": "2026-10-30",
+      "total": 7,
+      "tanker": 0,
+      "cargo": 7,
+      "capacity_tanker_t": 0,
+      "capacity_t": 165069
+    },
+    {
+      "date": "2026-10-31",
+      "total": 8,
+      "tanker": 4,
+      "cargo": 4,
+      "capacity_tanker_t": 85882,
+      "capacity_t": 100503
+    },
+    {
+      "date": "2026-11-01",
+      "total": 1,
+      "tanker": 1,
+      "cargo": 0,
       "capacity_tanker_t": 0,
       "capacity_t": 0
     }
