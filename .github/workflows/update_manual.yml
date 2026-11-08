@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '30 0 * * *'  # 毎日 09:30 JST
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '試し実行（ファイルを書かず、コミットもしない。結果はログに出す）'
+        type: boolean
+        default: false
 
 jobs:
   fetch-manual:
@@ -39,15 +44,18 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
             python scripts/fetch_manual.py --skip-if-updated-today
+          elif [ "${{ inputs.dry_run }}" = "true" ]; then
+            python scripts/fetch_manual.py --dry-run
           else
             python scripts/fetch_manual.py
           fi
 
       - name: Commit and push
+        if: inputs.dry_run != true
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          # data/ais-snapshot.json は実測専用（update_ais.yml が書く）。ここでは絶対に触らない
-          git add data/manual-update.json data/ais-estimate.json
-          git diff --staged --quiet || git commit -m "chore: update manual + AIS推計 $(date -u '+%Y-%m-%d %H:%M UTC')"
+          # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった（PortWatch で測る）
+          git add data/manual-update.json
+          git diff --staged --quiet || git commit -m "chore: update manual $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
