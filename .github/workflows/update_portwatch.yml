@@ -7,12 +7,21 @@ name: Update PortWatch (Hormuz transits)
 # （詳細: docs/data-sources-redesign.md §5-1・scripts/fetch_portwatch.py）
 on:
   schedule:
-    - cron: '43 1 * * *'   # 毎日 10:43 JST（GitHub 側の遅延で数時間ずれることがある）
+    # GitHub 側の遅延で数時間ずれることがある（11/6・11/7 は約6時間半）
+    - cron: '43 1 * * *'   # 毎日 10:43 JST
+    - cron: '43 13 * * *'  # 毎日 22:43 JST。ArcGIS の断続的な 400 で朝の回が外れても、その日のうちに取り直す
   workflow_dispatch:
+
+# 遅れた回と次の回が重ならないようにする（後の回は前の回が終わるまで待つ）
+concurrency:
+  group: update-portwatch
+  cancel-in-progress: false
 
 jobs:
   fetch-portwatch:
     runs-on: ubuntu-latest
+    # 試し直しは実行全体で最大40分（scripts/fetch_portwatch.py の RETRY_BUDGET_SEC）
+    timeout-minutes: 50
     permissions:
       contents: write
 
@@ -27,6 +36,9 @@ jobs:
 
       # 標準ライブラリだけで動くので、依存の導入は無い
       - name: Fetch PortWatch and rebuild portwatch-hormuz.json
+        # 標準出力と標準エラーの行の順を、ログで入れ替わらないようにする
+        env:
+          PYTHONUNBUFFERED: '1'
         run: |
           python scripts/fetch_portwatch.py
 

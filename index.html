@@ -550,7 +550,7 @@ function registerContextTimeline(ctx) {
   });
 }
 
-// PortWatch の取得が止まったとみなす日数。元のデータは約1週間遅れで週1回まとめて入るため、
+// PortWatch の更新が遅れているとみなす日数（公表の遅れと取得の失敗は見分けない）。元のデータは約1週間遅れで週1回まとめて入るため、
 // 最新の行が 7〜13日前なのは平常。fetch_portwatch.py の WARN と同じ 14日で切る。
 const PORTWATCH_STALE_DAYS = 14;
 
@@ -640,14 +640,14 @@ async function loadPortWatch() {
   const [from, to] = (w.period || '').split('/');
   const periodText = `${fmtMonthDay(from)}〜${fmtMonthDay(to)}（UTC）`;
   const staleMsg = stale
-    ? `⚠️ PortWatch の最新の行が ${pw.latest_date}（${age}日前）のままです。取得が止まっている可能性があります。`
+    ? `⚠️ PortWatch の最新の行が ${pw.latest_date}（${age}日前）のままです。PortWatch の公表が遅れているか、こちらの取得が止まっている可能性があります。`
     : '';
 
   // --- カード1：日次通航数 ---
   setText('pw-count', w.total.toFixed(1));
   setBadge('pw-tanker', 'タンカー', w.tanker);
   setBadge('pw-cargo',  '貨物船',   w.cargo);
-  if (stale) setOrigin('pw-origin', '取得が止まっています', '#fbbf24', 'rgba(251,191,36,0.12)');
+  if (stale) setOrigin('pw-origin', '更新が遅れています', '#fbbf24', 'rgba(251,191,36,0.12)');
   else       setOrigin('pw-origin', '実測（AIS で捕捉した分・下限）', '#4ade80', 'rgba(74,222,128,0.12)');
 
   // 分母は context.json の normal_vessels_per_day（PortWatch の 2025年平均）。分子と同じ出典にそろえる。

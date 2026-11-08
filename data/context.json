@@ -322,6 +322,96 @@
       "date": "2026-10-24",
       "fact": "イエメン政府の運輸省は10/24、フーシ派がアデン国際空港を弾道ミサイル2発で狙ったと発表し、今月4回目の同様の攻撃だと述べた。サウジ主導の連合軍の報道官は、リヤドに向けて発射された弾道ミサイル1発を防空網が迎撃し破壊したと投稿した。いずれも当事者の発表で、独立した確認は記事にない。",
       "source": "Al Jazeera 2026-10-24（https://www.aljazeera.com/news/2026/10/24/houthis-launch-attacks-on-saudi-arabia-and-yemens-aden）"
+    },
+    {
+      "date": "2026-10-23",
+      "fact": "UKMTOは警報182（10/26 09:20 UTC発行）で、ホルムズ海峡内で出港中のタンカーが正体不明の飛翔体を受けて航行不能になったとの確認された遅れての報告を公表した。乗組員は無事で、被害の評価と環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はなく、gCaptainは発生を10/23 08:39 UTCと書く。",
+      "source": "UKMTO 警報182（公式サイト Recent Incidents・2026-10-26 09:20 UTC 発行。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-10-26（https://gcaptain.com/tanker-disabled-in-strait-of-hormuz-attack-another-vessel-reported-on-fire-in-persian-gulf/）"
+    },
+    {
+      "date": "2026-10-29",
+      "fact": "UKMTOは警報185（10/29 06:29 UTC発行）で、オマーン・カサブの北9海里のホルムズ海峡で第三者の船の船長が別の船の炎上を目撃したと発表し、続報で、地域当局がその船をダウ船と特定し、海上の保安上の事案に巻き込まれて大きな火災が起き、傾いて沈没したこと、乗組員は安全に退避したことを伝えた。本文に発生時刻・原因・攻撃主体の記載はない。",
+      "source": "UKMTO 警報185（公式サイト Recent Incidents・2026-10-29 06:29 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-10-29（https://www.arabnews.pk/world/iran-claims-four-tankers-hit-mines-in-hormuz-as-dhow-crew-rescued-3005544）"
+    },
+    {
+      "date": "2026-10-29",
+      "fact": "UKMTOは警報186（10/29 17:51 UTC発行）で、会社保安責任者からの連絡として、ホルムズ海峡を出る通過を終える際にタンカーが正体不明の飛翔体を受けたと発表した。乗組員の負傷と環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報186（公式サイト Recent Incidents・2026-10-29 17:51 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Anews 2026-10-29（https://www.anews.com.tr/middle-east/2026/10/29/oil-tanker-struck-by-unknown-projectile-in-strait-of-hormuz-uk-maritime-agency）"
+    },
+    {
+      "date": "2026-10-29",
+      "fact": "UKMTOは警報187（10/29 23:51 UTC発行）で、本文の発生日時10/29 22:12 UTC、オマーン・カサブの北東25海里のホルムズ海峡で、海峡を出る船が炎上していると第三者から報告されたと発表した。続報（10/30 01:50 UTC）で、確認された報告として、タンカーに小型ボートが左舷側から近づいて喫水線の上の船体に爆発物2個を取り付け、爆発で機関室に火災が起きて船が一時航行不能になったこと、火災は消えて船は次の寄港地へ航行を続けていること、乗組員は無事で環境への影響はないことを伝え、事案を攻撃（ATTACK）に分類した。船名・攻撃主体は公表されていない。",
+      "source": "UKMTO 警報187（公式サイト Recent Incidents・2026-10-29 23:51 UTC 発行、Update 001 は 2026-10-30 01:50 UTC。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-10-30",
+      "fact": "UKMTOは警報188（10/30 19:03 UTC発行）で、イランのラヴァン島の南40海里（ペルシャ湾中部）で、船が左舷に正体不明の飛翔体を受けて船内で火災が起きたとの報告を受けたと発表した。乗組員は無事で、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報188（公式サイト Recent Incidents・2026-10-30 19:03 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-10-30",
+      "fact": "UKMTOは警報189（10/30 20:13 UTC発行）で、ホルムズ海峡について遅れての報告を受けたと発表した。信頼できる情報源から、原油タンカーが海峡を出る通過を終える際に正体不明の飛翔体を受けたとの内容で、当局が調査中。本文に発生時刻・船名・被害・攻撃主体の記載はない。",
+      "source": "UKMTO 警報189（公式サイト Recent Incidents・2026-10-30 20:13 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-10-31",
+      "fact": "米中央軍（CENTCOM）によると、米軍の対イラン海上封鎖で進路を変更させられた商船は10/31時点で144隻になった。約2週間前の発表は138隻だった。集計の起点は記事から読み取れない。",
+      "source": "CBS News 2026-10-31（ライブ更新。https://cbsnews.com/live-updates/iran-war-us-trump-diplomacy-threat-resume-attacks）/ CENTCOM の X 投稿 2026-10-31（ミラーサイト経由で確認）"
+    },
+    {
+      "date": "2026-11-01",
+      "fact": "UKMTOは警報191（Attack・11/1 18:15 UTC発行）で、ホルムズ海峡内で商船の船長がVHF 16チャンネルのMaydayを中継し、別の船が正体不明の飛翔体を受けたと発表した。本文に発生時刻・船名・被害・攻撃主体の記載はなく、当局が調査中。",
+      "source": "UKMTO 警報191（公式サイト Recent Incidents・2026-11-01 18:15 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-11-01（https://www.arabnews.com/middle-east/uk-agency-reports-vessel-strike-in-hormuz-irans-guards-say-tankers-hit-mines-3009316）"
+    },
+    {
+      "date": "2026-11-02",
+      "fact": "UKMTOは警報192（11/2 01:40 UTC発行）で、サウジアラビアのラスアルカフジの東72海里のペルシャ湾を南東へ航行中のタンカーが、左舷に正体不明の飛翔体2発を受けたと発表した。乗組員は全員無事で、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報192（公式サイト Recent Incidents・2026-11-02 01:40 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Middle East Eye 2026-11-02（https://www.middleeasteye.net/live-blog/live-blog-update/ukmto-says-vessel-hit-two-projectiles-near-saudi-arabia）"
+    },
+    {
+      "date": "2026-11-02",
+      "fact": "UKMTOは警報193（11/2 18:49 UTC発行）で、オマーンのリマの北東9海里で、船長の報告として、船が正体不明の飛翔体を受けて右舷に穴が開いたと発表した。船と乗組員は無事で、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はなく、本文の警報番号は「192-26」と誤記されている。",
+      "source": "UKMTO 警報193（公式サイト Recent Incidents・2026-11-02 18:49 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Gulf News 2026-11-02（https://gulfnews.com/world/mena/vessel-struck-near-strait-of-hormuz-maritime-agency-1.500733362）"
+    },
+    {
+      "date": "2026-11-03",
+      "fact": "UKMTOは警報194（11/3 13:16 UTC発行）で、インド政府の報告として、インド人乗組員のダウ船が海峡を出る途中で攻撃を受け、オマーン王立海軍が生存した乗組員を救助したと発表した。船の状態は不明。本文に船名・死者・発生時刻・攻撃主体の記載はない。",
+      "source": "UKMTO 警報194（公式サイト Recent Incidents・2026-11-03 13:16 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-03",
+      "fact": "インド外務省は、オマーンのリマ付近で11/2夕方にインド船籍の商船MSV AL JUSUFIが攻撃を受け、乗船していたインド人14人のうち13人が救助され、1人が死亡したと発表した。ソノワル海運相は救助したのはオマーン沿岸警備隊だと述べた（UKMTO警報194は救助したのをオマーン王立海軍としている）。攻撃主体は記事に示されていない。警報194とMSV AL JUSUFIが同じ事案かは、警報の本文に船名がなく確認できていない。",
+      "source": "Khaleej Times 2026-11-03（インド外務省の声明。https://www.khaleejtimes.com/world/asia/indian-sailor-killed-rescued-vessel-attacked-off-oman-coast）"
+    },
+    {
+      "date": "2026-11-03",
+      "fact": "UKMTOは警報195（11/3 21:08 UTC発行）で、オマーンのリマの北東14海里で、タンカーの会社保安責任者の報告として、船が正体不明の飛翔体2発を機関室に受けたと発表した。死傷者と環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報195（公式サイト Recent Incidents・2026-11-03 21:08 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-02",
+      "fact": "米当局者2人によると、米軍は11/2（月）にイランのQeshm島を限定的に攻撃した。当局者は、IRGCが過去数週間、ホルムズ海峡の上空で米軍の有人機・無人機を繰り返し標的にして撃ってきたことへの自衛で、イランでの大規模な戦闘の再開ではないと説明した。CENTCOM・国防総省の公式発表は確認されていない。",
+      "source": "NBC News 2026-11-02 公開・11-03 更新（米当局者2人の話。https://www.nbcnews.com/world/iran/us-conducted-defensive-strikes-iranian-targets-strait-hormuz-us-offici-rcna607161）"
+    },
+    {
+      "date": "2026-11-03",
+      "fact": "トランプ米大統領は、米軍が11/3（火）早朝にイランのQeshm島を攻撃したと認めた。「小規模な攻撃」で、イランが造った対空施設が完成した直後に攻撃したと述べた。CENTCOMの個別の公式発表は確認されていない。",
+      "source": "Al Jazeera 2026-11-04（トランプ氏の発言を伝える記事。https://aljazeera.com/news/2026/11/4/iran-says-us-reply-to-hormuz-plan-unconvincing-trump-confirms-strikes）"
+    },
+    {
+      "date": "2026-11-05",
+      "fact": "UKMTOは警報196（Attack・11/5 08:19 UTC発行）で、カタールのMadinat ash Shamalの北50海里のペルシャ湾中部で、タンカーが正体不明の飛翔体2発を受けたと発表した。乗組員の状況・被害・環境への影響は発表時点で未確認。本文に発生時刻・船名・攻撃主体の記載はない。Dawn（ロイター引用）は発生を11/4 23:20 UTCと伝え、公式の日時欄（11/5 08:00 UTC）と約8時間半の差がある。",
+      "source": "UKMTO 警報196（公式サイト Recent Incidents・2026-11-05 08:19 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Dawn 2026-11-05（ロイター引用。https://www.dawn.com/news/2042327）"
+    },
+    {
+      "date": "2026-11-05",
+      "fact": "マーシャル諸島籍のタンカーMT Velos Sapphireが、空荷でバーレーンへ向かう途中の湾内で、ミサイル攻撃によるとみられる爆発を受け、当初行方不明とされた船員1人が船内で死亡しているのが見つかった。火災は消し止められ、他にけが人はいない。Arab Newsは攻撃主体を書いておらず、UKMTOの警報196との関係も記事に示されていない。",
+      "source": "Arab News 2026-11-06（https://www.arabnews.com/middle-east/seafarer-killed-in-suspected-missile-attack-on-tanker-in-gulf-3010185）"
+    },
+    {
+      "date": "2026-11-06",
+      "fact": "UKMTOは警報197（Attack・11/6 12:06 UTC発行）で、遅れての報告として、オマーン・ハサブの東16海里で、ホルムズ海峡を出るタンカーの船長が左舷の喫水線での爆発を報告したと発表した。乗組員は全員無事で、船は自力で航行を続けている。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報197（公式サイト Recent Incidents・2026-11-06 12:06 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-11-06（https://www.arabnews.com/middle-east/tanker-reports-explosion-near-omans-khasab-while-transiting-strait-of-hormuz-ukmto-says-3010151）"
     }
   ],
 
