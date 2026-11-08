@@ -1,57 +1,57 @@
 {
-  "updated_at": "2026-11-07T09:32:13+09:00",
+  "updated_at": "2026-11-08T09:32:01+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-25",
-    "age_days": 13,
+    "age_days": 14,
     "stale_after_days": 30,
     "stale": false,
     "normal_flow_verified": true,
     "timeline_updated": "2026-11-06",
-    "timeline_age_days": 1,
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-05"
+    "judgment_date": "2027-02-06"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 34,
-    "B_partial_blockade_pct": 33,
+    "A_diplomacy_pct": 30,
+    "B_partial_blockade_pct": 37,
     "C_full_blockade_pct": 8,
     "D_escalation_pct": 25
   },
-  "hormuz_daily_flow_mbpd": 8.5,
+  "hormuz_daily_flow_mbpd": 7.5,
   "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 59,
-  "last_manual_note": "中間選挙で与党大敗後、カタール仲介で協議続く。イランは合意時2日で海峡再開と提示し核提案も検討。一方でタンカー被弾が続き、米はQeshm島を攻撃",
+  "flow_disruption_pct": 64,
+  "last_manual_note": "米軍がゲシュム島などを限定攻撃し、海峡では商船への飛翔体・爆発被害が続く。米の対イラン封鎖も継続。中間選挙での民主党勝利後、カタール仲介の核査察案とヴァンス主導の間接協議が進む。",
   "ais_estimated_vessels": 4,
   "ais_estimated_tankers": 3,
   "ais_estimated_cargo": 1,
   "ais_confidence": "low",
-  "ais_estimation_note": "日10隻前後の報道と通過時間から推計",
+  "ais_estimation_note": "直近の隻数報道なし。9月の日10隻前後から外挿",
   "scenario_range": {
     "A_diplomacy_pct": [
-      30,
-      34
+      25,
+      30
     ],
     "B_partial_blockade_pct": [
-      33,
+      37,
       40
     ],
     "C_full_blockade_pct": [
       7,
-      9
+      10
     ],
     "D_escalation_pct": [
-      19,
-      27
+      25,
+      25
     ]
   },
   "scenario_samples": 5
