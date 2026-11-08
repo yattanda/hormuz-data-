@@ -1,6 +1,6 @@
 {
   "_comment": "Gemini プロンプトに注入する前提を集約したファイル。scripts/fetch_manual.py が読み込む。ここを更新すれば Python コードを変更せずに前提を差し替えられる。値を変えたら context_updated も必ず更新すること。値を見直して据え置きと確かめたときも context_updated を更新し、何を確かめたかを context_review_log に1件足す（2026-10-08〜。見直しの記録が無いと、変える必要のない前提でも表示側に「更新されていません」の注意が出続ける）。",
-  "context_updated": "2026-10-25",
+  "context_updated": "2026-10-26",
   "context_review_log": [
     {
       "date": "2026-10-08",
@@ -13,6 +13,12 @@
       "result": "シナリオの定義を変更：判定日（90日後・scenario_horizon_days）と判定の順（scenario_rule：D → A → C → B）を足し、4つが重ならず必ずどれかに当たる形にした。数値の前提は変更なし",
       "checked": "scenario_definitions・scenario_horizon_days・scenario_rule",
       "not_rechecked": "normal_flow_mbpd・normal_vessels_per_day・dark_factor（2026-10-08 の見直しのまま）"
+    },
+    {
+      "date": "2026-10-26",
+      "result": "normal_vessels_per_day を 100（報道の概数）から 85.5（IMF PortWatch の 2025年平均）へ。untracked_share_reported を足した。dark_factor は表示に使わなくなった（値は変えず記録として残す）",
+      "checked": "normal_vessels_per_day：data/portwatch-hormuz.json の baselines.2025.total が 85.5 であることを確認",
+      "not_rechecked": "normal_flow_mbpd（2026-10-08 の見直しのまま）。untracked_share_reported は dark_factor の todo に記録済みの Lloyd's List の値を移しただけで、新しい週の報道は探していない"
     }
   ],
   "stale_after_days": 30,
@@ -38,17 +44,30 @@
   },
 
   "normal_vessels_per_day": {
-    "_comment": "「開戦前比」の分母。index.html が AI推計の隻数をこの値で割って割合を出す。scripts/fetch_manual.py のプロンプトも同じ値を参照する。",
-    "value": 100,
+    "_comment": "カード1「2025年平均比」の分母。index.html が IMF PortWatch の7日平均の通航数をこの値で割って割合を出す。分子と同じ出典（PortWatch）にそろえる（docs/data-sources-redesign.md Q2）。scripts/fetch_manual.py のプロンプトも同じ値を参照する。",
+    "value": 85.5,
     "unit": "隻/日",
     "verified": true,
-    "basis": "開戦（2026-02-28）前のホルムズ海峡の日間通航隻数として複数の報道が一致して示す水準。Al Jazeera は Kpler・UNCTAD を参照して「100隻超/日」とし、他に120隻/日・130隻/日・年間30,000隻超（約82隻/日）とする報道もある。公式統計ではなく報道ベースの概数である点に注意。従来の 200 は 2026-04-15 の index.html 初版に定数として直接書き込まれた値で、一次資料が記録されておらず、2026-09-05 の調査でも裏づけを確認できなかった。実態のおよそ2倍を分母にしていたため、封鎖前比を半分に過小表示していた。",
-    "source_url": "https://www.aljazeera.com/news/2026/8/27/how-a-95-percent-drop-in-hormuz-traffic-changed-global-shipping",
-    "todo": "IMO が Strait of Hormuz の月次通航データをグラフで公開している。数値を読み取れれば公式系の出典に置き換える。"
+    "basis": "IMF PortWatch（Daily Chokepoint Transit Calls・chokepoint6）の 2025年の日次通航の平均（2025-01-01〜12-31・365日）。data/portwatch-hormuz.json の baselines.2025.total と同じ値で、取得のたびに計算し直して5%以上動けば fetch_portwatch.py が WARN を出す。対象はコンテナ・ばら積み・一般貨物・RoRo・タンカーの5種類だけで、報道の「100隻超/日」（Al Jazeera が Kpler・UNCTAD を参照）より少ないのは主にこのためとみられる。2026年1〜2月（開戦前・68.1隻/日）は緊張の高まりが入っているとみて使わない。2026-10-26 に報道の概数 100 から差し替えた。それ以前の 200（2026-04-15 の index.html 初版の定数・一次資料なし）は 2026-09-05 に 100 へ直している。",
+    "source_url": "https://portwatch.imf.org/datasets/3da2b9ca97684916b75c4013f95d18ab_0/about",
+    "previous": {"value": 100, "until": "2026-10-26", "source_url": "https://www.aljazeera.com/news/2026/8/27/how-a-95-percent-drop-in-hormuz-traffic-changed-global-shipping"}
+  },
+
+  "untracked_share_reported": {
+    "_comment": "AIS で追跡できない船の割合の報道値。数値には掛けず、index.html のカード1に出典つきの文章でだけ示す（docs/data-sources-redesign.md Q4）。新しい週の報道を見つけたら差し替える。",
+    "value": 70,
+    "unit": "%",
+    "scope": "全船種・週次",
+    "period": "2026-07-20/2026-07-26",
+    "period_label": "7/20〜26 の週",
+    "published": "2026-07-29",
+    "source_name": "Lloyd's List Intelligence",
+    "source_url": "https://www.lloydslistintelligence.com/resources/blog/strait-of-hormuz-brief-29-july-2026",
+    "basis": "Strait of Hormuz Brief（2026-07-29 発行）。直前3週は 42% → 55% → 70% と動いており、週ごとの振れが大きい。"
   },
 
   "dark_factor": {
-    "_comment": "AIS 非検出（ダークシッピング）船舶を見込むための補正係数。index.html が AIS 受信の実測隻数に掛けて「推定実通航数」を出す。AI推計へのフォールバック時は掛けない（推計は報道から通過中の船舶数そのものを見積もっており、AIS で見えた分ではないため二重計上になる。2026-09-06 に是正）。値と帰属をここで一元管理し、表示側は verified を見て文言を切り替える。",
+    "_comment": "【2026-10-26 から表示に使っていない】AIS 非検出（ダークシッピング）船舶を見込むための補正係数。以前は index.html が AIS 受信の実測隻数に掛けて「推定実通航数」を出していた。根拠が無く、追跡できない割合は週ごとに大きく動くため、数値に掛けるのをやめ、untracked_share_reported を文章で示す形にした（docs/data-sources-redesign.md Q4）。記録として残す。",
     "value": 1.35,
     "verified": false,
     "label": "当サイト独自の暫定値・根拠未検証",
