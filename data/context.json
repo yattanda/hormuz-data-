@@ -412,6 +412,21 @@
       "date": "2026-11-06",
       "fact": "UKMTOは警報197（Attack・11/6 12:06 UTC発行）で、遅れての報告として、オマーン・ハサブの東16海里で、ホルムズ海峡を出るタンカーの船長が左舷の喫水線での爆発を報告したと発表した。乗組員は全員無事で、船は自力で航行を続けている。本文に発生時刻・船名・攻撃主体の記載はない。",
       "source": "UKMTO 警報197（公式サイト Recent Incidents・2026-11-06 12:06 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-11-06（https://www.arabnews.com/middle-east/tanker-reports-explosion-near-omans-khasab-while-transiting-strait-of-hormuz-ukmto-says-3010151）"
+    },
+    {
+      "date": "2026-11-07",
+      "fact": "UKMTOは警報198（Advisory・11/7 21:38 UTC発行）で、UAEのホール・ファッカンの東約18海里のオマーン湾で、ばら積み貨物船と軍が関わる事案の報告を受けたと発表した。乗組員の状況・被害・環境への影響は発表時点で不明で、当局が調査中。本文に発生時刻・船名・軍の国籍の記載はない。",
+      "source": "UKMTO 警報198（公式サイト Recent Incidents・2026-11-07 21:38 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-08",
+      "fact": "UKMTOは警報199（Suspicious Activity・11/8 09:10 UTC発行）で、遅れての報告として、オマーン・ハサブの北西8海里の事案を受け、軍当局がタンカーが炎上して乗組員が退避したと報告したと発表した。本文に発生時刻・原因・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報199（公式サイト Recent Incidents・2026-11-08 09:10 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Gulf News 2026-11-09（https://gulfnews.com/world/mena/uae-rescues-22-crew-in-gulf-of-oman-as-us-tightens-iran-blockade-and-tehran-lifts-missile-limits-1.500739993）"
+    },
+    {
+      "date": "2026-11-08",
+      "fact": "UKMTOは警報200（Attack・11/8 10:39 UTC発行）で、遅れての報告として、ホルムズ海峡を出る途中のタンカーが未特定の飛翔体に被弾したと、タンカーの会社保安責任者が報告したと発表した。乗組員は全員無事で、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報200（公式サイト Recent Incidents・2026-11-08 10:39 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
     }
   ],
 
