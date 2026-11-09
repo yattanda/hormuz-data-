@@ -1,58 +1,113 @@
 {
-  "updated_at": "2026-11-08T09:32:01+09:00",
+  "updated_at": "2026-11-09T09:32:03+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
-    "updated": "2026-10-25",
+    "updated": "2026-10-26",
     "age_days": 14,
     "stale_after_days": 30,
     "stale": false,
-    "normal_flow_verified": true,
-    "timeline_updated": "2026-11-06",
-    "timeline_age_days": 2,
+    "timeline_updated": "2026-11-08",
+    "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-06"
+    "judgment_date": "2027-02-07"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 30,
-    "B_partial_blockade_pct": 37,
-    "C_full_blockade_pct": 8,
-    "D_escalation_pct": 25
+    "A_diplomacy_pct": 24,
+    "B_partial_blockade_pct": 44,
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 22
   },
-  "hormuz_daily_flow_mbpd": 7.5,
-  "hormuz_normal_flow_mbpd": 20.9,
-  "flow_disruption_pct": 64,
-  "last_manual_note": "米軍がゲシュム島などを限定攻撃し、海峡では商船への飛翔体・爆発被害が続く。米の対イラン封鎖も継続。中間選挙での民主党勝利後、カタール仲介の核査察案とヴァンス主導の間接協議が進む。",
-  "ais_estimated_vessels": 4,
-  "ais_estimated_tankers": 3,
-  "ais_estimated_cargo": 1,
-  "ais_confidence": "low",
-  "ais_estimation_note": "直近の隻数報道なし。9月の日10隻前後から外挿",
   "scenario_range": {
     "A_diplomacy_pct": [
-      25,
-      30
+      18,
+      25
     ],
     "B_partial_blockade_pct": [
-      37,
-      40
+      41,
+      47
     ],
     "C_full_blockade_pct": [
-      7,
-      10
+      8,
+      15
     ],
     "D_escalation_pct": [
-      25,
+      20,
       25
     ]
   },
-  "scenario_samples": 5
+  "scenario_samples": 5,
+  "reported_figures": [],
+  "note_sentences": [
+    {
+      "text": "トランプ氏は対イランの陸上封鎖の発効を表明し、米軍は封鎖突破を図った船を攻撃した。",
+      "items": [
+        1,
+        13,
+        42
+      ],
+      "sources": [
+        {
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Iran war live: Trump says land blockade in effect; drone cuts power in Iraq",
+          "link": "https://www.aljazeera.com/news/liveblog/2026/11/9/iran-war-live-trump-says-land-blockade-in-effect-drone-cuts-power-in-iraq?traffic_source=rss",
+          "published": "2026-11-09"
+        },
+        {
+          "source": "The Times of Israel",
+          "domain": "www.timesofisrael.com",
+          "title": "US military says strike disabled ship trying to run blockade on Iran - The Times of Israel",
+          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNU09GTWFrTFZ6UDd1SkNCNkhtYmdycC1yakxvakIwcVl2aWhpRDFsdmI4VGg5SmRWemxWZUlFbTZPa2xYZzFRY1ZENWNhM0tCN1JNYmw1YWw1bVVOZm1rNmZKaUlLOHVzY0hqVTFuemZqTkNtTWl3cDB3SnV3Qm5qUE84Y21vRXBINU5talhPNFVwRWF5cUEtQnhMRzA3dlNh0gGmAUFVX3lxTE1HSk9WeEVMeXU1Z0hacVNudkhKaXhjanhJRWdVMTZCWm1ZNU5tUDFXTk96U2txN0pORlcyOHpVMUpUREs3QjMzQjE0STNnc1M2cUg0NTVTVlVPQndxbDZXUldSWHlJMk1KOGNZU2pZcGdPTmJuZmlnaGVLQ3l1MHlkLTFncGktS0R4YkFDUmJGT0NyWTZ0b0NhV2l1bG05YmlSZkdmY1E?oc=5",
+          "published": "2026-11-08"
+        },
+        {
+          "source": "Lloyd's List",
+          "domain": "www.lloydslist.com",
+          "title": "US strike on bulker marks new escalation as Hormuz ship casualties mount - Lloyd's List",
+          "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNTU5leHNTdmExcGhfaUMxNEhubXR4TjFlckdUQmFnU1RwcWJIM3NSeDRIN3V4MzhQdThjR25zOXNKN2g4cU02azNyWXZocS0tdVJOTlR5V1FrQW1weTd6MmZWSXktWlFXbVdaOFBJc1ExSElZdFVCZ2xtemFmbzFsNzFFbXNma1RMOV9TeldxcVhtMzVXVUpyaXB6U1luRC1NYXFCOHJ4NUI5Vm5uUGc?oc=5",
+          "published": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "text": "カタールの核査察案には海峡再開が含まれると報じられた。",
+      "items": [
+        23
+      ],
+      "sources": [
+        {
+          "source": "The Guardian",
+          "domain": "www.theguardian.com",
+          "title": "Strait of Hormuz could reopen as part of Qatari plan for Iran nuclear inspections - The Guardian",
+          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOMFNrLUQ1dG9iaVNVYWYzRjRlbmNnVEFHR29rcWh5NnFpaEx5UWs1RjNTbWZoc3oxd2RQWUdBaXFaNzJENjlUWVdNOHNsQzlWOFVYdDZHVTFvQmpGWEpSSlZFLXRVTUxWX2lQaHl6VjJMVDViVEM2NXF4cnZJcUo1aWJHc3MtdTZFdFRhLTF5cXBTallDMFVZY1dlMkd5RFU?oc=5",
+          "published": "2026-11-07"
+        }
+      ]
+    },
+    {
+      "text": "イランは海峡でタンカー3隻が炎上したと主張した。",
+      "items": [
+        9
+      ],
+      "sources": [
+        {
+          "source": "Inquirer.net",
+          "domain": "globalnation.inquirer.net",
+          "title": "Iran says 3 tankers caught fire in Strait of Hormuz - Inquirer.net",
+          "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQbHVjWGRLRlU4MGRaZ3YxVHFHVDktdGw1YjBGTHFqV1g5MEZoVVl5OHBHNnY1TmRIbHgtVk9WdldCUGlVbnE2OFBOeDJLODYyVXppSkhyUllQVTBoTlV2cUs0OW9MNllEVnJHSk5XUTRTTHc1UFIzT3B4Yy1IRGpsZ24yd1Z5ZV9NWl9MWjRvNG5ZRURGdE1z0gGcAUFVX3lxTE9XdEhqYnJYcS00cldqVnlWS0xhNF82ZUVyQ0tGNjQ4NG1SVkFxTjlEa0tTWEhTMGpYUW1WWGF2bE1KYlR0SnltYjJ6akpTNXU2cUl5Ry1sbmNhNW5RT2pDQ192bk41S1A1QzNBcUlSWW5ZMnNVbVBXNVEyM1dYRHpERXQtLXRCdUF6VEdUUmpqT0FqQlZ5SVVTV0VGNw?oc=5",
+          "published": "2026-11-08"
+        }
+      ]
+    }
+  ],
+  "last_manual_note": "トランプ氏は対イランの陸上封鎖の発効を表明し、米軍は封鎖突破を図った船を攻撃した。カタールの核査察案には海峡再開が含まれると報じられた。イランは海峡でタンカー3隻が炎上したと主張した。"
 }
