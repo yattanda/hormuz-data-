@@ -427,6 +427,16 @@
       "date": "2026-11-08",
       "fact": "UKMTOは警報200（Attack・11/8 10:39 UTC発行）で、遅れての報告として、ホルムズ海峡を出る途中のタンカーが未特定の飛翔体に被弾したと、タンカーの会社保安責任者が報告したと発表した。乗組員は全員無事で、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はない。",
       "source": "UKMTO 警報200（公式サイト Recent Incidents・2026-11-08 10:39 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-10",
+      "fact": "UKMTOは警報201（Attack・11/10 15:52 UTC発行）で、オマーン・リマの北東19海里で、タンカーの船長が未特定の飛翔体に被弾したと報告したと発表した。乗組員は全員無事で、環境への影響の報告はなく、損傷の確認は夜明け後に行う。本文に発生時刻・船名・攻撃主体の記載はなく、gCaptainは警報201によるとして発生を11/10 13:38 UTCと書く。",
+      "source": "UKMTO 警報201（公式サイト Recent Incidents・2026-11-10 15:52 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-11-10（https://gcaptain.com/adnoc-vessel-damaged-in-gulf-attack-as-ukmto-reports-fresh-tanker-strike-near-hormuz/）"
+    },
+    {
+      "date": "2026-11-10",
+      "fact": "ADNOC Logistics & Servicesは、同社の船舶が11/10午後にペルシャ湾（UAEの領海）での攻撃で損傷したと確認した。船の種類・船名・被害の程度・負傷の有無・攻撃主体は公表されておらず、gCaptainはUKMTOが報告した被弾との関連は「not immediately clear」と書く。",
+      "source": "gCaptain 2026-11-10（https://gcaptain.com/adnoc-vessel-damaged-in-gulf-attack-as-ukmto-reports-fresh-tanker-strike-near-hormuz/）/ Arab News 2026-11-10（https://www.arabnews.com/middle-east/tanker-struck-by-unknown-projectile-off-oman-ukmto-says-3010988）"
     }
   ],
 
