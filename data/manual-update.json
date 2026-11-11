@@ -1,113 +1,113 @@
 {
-  "updated_at": "2026-11-10T09:31:54+09:00",
+  "updated_at": "2026-11-11T09:31:54+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-26",
-    "age_days": 15,
+    "age_days": 16,
     "stale_after_days": 30,
     "stale": false,
-    "timeline_updated": "2026-11-08",
-    "timeline_age_days": 2,
+    "timeline_updated": "2026-11-10",
+    "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-08"
+    "judgment_date": "2027-02-09"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 31,
-    "B_partial_blockade_pct": 41,
-    "C_full_blockade_pct": 8,
-    "D_escalation_pct": 20
+    "A_diplomacy_pct": 21,
+    "B_partial_blockade_pct": 49,
+    "C_full_blockade_pct": 15,
+    "D_escalation_pct": 15
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      30,
-      35
+      20,
+      24
     ],
     "B_partial_blockade_pct": [
-      38,
-      42
+      46,
+      52
     ],
     "C_full_blockade_pct": [
-      8,
-      12
+      12,
+      16
     ],
     "D_escalation_pct": [
-      15,
-      20
+      12,
+      18
     ]
   },
   "scenario_samples": 5,
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "トランプ大統領はカタール首相との会談後、戦争は「事実上終わった」と述べたが、イラン側は否定した。",
+      "text": "トランプ氏は追加攻撃を「極めて考えにくい」としつつ封鎖は維持。",
       "items": [
-        1,
-        6
+        24,
+        26
       ],
       "sources": [
         {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Iran war live: Trump says war ‘effectively over’, Iran demands ‘surrender’",
-          "link": "https://www.aljazeera.com/news/liveblog/2026/11/9/iran-war-live-trump-says-war-effectively-over-iran-demands-surrender?traffic_source=rss",
+          "source": "BBC",
+          "domain": "feeds.bbci.co.uk",
+          "title": "Trump says more US attacks on Iran 'highly unlikely'",
+          "link": "https://www.bbc.co.uk/news/articles/cq5yny4nl2d3o?at_medium=RSS&at_campaign=rss",
           "published": "2026-11-10"
         },
         {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Trump says war on Iran ‘effectively over’ after talks with Qatar’s PM",
-          "link": "https://www.aljazeera.com/news/2026/11/9/trump-calls-iran-war-effectively-over-after-talks-with-qatar-pm?traffic_source=rss",
+          "source": "Nation Thailand",
+          "domain": "www.nationthailand.com",
+          "title": "Trump holds off fresh Iran strikes but keeps Strait of Hormuz blockade - Nation Thailand",
+          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9EajRJTG9LM3BUUGFOZHpaOVppUEMySWNKMGFBb24wb2lWSDFud0M4bS1PZDlHeVBuQVhGY0k1aGVPd3lGamJNUk5tTlhQNDV1UDg2QnpKUWFEUE1saWxJ?oc=5",
           "published": "2026-11-10"
         }
       ]
     },
     {
-      "text": "サウジの東西パイプラインが新たな攻撃を受けた。",
+      "text": "イランは対米協議を否定する一方、核の具体案を検討中と報じられた。",
       "items": [
-        7
+        1,
+        40
       ],
       "sources": [
         {
           "source": "Al Jazeera",
           "domain": "www.aljazeera.com",
-          "title": "Saudi Arabia reports new attack on key East-West pipeline",
-          "link": "https://www.aljazeera.com/news/2026/11/9/saudi-arabia-reports-new-attack-on-key-east-west-pipeline?traffic_source=rss",
-          "published": "2026-11-10"
-        }
-      ]
-    },
-    {
-      "text": "和平期待で原油価格は下落した。",
-      "items": [
-        9,
-        15
-      ],
-      "sources": [
+          "title": "Iran war live: Hegseth survives impeachment bid; Iran denies US talks",
+          "link": "https://www.aljazeera.com/news/liveblog/2026/11/11/iran-war-live-hegseth-survives-impeachment-bid-iran-denies-us-talks?traffic_source=rss",
+          "published": "2026-11-11"
+        },
         {
           "source": "New York Times",
           "domain": "rss.nytimes.com",
-          "title": "Oil Prices Fall on Hopes for Peace Between U.S. and Iran",
-          "link": "https://www.nytimes.com/2026/11/09/business/energy-environment/oil-price-iran-trump-war.html",
-          "published": "2026-11-10"
-        },
+          "title": "Iran is Reviewing ‘Concrete Proposals’ on Nuclear Program, Officials Say",
+          "link": "https://www.nytimes.com/2026/11/05/world/middleeast/peace-talks-iran-united-states-qatar-nuclear-program.html",
+          "published": "2026-11-06"
+        }
+      ]
+    },
+    {
+      "text": "ADNOCの船舶が湾内で攻撃を受け損傷した。",
+      "items": [
+        41
+      ],
+      "sources": [
         {
-          "source": "HESPRESS English - Morocco News",
-          "domain": "en.hespress.com",
-          "title": "Oil prices drop more than 5% amid hopes for US-Iran deal - HESPRESS English - Morocco News",
-          "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQVW5IQkI3RjlQUU5BX21pN3EzRnhQZGRsUEQ0SGk2Nl9TdTR1eGVsV3dKbUx3VC0xTHRpS20yQ2Ftd2FtdTVsX3Q2M3EzU3pISy16dVhGbDJUYTh2VjY0a1pmenRtQkRVam45RWVWaURiSG9kdzgwbUFyZmtNMFgwdTN6TUtsN21raXNjLURwTk9KOGZxQnc?oc=5",
-          "published": "2026-11-10"
+          "source": "gCaptain",
+          "domain": "gcaptain.com",
+          "title": "ADNOC Vessel Damaged in Gulf Attack as UKMTO Reports Fresh Tanker Strike Near Hormuz - gCaptain",
+          "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNN2x6eGtJcW9sblp3bU9KUkZpdFprRl93NXMyVGdKc0p1NS1EbW1Bd01Hek90NUdCTjdYT3pXdFZZc1pXMlN6enNnOUgxVGp1aUxObW02eWJ0M08xem56M2tpcXhYOFMtVkZ0SUNjako3RE40M1ludWczOGhNVXBvRUY3WHpfN3pPOVVfOG0wdmY4R01qVlZHSWtCSGszU0FGMi1LRDJZUUp1QQ?oc=5",
+          "published": "2026-11-11"
         }
       ]
     }
   ],
-  "last_manual_note": "トランプ大統領はカタール首相との会談後、戦争は「事実上終わった」と述べたが、イラン側は否定した。サウジの東西パイプラインが新たな攻撃を受けた。和平期待で原油価格は下落した。"
+  "last_manual_note": "トランプ氏は追加攻撃を「極めて考えにくい」としつつ封鎖は維持。イランは対米協議を否定する一方、核の具体案を検討中と報じられた。ADNOCの船舶が湾内で攻撃を受け損傷した。"
 }
