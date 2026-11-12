@@ -437,6 +437,21 @@
       "date": "2026-11-10",
       "fact": "ADNOC Logistics & Servicesは、同社の船舶が11/10午後にペルシャ湾（UAEの領海）での攻撃で損傷したと確認した。船の種類・船名・被害の程度・負傷の有無・攻撃主体は公表されておらず、gCaptainはUKMTOが報告した被弾との関連は「not immediately clear」と書く。",
       "source": "gCaptain 2026-11-10（https://gcaptain.com/adnoc-vessel-damaged-in-gulf-attack-as-ukmto-reports-fresh-tanker-strike-near-hormuz/）/ Arab News 2026-11-10（https://www.arabnews.com/middle-east/tanker-struck-by-unknown-projectile-off-oman-ukmto-says-3010988）"
+    },
+    {
+      "date": "2026-11-11",
+      "fact": "UKMTOは警報202（Attack・11/11 03:07 UTC発行）で、ホルムズ海峡のタンカーが未特定の飛翔体に被弾したと確認した。当初は事案の報告のみだったが、更新001で攻撃に再分類された。乗組員は全員無事と報告されている。本文に発生時刻・船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報202（公式サイト Recent Incidents・2026-11-11 03:07 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-12",
+      "fact": "UKMTOは警報203（Attack・11/12 12:15 UTC発行）で、遅れての報告として、アラビア湾（ペルシャ湾）を東へ向かっていたタンカーが未特定の飛翔体に被弾し、複数の負傷者が出て陸上で医療を受けていると発表した。残りの乗組員は全員無事。被害の評価と環境への影響は不明。本文の発生日は11/10で、発生時刻は未定（TBC）、船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報203（公式サイト Recent Incidents・2026-11-12 12:15 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-12",
+      "fact": "UKMTOは警報204（Attack・11/12 13:45 UTC発行）で、遅れての報告として、UAEのラアス・アル・ハイマの北西14海里でタンカーが機関室に未特定の飛翔体を受けたと発表した。発生は11/11 18:00 UTC。死傷者の報告はなく、乗組員は全員が安全に退避し、消火活動が続いている。gCaptainは、被弾したのは運航会社が韓国のSinokor Maritimeとされる MT Dominica Prosperity で、乗組員22人が避難したと書く。",
+      "source": "UKMTO 警報204（公式サイト Recent Incidents・2026-11-12 13:45 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-11-12（https://gcaptain.com/tanker-ablaze-off-uae-as-more-attacks-rattle-gulf-shipping/）"
     }
   ],
 
