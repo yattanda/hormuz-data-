@@ -1,113 +1,105 @@
 {
-  "updated_at": "2026-11-11T09:31:54+09:00",
+  "updated_at": "2026-11-12T09:31:44+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-26",
-    "age_days": 16,
+    "age_days": 17,
     "stale_after_days": 30,
     "stale": false,
     "timeline_updated": "2026-11-10",
-    "timeline_age_days": 1,
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-09"
+    "judgment_date": "2027-02-10"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 21,
-    "B_partial_blockade_pct": 49,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 20,
+    "B_partial_blockade_pct": 52,
+    "C_full_blockade_pct": 11,
+    "D_escalation_pct": 17
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      20,
-      24
+      18,
+      20
     ],
     "B_partial_blockade_pct": [
-      46,
-      52
+      50,
+      55
     ],
     "C_full_blockade_pct": [
-      12,
-      16
+      10,
+      12
     ],
     "D_escalation_pct": [
-      12,
-      18
+      15,
+      20
     ]
   },
   "scenario_samples": 5,
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "トランプ氏は追加攻撃を「極めて考えにくい」としつつ封鎖は維持。",
+      "text": "ルビオ国務長官は対イランの大規模戦闘再開は不要と述べた。",
       "items": [
-        24,
-        26
+        18,
+        23
       ],
       "sources": [
         {
-          "source": "BBC",
-          "domain": "feeds.bbci.co.uk",
-          "title": "Trump says more US attacks on Iran 'highly unlikely'",
-          "link": "https://www.bbc.co.uk/news/articles/cq5yny4nl2d3o?at_medium=RSS&at_campaign=rss",
-          "published": "2026-11-10"
-        },
-        {
-          "source": "Nation Thailand",
-          "domain": "www.nationthailand.com",
-          "title": "Trump holds off fresh Iran strikes but keeps Strait of Hormuz blockade - Nation Thailand",
-          "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9EajRJTG9LM3BUUGFOZHpaOVppUEMySWNKMGFBb24wb2lWSDFud0M4bS1PZDlHeVBuQVhGY0k1aGVPd3lGamJNUk5tTlhQNDV1UDg2QnpKUWFEUE1saWxJ?oc=5",
-          "published": "2026-11-10"
-        }
-      ]
-    },
-    {
-      "text": "イランは対米協議を否定する一方、核の具体案を検討中と報じられた。",
-      "items": [
-        1,
-        40
-      ],
-      "sources": [
-        {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Iran war live: Hegseth survives impeachment bid; Iran denies US talks",
-          "link": "https://www.aljazeera.com/news/liveblog/2026/11/11/iran-war-live-hegseth-survives-impeachment-bid-iran-denies-us-talks?traffic_source=rss",
+          "source": "CBS News",
+          "domain": "www.cbsnews.com",
+          "title": "Rubio says U.S. has \"no need\" to restart combat operations in Iran - CBS News",
+          "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE0zN0FDMkRwcDVyZGFpV0dvRnhidUVyU1hrc2pKQzJZMmlLZDF1bHZ0dzBtMDJLOXc5T0xNYmRuS2Q4eU1QQmFqaHJ1cVg0VGkxcWN3dEZLVlo1UlQ0ckZCaW52b0lHQzVZN2N6UElySjhIWDdXWVh5T24xcmh4Zw?oc=5",
           "published": "2026-11-11"
         },
         {
           "source": "New York Times",
           "domain": "rss.nytimes.com",
-          "title": "Iran is Reviewing ‘Concrete Proposals’ on Nuclear Program, Officials Say",
-          "link": "https://www.nytimes.com/2026/11/05/world/middleeast/peace-talks-iran-united-states-qatar-nuclear-program.html",
-          "published": "2026-11-06"
+          "title": "Rubio Says ‘Major Combat Operations’ in Iran War Are No Longer Needed",
+          "link": "https://www.nytimes.com/2026/11/10/us/politics/rubio-iran-war.html",
+          "published": "2026-11-11"
         }
       ]
     },
     {
-      "text": "ADNOCの船舶が湾内で攻撃を受け損傷した。",
+      "text": "イランは要求が満たされるまでホルムズ海峡を閉鎖し続けるとした。",
       "items": [
-        41
+        19
       ],
       "sources": [
         {
-          "source": "gCaptain",
-          "domain": "gcaptain.com",
-          "title": "ADNOC Vessel Damaged in Gulf Attack as UKMTO Reports Fresh Tanker Strike Near Hormuz - gCaptain",
-          "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNN2x6eGtJcW9sblp3bU9KUkZpdFprRl93NXMyVGdKc0p1NS1EbW1Bd01Hek90NUdCTjdYT3pXdFZZc1pXMlN6enNnOUgxVGp1aUxObW02eWJ0M08xem56M2tpcXhYOFMtVkZ0SUNjako3RE40M1ludWczOGhNVXBvRUY3WHpfN3pPOVVfOG0wdmY4R01qVlZHSWtCSGszU0FGMi1LRDJZUUp1QQ?oc=5",
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Iran denies talks with US, says Hormuz will stay shut until demands are met - Al Jazeera",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPbjE0dVFENk1CX2NnRnVSUEtzYzVDWlpBVlFvMnlNMnV5SjBncHJNcFI4WmRjNmdJWGtwXzJ6aUtYOUs4Ynl1bVUzVm5TWXFxNGxfSzRtaEY0czhyRTFSVU1mN3NqNW1BWm1WT1dCS2dZbEVTQ0hBcGRsM05RUWVQRGNUVHF1ZGhHOUZNVGVqR19keHFTUzJ3V0JwMnpFWF9uWDBYV2l3M01SN01ROFc2bzJHZUt1TjjSAbwBQVVfeXFMUDJtWTM5WXEtX3NDM0RkOG1ZVjE3RXVRYnRQNm5feHhKb0VJaXlLMjdPcjBCa1NzMkIySmk2a1hRMmwybS1SWG13RzNxLUtVZF9mQV9QYlB4cGxWcDVUbUFjVXdvcHo4THhtN2NIU01lUEYtUzVPdzRNcXIyWlBYM09QR0FsNzJUMUpBRGxaYUpQbl84bjNseUp6bWU1cFM2aUpvaUU5UnVJYXY0b1QybnBaX21OdWM2M3AtZ0w?oc=5",
           "published": "2026-11-11"
+        }
+      ]
+    },
+    {
+      "text": "イスラエルは対イラン攻撃の準備強化を軍に命じた。",
+      "items": [
+        1
+      ],
+      "sources": [
+        {
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Iran war live: Tehran warns of wider retaliation; Israel kills in Gaza",
+          "link": "https://www.aljazeera.com/news/liveblog/2026/11/12/iran-war-live-tehran-warns-of-wider-retaliation-israel-kills-in-gaza?traffic_source=rss",
+          "published": "2026-11-12"
         }
       ]
     }
   ],
-  "last_manual_note": "トランプ氏は追加攻撃を「極めて考えにくい」としつつ封鎖は維持。イランは対米協議を否定する一方、核の具体案を検討中と報じられた。ADNOCの船舶が湾内で攻撃を受け損傷した。"
+  "last_manual_note": "ルビオ国務長官は対イランの大規模戦闘再開は不要と述べた。イランは要求が満たされるまでホルムズ海峡を閉鎖し続けるとした。イスラエルは対イラン攻撃の準備強化を軍に命じた。"
 }
