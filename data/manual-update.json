@@ -1,43 +1,43 @@
 {
-  "updated_at": "2026-11-12T09:31:44+09:00",
+  "updated_at": "2026-11-13T09:31:51+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-26",
-    "age_days": 17,
+    "age_days": 18,
     "stale_after_days": 30,
     "stale": false,
-    "timeline_updated": "2026-11-10",
-    "timeline_age_days": 2,
+    "timeline_updated": "2026-11-12",
+    "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-10"
+    "judgment_date": "2027-02-11"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 20,
-    "B_partial_blockade_pct": 52,
-    "C_full_blockade_pct": 11,
-    "D_escalation_pct": 17
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 15
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      18,
-      20
-    ],
-    "B_partial_blockade_pct": [
-      50,
-      55
-    ],
-    "C_full_blockade_pct": [
       10,
       12
+    ],
+    "B_partial_blockade_pct": [
+      40,
+      48
+    ],
+    "C_full_blockade_pct": [
+      26,
+      30
     ],
     "D_escalation_pct": [
       15,
@@ -48,34 +48,42 @@
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "ルビオ国務長官は対イランの大規模戦闘再開は不要と述べた。",
+      "text": "トランプ大統領がイランとの合意は不要と述べ、原油価格が上昇した。",
       "items": [
-        18,
-        23
+        7,
+        13
       ],
       "sources": [
         {
-          "source": "CBS News",
-          "domain": "www.cbsnews.com",
-          "title": "Rubio says U.S. has \"no need\" to restart combat operations in Iran - CBS News",
-          "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE0zN0FDMkRwcDVyZGFpV0dvRnhidUVyU1hrc2pKQzJZMmlLZDF1bHZ0dzBtMDJLOXc5T0xNYmRuS2Q4eU1QQmFqaHJ1cVg0VGkxcWN3dEZLVlo1UlQ0ckZCaW52b0lHQzVZN2N6UElySjhIWDdXWVh5T24xcmh4Zw?oc=5",
-          "published": "2026-11-11"
+          "source": "Bloomberg.com",
+          "domain": "www.bloomberg.com",
+          "title": "Oil Jumps After Trump Says US Doesn’t Need Deal With Iran - Bloomberg.com",
+          "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPbmpyTWJjZ3NxT0J2V3FvcUxPX2ZjblNzWjJVZUhjXzZmTk1mWmV4ODI4WEFYZlNocG1abkp4Q3BNbTlRNFZCZm1KY19LY2xpSWIxMlE2UWpQclhpYlhVcXhndnk4aC1tTFdVUUNBNHpWNnJua0FkLXdyYjJ5T2czbkFFMlhkelBJTVd6NzFucXdZbHhjSVp2emRnd1l4RklZQ1J3Wm1US1E0eHlq?oc=5",
+          "published": "2026-11-13"
         },
         {
-          "source": "New York Times",
-          "domain": "rss.nytimes.com",
-          "title": "Rubio Says ‘Major Combat Operations’ in Iran War Are No Longer Needed",
-          "link": "https://www.nytimes.com/2026/11/10/us/politics/rubio-iran-war.html",
-          "published": "2026-11-11"
+          "source": "CNBC",
+          "domain": "www.cnbc.com",
+          "title": "Oil prices rise after Trump says no Iran deal needed: 'We've got their Strait' - CNBC",
+          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPZ3JPLXo4cE9pTTBQdTFHcEpvaU9BSTlpVU1CZ0FHMndhNG9GcWJOaHNWX1FhaTlyT0k4YllBV3lFMEYwdkhlMGo1YTV4YTVMZnh3eWU2SXpQb3lJNjZMaTJleWllT05kMFpqRHJBSTBSanZMNkJLb1FlaU5GWUlERzV5OWc1VThFSzI1bDQxWGViUkZ6cE5WR3kxdFc4WmVNZkdFX0oyODJjcFdHY2daWdIBtgFBVV95cUxOT1gzb1h4N0I0VkpfdldjdENNbEtWaFlWdEUtamVBQzN5eDFJMmtCcWFjLUlnaEtyaHJIcUhlZWg1WVVoRFRRbzJvRkFxM3FQZ2s1ZEdzdDlEMkVMUHIzNFNldHl6TURfZDQ5TEw5NUdVWnRqR2FrOWFSRWREdDEzcnVHempma1liU01lMktJTzZ0SkIxMVdzam5aU1dNejUyY3BDZV9uV0NPSUlNbmZKeGxVNG83QQ?oc=5",
+          "published": "2026-11-12"
         }
       ]
     },
     {
-      "text": "イランは要求が満たされるまでホルムズ海峡を閉鎖し続けるとした。",
+      "text": "イランのガリバフ議長は海峡再開に7条件を示し、要求が満たされるまで海峡を閉じるとした。",
       "items": [
-        19
+        17,
+        36
       ],
       "sources": [
+        {
+          "source": "Business Upturn",
+          "domain": "businessupturn.com",
+          "title": "Iran’s Ghalibaf sets seven U.S. conditions for reopening Strait of Hormuz and resuming talks - Business Upturn",
+          "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQNVdWWTNOTnlTZTNhbU9fWG85MVNyYnNmRnM5T3gtSV82ZElTNTdodDhaSUtHU2hTdjA3eUUxNTc3a1pDWXBWVWJxdWdOZDZkc0ZYWUxXX0I3MUs1bGIzcmhqTEU0NGZ6d3BLbzVzbllKYXFSckJVTWtPM0J6UmNkWUlJTWRzcklqTk9waTAyYkQzM2tvUkcza2VZenBqMVRWaUs2V296Q0hycUR0Sk96cjhtY0R4ZjJfbFQ3aFphX1A2QQ?oc=5",
+          "published": "2026-11-12"
+        },
         {
           "source": "Al Jazeera",
           "domain": "www.aljazeera.com",
@@ -86,20 +94,28 @@
       ]
     },
     {
-      "text": "イスラエルは対イラン攻撃の準備強化を軍に命じた。",
+      "text": "通航は増える一方、攻撃も増えている。",
       "items": [
-        1
+        31,
+        42
       ],
       "sources": [
         {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Iran war live: Tehran warns of wider retaliation; Israel kills in Gaza",
-          "link": "https://www.aljazeera.com/news/liveblog/2026/11/12/iran-war-live-tehran-warns-of-wider-retaliation-israel-kills-in-gaza?traffic_source=rss",
+          "source": "Reuters",
+          "domain": "www.reuters.com",
+          "title": "NEWSLETTER: Hormuz traffic is up. So are the attacks - Reuters",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYjlBX041WVNOU3VBZEk1UVBkeDJQZ2tmNDFiTExBWUtNMldua215TURPWTU3aTFEbGhlcGRiSnFrX191UVpONXpMSjc5dlVhNVpDZzJWM25lNEtoSE4wSFZpTmtKX1BMWnpkSUdoNk9OeTd0SzFUa2NqdlVxcGpRQ2ZSZEcyTlN3MnRzbTlUZm9tVlU?oc=5",
           "published": "2026-11-12"
+        },
+        {
+          "source": "Lloyd's List",
+          "domain": "www.lloydslist.com",
+          "title": "Hormuz tanker traffic hits wartime high as attacks surge - Lloyd's List",
+          "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxON2hKcUZDakpwRzVEem1laUFPUkRiNlo1S2tnVnRoVTM3S3BwTWFLSDF1WmdpU2VHamhnV3BiWjFSNDBLS1dmZ1lnUmFUZ2dqYWRQdS1DUDhhSmFhaGdFMXdlaVRYSldDMFFjZ20zdmRkNWtvOVBKczViNHZPaWxSNU8ycGwzbHk1WmZ4eVpZNy1OOUhWbGRsMg?oc=5",
+          "published": "2026-11-13"
         }
       ]
     }
   ],
-  "last_manual_note": "ルビオ国務長官は対イランの大規模戦闘再開は不要と述べた。イランは要求が満たされるまでホルムズ海峡を閉鎖し続けるとした。イスラエルは対イラン攻撃の準備強化を軍に命じた。"
+  "last_manual_note": "トランプ大統領がイランとの合意は不要と述べ、原油価格が上昇した。イランのガリバフ議長は海峡再開に7条件を示し、要求が満たされるまで海峡を閉じるとした。通航は増える一方、攻撃も増えている。"
 }
