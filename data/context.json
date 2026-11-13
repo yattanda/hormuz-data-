@@ -452,6 +452,16 @@
       "date": "2026-11-12",
       "fact": "UKMTOは警報204（Attack・11/12 13:45 UTC発行）で、遅れての報告として、UAEのラアス・アル・ハイマの北西14海里でタンカーが機関室に未特定の飛翔体を受けたと発表した。発生は11/11 18:00 UTC。死傷者の報告はなく、乗組員は全員が安全に退避し、消火活動が続いている。gCaptainは、被弾したのは運航会社が韓国のSinokor Maritimeとされる MT Dominica Prosperity で、乗組員22人が避難したと書く。",
       "source": "UKMTO 警報204（公式サイト Recent Incidents・2026-11-12 13:45 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-11-12（https://gcaptain.com/tanker-ablaze-off-uae-as-more-attacks-rattle-gulf-shipping/）"
+    },
+    {
+      "date": "2026-11-13",
+      "fact": "IRGCは、バーレーンの米軍の早期警戒レーダーを破壊したと主張した。米中央軍（CENTCOM）は、IRGCがバーレーンへ一方向攻撃の無人機2機を発射し、いずれも米軍が撃墜し、負傷者も被害もなかったと発表した。IRGCの声明は、イラン南部Sirikの通信塔への空爆への対応としている。レーダー破壊の主張は独立に確認されていない。",
+      "source": "RFE/RL 2026-11-13（CENTCOMの発表を引用。https://www.rferl.org/a/iran-us-sirik-bahrain-war-nuclear-talks/33897951.html）/ Al Jazeera 2026-11-13（https://www.aljazeera.com/news/2026/11/13/iran-says-it-struck-us-radar-site-in-bahrain）"
+    },
+    {
+      "date": "2026-11-13",
+      "fact": "国際エネルギー機関（IEA）は11月の月報で、2026年第4四半期の世界の原油供給は日量1億500万バレルと、需要見通しを日量170万バレル上回ると見込み、前回の月報が予測していた第4四半期の供給不足を供給過剰に改めた。2026年の世界の需要は日量270万バレル減の1億230万バレルと予測している。",
+      "source": "Arab News 2026-11-13（Reuters配信。https://www.arabnews.com/middle-east/iea-oil-market-returning-to-surplus-as-gulf-exports-recover-3011670）"
     }
   ],
 
