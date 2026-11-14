@@ -1,0 +1,42 @@
+{
+  "_comment": "シナリオ確率の採点に使う「判定日に当たったシナリオ」の記録（docs/data-sources-redesign.md §5-4）。判定日が来たら運営者が手で足す。scripts/score_scenarios.py が data/scenario-log.jsonl と照らして多クラスの Brier スコアを出す。最初の判定日は 2027-01-23。",
+  "_how_to": "outcomes に1件ずつ足す。from〜to（両端を含む・JST の日付）の日はすべて、その日に判定したら scenario に当たるとみなす。いちばん新しい期間は to を省いてよく、省いたら「今日まで続く」とみなす（それ以外の期間で to を省くと scripts/score_scenarios.py が止まる）。現状が変わったら、今の期間に to（変わる前の日）を書き、変わった日を from にした期間を足す。scenario は A_diplomacy_pct・B_partial_blockade_pct・C_full_blockade_pct・D_escalation_pct のどれか1つ（data/context.json の scenario_rule の順 D → A → C → B で判定）。D の「判定日までに」は「その日までの90日に」と読む。basis に判定の理由、sources に根拠の出典を書く。期間は重ねない。",
+  "_status_quo": "同じ表を「予測した日の現状」にも使う。比べる相手の「現状のまま」（予測した日の当たりに100%）を出すため、判定日（2027-01-23〜）だけでなく、記録の始まりの 2026-10-25 からの日も埋める（2026-10-26 運営者）。正解は運営者が決める。AI の毎日の見立て（scenario-log.jsonl の status_quo_ai）は使わない。見立てがこの表と2日続けて違ったときだけ、scripts/watch_status_quo.py が GitHub の Issue（ラベル scenario-status）で知らせる。",
+  "_example": {
+    "from": "2027-01-23",
+    "scenario": "B_partial_blockade_pct",
+    "basis": "通航の制限が続き、オマーンの仲介による協議も続いている",
+    "sources": [{"name": "媒体名", "url": "https://example.com/", "published": "2027-01-23"}],
+    "recorded_at": "2027-02-01"
+  },
+  "outcomes": [
+    {
+      "from": "2026-10-25",
+      "scenario": "B_partial_blockade_pct",
+      "basis": "D：直近90日（7/27〜）に米イランの直接の攻撃の応酬（7/29 の米国の空爆、9/1 の米軍の数十か所への攻撃とイランの弾道ミサイル、9/5 の米軍によるイランのタンカー3隻への攻撃ほか）はあったが、特定の攻撃への報復として短期間で終わった限られた応酬で、全面戦争の再開でも武力による海峡の制圧でもないため当たらない（D の読み方は 2026-10-26 運営者が決定）。A：合意に基づく通航の再開はなく、船への攻撃が続いているため当たらない。C：10/20 にアラグチ外相が交渉の席はまだあると述べ、仲介を通じたやり取りが30日以内にあるため当たらない。よって B（通航の制限と協議がどちらも続く）",
+      "sources": [
+        {
+          "name": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/10/24/iran-says-wont-allow-us-warships-to-get-close-as-trump-ponders-new-attacks",
+          "published": "2026-10-24"
+        },
+        {
+          "name": "Al Jazeera（ライブ）",
+          "url": "https://www.aljazeera.com/news/liveblog/2026/10/26/iran-war-live-trump-rules-out-strikes-today-israeli-forces-raid-hebron",
+          "published": "2026-10-26"
+        },
+        {
+          "name": "gCaptain",
+          "url": "https://gcaptain.com/two-more-tankers-struck-as-maritime-attacks-spread-across-persian-gulf/",
+          "published": "2026-10-21"
+        },
+        {
+          "name": "Gulf News（アラグチ外相の 10/20 の発言。hormuz-map の全記録 10/22 の項から。URL は未記録で要確認）",
+          "url": null,
+          "published": "2026-10-20"
+        }
+      ],
+      "recorded_at": "2026-10-26"
+    }
+  ]
+}

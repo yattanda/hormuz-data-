@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write  # 現状の見張り（scripts/watch_status_quo.py）が Issue を立てる
 
     steps:
       - name: Checkout repository
@@ -25,27 +26,21 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          pip install google-genai
-
-      # 推計に使うモデルはリポジトリの変数 SCENARIO_BACKEND（claude / gemini。未設定なら claude）
+      # 推計は Claude（Claude Code の CLI）。Gemini の経路は 2026-10-26 に外した（Python の追加パッケージは不要）
       - name: Install Claude Code CLI
-        if: vars.SCENARIO_BACKEND != 'gemini'
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Fetch and analyze news
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          SCENARIO_BACKEND: ${{ vars.SCENARIO_BACKEND }}
         # 本番は 09:30 JST の cron-job.org からの起動（workflow_dispatch）。
         # GitHub の予約実行は数時間遅れて動く予備なので、今日すでに更新済みなら何もしない
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
             python scripts/fetch_manual.py --skip-if-updated-today
           elif [ "${{ inputs.dry_run }}" = "true" ]; then
-            python scripts/fetch_manual.py --dry-run
+            # 予測の記録には書かず、足すはずだった1行をリポジトリの外に置く（見張りの試し実行が読む）
+            python scripts/fetch_manual.py --dry-run --dry-run-entry "$RUNNER_TEMP/scenario-log-entry.json"
           else
             python scripts/fetch_manual.py
           fi
@@ -56,6 +51,36 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった（PortWatch で測る）
-          git add data/manual-update.json
+          # 予測の記録（data/scenario-log.jsonl）は推計のたびに1行増える。採点に使う（scripts/score_scenarios.py）
+          # 推計に渡した見出し（data/scenario-inputs/）は1回ごとに1ファイル。確率の動きの原因を追うのに使う
+          git add data/manual-update.json data/scenario-log.jsonl
+          # 予備の回が何もしなかった日は、初回の前だとフォルダが無い（git add が失敗する）
+          if [ -d data/scenario-inputs ]; then git add data/scenario-inputs; fi
           git diff --staged --quiet || git commit -m "chore: update manual $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
+
+      # 食い違いの検査と採点。WARN はこの実行の要約に出す。推計が失敗した日も、
+      # 今あるファイルで検査する。ここが失敗してもワークフローは止めない
+      - name: Check consistency
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            EXTRA="--extra-entry $RUNNER_TEMP/scenario-log-entry.json"
+          fi
+          python scripts/check_consistency.py $EXTRA || echo "::warning::check_consistency.py が失敗しました"
+          python scripts/score_scenarios.py || echo "::warning::score_scenarios.py が失敗しました"
+
+      # 現状の見張り：AI の見立てが記録した現状と2日続けて違ったら Issue で知らせる。
+      # 試し実行では立てず、要約に「立てるはずだった」と出す
+      - name: Watch status quo
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python scripts/watch_status_quo.py --dry-run --extra-entry "$RUNNER_TEMP/scenario-log-entry.json"
+          else
+            python scripts/watch_status_quo.py
+          fi || echo "::warning::watch_status_quo.py が失敗しました"
