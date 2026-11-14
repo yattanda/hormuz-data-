@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-11-13T09:31:51+09:00",
+  "updated_at": "2026-11-14T09:31:52+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-26",
-    "age_days": 18,
+    "age_days": 19,
     "stale_after_days": 30,
     "stale": false,
-    "timeline_updated": "2026-11-12",
+    "timeline_updated": "2026-11-13",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -15,29 +15,29 @@
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-11"
+    "judgment_date": "2027-02-12"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 12,
+    "B_partial_blockade_pct": 46,
+    "C_full_blockade_pct": 24,
+    "D_escalation_pct": 18
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      10,
+      12,
       12
     ],
     "B_partial_blockade_pct": [
-      40,
+      45,
       48
     ],
     "C_full_blockade_pct": [
-      26,
-      30
+      22,
+      28
     ],
     "D_escalation_pct": [
       15,
@@ -48,74 +48,82 @@
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "トランプ大統領がイランとの合意は不要と述べ、原油価格が上昇した。",
+      "text": "IRGCは、ホルムズ海峡でLNG船が機雷に触れて炎上したと主張した。",
       "items": [
-        7,
-        13
+        4,
+        16,
+        43
       ],
       "sources": [
-        {
-          "source": "Bloomberg.com",
-          "domain": "www.bloomberg.com",
-          "title": "Oil Jumps After Trump Says US Doesn’t Need Deal With Iran - Bloomberg.com",
-          "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPbmpyTWJjZ3NxT0J2V3FvcUxPX2ZjblNzWjJVZUhjXzZmTk1mWmV4ODI4WEFYZlNocG1abkp4Q3BNbTlRNFZCZm1KY19LY2xpSWIxMlE2UWpQclhpYlhVcXhndnk4aC1tTFdVUUNBNHpWNnJua0FkLXdyYjJ5T2czbkFFMlhkelBJTVd6NzFucXdZbHhjSVp2emRnd1l4RklZQ1J3Wm1US1E0eHlq?oc=5",
-          "published": "2026-11-13"
-        },
-        {
-          "source": "CNBC",
-          "domain": "www.cnbc.com",
-          "title": "Oil prices rise after Trump says no Iran deal needed: 'We've got their Strait' - CNBC",
-          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPZ3JPLXo4cE9pTTBQdTFHcEpvaU9BSTlpVU1CZ0FHMndhNG9GcWJOaHNWX1FhaTlyT0k4YllBV3lFMEYwdkhlMGo1YTV4YTVMZnh3eWU2SXpQb3lJNjZMaTJleWllT05kMFpqRHJBSTBSanZMNkJLb1FlaU5GWUlERzV5OWc1VThFSzI1bDQxWGViUkZ6cE5WR3kxdFc4WmVNZkdFX0oyODJjcFdHY2daWdIBtgFBVV95cUxOT1gzb1h4N0I0VkpfdldjdENNbEtWaFlWdEUtamVBQzN5eDFJMmtCcWFjLUlnaEtyaHJIcUhlZWg1WVVoRFRRbzJvRkFxM3FQZ2s1ZEdzdDlEMkVMUHIzNFNldHl6TURfZDQ5TEw5NUdVWnRqR2FrOWFSRWREdDEzcnVHempma1liU01lMktJTzZ0SkIxMVdzam5aU1dNejUyY3BDZV9uV0NPSUlNbmZKeGxVNG83QQ?oc=5",
-          "published": "2026-11-12"
-        }
-      ]
-    },
-    {
-      "text": "イランのガリバフ議長は海峡再開に7条件を示し、要求が満たされるまで海峡を閉じるとした。",
-      "items": [
-        17,
-        36
-      ],
-      "sources": [
-        {
-          "source": "Business Upturn",
-          "domain": "businessupturn.com",
-          "title": "Iran’s Ghalibaf sets seven U.S. conditions for reopening Strait of Hormuz and resuming talks - Business Upturn",
-          "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQNVdWWTNOTnlTZTNhbU9fWG85MVNyYnNmRnM5T3gtSV82ZElTNTdodDhaSUtHU2hTdjA3eUUxNTc3a1pDWXBWVWJxdWdOZDZkc0ZYWUxXX0I3MUs1bGIzcmhqTEU0NGZ6d3BLbzVzbllKYXFSckJVTWtPM0J6UmNkWUlJTWRzcklqTk9waTAyYkQzM2tvUkcza2VZenBqMVRWaUs2V296Q0hycUR0Sk96cjhtY0R4ZjJfbFQ3aFphX1A2QQ?oc=5",
-          "published": "2026-11-12"
-        },
         {
           "source": "Al Jazeera",
           "domain": "www.aljazeera.com",
-          "title": "Iran denies talks with US, says Hormuz will stay shut until demands are met - Al Jazeera",
-          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPbjE0dVFENk1CX2NnRnVSUEtzYzVDWlpBVlFvMnlNMnV5SjBncHJNcFI4WmRjNmdJWGtwXzJ6aUtYOUs4Ynl1bVUzVm5TWXFxNGxfSzRtaEY0czhyRTFSVU1mN3NqNW1BWm1WT1dCS2dZbEVTQ0hBcGRsM05RUWVQRGNUVHF1ZGhHOUZNVGVqR19keHFTUzJ3V0JwMnpFWF9uWDBYV2l3M01SN01ROFc2bzJHZUt1TjjSAbwBQVVfeXFMUDJtWTM5WXEtX3NDM0RkOG1ZVjE3RXVRYnRQNm5feHhKb0VJaXlLMjdPcjBCa1NzMkIySmk2a1hRMmwybS1SWG13RzNxLUtVZF9mQV9QYlB4cGxWcDVUbUFjVXdvcHo4THhtN2NIU01lUEYtUzVPdzRNcXIyWlBYM09QR0FsNzJUMUpBRGxaYUpQbl84bjNseUp6bWU1cFM2aUpvaUU5UnVJYXY0b1QybnBaX21OdWM2M3AtZ0w?oc=5",
-          "published": "2026-11-11"
+          "title": "IRGC says tanker caught fire after hitting mines in Strait of Hormuz",
+          "link": "https://www.aljazeera.com/video/newsfeed/2026/11/13/irgc-says-tanker-caught-fire-after-hitting-mines-in-strait-of-hormuz?traffic_source=rss",
+          "published": "2026-11-14"
+        },
+        {
+          "source": "https://houseofsaud.com/",
+          "domain": "houseofsaud.com",
+          "title": "IRGC Says Gas Carrier Hit Mine and Exploded in Eastern Strait of Hormuz - https://houseofsaud.com/",
+          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1DYTBSZ2xBRWxRbE0xR0t4dzh1WFNhdzYwb2dncFVDRGRiUDZYYUs0blhtOW81YTVHYS1ZMjh5TWNmbDU1N3dnX0Y1V05tbURoWEloc3V1MXRCbHhIQUR3ZjBDZFo5WXV4VWZseUtiVUJNU3FRR2RaZg?oc=5",
+          "published": "2026-11-13"
+        },
+        {
+          "source": "gCaptain",
+          "domain": "gcaptain.com",
+          "title": "Iran Says Tanker Carrying LNG Hit Mine, Suffered Explosion in Hormuz - gCaptain",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMzVkRFFJekRaU3kzRVhNWFNuYjdNSmVEU2hFaXF3eWoxU0JVVFpnU28xUlZ2Wm1XdVFuZHZVQ3U4eU53YlBwMnBtZGZZUUhUWjFYODhkMzA3S0JNaFhtVTBYOG1Jb3MtaDU0ckpwTjVqVnQxdTRKbG1FYVgwRUpRbVg1MFpBSWVMcmFyaXNDZFhfOUU?oc=5",
+          "published": "2026-11-13"
         }
       ]
     },
     {
-      "text": "通航は増える一方、攻撃も増えている。",
+      "text": "IEAは、世界の石油供給がイラン戦争開始後で初めて供給過剰に戻ると予測した。",
       "items": [
-        31,
-        42
+        5,
+        13,
+        20
       ],
       "sources": [
         {
-          "source": "Reuters",
-          "domain": "www.reuters.com",
-          "title": "NEWSLETTER: Hormuz traffic is up. So are the attacks - Reuters",
-          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYjlBX041WVNOU3VBZEk1UVBkeDJQZ2tmNDFiTExBWUtNMldua215TURPWTU3aTFEbGhlcGRiSnFrX191UVpONXpMSjc5dlVhNVpDZzJWM25lNEtoSE4wSFZpTmtKX1BMWnpkSUdoNk9OeTd0SzFUa2NqdlVxcGpRQ2ZSZEcyTlN3MnRzbTlUZm9tVlU?oc=5",
-          "published": "2026-11-12"
+          "source": "The Guardian",
+          "domain": "www.theguardian.com",
+          "title": "Global oil supply returns to surplus for first time since start of Iran war, says IEA - The Guardian",
+          "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQNndNZUdKRnhDVGRkRE85YjZfUG1pUFd5NlVkbjBhbWZaTjZqZlRCU3RmMlBzR1ZjMmJpZi1jX2FvT01wbVc0ZDNaYm9YZUFTZm4wX29QQ3NLN0VpVS1CUjRBVm1GeWlHRk8yb1R4QkMySE5HUjdMUEM3OGVXdU5XM3lORndmX1RwRFdEbkZhalpnVmdONXhJYkR6bUpDZ2xfTXB1MlNuWDNFOGtPSFh0NzF0OWFYSjFBdU1hdVNqQnNSbUdMMi1JZW9vV1UwUQ?oc=5",
+          "published": "2026-11-14"
         },
         {
-          "source": "Lloyd's List",
-          "domain": "www.lloydslist.com",
-          "title": "Hormuz tanker traffic hits wartime high as attacks surge - Lloyd's List",
-          "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxON2hKcUZDakpwRzVEem1laUFPUkRiNlo1S2tnVnRoVTM3S3BwTWFLSDF1WmdpU2VHamhnV3BiWjFSNDBLS1dmZ1lnUmFUZ2dqYWRQdS1DUDhhSmFhaGdFMXdlaVRYSldDMFFjZ20zdmRkNWtvOVBKczViNHZPaWxSNU8ycGwzbHk1WmZ4eVpZNy1OOUhWbGRsMg?oc=5",
+          "source": "The National",
+          "domain": "www.thenationalnews.com",
+          "title": "Oil market to return to surplus for first time since start of Iran war, IEA says - The National",
+          "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPcXJYRFlhUVJEY0xBNFcxdW1lNUx2aEVaZkxyWE5JN2N3YmJJZXJHdTFrLU15RXFHcnRVNWc5cXFxdk1EMkJ5WGxWcVB0NW1KVnNldHQwYkQ3R1d4M215d1RmYVhDdFNJT3dYQUxQYkE4OVA2YW05NkRoMUstbDk5c0RrSnBndVBjUzF2Z2JhYWw1bS05b1BWLTNxUWZLVGF0QktORkhoVFcydG5CQm9IYjJiRG5XTmhYOV9hYnpnTlFGNjc2Nm43ZllNNS1HTzFpV0ROMlBB?oc=5",
+          "published": "2026-11-13"
+        },
+        {
+          "source": "Bloomberg",
+          "domain": "www.bloomberg.com",
+          "title": "Global Oil Market Swings to Surplus on Gulf Exports, IEA Says - Bloomberg",
+          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNdk45TmZ0SDVZOXY5Mm1XRXVldzFCTUJYTld4MURmUkdkVXRQQU44TGRVaWQ1dzE3MXN2UVR6Vml4NFRKZ3hoYUoyN3R2SExaRmc5eFdvcnFzeVN1bWFGdmQ4WkxDSlVWRjhxdmZJY1k3Z3REdFpVRlhyV0lIbFVjMnBULTBRNjFWenpQVl8wdDV5SHBqQUgwYk1hbEJQeTNnMTRMRGZ5SGR2aXZ4YjNhSw?oc=5",
+          "published": "2026-11-13"
+        }
+      ]
+    },
+    {
+      "text": "トランプ大統領は「イランとの合意は必要ない」と述べた。",
+      "items": [
+        21
+      ],
+      "sources": [
+        {
+          "source": "CBS News",
+          "domain": "www.cbsnews.com",
+          "title": "Trump says \"we don't need a deal with Iran,\" as Tehran sticks to its demands - CBS News",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5JdnI2N05uOHdtZFhtb0U3MGN6bEhNN05QbE85RV81UGRMenBqY04tWXhLU1MxRzR6NWxZOUx5cnNzYmRwRFEwRWJnbi1Cc0JpMUt2aW53VEpWOFA0cEptN2xLLVB6S1RxNDlydWs5MGsySnprakktTlkwUmxqODQ?oc=5",
           "published": "2026-11-13"
         }
       ]
     }
   ],
-  "last_manual_note": "トランプ大統領がイランとの合意は不要と述べ、原油価格が上昇した。イランのガリバフ議長は海峡再開に7条件を示し、要求が満たされるまで海峡を閉じるとした。通航は増える一方、攻撃も増えている。"
+  "last_manual_note": "IRGCは、ホルムズ海峡でLNG船が機雷に触れて炎上したと主張した。IEAは、世界の石油供給がイラン戦争開始後で初めて供給過剰に戻ると予測した。トランプ大統領は「イランとの合意は必要ない」と述べた。"
 }
