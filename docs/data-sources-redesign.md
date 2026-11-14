@@ -27,6 +27,8 @@
 | 2026-10-26 | 食い違いの検査の WARN は `hormuz-map` の `validate_daily.py` から**読まない**。ワークフローの要約と注釈で足りる（運営者・PR 4・§5-6） |
 | 2026-10-26 | 現状の記録を運営者が毎日つけずに済むよう、**AI の見立てと見張り**を足す。AI が毎日「今日判定したら当たるシナリオ」を記事の根拠つきで答え（5回の多数決・同数は不定）、`scenario-log.jsonl` に `status_quo_ai` として残す。記録済みの現状と2日続けて違い、同じシナリオを指したときだけ GitHub の Issue（ラベル `scenario-status`）で知らせる。現状の記録（`scenario-outcomes.json`）の正解は運営者が決め、AI の見立ては記録にも採点にも使わない（AI の予想を AI の答えで採点しないため）。最新の期間は `to` を省くと今日まで続く扱い（運営者・PR 4・§5-4） |
 | 2026-10-26 | 見張りの Issue は運営者 `yattanda` に**割り当て**、本文の先頭で**言及**する（GitHub Mobile のプッシュ通知で届くように。メールだけでは見逃しうる）。3日以上開いたままなら、毎日の実行で `@yattanda` の**催促のコメントを1回だけ**足し、要約に「未対応の Issue があります（何日）」を出す（運営者・PR 4・§5-4） |
+| 2026-11-14 | 報道値用の RSS の検索3本（`FIGURE_FEEDS`・10/26 追加）を**外す**。11/9〜11/14 の6回とも採用 0件。Google ニュースの RSS は説明文が空で、入力 52件のうち数字の入った見出しは1件だけ（11/13）＝見出しから拾う作りでは構造的に増えない。しかも足した最大12件はシナリオ確率の入力にも入っていた（#22 の後、入力の約2割が海運の専門紙・追跡会社の記事に替わった）。報道値の欄（`reported_figures`）と表示は、保険料率（§5-5）と追跡できない割合（§5-6）にも使うので残し、残りの9本の記事から拾う（運営者・PR 4・§5-2） |
+| 2026-11-14 | 推計に渡した見出しを**記録に入れる**。1回ごとに `data/scenario-inputs/YYYY-MM-DD_HHMM.json`（番号・見出し・媒体・ドメイン・リンク・日時・フィード）と `context.json` の中身のハッシュ。`scenario-log.jsonl` の `inputs` がそのパスを指す。11/10 からの D の下がりは入力が残っておらず原因を追えなかったため。リポジトリが公開なので説明文と本文は入れない（運営者・PR 4・§5-4） |
 
 ### 判断の記録（Q1〜Q8・2026-10-25 に決定）
 
@@ -189,6 +191,7 @@ PortWatch の 3.6隻/日を、AIS で追えない割合7割（Lloyd's List）で
   - 記事の媒体が許可リストにある（2026-10-26 運営者。`fetch_manual.py` の `REPORTED_SOURCE_DOMAINS`）：Reuters・Bloomberg・Lloyd's List（Intelligence を含む）・Al Jazeera・BBC・Financial Times・New York Times・AP、追加で WSJ・Washington Post・The Guardian・CNBC・gCaptain・TradeWinds・Splash247・USNI News・S&P Global・Argus・Kpler・Vortexa・EIA・IEA（計22）。媒体は Google ニュースの `<source url>`（直接取るフィードはそのホスト）のドメインで照合する
 - 通ったものを、媒体名・日付・リンクと一緒に「報道値」としてカードの下に最大2件出す。無い日は出さない
 - 期待しすぎない：入力は見出しと短い説明文だけなので、数字が拾える日は多くないとみる（確度：中）。本文を取りにいく案は §12
+- 報道値用に足していた検索3本（`FIGURE_FEEDS`・許可リストの媒体の記事を最大12件）は 2026-11-14 に外した（§0・§11）。拾うのは入力の9本の記事からだけ
 
 AI に流量を推計させる欄（`hormuz_daily_flow_mbpd`・`flow_disruption_pct`）はプロンプトから外す。
 
@@ -206,6 +209,7 @@ AI に流量を推計させる欄（`hormuz_daily_flow_mbpd`・`flow_disruption_
   - モデルは CLI の出力 JSON の `modelUsage` から取った実際のモデル ID（`model`）と、指定した別名（`model_requested`）。取れなかった日は `model` が null
   - 10/25 17:57・10/26 09:32 の2回は git の履歴から入れ直した（`backfilled` に元のコミット。記事数とモデル ID は null）。10/24〜25 の Gemini の回は入れない
   - 同じ判定日の行が複数あれば（手動の再実行など）、採点は最後の行を使う
+- **推計に渡した見出しの記録**（2026-11-14 追加）：1回ごとに `data/scenario-inputs/YYYY-MM-DD_HHMM.json`（`updated_at` の JST の日時）。中身は `at`・`context_sha256`（`context.json` の中身のハッシュ。同じなら前提と経緯は同じ）・`items`（プロンプトの番号 `n`・`title`・`source`・`domain`・`link`・`published`・`feed`）。`scenario-log.jsonl` の行の `inputs` がこのパスを指す（それより前の行には無い）。説明文と本文は入れない（リポジトリが公開のため）。1回 約25KB・1年で約9MB の見込み
 - **採点**：運営者が「その日に判定したら当たるシナリオ」を期間ごとに記録する（`data/scenario-outcomes.json`・根拠の出典つき。D の「判定日までに」は「その日までの90日に」と読む）。`scripts/score_scenarios.py` が多クラスの Brier スコア（0 が満点・2 が最悪）を出し、次の3つと比べる
   - 一様（各25%・いつも 0.75）
   - 「前の日のまま」：1つ前の記録の確率を予想としたもの。判定日が1日ずれるだけなので、推計とほぼ同じ値になる（作り物のデータで技能 −0.001）
@@ -341,6 +345,7 @@ WARN はワークフローの要約（`$GITHUB_STEP_SUMMARY`）と注釈（`::wa
 | Global Fishing Watch | 96時間遅延・CC BY-NC 4.0 | `tools/README.md` |
 | 有料の AIS（Datalastic・MarineTraffic・Spire など） | 費用・公開表示の制限 | `tools/README.md` |
 | Gemini 2.5 Flash でのシナリオ確率 | 同じ入力で1回ずつの幅が最大60pt | PR #18・`tools/diag_scenario_noise.py` |
+| 報道値用の RSS の検索3本（Kpler・Vortexa・Lloyd's List・海運と石油の専門紙を名指し） | 11/9〜11/14 の6回とも採用 0件（Google ニュースの RSS は説明文が空）。足した記事がシナリオ確率の入力にも混ざった | `fdfabc3`（10/26 追加）・PR 4 で外した |
 
 ---
 

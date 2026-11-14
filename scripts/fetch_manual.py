@@ -9,6 +9,7 @@ data/manual-update.json を自動更新し、シナリオ確率を data/scenario
 """
 
 import argparse
+import hashlib
 import html
 import json
 import os
@@ -39,15 +40,11 @@ RSS_FEEDS = [
     "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml",
 ]
 
-# 報道値（reported_figures）を拾うための追加の検索。海運の専門紙・石油の専門機関・追跡会社を名指しする
-# （2026-10-26。上の9本だけでは、許可リストの媒体で数字の入った見出しがほとんど無かった）。
-# シナリオ確率の入力を押し出さないよう、上の9本の採用分（MAX_ITEMS 件）はそのままにして、
-# 許可リストの媒体の記事だけを FIGURE_MAX_ITEMS 件まで後ろに足す。
-FIGURE_FEEDS = [
-    "https://news.google.com/rss/search?q=Hormuz+%28Kpler+OR+Vortexa+OR+%22Lloyd%27s+List%22%29&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=Hormuz+%28site%3Alloydslist.com+OR+site%3Atradewindsnews.com+OR+site%3Asplash247.com+OR+site%3Agcaptain.com%29&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=Hormuz+%28site%3Aspglobal.com+OR+site%3Aargusmedia.com+OR+site%3Akpler.com+OR+site%3Avortexa.com%29&hl=en-US&gl=US&ceid=US:en",
-]
+# 報道値（reported_figures）用に足していた検索3本（FIGURE_FEEDS・2026-10-26）は 2026-11-14 に外した。
+# 11/9〜11/14 の6回とも採用 0件で（Google ニュースの RSS は説明文が空で、数字の入った見出しがほぼ無い）、
+# しかも足した最大12件がシナリオ確率の入力にも入っていた（#22 の後、入力 52件のうち約2割）。
+# 報道値の欄（保険料率・追跡できない割合を含む）は、上の9本の記事から拾う形で残す
+# （docs/data-sources-redesign.md §5-2・§0）。
 
 
 KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait", "封鎖", "ホルムズ", "イラン"]
@@ -59,8 +56,6 @@ KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait"
 MAX_AGE_DAYS = 7
 PER_FEED_MAX = 12
 MAX_ITEMS = 40
-FIGURE_PER_FEED_MAX = 6
-FIGURE_MAX_ITEMS = 12
 
 # 媒体名を持たないフィード（<source> が無い）の表示名
 FEED_LABELS = {
@@ -144,6 +139,8 @@ def fetch_rss_news(max_items=40, max_age_days=MAX_AGE_DAYS, per_feed_max=PER_FEE
             print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
             continue
         print(f"[RSS] {len(items):3d} 件（期間内・該当）: {url[:70]}")
+        for item in items[:per_feed_max]:
+            item["feed"] = url
         collected.extend(items[:per_feed_max])
 
     seen = set()
@@ -161,33 +158,6 @@ def fetch_rss_news(max_items=40, max_age_days=MAX_AGE_DAYS, per_feed_max=PER_FEE
         print(f"[RSS] 採用 {len(news)} 件（重複除去前 {len(collected)} 件）"
               f" / 古さ 中央値 {ages[len(ages) // 2]:.1f} 日・最大 {ages[-1]:.1f} 日")
     return news
-
-
-def fetch_figure_news(existing, max_items=FIGURE_MAX_ITEMS, max_age_days=MAX_AGE_DAYS,
-                      per_feed_max=FIGURE_PER_FEED_MAX):
-    """FIGURE_FEEDS から、許可リストの媒体の記事を新しい順に返す。existing と同じ見出しは除く。"""
-    now = datetime.now(timezone.utc)
-    seen = {title_key(n["title"]) for n in existing}
-    collected = []
-    for url in FIGURE_FEEDS:
-        try:
-            items = fetch_feed(url, now, max_age_days)
-        except Exception as e:
-            print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
-            continue
-        allowed = [i for i in items if allowed_source(i)]
-        print(f"[RSS] {len(items):3d} 件（期間内・該当）・許可リスト {len(allowed):3d} 件: {url[:70]}")
-        collected.extend(allowed[:per_feed_max])
-    extra = []
-    for item in sorted(collected, key=lambda x: x["published"], reverse=True):
-        key = title_key(item["title"])
-        if key in seen:
-            continue
-        seen.add(key)
-        extra.append(item)
-    extra = extra[:max_items]
-    print(f"[RSS] 報道値用に追加 {len(extra)} 件")
-    return extra
 
 
 def format_news_line(item, number):
@@ -934,15 +904,53 @@ def save_manual(data, path="data/manual-update.json"):
 
 
 SCENARIO_LOG_PATH = "data/scenario-log.jsonl"
+SCENARIO_INPUTS_DIR = "data/scenario-inputs"
 
 
-def scenario_log_entry(manual, news_count, model_id=None, status_quo_ai=None):
+def scenario_inputs_path(at, base=SCENARIO_INPUTS_DIR):
+    """推計の入力の記録のパス。updated_at（JST）の日時で1回ごとに1ファイル（例 2026-11-14_0931.json）。"""
+    return f"{base}/{at[:10]}_{at[11:13]}{at[14:16]}.json"
+
+
+def scenario_inputs_record(at, news_items, context_path="data/context.json"):
+    """推計に渡した見出しの記録（docs/data-sources-redesign.md §5-4。2026-11-14 運営者）。
+
+    確率が動いたとき、揺れか入力の変化かを後から見分けるために残す。リポジトリは公開なので、
+    見出し・媒体・リンク・日時だけを持ち、説明文と本文は入れない。番号はプロンプトの番号（1 始まり）。
+    context.json は中身のハッシュで持つ（同じハッシュなら前提と経緯は同じ）。
+    """
+    try:
+        with open(context_path, "rb") as f:
+            context_sha256 = hashlib.sha256(f.read()).hexdigest()
+    except OSError:
+        context_sha256 = None
+    return {
+        "at": at,
+        "context_sha256": context_sha256,
+        "items": [
+            {
+                "n": i,
+                "title": item["title"],
+                "source": item.get("source"),
+                "domain": item.get("domain"),
+                "link": item.get("link"),
+                "published": item["published"].isoformat() if hasattr(item["published"], "isoformat")
+                else item["published"],
+                "feed": item.get("feed"),
+            }
+            for i, item in enumerate(news_items, 1)
+        ],
+    }
+
+
+def scenario_log_entry(manual, news_count, model_id=None, status_quo_ai=None, inputs=None):
     """予測の記録の1行（docs/data-sources-redesign.md §5-4）。
 
     採点（scripts/score_scenarios.py）は judgment_date ごとに、判定日に当たったシナリオと
     照らす。git の履歴からも復元できるが、採点に使いやすい形で持つ。
     model は CLI が返した実際のモデル ID（取れなかった日は None）、model_requested は指定した別名。
     status_quo_ai は AI の「今日判定したら当たるシナリオ」の見立て（verify_status_quo）。採点の正解には使わない。
+    inputs はその回に推計へ渡した見出しの記録のパス（scenario_inputs_path）。
     """
     return {
         "at": manual["updated_at"],
@@ -955,6 +963,7 @@ def scenario_log_entry(manual, news_count, model_id=None, status_quo_ai=None):
         "model": model_id,
         "model_requested": CLAUDE_MODEL,
         "status_quo_ai": status_quo_ai,
+        "inputs": inputs,
     }
 
 
@@ -993,7 +1002,6 @@ def main(argv=None):
 
     print("[Manual] Fetching RSS news...")
     news_items = fetch_rss_news(max_items=MAX_ITEMS)
-    news_items += fetch_figure_news(news_items)
     print(f"[Manual] Found {len(news_items)} relevant articles.")
 
     if not news_items:
@@ -1055,7 +1063,8 @@ def main(argv=None):
     status_quo_ai = verify_status_quo(samples, news_items)
 
     manual = build_manual_json(data, context, load_existing_manual())
-    entry = scenario_log_entry(manual, len(news_items), model_id, status_quo_ai)
+    inputs_path = scenario_inputs_path(manual["updated_at"])
+    entry = scenario_log_entry(manual, len(news_items), model_id, status_quo_ai, inputs_path)
 
     if args.dry_run:
         print("[Manual] --dry-run のため書き込みません。")
@@ -1067,6 +1076,9 @@ def main(argv=None):
         return
 
     save_manual(manual)
+    os.makedirs(SCENARIO_INPUTS_DIR, exist_ok=True)
+    write_json(scenario_inputs_record(manual["updated_at"], news_items), inputs_path)
+    print(f"[Manual] 推計に渡した見出し {len(news_items)} 件を {inputs_path} に書きました")
     append_scenario_log(entry)
 
     # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった。
