@@ -219,7 +219,7 @@ AI に流量を推計させる欄（`hormuz_daily_flow_mbpd`・`flow_disruption_
   - プロンプトに `status_quo`（今日判定したら当たるシナリオ1つ・根拠の記事番号 `items`・60字以内の理由）を足す。確率とは別の問いで、D の「判定日までに」は「今日までの90日に」と読ませる
   - コードで確かめる（`fetch_manual.py` の `verify_status_quo`）：キーが A〜D のどれでもない回・`items` が無いか範囲外の番号を含む回は数えない。数えた回の多数決で1つにし、数えた回が3回未満か最多が同数なら**不定**（null）。判定の順 D → A → C → B で決めると、割れた日ほど D に寄るため使わない
   - `scenario-log.jsonl` の `status_quo_ai` に、見立て・票・数えた回・理由・根拠の記事（媒体・日付・リンク）を残す。記録にも採点にも使わない
-  - 見張り（`scripts/watch_status_quo.py`・`update_manual.yml` の最後の段・`if: always()`）：直近2日の見立てがどちらも記録と違い、同じシナリオを指したときだけ Issue を立てる（`gh issue create`・`permissions: issues: write`・GITHUB_TOKEN）。題は「現状のシナリオが X → Y に変わった可能性（日付）」、本文に2日分の見立て・根拠の記事・理由・記録の足し方
+  - 見張り（`scripts/watch_status_quo.py`・`update_manual.yml` の最後の段・`if: always()`）：直近2日の見立てがどちらも記録と違い、同じシナリオを指したときだけ Issue を立てる。2日は暦の上で続いた昨日と今日に限り、最新の行が今日の分でなければ立てない（推計が失敗・休止して行が飛んだ日に、離れた2日や古い行で知らせないため。2026-11-14・Codex の指摘）（`gh issue create`・`permissions: issues: write`・GITHUB_TOKEN）。題は「現状のシナリオが X → Y に変わった可能性（日付）」、本文に2日分の見立て・根拠の記事・理由・記録の足し方
   - 立てないとき：記録が1行も無い（要約に「現状の記録がありません」）・1日だけ違う・見立てが不定・2日とも違うが見立てが割れている・その日を含む期間が無い・同じ変化（X → Y）の Issue が開いているか閉じて7日以内（本文の印 `<!-- scenario-status: X->Y -->` で照合。運営者が「変化ではない」と閉じた翌日に立ち続けないように）
   - 通知：Issue は `yattanda` に割り当て（`--assignee`）、本文の先頭で `@yattanda` に言及する。GitHub Mobile のプッシュ通知（割り当て・言及）で届くようにするため（メールだけでは見逃しうる。2026-10-26 運営者）
   - 催促：見張りの Issue が3日以上開いたままなら、毎日の実行で `@yattanda` の催促のコメントを足す。同じ Issue への催促は1回まで（コメントの印 `<!-- scenario-status-reminder -->` で照合）。開いている間は要約に「未対応の Issue があります（何日）」を出す

@@ -5,7 +5,9 @@ AI の毎日の「今日判定したら当たるシナリオ」の見立て（sc
 （docs/data-sources-redesign.md §5-4）。
 
 - 記録の正解は運営者が決める。AI の見立ては採点にも記録にも使わない（AI の予想を AI の答えで採点しないため）
-- 知らせるのは、直近2日の見立てがどちらも記録と違い、しかも同じシナリオを指しているときだけ
+- 知らせるのは、直近2日の見立てがどちらも記録と違い、しかも同じシナリオを指しているときだけ。
+  2日は暦の上で続いた日（昨日と今日）に限り、最新の行が今日の分でなければ立てない
+  （推計が失敗・休止した日は行が無く、離れた2日や古い行で知らせないため。催促は別に回す）
 - 同じ変化（X → Y）の Issue が開いているか、閉じてから DISMISS_DAYS 日以内なら、新しく立てない
   （運営者が「変化ではない」と閉じた翌日に、同じ Issue が立ち続けないように）
 - 記録がまだ1行も無いあいだは Issue を立てず、要約に「現状の記録がありません」と出す
@@ -86,8 +88,9 @@ def scenario_names(context_path):
     return {k: f"{k[0]}（{str(defs.get(k) or k).split(' — ')[0]}）" for k in SCENARIO_KEYS}
 
 
-def evaluate(entries, outcomes):
-    """Issue を立てるかを決める。{"open": bool, "message": 要約の1文, "change": (X, Y) or None, "days": [...]}"""
+def evaluate(entries, outcomes, today):
+    """Issue を立てるかを決める。{"open": bool, "message": 要約の1文, "change": (X, Y) or None, "days": [...]}
+    today は見張りの基準の日（JST）。最新の行がこの日でなければ立てない。"""
     result = {"open": False, "change": None, "days": []}
     if not outcomes:
         result["message"] = "現状の記録がありません（scenario-outcomes.json の outcomes が空）。Issue は立てません"
@@ -98,13 +101,17 @@ def evaluate(entries, outcomes):
     days = [(d, e, ai_view(e), outcomes.get(d)) for d, e in entries[-2:]]
     result["days"] = days
     d, _, ai, rec = days[-1]
-    if rec is None:
+    if d != today:
+        result["message"] = (f"{today} の見立ての記録がありません（最新は {d}。推計が失敗・休止した可能性）。"
+                             "Issue は立てません")
+    elif rec is None:
         result["message"] = f"{d} を含む現状の記録がありません（最新の期間の to が過去の日付か、まだ記録の前）"
     elif ai is None:
         result["message"] = f"{d} の見立ては不定（多数決で決まらない・または記録に見立てが無い）"
     elif ai == rec:
         result["message"] = f"{d} の見立て {ai} は記録と一致"
-    elif len(days) < 2 or days[0][3] is None or days[0][2] is None or days[0][2] == days[0][3]:
+    elif (len(days) < 2 or days[0][0] != d - timedelta(days=1)  # 昨日の行が無い（日が飛んだ）
+          or days[0][3] is None or days[0][2] is None or days[0][2] == days[0][3]):
         result["message"] = f"{d} の見立て {ai} が記録 {rec} と違う（1日目。続けば Issue を立てる）"
     elif days[0][2] != ai:
         result["message"] = (f"{days[0][0]}・{d} の見立て（{days[0][2]}・{ai}）がどちらも記録と違うが、"
@@ -230,7 +237,7 @@ def run(data_dir, extra_entry, dry_run, today):
         outcomes = None
     result = None
     if outcomes is not None:
-        result = evaluate(load_entries(os.path.join(data_dir, "scenario-log.jsonl"), extra_entry), outcomes)
+        result = evaluate(load_entries(os.path.join(data_dir, "scenario-log.jsonl"), extra_entry), outcomes, today)
         lines.append(f"- {result['message']}")
     # 記録がまだ無いあいだは Issue が立たないので、gh を呼ばずに終える
     if not outcomes:
@@ -269,7 +276,7 @@ def today_line(data_dir, extra_entry, today):
         outcomes = load_outcomes(os.path.join(data_dir, "scenario-outcomes.json"), today)
     except (OSError, json.JSONDecodeError, SystemExit) as e:
         return f"現状の見立て：記録を読めません（{e}）"
-    result = evaluate(load_entries(os.path.join(data_dir, "scenario-log.jsonl"), extra_entry), outcomes)
+    result = evaluate(load_entries(os.path.join(data_dir, "scenario-log.jsonl"), extra_entry), outcomes, today)
     return f"現状の見立て：{result['message']}"
 
 
