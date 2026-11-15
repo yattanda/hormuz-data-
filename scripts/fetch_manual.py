@@ -951,6 +951,8 @@ def scenario_log_entry(manual, news_count, model_id=None, status_quo_ai=None, in
     model は CLI が返した実際のモデル ID（取れなかった日は None）、model_requested は指定した別名。
     status_quo_ai は AI の「今日判定したら当たるシナリオ」の見立て（verify_status_quo）。採点の正解には使わない。
     inputs はその回に推計へ渡した見出しの記録のパス（scenario_inputs_path）。
+    context_updated は前提（シナリオの定義を含む）の基準日。定義を直した日の前後を採点で分けるため
+    （2026-11-15 に D の定義を直した）。
     """
     return {
         "at": manual["updated_at"],
@@ -964,6 +966,7 @@ def scenario_log_entry(manual, news_count, model_id=None, status_quo_ai=None, in
         "model_requested": CLAUDE_MODEL,
         "status_quo_ai": status_quo_ai,
         "inputs": inputs,
+        "context_updated": (manual.get("context") or {}).get("updated"),
     }
 
 
