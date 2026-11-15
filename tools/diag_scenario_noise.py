@@ -6,10 +6,11 @@ diag_scenario_noise.py
   legacy:<model> : 2026-10-25 までの入力（先頭のフィードから40件・日付で絞らない）で1回ずつ
   new1:<model>   : 新しい入力（全フィード・直近7日・新しい順）で1回ずつ
   newN:<model>   : 新しい入力で --samples 回答えさせた中央値（本番と同じ形）を --repeats 回
-  <model> は gemini または claude。Gemini の無料枠は1日20回（再試行も数える）なので、回数に注意する
+  <model> は Claude のモデル名（opus・sonnet など。claude -p --model に渡す）。
+  2026-10-25 の Gemini との比較（幅の最大 60pt 対 7pt）のあと、Gemini の経路は外した（2026-10-26）
 
-使い方（API キー・サブスクの認証が要るので Actions の diag_estat.yml を command=scenario_noise で動かす）:
-  python tools/diag_scenario_noise.py --variants new1:gemini,new1:claude --runs 5
+使い方（サブスクの認証が要るので Actions の diag_estat.yml を command=scenario_noise で動かす）:
+  python tools/diag_scenario_noise.py --variants new1:opus,new1:sonnet --runs 5
 """
 
 import argparse
@@ -90,7 +91,7 @@ def summarize(label, vectors):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--variants", default="new1:gemini,new1:claude")
+    p.add_argument("--variants", default="new1:opus")
     p.add_argument("--runs", type=int, default=5)
     p.add_argument("--samples", type=int, default=fm.SAMPLES)
     p.add_argument("--repeats", type=int, default=3)

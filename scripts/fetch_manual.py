@@ -1,15 +1,15 @@
 """
 fetch_manual.py
 RSSフィードから最新ニュースを取得し、
-生成AI（既定は Claude・--backend で Gemini も選べる）で分析して
-data/manual-update.json を自動更新する。
+生成AI（Claude・Claude Code の CLI）で分析して
+data/manual-update.json を自動更新し、シナリオ確率を data/scenario-log.jsonl に1行足す。
 
 必要環境変数:
-  CLAUDE_CODE_OAUTH_TOKEN : Claude のサブスクの認証（既定の claude のとき）
-  GEMINI_API_KEY          : Google Gemini API キー（--backend gemini のとき）
+  CLAUDE_CODE_OAUTH_TOKEN : Claude のサブスクの認証
 """
 
 import argparse
+import hashlib
 import html
 import json
 import os
@@ -24,8 +24,6 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
-from google import genai
-from google.genai import types
 
 # RSS フィードリスト
 RSS_FEEDS = [
@@ -42,15 +40,11 @@ RSS_FEEDS = [
     "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml",
 ]
 
-# 報道値（reported_figures）を拾うための追加の検索。海運の専門紙・石油の専門機関・追跡会社を名指しする
-# （2026-10-26。上の9本だけでは、許可リストの媒体で数字の入った見出しがほとんど無かった）。
-# シナリオ確率の入力を押し出さないよう、上の9本の採用分（MAX_ITEMS 件）はそのままにして、
-# 許可リストの媒体の記事だけを FIGURE_MAX_ITEMS 件まで後ろに足す。
-FIGURE_FEEDS = [
-    "https://news.google.com/rss/search?q=Hormuz+%28Kpler+OR+Vortexa+OR+%22Lloyd%27s+List%22%29&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=Hormuz+%28site%3Alloydslist.com+OR+site%3Atradewindsnews.com+OR+site%3Asplash247.com+OR+site%3Agcaptain.com%29&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=Hormuz+%28site%3Aspglobal.com+OR+site%3Aargusmedia.com+OR+site%3Akpler.com+OR+site%3Avortexa.com%29&hl=en-US&gl=US&ceid=US:en",
-]
+# 報道値（reported_figures）用に足していた検索3本（FIGURE_FEEDS・2026-10-26）は 2026-11-14 に外した。
+# 11/9〜11/14 の6回とも採用 0件で（Google ニュースの RSS は説明文が空で、数字の入った見出しがほぼ無い）、
+# しかも足した最大12件がシナリオ確率の入力にも入っていた（#22 の後、入力 52件のうち約2割）。
+# 報道値の欄（保険料率・追跡できない割合を含む）は、上の9本の記事から拾う形で残す
+# （docs/data-sources-redesign.md §5-2・§0）。
 
 
 KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait", "封鎖", "ホルムズ", "イラン"]
@@ -62,8 +56,6 @@ KEYWORDS = ["Hormuz", "Iran", "blockade", "oil", "tanker", "ceasefire", "strait"
 MAX_AGE_DAYS = 7
 PER_FEED_MAX = 12
 MAX_ITEMS = 40
-FIGURE_PER_FEED_MAX = 6
-FIGURE_MAX_ITEMS = 12
 
 # 媒体名を持たないフィード（<source> が無い）の表示名
 FEED_LABELS = {
@@ -147,6 +139,8 @@ def fetch_rss_news(max_items=40, max_age_days=MAX_AGE_DAYS, per_feed_max=PER_FEE
             print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
             continue
         print(f"[RSS] {len(items):3d} 件（期間内・該当）: {url[:70]}")
+        for item in items[:per_feed_max]:
+            item["feed"] = url
         collected.extend(items[:per_feed_max])
 
     seen = set()
@@ -164,33 +158,6 @@ def fetch_rss_news(max_items=40, max_age_days=MAX_AGE_DAYS, per_feed_max=PER_FEE
         print(f"[RSS] 採用 {len(news)} 件（重複除去前 {len(collected)} 件）"
               f" / 古さ 中央値 {ages[len(ages) // 2]:.1f} 日・最大 {ages[-1]:.1f} 日")
     return news
-
-
-def fetch_figure_news(existing, max_items=FIGURE_MAX_ITEMS, max_age_days=MAX_AGE_DAYS,
-                      per_feed_max=FIGURE_PER_FEED_MAX):
-    """FIGURE_FEEDS から、許可リストの媒体の記事を新しい順に返す。existing と同じ見出しは除く。"""
-    now = datetime.now(timezone.utc)
-    seen = {title_key(n["title"]) for n in existing}
-    collected = []
-    for url in FIGURE_FEEDS:
-        try:
-            items = fetch_feed(url, now, max_age_days)
-        except Exception as e:
-            print(f"[RSS] Error fetching {url}: {e}", file=sys.stderr)
-            continue
-        allowed = [i for i in items if allowed_source(i)]
-        print(f"[RSS] {len(items):3d} 件（期間内・該当）・許可リスト {len(allowed):3d} 件: {url[:70]}")
-        collected.extend(allowed[:per_feed_max])
-    extra = []
-    for item in sorted(collected, key=lambda x: x["published"], reverse=True):
-        key = title_key(item["title"])
-        if key in seen:
-            continue
-        seen.add(key)
-        extra.append(item)
-    extra = extra[:max_items]
-    print(f"[RSS] 報道値用に追加 {len(extra)} 件")
-    return extra
 
 
 def format_news_line(item, number):
@@ -217,7 +184,7 @@ def load_context(path="data/context.json"):
         return json.load(f)
 
 
-# 手動でしか確認できない項目。Gemini には生成させない。
+# 手動でしか確認できない項目。推計（AI）には生成させない。
 # build_manual_json は毎回ファイルを作り直すため、明示的に引き継がないと
 # 手動で入れた値が翌日の自動更新で消える。実際 2026-05-15 に保険料率を
 # 「手動確認のみ」へ設計変更した後、3フィールドともファイルから失われ、
@@ -345,6 +312,8 @@ def build_prompt(news_items, context):
     timeline_latest = latest.isoformat() if latest else "不明"
     timeline_text = build_timeline_text(context)
     scenario_text = build_scenario_text(context)
+    jst = timezone(timedelta(hours=9))
+    today = datetime.now(jst).date().isoformat()
 
     news_text = "\n".join(format_news_line(item, i) for i, item in enumerate(news_items, 1))
     metrics_text = "\n".join(f"  - {k}: {v['desc']}（単位: {v['unit']}）" for k, v in REPORTED_METRICS.items())
@@ -373,7 +342,8 @@ def build_prompt(news_items, context):
   ],
   "note_sentences": [
     {{"text": "<最新状況メモの1文。日本語>", "items": [<その文の根拠の記事番号>]}}
-  ]
+  ],
+  "status_quo": {{"scenario": "<今日 {today} に判定したら当たるシナリオのキー1つ（A_diplomacy_pct など）>", "items": [<根拠の記事番号>], "reason": "<理由。日本語で60字以内>"}}
 }}
 
 【シナリオの定義】（表示側のカード見出しと一致させてある。この定義と判定の順に沿って確率を割り当てること。
@@ -393,6 +363,9 @@ def build_prompt(news_items, context):
 - note_sentences はホルムズ・イラン情勢の最新動向を、合計100文字以内・1〜3文で書く
 - note_sentences の各文には、その内容が書かれている記事の番号を items に必ず入れる。
   記事に書かれていない内容（【確定した経緯】だけにある事実・推測・背景知識）は書かない
+- status_quo は確率とは別の問い。判定日ではなく「今日 {today} を判定日としたら、どのシナリオに当たるか」を
+  シナリオの定義と判定の順で1つ選ぶ。D の「判定日までに」は「今日までの90日に」と読む。
+  items には、そう判断した根拠の記事番号を必ず入れる
 """
 
 
@@ -534,6 +507,49 @@ def verify_reported_figures(samples, news_items):
     return figures
 
 
+# 現状の見立ての根拠として残す記事の上限
+MAX_STATUS_SOURCES = 5
+
+
+def verify_status_quo(samples, news_items):
+    """各回の status_quo（今日判定したら当たるシナリオ）を確かめ、多数決で1つにまとめる
+    （docs/data-sources-redesign.md §5-4）。
+
+    - scenario が SCENARIO_KEYS のどれでもない回・items が無いか範囲外の番号を含む回は数えない
+    - 数えた回が MIN_SAMPLES に満たないか、最多が同数で並んだら scenario は None（不定）。
+      判定の順（D → A → C → B）で決めると、割れた日ほど D に寄るため使わない
+    採点の正解には使わない（AI の予想を AI の答えで採点しないため）。見張り
+    （scripts/watch_status_quo.py）が、記録済みの現状との食い違いを知らせるのに使う。
+    """
+    votes, valid = {}, []
+    for sample in samples:
+        sq = sample.get("status_quo") if isinstance(sample, dict) else None
+        if not isinstance(sq, dict) or sq.get("scenario") not in SCENARIO_KEYS:
+            continue
+        try:
+            numbers = sorted({int(n) for n in sq.get("items") or []})
+        except (TypeError, ValueError):
+            continue
+        if not numbers or not all(1 <= n <= len(news_items) for n in numbers):
+            continue
+        votes[sq["scenario"]] = votes.get(sq["scenario"], 0) + 1
+        valid.append((sq["scenario"], numbers, str(sq.get("reason") or "").strip()))
+    top = max(votes.values()) if votes else 0
+    leaders = [k for k, n in votes.items() if n == top]
+    winner = leaders[0] if len(leaders) == 1 and len(valid) >= MIN_SAMPLES else None
+    chosen = [v for v in valid if v[0] == winner]
+    numbers = sorted({n for _, nums, _ in chosen for n in nums})[:MAX_STATUS_SOURCES]
+    result = {
+        "scenario": winner,
+        "votes": {k: votes[k] for k in SCENARIO_KEYS if k in votes},
+        "valid_samples": len(valid),
+        "reason": chosen[0][2] if chosen else None,
+        "sources": [article_ref(news_items[n - 1]) for n in numbers],
+    }
+    print(f"[StatusQuo] 見立て: {winner or '不定'}（{result['votes']}・数えた回 {len(valid)}/{len(samples)}）")
+    return result
+
+
 NOTE_MAX_CHARS = 100
 # 状況メモの価格の検査で許す EIA の週次価格との差（±10%）。EIA は週次なので急変した週は外れうる。
 NOTE_PRICE_TOLERANCE = 0.10
@@ -557,11 +573,12 @@ def prices_in_note(text):
     return prices
 
 
-def verify_note_sentences(sample, news_items, reference_prices):
+def verify_note_sentences(sample, news_items, reference_prices, price_warnings=None):
     """状況メモの文を確かめ、通った文だけを根拠の記事つきで返す（docs/data-sources-redesign.md §5-3）。
 
     - items が無い文・範囲外の番号を含む文は捨てる
     - 「○ドル」が EIA の最新の WTI・Brent のどちらからも ±10% を超えて離れていたら、その文を捨てて WARN
+      （price_warnings にリストを渡すと、捨てた文を足す。scripts/check_consistency.py が要約に出す）
     - 合計 NOTE_MAX_CHARS 字を超える分の文は捨てる
     """
     raw = sample.get("note_sentences") if isinstance(sample, dict) else None
@@ -584,6 +601,8 @@ def verify_note_sentences(sample, news_items, reference_prices):
         if off:
             print(f"[Note] WARN: 価格 {off} が EIA の {reference_prices} から ±{NOTE_PRICE_TOLERANCE:.0%} を超えるため文を捨てました: {text[:40]}",
                   file=sys.stderr)
+            if price_warnings is not None:
+                price_warnings.append({"text": text, "prices": off, "reference_prices": reference_prices})
             continue
         if total + len(text) > NOTE_MAX_CHARS:
             continue
@@ -616,37 +635,12 @@ def with_retries(label, call):
             raise
         except Exception as e:
             print(f"[{label}] Attempt {attempt+1} failed: {e}", file=sys.stderr)
-            # Gemini の無料枠は1日20回（gemini-2.5-flash・2026-10-25 の 429 の応答）。
-            # 使い切ったあとの再試行は枠を回復させず、待つ時間だけがかかる（10/25 の測定で約1時間）
-            if "RESOURCE_EXHAUSTED" in str(e):
-                raise QuotaExhausted(str(e)) from e
             if attempt < 2:
                 wait = (attempt + 1) * 30  # 30秒→60秒待機
                 print(f"[{label}] Waiting {wait}s before retry...", file=sys.stderr)
                 time.sleep(wait)
     print(f"[{label}] All retries failed.", file=sys.stderr)
     return None
-
-
-GEMINI_MODEL = "gemini-2.5-flash"
-
-
-def analyze_with_gemini(api_key, news_items, context, prompt=None):
-    """Gemini API でニュースを分析してJSONを生成（1回分）"""
-    client = genai.Client(api_key=api_key)
-
-    if prompt is None:
-        prompt = build_prompt(news_items, context)
-
-    def call():
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=prompt,
-            config=types.GenerateContentConfig(response_mime_type="application/json"),
-        )
-        return parse_json_text(response.text)
-
-    return with_retries("Gemini", call)
 
 
 # Claude は Claude Code の CLI を、サブスクの認証（CLAUDE_CODE_OAUTH_TOKEN）で呼ぶ。
@@ -679,39 +673,53 @@ def analyze_with_claude(prompt, model=CLAUDE_MODEL):
             if any(w in msg.lower() for w in ("limit", "not logged in", "authenticate")):
                 raise QuotaExhausted(msg)
             raise RuntimeError(msg)
-        return parse_json_text(out.get("result"))
+        data = parse_json_text(out.get("result"))
+        if isinstance(data, dict):
+            # 別名（opus など）が指した実際のモデル ID。予測の記録に残す（採点の系列が
+            # モデルの入れ替わりで混ざらないように）。aggregate_samples は決めたキーしか
+            # 返さないので、この欄は manual-update.json には載らない
+            data["_model_ids"] = model_ids_in(out)
+        return data
 
     return with_retries("Claude", call)
 
 
-# 推計に使うモデル。表示側の出典と ais-estimate.json の model はここから作る。
+def model_ids_in(out):
+    """CLI の出力 JSON の modelUsage から、出力トークンの多い順にモデル ID を返す。無ければ空。"""
+    usage = out.get("modelUsage") if isinstance(out, dict) else None
+    if not isinstance(usage, dict):
+        return []
+    def tokens(k):
+        v = usage[k]
+        return v.get("outputTokens", 0) if isinstance(v, dict) else 0
+    return sorted(usage, key=tokens, reverse=True)
+
+
+def sample_model_id(samples):
+    """各回でいちばん多く出力したモデル ID のうち、回数の多いもの。取れなければ None。"""
+    ids = [s["_model_ids"][0] for s in samples if isinstance(s, dict) and s.get("_model_ids")]
+    return max(set(ids), key=ids.count) if ids else None
+
+
+# 推計に使うモデル。表示側の出典はここから作る。
 # 2026-10-25 に Gemini から Claude（opus）へ切り替えた。同じ入力で1回ずつ5回答えさせた幅が
 # Gemini は最大60ポイント、Claude は最大7ポイントだった（tools/diag_scenario_noise.py）。
-# Claude が失敗した日は Gemini に切り替えず、更新しない（振れの大きい値を混ぜないため）
-BACKENDS = {
-    "gemini": {"label": "Gemini 2.5 Flash", "model": GEMINI_MODEL},
-    "claude": {"label": f"Claude（{CLAUDE_MODEL}）", "model": f"claude-{CLAUDE_MODEL}"},
-}
+# Gemini の経路は 2026-10-26 に外した（docs/data-sources-redesign.md Q8）。
+# Claude が失敗した日は更新しない（前回の値を残す）
+CLAUDE_LABEL = f"Claude（{CLAUDE_MODEL}）"
 
 
-def source_text(backend):
+def source_text():
     """出典表示の文字列。1件だけ読んでも供給元・モデル・入力が分かる形にする。"""
-    return (f"{BACKENDS[backend]['label']} による推計"
+    return (f"{CLAUDE_LABEL} による推計"
             "（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）")
 
 
-def make_estimator(backend):
-    """backend の1回分の推計関数 prompt -> dict|None を返す。"""
-    if backend == "gemini":
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
-            raise SystemExit("[Manual] ERROR: GEMINI_API_KEY not set.")
-        return lambda prompt: analyze_with_gemini(api_key, None, None, prompt=prompt)
-    if backend == "claude":
-        if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
-            raise SystemExit("[Manual] ERROR: CLAUDE_CODE_OAUTH_TOKEN not set.")
-        return analyze_with_claude
-    raise SystemExit(f"[Manual] ERROR: unknown backend {backend}")
+def make_estimator(model=CLAUDE_MODEL):
+    """1回分の推計関数 prompt -> dict|None を返す。model は Claude のモデル名（opus・sonnet など）。"""
+    if not os.environ.get("CLAUDE_CODE_OAUTH_TOKEN"):
+        raise SystemExit("[Manual] ERROR: CLAUDE_CODE_OAUTH_TOKEN not set.")
+    return lambda prompt: analyze_with_claude(prompt, model=model)
 
 
 SCENARIO_KEYS = ("A_diplomacy_pct", "B_partial_blockade_pct", "C_full_blockade_pct", "D_escalation_pct")
@@ -823,7 +831,7 @@ def updated_today(path="data/manual-update.json"):
     jst = timezone(timedelta(hours=9))
     return at.astimezone(jst).date() == datetime.now(jst).date()
 
-def build_manual_json(data, context, previous=None, backend="gemini"):
+def build_manual_json(data, context, previous=None):
     """manual-update.json の形式に変換。
 
     前提の基準日と経過日数を出力に含める。表示側はこれを見て
@@ -843,7 +851,7 @@ def build_manual_json(data, context, previous=None, backend="gemini"):
     return {
         "updated_at": now,
         "auto_generated": True,
-        "source": source_text(backend),
+        "source": source_text(),
         "context": {
             "updated": context.get("context_updated"),
             "age_days": age,
@@ -895,15 +903,87 @@ def save_manual(data, path="data/manual-update.json"):
     print(f"[Manual] Saved to {path}")
 
 
+SCENARIO_LOG_PATH = "data/scenario-log.jsonl"
+SCENARIO_INPUTS_DIR = "data/scenario-inputs"
+
+
+def scenario_inputs_path(at, base=SCENARIO_INPUTS_DIR):
+    """推計の入力の記録のパス。updated_at（JST）の日時で1回ごとに1ファイル（例 2026-11-14_0931.json）。"""
+    return f"{base}/{at[:10]}_{at[11:13]}{at[14:16]}.json"
+
+
+def scenario_inputs_record(at, news_items, context_path="data/context.json"):
+    """推計に渡した見出しの記録（docs/data-sources-redesign.md §5-4。2026-11-14 運営者）。
+
+    確率が動いたとき、揺れか入力の変化かを後から見分けるために残す。リポジトリは公開なので、
+    見出し・媒体・リンク・日時だけを持ち、説明文と本文は入れない。番号はプロンプトの番号（1 始まり）。
+    context.json は中身のハッシュで持つ（同じハッシュなら前提と経緯は同じ）。
+    """
+    try:
+        with open(context_path, "rb") as f:
+            context_sha256 = hashlib.sha256(f.read()).hexdigest()
+    except OSError:
+        context_sha256 = None
+    return {
+        "at": at,
+        "context_sha256": context_sha256,
+        "items": [
+            {
+                "n": i,
+                "title": item["title"],
+                "source": item.get("source"),
+                "domain": item.get("domain"),
+                "link": item.get("link"),
+                "published": item["published"].isoformat() if hasattr(item["published"], "isoformat")
+                else item["published"],
+                "feed": item.get("feed"),
+            }
+            for i, item in enumerate(news_items, 1)
+        ],
+    }
+
+
+def scenario_log_entry(manual, news_count, model_id=None, status_quo_ai=None, inputs=None):
+    """予測の記録の1行（docs/data-sources-redesign.md §5-4）。
+
+    採点（scripts/score_scenarios.py）は judgment_date ごとに、判定日に当たったシナリオと
+    照らす。git の履歴からも復元できるが、採点に使いやすい形で持つ。
+    model は CLI が返した実際のモデル ID（取れなかった日は None）、model_requested は指定した別名。
+    status_quo_ai は AI の「今日判定したら当たるシナリオ」の見立て（verify_status_quo）。採点の正解には使わない。
+    inputs はその回に推計へ渡した見出しの記録のパス（scenario_inputs_path）。
+    """
+    return {
+        "at": manual["updated_at"],
+        "judgment_date": manual["scenario_horizon"]["judgment_date"],
+        "horizon_days": manual["scenario_horizon"]["days"],
+        "scenario": manual["scenario"],
+        "scenario_range": manual["scenario_range"],
+        "samples": manual["scenario_samples"],
+        "news_items": news_count,
+        "model": model_id,
+        "model_requested": CLAUDE_MODEL,
+        "status_quo_ai": status_quo_ai,
+        "inputs": inputs,
+    }
+
+
+def append_scenario_log(entry, path=SCENARIO_LOG_PATH):
+    """予測の記録に1行足す。1行ずつ足すだけなので、既存の行は書き換えない。"""
+    line = json.dumps(entry, ensure_ascii=False, separators=(",", ":"))
+    line.encode("utf-8")  # 書き込む前にエンコード可能なことを確かめる
+    with open(path, "a", encoding="utf-8", newline="\n") as f:
+        f.write(line + "\n")
+    print(f"[Manual] {path} に1行足しました（判定日 {entry['judgment_date']}）")
+
+
 def parse_args(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--skip-if-updated-today", action="store_true",
                    help="今日（JST）すでに更新済みなら何もしない（GitHub の予約実行＝予備の回で使う）")
     p.add_argument("--dry-run", action="store_true",
                    help="ファイルを書かず、結果を表示するだけ")
-    p.add_argument("--backend", choices=sorted(BACKENDS),
-                   default=os.environ.get("SCENARIO_BACKEND") or "claude",
-                   help="推計に使うモデル（既定は環境変数 SCENARIO_BACKEND、無ければ claude）")
+    p.add_argument("--dry-run-entry", metavar="PATH",
+                   help="--dry-run のとき、予測の記録に足すはずだった1行を PATH に書く（見張りの試し実行用）")
     p.add_argument("--samples", type=int, default=SAMPLES,
                    help=f"同じ入力で答えさせる回数（既定 {SAMPLES}）")
     return p.parse_args(argv)
@@ -918,11 +998,10 @@ def main(argv=None):
         print("[Manual] 今日はすでに更新済みのため、予備の実行は何もしません。")
         sys.exit(0)
 
-    estimate = make_estimator(args.backend)
+    estimate = make_estimator()
 
     print("[Manual] Fetching RSS news...")
     news_items = fetch_rss_news(max_items=MAX_ITEMS)
-    news_items += fetch_figure_news(news_items)
     print(f"[Manual] Found {len(news_items)} relevant articles.")
 
     if not news_items:
@@ -955,7 +1034,7 @@ def main(argv=None):
             file=sys.stderr,
         )
 
-    print(f"[Manual] Analyzing with {BACKENDS[args.backend]['label']}（{args.samples} 回）...")
+    print(f"[Manual] Analyzing with {CLAUDE_LABEL}（{args.samples} 回）...")
     samples = collect_samples(estimate, news_items, context, n=args.samples)
     need = min(MIN_SAMPLES, args.samples)
     if len(samples) < need:
@@ -968,21 +1047,39 @@ def main(argv=None):
         print("[Manual] 回ごとの答えが割れ、中央値の合計が 0 になりました。更新しません（前回の値を残します）。",
               file=sys.stderr)
         sys.exit(1)
-    print(f"[Manual] 中央値: {data['scenario']} / 幅: {data['scenario_range']}")
+    model_id = sample_model_id(samples)
+    print(f"[Manual] 中央値: {data['scenario']} / 幅: {data['scenario_range']} / モデル: {model_id or '不明'}")
 
     data["reported_figures"] = verify_reported_figures(samples, news_items)
-    sentences = verify_note_sentences(samples[nearest_sample(samples)], news_items, load_reference_prices())
+    price_warnings = []
+    sentences = verify_note_sentences(samples[nearest_sample(samples)], news_items, load_reference_prices(),
+                                      price_warnings)
     data["note_sentences"] = sentences
+    # 価格が EIA と食い違って捨てた文。表示には使わず、scripts/check_consistency.py が WARN に出す
+    data["note_price_warnings"] = price_warnings
     # 互換のため、確かめた文をつないだものを今までどおり持つ（どこにも表示していない。2026-10-26 確認）
     data["last_manual_note"] = "".join(s["text"] for s in sentences)
+
+    status_quo_ai = verify_status_quo(samples, news_items)
+
+    manual = build_manual_json(data, context, load_existing_manual())
+    inputs_path = scenario_inputs_path(manual["updated_at"])
+    entry = scenario_log_entry(manual, len(news_items), model_id, status_quo_ai, inputs_path)
 
     if args.dry_run:
         print("[Manual] --dry-run のため書き込みません。")
         print(json.dumps(data, ensure_ascii=False, indent=2))
+        if args.dry_run_entry:
+            # リポジトリの外（Actions の RUNNER_TEMP など）に置き、見張りの試し実行が読む
+            write_json(entry, args.dry_run_entry)
+            print(f"[Manual] 予測の記録に足すはずだった1行を {args.dry_run_entry} に書きました")
         return
 
-    manual = build_manual_json(data, context, load_existing_manual(), backend=args.backend)
     save_manual(manual)
+    os.makedirs(SCENARIO_INPUTS_DIR, exist_ok=True)
+    write_json(scenario_inputs_record(manual["updated_at"], news_items), inputs_path)
+    print(f"[Manual] 推計に渡した見出し {len(news_items)} 件を {inputs_path} に書きました")
+    append_scenario_log(entry)
 
     # 隻数の AI 推計（data/ais-estimate.json）は 2026-10 の見直しで書かなくなった。
     # 通航数は IMF PortWatch で測る（scripts/fetch_portwatch.py）。ファイルは記録として残す
