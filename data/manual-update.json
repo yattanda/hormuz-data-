@@ -1,89 +1,82 @@
 {
-  "updated_at": "2026-11-14T09:31:52+09:00",
+  "updated_at": "2026-11-15T09:31:57+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-10-26",
-    "age_days": 19,
+    "age_days": 20,
     "stale_after_days": 30,
     "stale": false,
     "timeline_updated": "2026-11-13",
-    "timeline_age_days": 1,
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-12"
+    "judgment_date": "2027-02-13"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 12,
-    "B_partial_blockade_pct": 46,
-    "C_full_blockade_pct": 24,
-    "D_escalation_pct": 18
+    "A_diplomacy_pct": 10,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 30,
+    "D_escalation_pct": 15
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      12,
+      10,
       12
     ],
     "B_partial_blockade_pct": [
-      45,
-      48
+      43,
+      47
     ],
     "C_full_blockade_pct": [
-      22,
-      28
+      30,
+      30
     ],
     "D_escalation_pct": [
-      15,
-      20
+      13,
+      15
     ]
   },
   "scenario_samples": 5,
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "IRGCは、ホルムズ海峡でLNG船が機雷に触れて炎上したと主張した。",
+      "text": "トランプ氏はイラン戦争が「事実上終わった」と述べ、政権は長期の経済圧力に軸足を移しつつある。",
       "items": [
-        4,
-        16,
-        43
+        6,
+        13
       ],
       "sources": [
         {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "IRGC says tanker caught fire after hitting mines in Strait of Hormuz",
-          "link": "https://www.aljazeera.com/video/newsfeed/2026/11/13/irgc-says-tanker-caught-fire-after-hitting-mines-in-strait-of-hormuz?traffic_source=rss",
+          "source": "The Hill",
+          "domain": "thehill.com",
+          "title": "Trump says the Iran war ‘effectively over.’ It’s still costing the US billions - The Hill",
+          "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPSVNZbjB3dnptVVYtWWVQMHBpZmZqX3lmTXVrdnloalBCZXczUTFiaEswUXN2a1o4Z2VpNVFxdVdFN3Btd3c0N2NFMHpwZ2k5bFNyWlc5elBwb0ZUaUJaemUyeDBRMmdzMC1fUTRWakFKVGY2RW9fMUd0amM0b1dlUNIBhgFBVV95cUxPVzdXcGJYNncwNXZzYWhOV29tS0dSTjNabHVBWFhaVlV6SEZhVmdVX2hXZGM0RnBxbE41RkFWXzR4QkpDMUVURGZ3VjdyeW5pRXF4VXRkdkQzZ0hsNTA0eVBEYzdGWTVyZ2c2eGZ4aWszSHRPRDJTenBzbmVJMndidDdObFVvZw?oc=5",
           "published": "2026-11-14"
         },
         {
-          "source": "https://houseofsaud.com/",
-          "domain": "houseofsaud.com",
-          "title": "IRGC Says Gas Carrier Hit Mine and Exploded in Eastern Strait of Hormuz - https://houseofsaud.com/",
-          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1DYTBSZ2xBRWxRbE0xR0t4dzh1WFNhdzYwb2dncFVDRGRiUDZYYUs0blhtOW81YTVHYS1ZMjh5TWNmbDU1N3dnX0Y1V05tbURoWEloc3V1MXRCbHhIQUR3ZjBDZFo5WXV4VWZseUtiVUJNU3FRR2RaZg?oc=5",
-          "published": "2026-11-13"
-        },
-        {
-          "source": "gCaptain",
-          "domain": "gcaptain.com",
-          "title": "Iran Says Tanker Carrying LNG Hit Mine, Suffered Explosion in Hormuz - gCaptain",
-          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMzVkRFFJekRaU3kzRVhNWFNuYjdNSmVEU2hFaXF3eWoxU0JVVFpnU28xUlZ2Wm1XdVFuZHZVQ3U4eU53YlBwMnBtZGZZUUhUWjFYODhkMzA3S0JNaFhtVTBYOG1Jb3MtaDU0ckpwTjVqVnQxdTRKbG1FYVgwRUpRbVg1MFpBSWVMcmFyaXNDZFhfOUU?oc=5",
-          "published": "2026-11-13"
+          "source": "New York Times",
+          "domain": "rss.nytimes.com",
+          "title": "Trump Signals New Strategy on Iran: A Waiting Game",
+          "link": "https://www.nytimes.com/2026/11/13/us/politics/trump-iran-strategy.html",
+          "published": "2026-11-14"
         }
       ]
     },
     {
-      "text": "IEAは、世界の石油供給がイラン戦争開始後で初めて供給過剰に戻ると予測した。",
+      "text": "ホルムズではタンカーの被弾や炎上の報告が続くが、IEAは世界の原油供給が過剰に戻ると見込む。",
       "items": [
-        5,
-        13,
-        20
+        10,
+        20,
+        29,
+        41
       ],
       "sources": [
         {
@@ -94,36 +87,28 @@
           "published": "2026-11-14"
         },
         {
-          "source": "The National",
-          "domain": "www.thenationalnews.com",
-          "title": "Oil market to return to surplus for first time since start of Iran war, IEA says - The National",
-          "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPcXJYRFlhUVJEY0xBNFcxdW1lNUx2aEVaZkxyWE5JN2N3YmJJZXJHdTFrLU15RXFHcnRVNWc5cXFxdk1EMkJ5WGxWcVB0NW1KVnNldHQwYkQ3R1d4M215d1RmYVhDdFNJT3dYQUxQYkE4OVA2YW05NkRoMUstbDk5c0RrSnBndVBjUzF2Z2JhYWw1bS05b1BWLTNxUWZLVGF0QktORkhoVFcydG5CQm9IYjJiRG5XTmhYOV9hYnpnTlFGNjc2Nm43ZllNNS1HTzFpV0ROMlBB?oc=5",
+          "source": "Reuters",
+          "domain": "www.reuters.com",
+          "title": "World oil market is returning to surplus as Gulf exports recover, IEA says - Reuters",
+          "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOcWtzQXhRVUlUbWQ0VVloOTVjekFCcC1XQlNXNWNRcERHNDFEbnBNTTFhZjV3Qjk5bGxCaDhoRFE1Yi1mdGNoR3JCVXY5MmQ0ODVnUWRabHowUDhYSUNKOXV5X0lLQzRBbWNabUFMTzVlMzBNOUUyWTgyeUg1cW5sRjJtUHo3TldPOEY4S19xOGwwYjlkemFibktTVTltVF94WUg5ekdJczcyUlBHOHZ0V3EtdWdjU0JOVkY4?oc=5",
           "published": "2026-11-13"
         },
         {
-          "source": "Bloomberg",
-          "domain": "www.bloomberg.com",
-          "title": "Global Oil Market Swings to Surplus on Gulf Exports, IEA Says - Bloomberg",
-          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNdk45TmZ0SDVZOXY5Mm1XRXVldzFCTUJYTld4MURmUkdkVXRQQU44TGRVaWQ1dzE3MXN2UVR6Vml4NFRKZ3hoYUoyN3R2SExaRmc5eFdvcnFzeVN1bWFGdmQ4WkxDSlVWRjhxdmZJY1k3Z3REdFpVRlhyV0lIbFVjMnBULTBRNjFWenpQVl8wdDV5SHBqQUgwYk1hbEJQeTNnMTRMRGZ5SGR2aXZ4YjNhSw?oc=5",
+          "source": "Arab News",
+          "domain": "www.arabnews.com",
+          "title": "Iran says four tankers on fire in Hormuz - Arab News",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNWDI5MGxiUVVhallvSEhhZUo1NVV4WjVSMkVHMjhsRVVwRVI4aFozVzQ2eUpCaDNZTERpcjNZMEtmaC16WF9zWHhRYUNTcGNxQjJjelpWc3NibGpfaUsyTHEwOWxXNHdPbWswSGlNVzFJeHE3bUZDWmVYTjZTNHIzVjFqNnJLalBZUmZiSG1B?oc=5",
           "published": "2026-11-13"
-        }
-      ]
-    },
-    {
-      "text": "トランプ大統領は「イランとの合意は必要ない」と述べた。",
-      "items": [
-        21
-      ],
-      "sources": [
+        },
         {
-          "source": "CBS News",
-          "domain": "www.cbsnews.com",
-          "title": "Trump says \"we don't need a deal with Iran,\" as Tehran sticks to its demands - CBS News",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5JdnI2N05uOHdtZFhtb0U3MGN6bEhNN05QbE85RV81UGRMenBqY04tWXhLU1MxRzR6NWxZOUx5cnNzYmRwRFEwRWJnbi1Cc0JpMUt2aW53VEpWOFA0cEptN2xLLVB6S1RxNDlydWs5MGsySnprakktTlkwUmxqODQ?oc=5",
-          "published": "2026-11-13"
+          "source": "TradeWinds News",
+          "domain": "www.tradewindsnews.com",
+          "title": "Firefighting underway after tanker hit by ‘unidentified object’ in Hormuz - TradeWinds News",
+          "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQYzJWZldPWWR5N2JxOWxtQ1BMOExoeVNpUkNNcjZsNklNMWYzYTItbGhwbXlkRHhXOUM4T3NTWW1Yb3hJR1hydTl2VUR4LUV3czFVdV9jbnNwWDFWY2YzTGVpaC1rdndPSndnTXZIcTNmckRuNXMta3hSWDhpcEdKMDltOTYya0VybFluY2oyZnNWY09FSmtoMk1GelZyd1A3SDR6TTR3R2pIcmNma2Mta2s5X3piRDZGcWJVdjBYRW1iNUU?oc=5",
+          "published": "2026-11-14"
         }
       ]
     }
   ],
-  "last_manual_note": "IRGCは、ホルムズ海峡でLNG船が機雷に触れて炎上したと主張した。IEAは、世界の石油供給がイラン戦争開始後で初めて供給過剰に戻ると予測した。トランプ大統領は「イランとの合意は必要ない」と述べた。"
+  "last_manual_note": "トランプ氏はイラン戦争が「事実上終わった」と述べ、政権は長期の経済圧力に軸足を移しつつある。ホルムズではタンカーの被弾や炎上の報告が続くが、IEAは世界の原油供給が過剰に戻ると見込む。"
 }
