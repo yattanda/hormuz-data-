@@ -1,0 +1,9 @@
+# GitHub Pages（legacy の Jekyll 配信）の設定。
+# 配信に要るのは index.html と data/ だけ。スクリプト・診断の道具・内部の設計書は配信から外す
+# （リポジトリは public のままなので、GitHub の画面では読める。ダッシュボードの「算出方法」のリンクは github.com を向いている）。
+# ドット始まりのファイル（.github/・.env.example など）は Jekyll が既定で外す。
+# 決定：④ data. の Q2 b（2026-10-26・hormuz-ops/drafts/design/data-subdomain-survey.md）
+exclude:
+  - scripts/
+  - tools/
+  - docs/
