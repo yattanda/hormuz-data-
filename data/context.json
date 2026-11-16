@@ -468,6 +468,26 @@
       "date": "2026-11-13",
       "fact": "国際エネルギー機関（IEA）は11月の月報で、2026年第4四半期の世界の原油供給は日量1億500万バレルと、需要見通しを日量170万バレル上回ると見込み、前回の月報が予測していた第4四半期の供給不足を供給過剰に改めた。2026年の世界の需要は日量270万バレル減の1億230万バレルと予測している。",
       "source": "Arab News 2026-11-13（Reuters配信。https://www.arabnews.com/middle-east/iea-oil-market-returning-to-surplus-as-gulf-exports-recover-3011670）"
+    },
+    {
+      "date": "2026-11-15",
+      "fact": "UKMTOは警報205（Attack・11/15 11:52 UTC発行）で、インド海運当局の報告として、アラビア湾（ペルシャ湾）を東へ向かいホルムズ海峡に入る前のタンカーが攻撃を受けたと発表した。乗組員は全員無事で、被害と環境への影響は不明。本文に船名・攻撃主体の記載はなく、日時欄は11/15 02:00 UTC。",
+      "source": "UKMTO 警報205（公式サイト Recent Incidents・2026-11-15 11:52 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-16",
+      "fact": "UKMTOは警報207（Attack・11/16 07:09 UTC発行）で、タンカーの会社保安責任者の報告として、ホルムズ海峡を出る途中のタンカーが正体不明の飛翔体を受けて機関室で火災が起きたと発表した。死傷者はなく、乗組員は全員無事で、被害と環境への影響は不明。本文に発生時刻・船名・攻撃主体の記載はなく、日時欄は07:08 UTC。",
+      "source": "UKMTO 警報207（公式サイト Recent Incidents・2026-11-16 07:09 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-16",
+      "fact": "UKMTOは警報208（Attack・11/16 21:47 UTC発行）で、オマーン・Khasabの北7海里で、第三者の報告として、ホルムズ海峡を通航中のタンカーが攻撃を受けて航行不能になり、機関室で火災が起きたと発表した。乗組員は無事と報告され、被害と環境への影響は不明。本文に発生時刻・船名・攻撃主体の記載はなく、日時欄は11/16 19:00 UTC。警報207と同じ船かは公表されていない。",
+      "source": "UKMTO 警報208（公式サイト Recent Incidents・2026-11-16 21:47 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-11-17（Reuters配信。https://www.arabnews.com/world/tanker-attacked-north-of-omans-khasab-ukmto-says-3012356）"
+    },
+    {
+      "date": "2026-11-16",
+      "fact": "米中央軍（CENTCOM）はXに、空母セオドア・ルーズベルト（CVN 71）が担当海域で予定された展開の一環として活動していると投稿した（写真は11/15にインド洋で撮影）。Fox Newsは、同空母が日曜（11/15）に担当海域に入ったと報じられたと伝える。到着日は報道で11/15と11/16に分かれ、Al Jazeeraは国防総省とCENTCOMの正式な確認はないと書く。",
+      "source": "Fox News 2026-11-16（CENTCOMのX投稿を引用。https://www.foxnews.com/politics/third-us-aircraft-carrier-arrives-middle-east-iran-rules-out-un-nuclear-inspections）"
     }
   ],
 
