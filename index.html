@@ -423,7 +423,9 @@
   <a id="main-site-link" href="https://chokepointlab.com/hormuz/" target="_blank">← メインサイト「ホルムズ海峡危機マップ」に戻る</a>
 </footer>
 <script>
-const BASE = 'https://yattanda.github.io/hormuz-data-';
+// データの読み込み先はこのページと同じ所（相対パス）。
+// yattanda.github.io/hormuz-data-/ でも data.chokepointlab.com/ でも、ページと同じ配信元の data/ を読む（④ data. の手順0・2026-11-16）
+const BASE = '.';
 
 function fmtDate(iso) {
   try {
