@@ -1,6 +1,6 @@
 # ダッシュボードのデータの出どころの見直し 設計書
 
-対象：`https://yattanda.github.io/hormuz-data-/`（`/hormuz/` の「ホルムズ データ監視ダッシュボード」に iframe で埋め込む）
+対象：`https://data.chokepointlab.com/`（2026-11 の ④ までは `https://yattanda.github.io/hormuz-data-/`。`/hormuz/` の「ホルムズ データ監視ダッシュボード」に iframe で埋め込む）
 起案：2026-10-25 / 状態：**Q1〜Q8 決定済み（2026-10-25）・PR 1 マージ済み（#19）・PR 2（#21）・PR 3 作業中（マージは `update_portwatch.yml` のコミットの段が通り、取得が数日安定してから）**
 
 **方針を一言で：測れるものは公開データで測る。報道の数字は出典つきで拾う。AI には判断と要約だけを任せる。**
