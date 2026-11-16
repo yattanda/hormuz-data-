@@ -1,114 +1,123 @@
 {
-  "updated_at": "2026-11-15T09:31:57+09:00",
+  "updated_at": "2026-11-16T09:32:08+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
-    "updated": "2026-10-26",
-    "age_days": 20,
+    "updated": "2026-11-15",
+    "age_days": 1,
     "stale_after_days": 30,
     "stale": false,
     "timeline_updated": "2026-11-13",
-    "timeline_age_days": 2,
+    "timeline_age_days": 3,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-13"
+    "judgment_date": "2027-02-14"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 10,
-    "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 30,
-    "D_escalation_pct": 15
+    "A_diplomacy_pct": 12,
+    "B_partial_blockade_pct": 40,
+    "C_full_blockade_pct": 23,
+    "D_escalation_pct": 25
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      10,
+      12,
       12
     ],
     "B_partial_blockade_pct": [
-      43,
-      47
+      40,
+      45
     ],
     "C_full_blockade_pct": [
-      30,
-      30
+      18,
+      26
     ],
     "D_escalation_pct": [
-      13,
-      15
+      22,
+      25
     ]
   },
   "scenario_samples": 5,
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "トランプ氏はイラン戦争が「事実上終わった」と述べ、政権は長期の経済圧力に軸足を移しつつある。",
+      "text": "イランがバーレーンの米軍基地を数日で2度攻撃し、バーレーンは迎撃したと発表した。",
       "items": [
-        6,
-        13
+        2,
+        13,
+        16,
+        20
       ],
       "sources": [
         {
-          "source": "The Hill",
-          "domain": "thehill.com",
-          "title": "Trump says the Iran war ‘effectively over.’ It’s still costing the US billions - The Hill",
-          "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPSVNZbjB3dnptVVYtWWVQMHBpZmZqX3lmTXVrdnloalBCZXczUTFiaEswUXN2a1o4Z2VpNVFxdVdFN3Btd3c0N2NFMHpwZ2k5bFNyWlc5elBwb0ZUaUJaemUyeDBRMmdzMC1fUTRWakFKVGY2RW9fMUd0amM0b1dlUNIBhgFBVV95cUxPVzdXcGJYNncwNXZzYWhOV29tS0dSTjNabHVBWFhaVlV6SEZhVmdVX2hXZGM0RnBxbE41RkFWXzR4QkpDMUVURGZ3VjdyeW5pRXF4VXRkdkQzZ0hsNTA0eVBEYzdGWTVyZ2c2eGZ4aWszSHRPRDJTenBzbmVJMndidDdObFVvZw?oc=5",
-          "published": "2026-11-14"
+          "source": "The National",
+          "domain": "www.thenationalnews.com",
+          "title": "Middle East latest: Bahrain says it intercepted Iranian aerial attacks after nationwide alert - The National",
+          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQRWFZVVhzUDVtSFIwNTY3QjZWN2NIRzJXVmdMWEc4ZEtKQlpQb1NBZ2VnUGxtaFZtc1IyLUZ0ZGFXZUtaUEVsd1lSNG1vSmF0Sy1KRndMcDdSYTdYaWI0ZXowSEwzLUhRN0ZKTVlhZ2ZiT2M1RTRwMEF4dEJQVGY4aExtUnF5T1RQLTlOMHdsLTVUblN2QUN1SXhmZ3hjZWV1?oc=5",
+          "published": "2026-11-16"
+        },
+        {
+          "source": "The Guardian",
+          "domain": "www.theguardian.com",
+          "title": "Iran launches drone attacks against US military base in Bahrain - The Guardian",
+          "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPS0RnUlBTa1J0QTBzR0RHcldQd0twTEtaUWwzV2xlSzJOSURDRW9hcHVqaUNtUVp3YU9uMGZ1N2djRU1xeGdsTzlBLU9Jdm1iSTQ5RDlzc1VPb293V2xkNk1Ddms0VHZvMVJ3VklsXy1KUGtkTW03RnY1VUZ5VU1jaTFTNDlUYU9UVEw4MVlEVkdPNnNWX3hQejRueUotWmxEal9lTnJhaloyNTBCTFE?oc=5",
+          "published": "2026-11-16"
         },
         {
           "source": "New York Times",
           "domain": "rss.nytimes.com",
-          "title": "Trump Signals New Strategy on Iran: A Waiting Game",
-          "link": "https://www.nytimes.com/2026/11/13/us/politics/trump-iran-strategy.html",
-          "published": "2026-11-14"
+          "title": "Iran Attacks Bahrain for the Second Time in Days",
+          "link": "https://www.nytimes.com/2026/11/15/world/middleeast/bahrain-iran-israel.html",
+          "published": "2026-11-16"
+        },
+        {
+          "source": "BBC",
+          "domain": "feeds.bbci.co.uk",
+          "title": "Iran targets US military base in Bahrain with drone attack",
+          "link": "https://www.bbc.co.uk/news/articles/cqn4e2py48kwo?at_medium=RSS&at_campaign=rss",
+          "published": "2026-11-15"
         }
       ]
     },
     {
-      "text": "ホルムズではタンカーの被弾や炎上の報告が続くが、IEAは世界の原油供給が過剰に戻ると見込む。",
+      "text": "イランは機雷接触で原油200万バレル積みの大型タンカーが沈没したと主張するが未確認。",
       "items": [
-        10,
-        20,
-        29,
-        41
+        4,
+        11,
+        18
       ],
       "sources": [
         {
-          "source": "The Guardian",
-          "domain": "www.theguardian.com",
-          "title": "Global oil supply returns to surplus for first time since start of Iran war, says IEA - The Guardian",
-          "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQNndNZUdKRnhDVGRkRE85YjZfUG1pUFd5NlVkbjBhbWZaTjZqZlRCU3RmMlBzR1ZjMmJpZi1jX2FvT01wbVc0ZDNaYm9YZUFTZm4wX29QQ3NLN0VpVS1CUjRBVm1GeWlHRk8yb1R4QkMySE5HUjdMUEM3OGVXdU5XM3lORndmX1RwRFdEbkZhalpnVmdONXhJYkR6bUpDZ2xfTXB1MlNuWDNFOGtPSFh0NzF0OWFYSjFBdU1hdVNqQnNSbUdMMi1JZW9vV1UwUQ?oc=5",
-          "published": "2026-11-14"
+          "source": "investingLive",
+          "domain": "investinglive.com",
+          "title": "Iran says supertanker with 2 million barrels sank after Hormuz mine strike, unconfirmed - investingLive",
+          "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPMGZmeFlWU2ltSEQyaDVhU1dteWVpR202dVprbVRFQmU3VEloclNpb3BZTlJUOXp3WFN0SXk5WFVfUmJFdGIwd2oxQk9SUnVld2VfWDIzQ2RNSm4yWFFQZVdNb1hvcTNhelNZZmVtQmtHV2pnSW0yVjd4akUwVjB5QUphc0NCQmhvN2tOWmZ2dFctNTJyejM3aWpTUndtaURwb0treUl6RHhxcE5UeS1JaDViZFo5S3JUMU92c2htdGVQTFU?oc=5",
+          "published": "2026-11-16"
         },
         {
-          "source": "Reuters",
-          "domain": "www.reuters.com",
-          "title": "World oil market is returning to surplus as Gulf exports recover, IEA says - Reuters",
-          "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOcWtzQXhRVUlUbWQ0VVloOTVjekFCcC1XQlNXNWNRcERHNDFEbnBNTTFhZjV3Qjk5bGxCaDhoRFE1Yi1mdGNoR3JCVXY5MmQ0ODVnUWRabHowUDhYSUNKOXV5X0lLQzRBbWNabUFMTzVlMzBNOUUyWTgyeUg1cW5sRjJtUHo3TldPOEY4S19xOGwwYjlkemFibktTVTltVF94WUg5ekdJczcyUlBHOHZ0V3EtdWdjU0JOVkY4?oc=5",
-          "published": "2026-11-13"
+          "source": "The Telegraph",
+          "domain": "www.telegraph.co.uk",
+          "title": "Oil supertanker ‘sinks after hitting mine’ in Strait of Hormuz - The Telegraph",
+          "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOUmpReEpXNS0wU1l5SlZqc3J1ZGQtRUF0WF9XeHgxUURQVk9VeVhtbFB5dy11VUtSaU9pZGktZmNQeEZ1cFE1eTR0NHZJaDhPT2ZZSjg4ay1PVVIwRGV4bDNjOFRWQ29qNzNlZmp1djBhUHdBUnQ3bUh1WVlHUm5iUUpCSzkxdHlUZjdvU0ZOU2JpamhOQnc?oc=5",
+          "published": "2026-11-16"
         },
         {
-          "source": "Arab News",
-          "domain": "www.arabnews.com",
-          "title": "Iran says four tankers on fire in Hormuz - Arab News",
-          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNWDI5MGxiUVVhallvSEhhZUo1NVV4WjVSMkVHMjhsRVVwRVI4aFozVzQ2eUpCaDNZTERpcjNZMEtmaC16WF9zWHhRYUNTcGNxQjJjelpWc3NibGpfaUsyTHEwOWxXNHdPbWswSGlNVzFJeHE3bUZDWmVYTjZTNHIzVjFqNnJLalBZUmZiSG1B?oc=5",
-          "published": "2026-11-13"
-        },
-        {
-          "source": "TradeWinds News",
-          "domain": "www.tradewindsnews.com",
-          "title": "Firefighting underway after tanker hit by ‘unidentified object’ in Hormuz - TradeWinds News",
-          "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQYzJWZldPWWR5N2JxOWxtQ1BMOExoeVNpUkNNcjZsNklNMWYzYTItbGhwbXlkRHhXOUM4T3NTWW1Yb3hJR1hydTl2VUR4LUV3czFVdV9jbnNwWDFWY2YzTGVpaC1rdndPSndnTXZIcTNmckRuNXMta3hSWDhpcEdKMDltOTYya0VybFluY2oyZnNWY09FSmtoMk1GelZyd1A3SDR6TTR3R2pIcmNma2Mta2s5X3piRDZGcWJVdjBYRW1iNUU?oc=5",
-          "published": "2026-11-14"
+          "source": "RTE.ie",
+          "domain": "www.rte.ie",
+          "title": "Iran says supertanker carrying oil sinks in Hormuz Strait - RTE.ie",
+          "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE1xcE8tN0VYbDRGSFRuM2ZvNTV4cThGLVZIY0VoQW1yRUdRWG0xUFVCLWE2N0hnem9xZUsyS0Rhc05vajY1cmNHSUFpV0JIZ2tvWHNwc0dhc2VzTGg5RnVVWDhnNEpIalgtM3oyek9ZbGhhd1hqUGlMY2V4Mjlidw?oc=5",
+          "published": "2026-11-16"
         }
       ]
     }
   ],
-  "last_manual_note": "トランプ氏はイラン戦争が「事実上終わった」と述べ、政権は長期の経済圧力に軸足を移しつつある。ホルムズではタンカーの被弾や炎上の報告が続くが、IEAは世界の原油供給が過剰に戻ると見込む。"
+  "note_price_warnings": [],
+  "last_manual_note": "イランがバーレーンの米軍基地を数日で2度攻撃し、バーレーンは迎撃したと発表した。イランは機雷接触で原油200万バレル積みの大型タンカーが沈没したと主張するが未確認。"
 }
