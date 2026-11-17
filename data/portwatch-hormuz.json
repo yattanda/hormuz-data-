@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-11T05:36:47+09:00",
+  "fetched_at": "2026-11-18T06:54:32+09:00",
   "measurement": "actual",
   "source": "IMF PortWatch（Daily Chokepoint Transit Calls）",
   "source_url": "https://portwatch.imf.org/datasets/3da2b9ca97684916b75c4013f95d18ab_0/about",
@@ -10,15 +10,15 @@
     "portid": "chokepoint6",
     "portname": "Strait of Hormuz"
   },
-  "latest_date": "2026-11-08",
+  "latest_date": "2026-11-15",
   "window": {
-    "period": "2026-11-02/2026-11-08",
+    "period": "2026-11-09/2026-11-15",
     "days": 7,
-    "total": 3.9,
-    "tanker": 1.0,
-    "cargo": 2.9,
-    "capacity_tanker_t": 3077,
-    "tanker_days_without_capacity": 3
+    "total": 2.3,
+    "tanker": 0.4,
+    "cargo": 1.9,
+    "capacity_tanker_t": 17708,
+    "tanker_days_without_capacity": 0
   },
   "baselines": {
     "2025": {
@@ -39,62 +39,6 @@
     }
   },
   "daily": [
-    {
-      "date": "2026-09-10",
-      "total": 5,
-      "tanker": 1,
-      "cargo": 4,
-      "capacity_tanker_t": 0,
-      "capacity_t": 30768
-    },
-    {
-      "date": "2026-09-11",
-      "total": 8,
-      "tanker": 3,
-      "cargo": 5,
-      "capacity_tanker_t": 81604,
-      "capacity_t": 96001
-    },
-    {
-      "date": "2026-09-12",
-      "total": 2,
-      "tanker": 1,
-      "cargo": 1,
-      "capacity_tanker_t": 4771,
-      "capacity_t": 84568
-    },
-    {
-      "date": "2026-09-13",
-      "total": 8,
-      "tanker": 1,
-      "cargo": 7,
-      "capacity_tanker_t": 0,
-      "capacity_t": 71701
-    },
-    {
-      "date": "2026-09-14",
-      "total": 2,
-      "tanker": 0,
-      "cargo": 2,
-      "capacity_tanker_t": 0,
-      "capacity_t": 0
-    },
-    {
-      "date": "2026-09-15",
-      "total": 2,
-      "tanker": 1,
-      "cargo": 1,
-      "capacity_tanker_t": 0,
-      "capacity_t": 53291
-    },
-    {
-      "date": "2026-09-16",
-      "total": 1,
-      "tanker": 0,
-      "cargo": 1,
-      "capacity_tanker_t": 0,
-      "capacity_t": 51573
-    },
     {
       "date": "2026-09-17",
       "total": 3,
@@ -233,9 +177,9 @@
     },
     {
       "date": "2026-10-04",
-      "total": 4,
+      "total": 5,
       "tanker": 0,
-      "cargo": 4,
+      "cargo": 5,
       "capacity_tanker_t": 0,
       "capacity_t": 81884
     },
@@ -518,6 +462,62 @@
       "cargo": 2,
       "capacity_tanker_t": 0,
       "capacity_t": 792
+    },
+    {
+      "date": "2026-11-09",
+      "total": 6,
+      "tanker": 1,
+      "cargo": 5,
+      "capacity_tanker_t": 68520,
+      "capacity_t": 147259
+    },
+    {
+      "date": "2026-11-10",
+      "total": 1,
+      "tanker": 0,
+      "cargo": 1,
+      "capacity_tanker_t": 0,
+      "capacity_t": 0
+    },
+    {
+      "date": "2026-11-11",
+      "total": 4,
+      "tanker": 1,
+      "cargo": 3,
+      "capacity_tanker_t": 23320,
+      "capacity_t": 33562
+    },
+    {
+      "date": "2026-11-12",
+      "total": 1,
+      "tanker": 1,
+      "cargo": 0,
+      "capacity_tanker_t": 32117,
+      "capacity_t": 32117
+    },
+    {
+      "date": "2026-11-13",
+      "total": 1,
+      "tanker": 0,
+      "cargo": 1,
+      "capacity_tanker_t": 0,
+      "capacity_t": 2169
+    },
+    {
+      "date": "2026-11-14",
+      "total": 1,
+      "tanker": 0,
+      "cargo": 1,
+      "capacity_tanker_t": 0,
+      "capacity_t": 0
+    },
+    {
+      "date": "2026-11-15",
+      "total": 2,
+      "tanker": 0,
+      "cargo": 2,
+      "capacity_tanker_t": 0,
+      "capacity_t": 4297
     }
   ],
   "note": "AIS で捕捉した通航の集計（IMF PortWatch）。AIS を切った船は含まない下限。対象はコンテナ・ばら積み・一般貨物・RoRo・タンカーの5種類。capacity_* は PortWatch が喫水などから推定した積載量（トン）。日付は UTC。fetched_at は中身が最後に変わった日時。"
