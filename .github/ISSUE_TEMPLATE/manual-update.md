@@ -47,4 +47,4 @@ assignees: yattanda
 - [ ] VS Code で `Ctrl+S` 保存
 - [ ] Commit メッセージ: `chore: manual update YYYY-MM-DD`
 - [ ] Push 完了
-- [ ] `https://yattanda.github.io/hormuz-data-/` で表示確認
+- [ ] `https://data.chokepointlab.com/` で表示確認
