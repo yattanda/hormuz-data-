@@ -20,15 +20,9 @@
   <link rel="stylesheet" href="https://chokepointlab.com/assets/fonts/ibm-plex-sans-condensed/ibm-plex-sans-condensed.css">
   <link rel="stylesheet" href="https://chokepointlab.com/assets/css/tokens.css?v=20261022">
   <style>
-    /* D4-1（2026-11-17）：地・面・罫・書体・文字の色を本体のトークン（--c-*・--f-*）に替えた。
-       下の5つは状態とカードの棒の色で、D4-2 で本体の状態の4色（--c-danger・--c-alert・--c-warn・--c-ok）に替えて外す */
-    :root {
-      --accent: #f97316;
-      --accent2: #3b82f6;
-      --green: #22c55e;
-      --red: #ef4444;
-      --yellow: #eab308;
-    }
+    /* 課題46 D4（2026-11-17）：色と書体は本体のトークン（--c-*・--f-*）だけを使う。直書きの色を足さない。
+       D4-1 で地・面・罫・書体を、D4-2 で状態の色・棒・札・絵文字を本体の作法（site-design）にそろえた。
+       状態の4色は状態を示す札（面）だけに使い、状態を文字でも書く。棒は本体の .sc-bar と同じ面＋鋼色 */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--c-bg);
@@ -47,6 +41,8 @@
     }
     header h1 { font-size: 1.15rem; font-weight: 700; color: var(--c-text); }
     .header-meta { font-size: 0.72rem; color: var(--c-text-mute); text-align: right; }
+    /* 埋め込み（?embed=1）では本体の見出しがあるので、ページの見出しを出さない */
+    .is-embed header { display: none; }
     .grid {
      display: grid;
      grid-template-columns: repeat(6, 1fr);
@@ -61,17 +57,6 @@
       position: relative;
       overflow: hidden;
     }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-    }
-    .card.orange::before { background: linear-gradient(90deg, var(--accent), #fb923c); }
-    .card.blue::before   { background: linear-gradient(90deg, var(--accent2), #60a5fa); }
-    .card.green::before  { background: linear-gradient(90deg, var(--green), #4ade80); }
-    .card.red::before    { background: linear-gradient(90deg, var(--red), #f87171); }
-    .card.yellow::before { background: linear-gradient(90deg, var(--yellow), #facc15); }
     .card-label {
       font-size: 0.68rem;
       font-weight: 600;
@@ -80,6 +65,8 @@
       color: var(--c-text-mute);
       margin-bottom: 8px;
     }
+    /* 「週次」「月次」は状態ではないので色を付けない */
+    .card-freq { color: var(--c-text); font-size: 0.85em; font-weight: 700; }
     /* 大きな数字は IBM Plex Sans Condensed（配っているのは 500・600）と --c-figure */
     .card-value {
       font-family: var(--f-figure);
@@ -92,34 +79,48 @@
     }
     .card-unit { font-size: 0.95rem; font-weight: 400; color: var(--c-text-mute); margin-left: 4px; }
     .card-sub { font-size: 0.76rem; color: var(--c-text-mute); margin-top: 8px; line-height: 1.5; }
+    /* 船種の内訳は状態ではないので、枠だけの札（本体の .label-fact と同じ形） */
     .badge {
       display: inline-block;
       padding: 2px 8px;
-      border-radius: 20px;
       font-size: 0.66rem;
       font-weight: 700;
       margin-right: 4px;
       margin-top: 4px;
+      border: 1px solid var(--c-text-mute);
+      color: var(--c-text);
     }
-    .badge-orange { background: rgba(249,115,22,0.18); color: var(--accent);  border: 1px solid rgba(249,115,22,0.35); }
-    .badge-blue   { background: rgba(59,130,246,0.18);  color: var(--accent2); border: 1px solid rgba(59,130,246,0.35); }
-    .badge-green  { background: rgba(34,197,94,0.18);   color: var(--green);   border: 1px solid rgba(34,197,94,0.35); }
+    /* 状態の札（本体の .pill-r・-o・-y・-g と同じ）。札の文字で状態を書く */
+    .st { display: inline-block; padding: 1px 7px; font-size: 0.62rem; font-weight: 700; line-height: 1.5; border: 1px solid transparent; }
+    .st-danger { background: var(--c-danger); color: var(--c-on-danger); }
+    .st-alert  { background: var(--c-alert);  color: var(--c-on-alert); }
+    .st-warn   { background: var(--c-warn);   color: var(--c-on-warn); }
+    .st-ok     { background: var(--c-ok);     color: var(--c-on-ok); }
+    .st-none   { border-color: var(--c-text-mute); color: var(--c-text); }
+    .st-none.st-dashed { border-style: dashed; }
+    /* 注記（古い値・未確認の前提など）。本体の .stale-notice と同じ黄の面 */
+    .note-warn { display: none; margin-top: 5px; padding: 5px 7px; background: var(--c-warn); color: var(--c-on-warn); font-size: 0.62rem; font-weight: 700; line-height: 1.55; }
     .flow-bar-wrap { margin-top: 12px; }
     .flow-bar-bg {
       background: var(--c-surface);
-      border-radius: 6px;
       height: 10px;
       overflow: hidden;
       margin-bottom: 6px;
     }
-    .flow-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
+    .flow-bar-fill { height: 100%; background: var(--c-figure); transition: width 1s ease; }
     .flow-bar-label { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--c-text-mute); }
     .scenario-list { margin-top: 10px; }
    .scenario-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-   .scenario-name { font-size: 0.65rem; color: var(--c-text); min-width: 0; flex: 0 0 auto; max-width: 120px; }
-   .scenario-bar-bg { flex: 0 0 30px; width: 30px; background: var(--c-surface); border-radius: 4px; height: 7px; overflow: hidden; }
-   .scenario-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
-   .scenario-pct { font-size: 0.68rem; font-weight: 700; width: 28px; text-align: left; flex-shrink: 0; }
+   .scenario-name { display: flex; align-items: flex-start; gap: 4px; font-size: 0.65rem; line-height: 1.4; color: var(--c-text); min-width: 0; flex: 0 0 auto; max-width: 120px; }
+   /* シナリオの札は本体の #sc-tag-A〜D と同じ（A 緑・B 黄・C 橙・D 赤）。名前が折り返しても札は左の列に残す */
+   .scenario-tag { flex: 0 0 auto; padding: 0 5px; font-weight: 700; }
+   .scenario-tag-A { background: var(--c-ok);     color: var(--c-on-ok); }
+   .scenario-tag-B { background: var(--c-warn);   color: var(--c-on-warn); }
+   .scenario-tag-C { background: var(--c-alert);  color: var(--c-on-alert); }
+   .scenario-tag-D { background: var(--c-danger); color: var(--c-on-danger); }
+   .scenario-bar-bg { flex: 0 0 30px; width: 30px; background: var(--c-surface); height: 7px; overflow: hidden; }
+   .scenario-bar-fill { height: 100%; background: var(--c-figure); transition: width 1s ease; }
+   .scenario-pct { font-family: var(--f-figure); font-size: 0.72rem; font-weight: 600; width: 28px; text-align: left; flex-shrink: 0; color: var(--c-figure); font-variant-numeric: tabular-nums; }
     .card-footer {
       margin-top: 12px;
       padding-top: 8px;
@@ -130,20 +131,6 @@
       align-items: center;
       gap: 5px;
     }
-    .dot-live {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s infinite;
-      display: inline-block;
-      flex-shrink: 0;
-    }
-    .dot-manual {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--yellow);
-      display: inline-block;
-      flex-shrink: 0;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     footer {
       padding: 16px 20px;
       font-size: 0.65rem;
@@ -167,19 +154,21 @@
   .scenario-pct { font-size: 0.62rem; min-width: 24px; }
   .scenario-bar-bg { min-width: 15px; }
 }
-    .flow-route-bar { height: 6px; border-radius: 3px; background: var(--c-surface); overflow: hidden; margin: 3px 0 6px; }
-    .flow-route-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+    .flow-route-bar { height: 6px; background: var(--c-surface); overflow: hidden; margin: 3px 0 6px; }
+    .flow-route-fill { height: 100%; background: var(--c-figure); transition: width 0.6s ease; }
     .flow-route-row { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; margin-bottom: 2px; }
-    .flow-route-label { flex: 1; color: var(--c-text-mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .flow-route-val { min-width: 52px; text-align: right; font-weight: 700; font-size: 0.68rem; }
-    .flow-route-delta { min-width: 36px; text-align: right; font-size: 0.62rem; }
+    .flow-route-label { flex: 1; color: var(--c-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .flow-route-val { min-width: 52px; text-align: right; font-weight: 700; font-size: 0.68rem; color: var(--c-text); font-variant-numeric: tabular-nums; }
+    .flow-route-delta { min-width: 36px; text-align: right; font-size: 0.62rem; color: var(--c-text-mute); font-variant-numeric: tabular-nums; }
     .flow-route-tanker { min-width: 30px; text-align: right; font-size: 0.62rem; color: var(--c-text-mute); }
   </style>
+  <script>/* 埋め込みの印は描く前に付ける（見出しが一瞬出て高さが揺れないように） */
+  if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.classList.add('is-embed');</script>
 </head>
 <body>
 
 <header>
-  <h1>🛢 ホルムズ <span>データ監視</span> ダッシュボード</h1>
+  <h1>ホルムズ データ監視ダッシュボード</h1>
   <div class="header-meta">
     <div id="header-updated">データ読み込み中…</div>
     <div style="margin-top:3px;">
@@ -192,23 +181,23 @@
 <div class="grid">
 
   <!-- Card 1: 日次通航数（IMF PortWatch） -->
-  <div class="card orange">
-    <div class="card-label">🛥 ホルムズ海峡 日次通航数（7日平均）</div>
+  <div class="card">
+    <div class="card-label">ホルムズ海峡 日次通航数（7日平均）</div>
     <div style="margin:5px 0 3px;">
-      <span id="pw-origin" style="display:inline-block;padding:2px 7px;border-radius:3px;font-size:0.6rem;font-weight:700;border:1px solid transparent;">—</span>
+      <span id="pw-origin" class="st st-none">—</span>
     </div>
     <div style="display:flex;align-items:baseline;gap:6px;">
       <div class="card-value" id="pw-count">—</div>
       <div class="card-unit">隻/日</div>
     </div>
     <div style="margin-top:6px;">
-      <span class="badge badge-orange" id="pw-tanker">タンカー — 隻</span>
-      <span class="badge badge-blue"   id="pw-cargo">貨物船 — 隻</span>
+      <span class="badge" id="pw-tanker">タンカー — 隻</span>
+      <span class="badge" id="pw-cargo">貨物船 — 隻</span>
     </div>
     <div class="flow-bar-wrap">
       <div class="flow-bar-bg">
         <div class="flow-bar-fill" id="pw-bar"
-             style="width:0%;background:linear-gradient(90deg,var(--accent),#fb923c)"></div>
+             style="width:0%;"></div>
       </div>
       <div class="flow-bar-label">
         <span id="pw-bar-basis">2025年平均比</span>
@@ -219,18 +208,17 @@
       <div id="pw-latest"></div>
       <div style="font-size:0.63rem;margin-top:4px;">AIS で捕捉した通航だけを数えた下限です。AIS を切った船は含みません。</div>
       <div id="pw-untracked" style="font-size:0.63rem;margin-top:4px;"></div>
-      <div id="pw-stale" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
+      <div id="pw-stale" class="note-warn"></div>
     </div>
     <div class="card-footer" style="flex-wrap:wrap;">
-     <span class="dot-live"></span>
      <span style="flex:1;min-width:0;">出典: IMF PortWatch を加工して作成 ／ 対象日: <span id="pw-period">—</span></span>
-    <div style="flex-basis:100%;font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">🕙 週1回更新（IMF PortWatch・約1週間遅れ）</div>
+    <div style="flex-basis:100%;font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">週1回更新（IMF PortWatch・約1週間遅れ）</div>
 </div>
   </div>
 
   <!-- Card 2: AIS で見えた石油流量（IMF PortWatch のタンカー積載量から） -->
-  <div class="card red">
-    <div class="card-label">🛢 ホルムズ通過石油 AIS で見えた流量</div>
+  <div class="card">
+    <div class="card-label">ホルムズ通過石油 AIS で見えた流量</div>
     <div style="display:flex;align-items:baseline;gap:6px;">
       <div class="card-value" id="flow-val">—</div>
       <div class="card-unit">百万BPD</div>
@@ -238,7 +226,7 @@
     <div class="flow-bar-wrap">
       <div class="flow-bar-bg">
         <div class="flow-bar-fill" id="flow-bar"
-             style="width:0%;background:linear-gradient(90deg,var(--red),#f87171)"></div>
+             style="width:0%;"></div>
       </div>
       <div class="flow-bar-label">
         <span>平常時 <span id="flow-normal">—</span> 百万BPD 比</span>
@@ -249,19 +237,18 @@
       <div style="font-size:0.63rem;">タンカー積載量（PortWatch の推定）の 2025年上半期比 × 平常時流量（EIA）。AIS を切ったタンカーは含まない下限です。
         <a href="https://github.com/yattanda/hormuz-data-/blob/main/docs/hormuz-flow-method.md" target="_blank" rel="noopener" style="color:var(--c-text-mute);">算出方法</a></div>
       <div id="flow-capnote" style="display:none;font-size:0.63rem;margin-top:4px;"></div>
-      <div id="ctx-note-flow" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
+      <div id="ctx-note-flow" class="note-warn"></div>
       <div id="flow-reported" style="display:none;margin-top:6px;padding-top:6px;border-top:1px solid var(--c-rule);font-size:0.62rem;line-height:1.55;"></div>
     </div>
     <div class="card-footer" style="flex-wrap:wrap;">
-     <span class="dot-live"></span>
      <span style="flex:1;min-width:0;">出典: IMF PortWatch を加工して作成（平常時流量は EIA）／ 対象日: <span id="flow-period">—</span></span>
-    <div style="flex-basis:100%;font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">🕙 週1回更新（IMF PortWatch・約1週間遅れ）</div>
+    <div style="flex-basis:100%;font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">週1回更新（IMF PortWatch・約1週間遅れ）</div>
 </div>
   </div>
 
   <!-- Card 3: WTI/Brent -->
-  <div class="card blue">
-    <div class="card-label">💹 原油価格（EIA <span style="color:#fbbf24; font-size:0.85em; font-weight:700;">週次</span>）</div>
+  <div class="card">
+    <div class="card-label">原油価格（EIA <span class="card-freq">週次</span>）</div>
     <div style="display:flex; flex-direction:column; gap:8px;">
       <div>
         <div style="font-size:0.65rem; color:var(--c-text-mute);">WTI</div>
@@ -280,21 +267,20 @@
       米国原油生産: <strong id="eia-production">—</strong> 百万BPD
     </div>
     <div class="card-footer">
-      <span class="dot-live"></span>
       EIA Open Data API ／ 最終取得: <span id="eia-updated">—</span>
     </div>
   </div>
 
   <!-- Card 4: 保険料率 -->
-  <div class="card yellow">
-    <div class="card-label">🔒 戦争リスク保険料率（War Risk Premium）</div>
+  <div class="card">
+    <div class="card-label">戦争リスク保険料率（War Risk Premium）</div>
     <div style="display:flex;align-items:baseline;gap:6px;">
-      <div style="font-size:2rem;font-weight:800;color:var(--yellow);" id="ins-val">—</div>
-      <div class="card-unit" style="color:var(--yellow);">% AWR</div>
-      <span id="ins-badge" style="font-size:0.68rem;font-weight:700;margin-left:4px;color:#94a3b8;">— 未確認</span>
+      <div class="card-value" style="font-size:2rem;" id="ins-val">—</div>
+      <div class="card-unit">% AWR</div>
+      <span id="ins-badge" class="st st-none st-dashed" style="margin-left:4px;">未確認</span>
     </div>
     <div class="card-sub" style="margin-top:8px;">
-      通常時: 0.025〜0.125% ／ 現在: <span id="ins-val2" style="color:var(--yellow);font-weight:700;">—%</span><br/>
+      通常時: 0.025〜0.125% ／ 現在: <span id="ins-val2" style="color:var(--c-text);font-weight:700;">—%</span><br/>
       タンカー1隻あたり +約 <span id="ins-cost">—</span> 万USD/航海<br/>
       <span style="font-size:0.63rem;">出典: <span id="ins-source">—</span></span><br/>
       <span style="font-size:0.60rem;color:var(--c-text-mute);line-height:1.6;">
@@ -303,30 +289,28 @@
       </span>
     </div>
     <div class="card-footer" style="flex-wrap:wrap;">
-     <span>✏️</span>
      <span style="flex:1;min-width:0;">手動確認または報道から自動 ／ <span id="ins-updated">—</span></span>
     <div style="flex-basis:100%;font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">確認先候補: S&amp;P Global / Caixin / Lloyd's List</div>
 </div>
   </div>
 
   <!-- Card 5: シナリオ確率 -->
-  <div class="card green" id="card5-scenario">
-    <div class="card-label">📊 シナリオ確率（90日後の判定日の推定）</div>
+  <div class="card" id="card5-scenario">
+    <div class="card-label">シナリオ確率（90日後の判定日の推定）</div>
     <div class="scenario-list" id="scenario-list">
       <div style="opacity:0.4;font-size:0.8rem;">読み込み中…</div>
     </div>
     <div id="scenario-meta" style="display:none;margin-top:4px;font-size:0.58rem;color:var(--c-text-mute);line-height:1.5;"></div>
-    <div id="ctx-note-scenario" style="display:none;margin-top:8px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
+    <div id="ctx-note-scenario" class="note-warn"></div>
     <div class="card-footer">
-     <span class="dot-live"></span>
-     🤖 自動更新（生成AI）／ <span id="scenario-updated">—</span>
-    <div style="font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">🕙 毎日 09:30 JST 自動実行</div>
+     自動更新（生成AI）／ <span id="scenario-updated">—</span>
+    <div style="font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">毎日 09:30 JST 自動実行</div>
 </div>
   </div>
 
   <!-- Card 6: 中東輸入依存度 -->
-  <div class="card orange">
-    <div class="card-label">🌍 米国の中東原油輸入比率（EIA <span style="color:#fbbf24; font-size:0.85em; font-weight:700;">月次</span>）</div>
+  <div class="card">
+    <div class="card-label">米国の中東原油輸入比率（EIA <span class="card-freq">月次</span>）</div>
     <div style="display:flex;align-items:baseline;gap:4px;">
       <div class="card-value" id="me-import">—</div>
       <div class="card-unit">%</div>
@@ -337,28 +321,27 @@
       <span style="font-size:0.63rem;">EIA Import Data ／ 参考値</span>
     </div>
     <div class="card-footer">
-      <span class="dot-live"></span>
       EIA Open Data API ／ 最終取得: <span id="me-updated">—</span>
     </div>
   </div>
 
 
-  <!-- 🇯🇵 日本向け調達フロー カード -->
+  <!-- 日本向け調達フロー カード -->
   <div class="card" style="grid-column: span 2;">
-    <div class="card-label">🇯🇵 日本向け調達フロー（<span style="color:#fbbf24; font-size:0.85em; font-weight:700;">月次</span>・6ルート）</div>
+    <div class="card-label">日本向け調達フロー（<span class="card-freq">月次</span>・6ルート）</div>
 
     <!-- 合計サマリー -->
     <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:4px;">
       <div class="card-value" id="jf-total" style="font-size:1.6rem;">—</div>
       <div class="card-unit">万BPD</div>
-      <div id="jf-pct" style="font-size:0.75rem; font-weight:700; color:var(--red); margin-left:4px;">—%</div>
+      <div id="jf-pct" style="font-size:0.75rem; font-weight:700; color:var(--c-text); margin-left:4px;">—%</div>
     </div>
 
     <!-- 全体バー -->
     <div class="flow-bar-wrap" style="margin-bottom:10px;">
       <div class="flow-bar-bg">
         <div class="flow-bar-fill" id="jf-total-bar"
-             style="width:0%; background:linear-gradient(90deg,#38bdf8,#4ade80);"></div>
+             style="width:0%;"></div>
       </div>
       <div class="flow-bar-label">
         <span>平常時 236万BPD比</span>
@@ -381,10 +364,9 @@
 
     <!-- フッター -->
     <div class="card-footer" style="margin-top:8px; flex-wrap:wrap;">
-      <span class="dot-live"></span>
       月次自動更新 ／ 基準: <span id="jf-updated">—</span>
       <div id="jf-next" style="width:100%; font-size:0.6rem; color:var(--c-text-mute); margin-top:3px;"></div>
-      <div id="jf-stale" style="display:none; width:100%; font-size:0.6rem; color:#fbbf24; margin-top:3px;"></div>
+      <div id="jf-stale" class="note-warn" style="width:100%;"></div>
       <div style="width:100%; font-size:0.58rem; color:var(--c-text-mute); margin-top:2px;">
         出典: 政府統計の総合窓口(e-Stat)（財務省 普通貿易統計）を加工して作成 ／
         <a href="https://github.com/yattanda/hormuz-data-/blob/main/docs/oil-flow-method.md"
@@ -395,12 +377,6 @@
 
 </div><!-- /grid -->
 
-<div style="padding:0 20px 16px;">
-  <div style="font-size:0.68rem;color:var(--c-text-mute);display:flex;gap:16px;flex-wrap:wrap;">
-    <span><span class="dot-live" style="display:inline-block;vertical-align:middle;margin-right:4px;"></span>自動更新（GitHub Actions）</span>
-    <span><span class="dot-live" style="display:inline-block;vertical-align:middle;margin-right:4px;"></span>🤖 自動更新（生成AI）</span>
-  </div>
-</div>
 
 <footer>
   <!-- 出典はページ読み込み時に各データファイルの source から組み立てる（renderFooterSources）。
@@ -484,8 +460,8 @@ function renderFooterSources() {
   const listEl = document.getElementById('footer-basis-list');
   if (!listEl) return;
   listEl.innerHTML = entries.map(e => {
-    const style = e.stale ? ' style="color:#fbbf24;"' : '';
-    const mark  = e.stale ? ' ⚠' : '';
+    const style = '';
+    const mark  = e.stale ? ' <span class="st st-warn">古い</span>' : '';
     return `<div${style}><span style="opacity:0.7;">${escapeHtml(e.label)}:</span> ${escapeHtml(e.basis || '—')}${mark}</div>`;
   }).join('');
 }
@@ -593,13 +569,12 @@ function setBar(barId, pctId, pct) {
   if (bar) bar.style.width = (pct == null ? 0 : Math.min(pct, 100)) + '%';
 }
 
-function setOrigin(id, text, color, bg) {
+// state は札の種類（none＝枠だけ・warn＝注記の黄）。色は CSS の .st-* が持つ
+function setOrigin(id, text, state) {
   const el = document.getElementById(id);
   if (!el) return;
   el.textContent = text;
-  el.style.color = color;
-  el.style.background = bg;
-  el.style.borderColor = color;
+  el.className = 'st st-' + state;
 }
 
 function setNote(id, text) {
@@ -623,7 +598,7 @@ async function loadPortWatch() {
   const w = pw && pw.window;
   if (!w || typeof w.total !== 'number' || !pw.latest_date) {
     setText('pw-count', 'N/A');
-    setOrigin('pw-origin', 'データ取得不可', '#f87171', 'rgba(248,113,113,0.12)');
+    setOrigin('pw-origin', 'データ取得不可', 'warn');
     setText('flow-val', 'N/A');
     ['portwatch', 'flow'].forEach(key => registerSource({
       key,
@@ -639,15 +614,15 @@ async function loadPortWatch() {
   const [from, to] = (w.period || '').split('/');
   const periodText = `${fmtMonthDay(from)}〜${fmtMonthDay(to)}（UTC）`;
   const staleMsg = stale
-    ? `⚠️ PortWatch の最新の行が ${pw.latest_date}（${age}日前）のままです。PortWatch の公表が遅れているか、こちらの取得が止まっている可能性があります。`
+    ? `PortWatch の最新の行が ${pw.latest_date}（${age}日前）のままです。PortWatch の公表が遅れているか、こちらの取得が止まっている可能性があります。`
     : '';
 
   // --- カード1：日次通航数 ---
   setText('pw-count', w.total.toFixed(1));
   setBadge('pw-tanker', 'タンカー', w.tanker);
   setBadge('pw-cargo',  '貨物船',   w.cargo);
-  if (stale) setOrigin('pw-origin', '更新が遅れています', '#fbbf24', 'rgba(251,191,36,0.12)');
-  else       setOrigin('pw-origin', '実測（AIS で捕捉した分・下限）', '#4ade80', 'rgba(74,222,128,0.12)');
+  if (stale) setOrigin('pw-origin', '更新が遅れています', 'warn');
+  else       setOrigin('pw-origin', '実測（AIS で捕捉した分・下限）', 'none');
 
   // 分母は context.json の normal_vessels_per_day（PortWatch の 2025年平均）。分子と同じ出典にそろえる。
   // 読めなかったときは既定値で割らず、比を出さない。
@@ -719,7 +694,6 @@ async function loadEIA() {
       const el = document.getElementById('eia-inv-change');
       if (el) {
         el.textContent = (chg >= 0 ? '+' : '') + chg.toFixed(1);
-        el.style.color = chg < 0 ? 'var(--green)' : 'var(--red)';
       }
     }
     if (d.us_crude_production_mbpd != null)
@@ -757,7 +731,7 @@ async function loadEIA() {
 function applyContextNotice(ctx) {
   const stale = ctx && ctx.stale === true && ctx.updated;
   setNote('ctx-note-scenario', stale
-    ? `⚠️ この推計に与えた前提は ${ctx.updated} 基準で、${ctx.age_days} 日更新されていません。`
+    ? `この推計に与えた前提は ${ctx.updated} 基準で、${ctx.age_days} 日更新されていません。`
     : '');
 }
 
@@ -834,14 +808,14 @@ async function loadManual() {
     const badge = document.getElementById('ins-badge');
     if (badge) {
       if (insManual != null && insVerified) {
-        badge.textContent = '✓ 確認済み';
-        badge.style.color = '#4ade80';
+        badge.textContent = '確認済み';
+        badge.className = 'st st-none';
       } else if (insReported) {
         badge.textContent = '報道値';
-        badge.style.color = '#fbbf24';
+        badge.className = 'st st-none';
       } else {
-        badge.textContent = '— 未確認';
-        badge.style.color = '#94a3b8';
+        badge.textContent = '未確認';
+        badge.className = 'st st-none st-dashed';
       }
     }
     const insSrcEl = document.getElementById('ins-source');
@@ -866,19 +840,19 @@ async function loadManual() {
     if (sc) {
       const scenarios = [
         // 名称は hormuz-map のシナリオカード見出し・data/context.json の定義と一致させること
-        { key: 'A_diplomacy_pct',        label: 'A: 段階的MOU履行成功',     color: 'var(--green)'  },
-        { key: 'B_partial_blockade_pct', label: 'B: 膠着継続・外交不透明化', color: 'var(--yellow)' },
-        { key: 'C_full_blockade_pct',    label: 'C: 二重封鎖（イラン・米国）の制度化', color: 'var(--accent)' },
-        { key: 'D_escalation_pct',       label: 'D: 全面対決・海峡の無期限閉鎖', color: 'var(--red)'    },
+        { key: 'A_diplomacy_pct',        label: 'A: 段階的MOU履行成功' },
+        { key: 'B_partial_blockade_pct', label: 'B: 膠着継続・外交不透明化' },
+        { key: 'C_full_blockade_pct',    label: 'C: 二重封鎖（イラン・米国）の制度化' },
+        { key: 'D_escalation_pct',       label: 'D: 全面対決・海峡の無期限閉鎖' },
       ];
       const list = document.getElementById('scenario-list');
       if (list) list.innerHTML = scenarios.map(s => `
         <div class="scenario-row">
-          <div class="scenario-name">${s.label}</div>
+          <div class="scenario-name"><span class="scenario-tag scenario-tag-${s.label[0]}">${s.label[0]}</span>${s.label.slice(3)}</div>
           <div class="scenario-bar-bg">
-            <div class="scenario-bar-fill" style="width:${sc[s.key]??0}%;background:${s.color};"></div>
+            <div class="scenario-bar-fill" style="width:${sc[s.key]??0}%;"></div>
           </div>
-          <div class="scenario-pct" style="color:${s.color};"${rangeTitle(s.key)}>${sc[s.key]??0}%</div>
+          <div class="scenario-pct"${rangeTitle(s.key)}>${sc[s.key]??0}%</div>
         </div>`).join('');
       // 判定日（何日後の話か）と、同じ入力で複数回推定させたときの幅（fetch_manual.py が保存する）
       const meta = document.getElementById('scenario-meta');
@@ -978,11 +952,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const iso   = data.updated_iso;
     const limit = data.stale_after_days || 45;
     if (!iso) {
-      msgs.push('⚠ このデータには更新日時が記録されていません');
+      msgs.push('このデータには更新日時が記録されていません');
     } else {
       const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
       if (days > limit) {
-        msgs.push('⚠ データが ' + days + ' 日間更新されていません'
+        msgs.push('データが ' + days + ' 日間更新されていません'
                 + '（想定間隔 ' + limit + ' 日）。値は最新ではありません。');
       }
     }
@@ -995,7 +969,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const months = (now.getFullYear() - Number(pm[1])) * 12
                    + (now.getMonth() + 1 - Number(pm[2]));
       if (months > mLimit) {
-        msgs.push('⚠ 元データが ' + months + ' か月前のままです'
+        msgs.push('元データが ' + months + ' か月前のままです'
                 + '（最新は ' + Number(pm[1]) + '年' + Number(pm[2]) + '月分／想定 '
                 + mLimit + 'か月以内）。統計の公表が遅れているか、取得に失敗しています。');
       }
@@ -1016,6 +990,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   const container = document.getElementById('jf-routes');
+  // oil-flow.json の label には国旗などの絵文字が入っている（データは書き換えない）。表示のときに外す。
+  // ルートの color も使わない（状態の色と取り違えるため。棒は鋼色・停止は札）
+  const routeLabel = s => String(s || '').replace(/[\u{1F1E6}-\u{1F1FF}\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F]/gu, '');
   const ORDER = ['old', 'A', 'B', 'C_US', 'C_GL', 'D'];
 
   ORDER.forEach(key => {
@@ -1024,22 +1001,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const barPct   = r.bpd > 0 ? Math.min(Math.round(r.bpd / normal * 100 * 3), 100) : 0;
     const delta    = r.bpd - (r.prev_bpd || 0);
-    const deltaStr = delta > 0 ? '<span style="color:#4ade80">▲' + delta + '</span>'
-                   : delta < 0 ? '<span style="color:#ef4444">▼' + Math.abs(delta) + '</span>'
-                   : '<span style="color:var(--c-text-mute)">→</span>';
+    // 増減は ↑↓（▲▼ は開閉の記号だけ・site-design）。赤・緑を文字の色にしない
+    const deltaStr = delta > 0 ? '↑' + delta
+                   : delta < 0 ? '↓' + Math.abs(delta)
+                   : '→';
 
-    const tankerStr = r.tankers_week > 0 ? '🚢×' + r.tankers_week : '—';
+    const tankerStr = r.tankers_week > 0 ? String(r.tankers_week) : '—';
 
     container.insertAdjacentHTML('beforeend', `
       <div>
         <div class="flow-route-row">
-          <span class="flow-route-label" style="color:${r.color};">${r.label}</span>
-          <span class="flow-route-val" style="color:${r.color};">${r.bpd > 0 ? r.bpd + '万' : '停止中'}</span>
+          <span class="flow-route-label">${routeLabel(r.label)}</span>
+          <span class="flow-route-val">${r.bpd > 0 ? r.bpd + '万' : '<span class="st st-danger">停止</span>'}</span>
           <span class="flow-route-delta">${deltaStr}</span>
           <span class="flow-route-tanker">${tankerStr}</span>
         </div>
         <div class="flow-route-bar">
-          <div class="flow-route-fill" style="width:${barPct}%; background:${r.color};"></div>
+          <div class="flow-route-fill" style="width:${barPct}%;"></div>
         </div>
       </div>
     `);
