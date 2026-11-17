@@ -14,29 +14,30 @@
   <meta property="og:url" content="https://data.chokepointlab.com/" />
   <meta property="og:image" content="https://chokepointlab.com/ogp.jpg" />
   <meta property="og:locale" content="ja_JP" />
+  <!-- 書体と色は本体（chokepointlab.com）の /assets/ から読む（課題46 D4・Q7 a）。色と書体の正本は本体の tokens.css の1か所。
+       本体の tokens.css を替えるとこのページも変わる。?v= は本体の各ページと同じ印にそろえる -->
+  <link rel="stylesheet" href="https://chokepointlab.com/assets/fonts/biz-udpgothic/biz-udpgothic.css">
+  <link rel="stylesheet" href="https://chokepointlab.com/assets/fonts/ibm-plex-sans-condensed/ibm-plex-sans-condensed.css">
+  <link rel="stylesheet" href="https://chokepointlab.com/assets/css/tokens.css?v=20261022">
   <style>
+    /* D4-1（2026-11-17）：地・面・罫・書体・文字の色を本体のトークン（--c-*・--f-*）に替えた。
+       下の5つは状態とカードの棒の色で、D4-2 で本体の状態の4色（--c-danger・--c-alert・--c-warn・--c-ok）に替えて外す */
     :root {
-      --bg: #0a0e1a;
-      --card: #111827;
-      --border: #1e3a5f;
       --accent: #f97316;
       --accent2: #3b82f6;
       --green: #22c55e;
       --red: #ef4444;
       --yellow: #eab308;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --font: 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: var(--f-body);
     }
+    a { color: var(--c-text); text-decoration: underline; }
     header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-      border-bottom: 2px solid var(--accent);
+      border-bottom: 1px solid var(--c-rule);
       padding: 18px 24px 14px;
       display: flex;
       align-items: center;
@@ -44,11 +45,8 @@
       flex-wrap: wrap;
       gap: 10px;
     }
-    header h1 { font-size: 1.15rem; font-weight: 700; color: #fff; }
-    header h1 span { color: var(--accent); }
-    .header-meta { font-size: 0.72rem; color: var(--muted); text-align: right; }
-    .header-meta a { color: var(--accent2); text-decoration: none; }
-    .header-meta a:hover { text-decoration: underline; }
+    header h1 { font-size: 1.15rem; font-weight: 700; color: var(--c-text); }
+    .header-meta { font-size: 0.72rem; color: var(--c-text-mute); text-align: right; }
     .grid {
      display: grid;
      grid-template-columns: repeat(6, 1fr);
@@ -56,11 +54,10 @@
      padding: 12px 12px 6px;
      width: 100%;
      }
+    /* 箱・角丸で区切らず、本体の指標（.stat-card）と同じく上の細い罫で区切る */
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px 20px 16px;
+      border-top: 1px solid var(--c-rule);
+      padding: 18px 4px 16px;
       position: relative;
       overflow: hidden;
     }
@@ -80,17 +77,21 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--c-text-mute);
       margin-bottom: 8px;
     }
+    /* 大きな数字は IBM Plex Sans Condensed（配っているのは 500・600）と --c-figure */
     .card-value {
+      font-family: var(--f-figure);
       font-size: 2.4rem;
-      font-weight: 800;
+      font-weight: 600;
       line-height: 1;
       margin-bottom: 4px;
+      color: var(--c-figure);
+      font-variant-numeric: tabular-nums;
     }
-    .card-unit { font-size: 0.95rem; font-weight: 400; color: var(--muted); margin-left: 4px; }
-    .card-sub { font-size: 0.76rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+    .card-unit { font-size: 0.95rem; font-weight: 400; color: var(--c-text-mute); margin-left: 4px; }
+    .card-sub { font-size: 0.76rem; color: var(--c-text-mute); margin-top: 8px; line-height: 1.5; }
     .badge {
       display: inline-block;
       padding: 2px 8px;
@@ -105,26 +106,26 @@
     .badge-green  { background: rgba(34,197,94,0.18);   color: var(--green);   border: 1px solid rgba(34,197,94,0.35); }
     .flow-bar-wrap { margin-top: 12px; }
     .flow-bar-bg {
-      background: rgba(255,255,255,0.07);
+      background: var(--c-surface);
       border-radius: 6px;
       height: 10px;
       overflow: hidden;
       margin-bottom: 6px;
     }
     .flow-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
-    .flow-bar-label { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--muted); }
+    .flow-bar-label { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--c-text-mute); }
     .scenario-list { margin-top: 10px; }
    .scenario-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-   .scenario-name { font-size: 0.65rem; color: var(--text); min-width: 0; flex: 0 0 auto; max-width: 120px; }
-   .scenario-bar-bg { flex: 0 0 30px; width: 30px; background: rgba(255,255,255,0.07); border-radius: 4px; height: 7px; overflow: hidden; }
+   .scenario-name { font-size: 0.65rem; color: var(--c-text); min-width: 0; flex: 0 0 auto; max-width: 120px; }
+   .scenario-bar-bg { flex: 0 0 30px; width: 30px; background: var(--c-surface); border-radius: 4px; height: 7px; overflow: hidden; }
    .scenario-bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
    .scenario-pct { font-size: 0.68rem; font-weight: 700; width: 28px; text-align: left; flex-shrink: 0; }
     .card-footer {
       margin-top: 12px;
       padding-top: 8px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid var(--c-rule);
       font-size: 0.64rem;
-      color: var(--muted);
+      color: var(--c-text-mute);
       display: flex;
       align-items: center;
       gap: 5px;
@@ -143,28 +144,14 @@
       flex-shrink: 0;
     }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    .critical-window {
-      background: linear-gradient(135deg, rgba(239,68,68,0.12), rgba(249,115,22,0.08));
-      border: 1px solid rgba(239,68,68,0.35);
-      border-radius: 10px;
-      padding: 14px 20px;
-      margin: 0 20px 16px;
-    }
-    .critical-window h3 {
-      font-size: 0.78rem; font-weight: 700;
-      color: var(--red); letter-spacing: 0.07em;
-      text-transform: uppercase; margin-bottom: 6px;
-    }
-    .critical-window p { font-size: 0.82rem; line-height: 1.6; }
     footer {
       padding: 16px 20px;
       font-size: 0.65rem;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
+      color: var(--c-text-mute);
+      border-top: 1px solid var(--c-rule);
       margin-top: 10px;
       line-height: 1.8;
     }
-    footer a { color: var(--accent2); text-decoration: none; }
     @media (max-width: 768px) {
   .card-value { font-size: 1.6rem; }
   header h1 { font-size: 0.95rem; }
@@ -180,13 +167,13 @@
   .scenario-pct { font-size: 0.62rem; min-width: 24px; }
   .scenario-bar-bg { min-width: 15px; }
 }
-    .flow-route-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; margin: 3px 0 6px; }
+    .flow-route-bar { height: 6px; border-radius: 3px; background: var(--c-surface); overflow: hidden; margin: 3px 0 6px; }
     .flow-route-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
     .flow-route-row { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; margin-bottom: 2px; }
-    .flow-route-label { flex: 1; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .flow-route-label { flex: 1; color: var(--c-text-mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .flow-route-val { min-width: 52px; text-align: right; font-weight: 700; font-size: 0.68rem; }
     .flow-route-delta { min-width: 36px; text-align: right; font-size: 0.62rem; }
-    .flow-route-tanker { min-width: 30px; text-align: right; font-size: 0.62rem; color: var(--muted); }
+    .flow-route-tanker { min-width: 30px; text-align: right; font-size: 0.62rem; color: var(--c-text-mute); }
   </style>
 </head>
 <body>
@@ -237,7 +224,7 @@
     <div class="card-footer" style="flex-wrap:wrap;">
      <span class="dot-live"></span>
      <span style="flex:1;min-width:0;">出典: IMF PortWatch を加工して作成 ／ 対象日: <span id="pw-period">—</span></span>
-    <div style="flex-basis:100%;font-size:0.58rem;color:var(--muted);margin-top:2px;">🕙 週1回更新（IMF PortWatch・約1週間遅れ）</div>
+    <div style="flex-basis:100%;font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">🕙 週1回更新（IMF PortWatch・約1週間遅れ）</div>
 </div>
   </div>
 
@@ -260,15 +247,15 @@
     </div>
     <div class="card-sub">
       <div style="font-size:0.63rem;">タンカー積載量（PortWatch の推定）の 2025年上半期比 × 平常時流量（EIA）。AIS を切ったタンカーは含まない下限です。
-        <a href="https://github.com/yattanda/hormuz-data-/blob/main/docs/hormuz-flow-method.md" target="_blank" rel="noopener" style="color:var(--muted);">算出方法</a></div>
+        <a href="https://github.com/yattanda/hormuz-data-/blob/main/docs/hormuz-flow-method.md" target="_blank" rel="noopener" style="color:var(--c-text-mute);">算出方法</a></div>
       <div id="flow-capnote" style="display:none;font-size:0.63rem;margin-top:4px;"></div>
       <div id="ctx-note-flow" style="display:none;margin-top:5px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
-      <div id="flow-reported" style="display:none;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,0.08);font-size:0.62rem;line-height:1.55;"></div>
+      <div id="flow-reported" style="display:none;margin-top:6px;padding-top:6px;border-top:1px solid var(--c-rule);font-size:0.62rem;line-height:1.55;"></div>
     </div>
     <div class="card-footer" style="flex-wrap:wrap;">
      <span class="dot-live"></span>
      <span style="flex:1;min-width:0;">出典: IMF PortWatch を加工して作成（平常時流量は EIA）／ 対象日: <span id="flow-period">—</span></span>
-    <div style="flex-basis:100%;font-size:0.58rem;color:var(--muted);margin-top:2px;">🕙 週1回更新（IMF PortWatch・約1週間遅れ）</div>
+    <div style="flex-basis:100%;font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">🕙 週1回更新（IMF PortWatch・約1週間遅れ）</div>
 </div>
   </div>
 
@@ -277,13 +264,13 @@
     <div class="card-label">💹 原油価格（EIA <span style="color:#fbbf24; font-size:0.85em; font-weight:700;">週次</span>）</div>
     <div style="display:flex; flex-direction:column; gap:8px;">
       <div>
-        <div style="font-size:0.65rem; color:#94a3b8;">WTI</div>
-        <span class="card-value" id="wti-val" style="font-size:2rem;color:#60a5fa">—</span>
+        <div style="font-size:0.65rem; color:var(--c-text-mute);">WTI</div>
+        <span class="card-value" id="wti-val" style="font-size:2rem;">—</span>
         <span class="card-unit">USD/bbl</span>
       </div>
       <div>
-        <div style="font-size:0.65rem; color:#94a3b8;">Brent</div>
-        <span class="card-value" id="brent-val" style="font-size:1.4rem;color:#93c5fd">—</span>
+        <div style="font-size:0.65rem; color:var(--c-text-mute);">Brent</div>
+        <span class="card-value" id="brent-val" style="font-size:1.4rem;">—</span>
         <span class="card-unit">USD/bbl</span>
       </div>
     </div>
@@ -310,7 +297,7 @@
       通常時: 0.025〜0.125% ／ 現在: <span id="ins-val2" style="color:var(--yellow);font-weight:700;">—%</span><br/>
       タンカー1隻あたり +約 <span id="ins-cost">—</span> 万USD/航海<br/>
       <span style="font-size:0.63rem;">出典: <span id="ins-source">—</span></span><br/>
-      <span style="font-size:0.60rem;color:#64748b;line-height:1.6;">
+      <span style="font-size:0.60rem;color:var(--c-text-mute);line-height:1.6;">
         ※有意な情報のある日のみ表示<br/>
         ※船籍・積荷・旗国・航路により大幅変動
       </span>
@@ -318,7 +305,7 @@
     <div class="card-footer" style="flex-wrap:wrap;">
      <span>✏️</span>
      <span style="flex:1;min-width:0;">手動確認または報道から自動 ／ <span id="ins-updated">—</span></span>
-    <div style="flex-basis:100%;font-size:0.58rem;color:var(--muted);margin-top:2px;">確認先候補: S&amp;P Global / Caixin / Lloyd's List</div>
+    <div style="flex-basis:100%;font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">確認先候補: S&amp;P Global / Caixin / Lloyd's List</div>
 </div>
   </div>
 
@@ -328,12 +315,12 @@
     <div class="scenario-list" id="scenario-list">
       <div style="opacity:0.4;font-size:0.8rem;">読み込み中…</div>
     </div>
-    <div id="scenario-meta" style="display:none;margin-top:4px;font-size:0.58rem;color:var(--muted);line-height:1.5;"></div>
+    <div id="scenario-meta" style="display:none;margin-top:4px;font-size:0.58rem;color:var(--c-text-mute);line-height:1.5;"></div>
     <div id="ctx-note-scenario" style="display:none;margin-top:8px;padding:5px 7px;border-radius:4px;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.35);font-size:0.62rem;color:#fbbf24;line-height:1.55;"></div>
     <div class="card-footer">
      <span class="dot-live"></span>
      🤖 自動更新（生成AI）／ <span id="scenario-updated">—</span>
-    <div style="font-size:0.58rem;color:var(--muted);margin-top:2px;">🕙 毎日 09:30 JST 自動実行</div>
+    <div style="font-size:0.58rem;color:var(--c-text-mute);margin-top:2px;">🕙 毎日 09:30 JST 自動実行</div>
 </div>
   </div>
 
@@ -357,7 +344,7 @@
 
 
   <!-- 🇯🇵 日本向け調達フロー カード -->
-  <div class="card" style="border-color: rgba(56,189,248,0.3); grid-column: span 2;">
+  <div class="card" style="grid-column: span 2;">
     <div class="card-label">🇯🇵 日本向け調達フロー（<span style="color:#fbbf24; font-size:0.85em; font-weight:700;">月次</span>・6ルート）</div>
 
     <!-- 合計サマリー -->
@@ -380,8 +367,8 @@
     </div>
 
     <!-- ルート別リスト -->
-    <div style="display:flex; font-size:0.6rem; color:#475569;
-      padding:0 0 4px 0; border-bottom:1px solid rgba(255,255,255,0.07);
+    <div style="display:flex; font-size:0.6rem; color:var(--c-text-mute);
+      padding:0 0 4px 0; border-bottom:1px solid var(--c-rule);
       margin-bottom:4px;">
       <span style="flex:1;">ルート</span>
       <span style="min-width:52px; text-align:right;">万BPD</span>
@@ -396,9 +383,9 @@
     <div class="card-footer" style="margin-top:8px; flex-wrap:wrap;">
       <span class="dot-live"></span>
       月次自動更新 ／ 基準: <span id="jf-updated">—</span>
-      <div id="jf-next" style="width:100%; font-size:0.6rem; color:#cbd5e1; margin-top:3px;"></div>
+      <div id="jf-next" style="width:100%; font-size:0.6rem; color:var(--c-text-mute); margin-top:3px;"></div>
       <div id="jf-stale" style="display:none; width:100%; font-size:0.6rem; color:#fbbf24; margin-top:3px;"></div>
-      <div style="width:100%; font-size:0.58rem; color:var(--muted); margin-top:2px;">
+      <div style="width:100%; font-size:0.58rem; color:var(--c-text-mute); margin-top:2px;">
         出典: 政府統計の総合窓口(e-Stat)（財務省 普通貿易統計）を加工して作成 ／
         <a href="https://github.com/yattanda/hormuz-data-/blob/main/docs/oil-flow-method.md"
            style="color:inherit;" target="_blank" rel="noopener">算出方法</a>
@@ -409,7 +396,7 @@
 </div><!-- /grid -->
 
 <div style="padding:0 20px 16px;">
-  <div style="font-size:0.68rem;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap;">
+  <div style="font-size:0.68rem;color:var(--c-text-mute);display:flex;gap:16px;flex-wrap:wrap;">
     <span><span class="dot-live" style="display:inline-block;vertical-align:middle;margin-right:4px;"></span>自動更新（GitHub Actions）</span>
     <span><span class="dot-live" style="display:inline-block;vertical-align:middle;margin-right:4px;"></span>🤖 自動更新（生成AI）</span>
   </div>
@@ -421,7 +408,7 @@
        データ側の source を直すこと。この文字列に足しても表示は変わらない。 -->
   <strong>データソース:</strong>
   <span id="footer-sources">Claude（opus）による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）／ EIA Open Data API（米国エネルギー情報局・公式統計）／ 政府統計の総合窓口(e-Stat)（財務省 普通貿易統計）を加工して作成</span><br/>
-  <div id="footer-basis" style="margin:8px 0; padding:8px 10px; border:1px solid rgba(148,163,184,0.25); border-radius:4px;">
+  <div id="footer-basis" style="margin:8px 0; padding:8px 0; border-top:1px solid var(--c-rule); border-bottom:1px solid var(--c-rule);">
     <div style="font-weight:700; margin-bottom:4px;">各データの基準日</div>
     <div id="footer-basis-list" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2px 16px;">読み込み中…</div>
   </div>
@@ -800,7 +787,7 @@ function reportedOf(figs, metrics) {
 function reportedSourceHtml(f) {
   const label = `${escapeHtml(f.source || '—')}・${fmtMonthDay(f.published)}`;
   return /^https?:\/\//.test(f.link || '')
-    ? `<a href="${escapeHtml(f.link)}" target="_blank" rel="noopener" style="color:var(--muted);">${label}</a>`
+    ? `<a href="${escapeHtml(f.link)}" target="_blank" rel="noopener" style="color:var(--c-text-mute);">${label}</a>`
     : label;
 }
 
@@ -814,7 +801,7 @@ function renderReportedFlow(figs) {
   const list = reportedOf(figs, Object.keys(REPORTED_FLOW_LABELS)).slice(0, 2);
   el.style.display = list.length ? 'block' : 'none';
   el.innerHTML = list.length
-    ? '<div style="font-weight:700;color:var(--muted);">報道値（記事の見出し・説明文から）</div>' + list.map(f => {
+    ? '<div style="font-weight:700;color:var(--c-text-mute);">報道値（記事の見出し・説明文から）</div>' + list.map(f => {
         const [name, unit] = REPORTED_FLOW_LABELS[f.metric];
         return `<div style="margin-top:3px;">${name} ${f.value} ${unit}（${reportedSourceHtml(f)}）`
           + `<br/><span style="opacity:0.7;">“${escapeHtml(f.quote)}”</span></div>`;
@@ -1039,7 +1026,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const delta    = r.bpd - (r.prev_bpd || 0);
     const deltaStr = delta > 0 ? '<span style="color:#4ade80">▲' + delta + '</span>'
                    : delta < 0 ? '<span style="color:#ef4444">▼' + Math.abs(delta) + '</span>'
-                   : '<span style="color:#64748b">→</span>';
+                   : '<span style="color:var(--c-text-mute)">→</span>';
 
     const tankerStr = r.tankers_week > 0 ? '🚢×' + r.tankers_week : '—';
 
