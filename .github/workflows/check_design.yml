@@ -1,0 +1,55 @@
+name: Check design (dashboard)
+
+# ダッシュボード（index.html）の見た目が本体（chokepointlab.com）の決まりから外れていないかを見る（課題46 D4）。
+# 絵文字・直書きの色・角丸／影／グラデーション・本体の CSS と書体の読み込み・本体の tokens.css に無いトークン名。
+# NG なら失敗にする（scripts/check_design.py）。本体の tokens.css は公開の URL から読む（取れないときは WARN で通す）。
+# 本体の tokens.css で名前を変えたとき（このリポジトリには変更が無い）に気づくよう、週1回も回す。
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'scripts/check_design.py'
+      - '.github/workflows/check_design.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'scripts/check_design.py'
+      - '.github/workflows/check_design.yml'
+  schedule:
+    - cron: '17 0 * * 1'  # 毎週月曜 09:17 JST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-design:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      # 標準ライブラリだけで動くので、依存の導入は無い
+      - name: Check index.html against the site design
+        run: |
+          set -o pipefail
+          python scripts/check_design.py | tee check-design.log
+        env:
+          PYTHONUNBUFFERED: '1'
+
+      - name: Write summary
+        if: always()
+        run: |
+          {
+            echo '### ダッシュボードの見た目の検査'
+            echo '```'
+            cat check-design.log 2>/dev/null || echo '（ログなし）'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
