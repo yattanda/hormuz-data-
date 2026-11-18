@@ -493,6 +493,26 @@
       "date": "2026-11-17",
       "fact": "米軍の戦闘機がイランのQeshm島にあるIRGCのミサイル発射施設を精密誘導弾で攻撃したと、匿名の米軍当局者が確認した。米側の声明は自衛としている。攻撃は、イランがバーレーンのシェイク・イーサ空軍基地の米軍レーダーを標的にしたと主張した数時間後に行われた。CENTCOMは、バーレーンに向けたイランのドローンは迎撃され、米側の装備・人員に被害はなかったと発表した。",
       "source": "Fox News 2026-11-17（匿名の米軍当局者の声明。https://www.foxnews.com/world/us-carries-out-self-defense-strike-irgc-missile-launch-site-qeshm-island）/ Anadolu 2026-11-17（CENTCOMの声明。https://www.aa.com.tr/en/americas/us-rejects-iranian-claim-about-drone-strike-hitting-radar-in-bahrain/4127913）"
+    },
+    {
+      "date": "2026-11-17",
+      "fact": "ADNOC Logistics & Servicesは、同社の船が11/17夕にホルムズ海峡で攻撃を受け、乗組員11人が負傷し1人が所在不明で、残りの乗組員は避難したと発表した。船名・攻撃主体は公表されていない。UKMTOは警報211（Attack・11/18 09:53 UTC発行）で、遅れての報告として、Khasabの北13海里でタンカーが正体不明の飛翔体を受けて火災が起き（消火済み）、乗組員1人が行方不明で捜索中と発表した。gCaptainは、UKMTOのこの報告はADNOCの事案に対応するとみられると書く。警報の本文に発生時刻の記載はない。",
+      "source": "gCaptain 2026-11-18（ADNOCの発表を引用。https://gcaptain.com/tara-gas-burning-off-oman-as-another-tanker-attack-leaves-11-injured/）/ UKMTO 警報211（公式サイト Recent Incidents・2026-11-18 09:53 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-18",
+      "fact": "UKMTOは警報212（Attack・11/18 22:27 UTC発行）で、遅れての報告として、Khasabの北6海里で、ホルムズ海峡を出る途中のタンカーが機関室に正体不明の飛翔体を受けたと発表した。乗組員は無事で所在も確認され、被害と環境への影響は不明。本文に発生時刻・船名・攻撃主体の記載はなく、日時欄は11/18 22:25 UTC。",
+      "source": "UKMTO 警報212（公式サイト Recent Incidents・2026-11-18 22:27 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-11-19（https://www.arabnews.com/middle-east/tanker-struck-by-projectile-near-omans-khasab-as-attacks-in-hormuz-continue-3012815）"
+    },
+    {
+      "date": "2026-11-18",
+      "fact": "米中央軍（CENTCOM）は11/18に通知を出し、対イラン海上封鎖の対象船から洋上の積み替え（ship-to-ship transfer）で貨物を受け取った船は、イランの港に入っていなくても封鎖を回避しているとみなされ得ると示した。そうした船は停止・乗船・進路変更・拿捕される可能性があり、積み荷が出たイランの港へ向かうよう指示されることもある。",
+      "source": "gCaptain 2026-11-18（CENTCOMの通知を引用。https://gcaptain.com/u-s-targets-ship-to-ship-transfers-in-expanded-iran-maritime-blockade/）"
+    },
+    {
+      "date": "2026-11-18",
+      "fact": "イランは、クウェートの米軍が使う空軍基地を標的に新たな攻撃を行った。クウェートは、無人機に対抗して防空システムを作動させたと発表した（9月初め以来初めてとされる）。バーレーンは11/18早朝にイランの攻撃を撃退したと発表し、6日間で4回の攻撃を受けたとされる。イランは、攻撃を米国の無人機による監視活動への対応と説明した。記事に人的・物的被害の記載はない。",
+      "source": "Al Jazeera 2026-11-18（https://www.aljazeera.com/news/2026/11/18/kuwait-bahrain-face-new-iran-attacks-after-us-strike-on-qeshm-island）"
     }
   ],
 
