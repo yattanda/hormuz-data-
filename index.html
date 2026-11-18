@@ -3,6 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js)・課題26（④ data. の Q4 b）。測定 ID は本体（chokepointlab.com）と同じ。
+       data. は本体と同じサイトなので、埋め込みでも本体の Cookie（_ga）がそのまま使われる。
+       埋め込み（?embed=1）では親の /hormuz/ が page_view を送るので、ここでは送らない（閲覧数の二重計上を避ける）。
+       どちらの形でも、ダッシュボード内のリンクの利用を dash_link_click で送る（/privacy/ 第6章） -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T0KCXP29E5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    var GA_EMBED = new URLSearchParams(location.search).get('embed') === '1';
+    gtag('config', 'G-T0KCXP29E5', GA_EMBED ? { send_page_view: false } : {});
+
+    // item：本体へ戻る main_site／算出方法 method_flow・method_oil／出典 source
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      var h = a.href;
+      var item = /chokepointlab\.com\/hormuz\//.test(h) ? 'main_site'
+        : /hormuz-flow-method/.test(h) ? 'method_flow'
+        : /oil-flow-method/.test(h) ? 'method_oil'
+        : 'source';
+      gtag('event', 'dash_link_click', { section: 'dashboard', item: item, embed: GA_EMBED ? '1' : '0' });
+    });
+  </script>
   <title>ホルムズ データ監視ダッシュボード</title>
   <!-- 検索と共有（④ data. の Q3 b）。?embed=1 付きも同じページとして扱わせるため、自分への canonical を置く -->
   <meta name="description" content="ホルムズ海峡の通航数（IMF PortWatch）、原油価格（EIA）、日本向け原油の調達ルート（財務省貿易統計）、危機シナリオの確率（AI推定）を1画面にまとめたダッシュボード。チョークポイント・ラボ運営。" />
