@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-11-17T09:32:01+09:00",
+  "updated_at": "2026-11-18T09:31:58+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-11-15",
-    "age_days": 2,
+    "age_days": 3,
     "stale_after_days": 30,
     "stale": false,
-    "timeline_updated": "2026-11-16",
+    "timeline_updated": "2026-11-17",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -15,80 +15,101 @@
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-15"
+    "judgment_date": "2027-02-16"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 12,
-    "B_partial_blockade_pct": 53,
-    "C_full_blockade_pct": 18,
-    "D_escalation_pct": 17
+    "A_diplomacy_pct": 13,
+    "B_partial_blockade_pct": 45,
+    "C_full_blockade_pct": 16,
+    "D_escalation_pct": 26
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      10,
-      12
+      12,
+      14
     ],
     "B_partial_blockade_pct": [
-      52,
-      60
+      41,
+      48
     ],
     "C_full_blockade_pct": [
       15,
       20
     ],
     "D_escalation_pct": [
-      12,
-      18
+      25,
+      30
     ]
   },
   "scenario_samples": 5,
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "イランが数日で2度目となるバーレーン攻撃を行い、米イランの和平協議は停滞しているとみられる。",
+      "text": "ホルムズ海峡でタンカーへの攻撃が続き、イランは24時間で4隻目の被弾を主張した。",
       "items": [
-        20
+        17,
+        24
       ],
       "sources": [
         {
-          "source": "New York Times",
-          "domain": "rss.nytimes.com",
-          "title": "Iran Attacks Bahrain for the Second Time in Days",
-          "link": "https://www.nytimes.com/2026/11/15/world/middleeast/bahrain-iran-israel.html",
-          "published": "2026-11-16"
+          "source": "https://houseofsaud.com/",
+          "domain": "houseofsaud.com",
+          "title": "Iran Navy Says 4th Tanker Hit in Hormuz as UKMTO Confirms Khasab Attack - https://houseofsaud.com/",
+          "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBLSWRtc1FNYzczSnJNZXhjb2ZCU2NrWTl0bkh6dXR3SHc3dUp2c08yQW42OWNhT0IxRHB4U0w0eFlSVkl0SldkcUI3dlVlaUFlZ1Y0M2o4M1RVNW9aMmNSa01zTTdzT19yNjRR?oc=5",
+          "published": "2026-11-17"
+        },
+        {
+          "source": "investingLive",
+          "domain": "investinglive.com",
+          "title": "Iran says 4th tanker hit in 24 hours as UKMTO reports Hormuz attack near Oman - investingLive",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOWGpqMUFOZjE1MVVwQ3E1UE1GX3NOMmQ2MGwyeC1GbThJUHZfOHM2QnRWTmJsUWdtb1RBMXlJQkNJbTFrWFdlN3FzU2stNENMXzR4Y0hyd2pHSFB2Nk9kUGFLcjFPUnZFYmx1a3AzeEhiR2FUQ1h5MnJqRmlrczhScURZRnp3cVhWZG1QbDUzeVo1aGgzZjRMeG9mbndSekJEYVBITjRBMVB4LWVpb09RalV3Mm9FOFU?oc=5",
+          "published": "2026-11-17"
         }
       ]
     },
     {
-      "text": "パキスタンはイランの最新提案への米国の回答を待っている。",
+      "text": "米イランはQeshm島とバーレーンをめぐって攻撃を応酬し、クウェートは敵対的なドローンを迎撃した。",
       "items": [
-        3
+        1,
+        2,
+        13,
+        14
       ],
       "sources": [
         {
-          "source": "The National",
-          "domain": "www.thenationalnews.com",
-          "title": "Middle East latest: Pakistan awaits US response to latest Iran proposals - The National",
-          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQWUhsb2pnODdZNmUya1pnTkFma1Rsb0ozYnVkNGRzd0M0Q0VHT2xuVHhkaFc1NlREdnBiT2d0aW1oTjNRXzVOWkxnRmdzX1pvcmx4dWRIQmJySzFSOG52ZHZ3S0FpWTZOcFllRFRaaTg0ZEFsam8zdHlkME9rdFZGbWdxaVZtMDB6THQ2aGdCaEdLZjRMeTZfNURNZEUyWGoycVBkTg?oc=5",
-          "published": "2026-11-17"
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Iran war live: Kuwait says intercepting ‘hostile’ drone attacks",
+          "link": "https://www.aljazeera.com/news/liveblog/2026/11/18/iran-war-live-kuwait-says-intercepting-hostile-drone-attacks?traffic_source=rss",
+          "published": "2026-11-18"
+        },
+        {
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Kuwait reports drone attacks as Iran, US trade attacks on Qeshm and Bahrain",
+          "link": "https://www.aljazeera.com/news/2026/11/17/kuwait-reports-drone-attacks-as-iran-us-trade-attacks-on-qeshm-and-bahrain?traffic_source=rss",
+          "published": "2026-11-18"
+        },
+        {
+          "source": "Los Angeles Times",
+          "domain": "www.latimes.com",
+          "title": "After 2-month lull, Iran carries out third strike on U.S. targets in Bahrain; U.S. retaliates - Los Angeles Times",
+          "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQOERCeEwxcENOVGVodWpFZWZ6SHlHMU9DR2pfWmpoVllXV0gtYkRqY3RXVFZsRXpzajVzU01ILW5QSFF2MTZGUGVFcFV2MVRtdXdrUHM3cFR2b3BKY2VScG51SFBuRlkzSVIxRVEyQ3YxWGl0cUh5OEhwMWsyMVI5eWlGRkFoOFFzUEtGcjltVkZuSzJVYUVqU2JaNDRzSDdpWTJhcDAzcUpSeHREZWxHME1xaTJYNW5wZVAySXlteTU?oc=5",
+          "published": "2026-11-18"
+        },
+        {
+          "source": "Pragativadi",
+          "domain": "pragativadi.com",
+          "title": "US Launches Strikes on Iran’s Strategic Qeshm Island in Strait of Hormuz Hours After Iranian Drones Target US Radar in Bahrain - Pragativadi",
+          "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQNU9kek0wam96dWFWZ01zejFjLVl1WDdFNUc0cVlsbUZxQm9qekJuZWRIRUNxQVBIaWJCVExTMGk0TV9saTFWTGptWmNobmlGdGhMT09pbC1haklSaEozVGc0T2tyVDI2WFdjZ1RpcGcwN3pFWGZIZHhyV3lleDVPQV83bU5wWmhyeWxBY0ZVclJtVi1Xb294OV9Wb2s5WnFVaFdsOUItTGJqbUNyQVUxcUFKUnJMbFJ4S1lFaWd2LXpEbGQ5OHlGUnlUZE5BSWNZSzZOaTBISF9FeEdCZnNteDZUZGE?oc=5",
+          "published": "2026-11-18"
         }
       ]
     }
   ],
-  "note_price_warnings": [
-    {
-      "text": "中東の輸出回復で米原油は85ドルに下落した。",
-      "prices": [
-        85.0
-      ],
-      "reference_prices": [
-        105.59,
-        121.17
-      ]
-    }
-  ],
-  "last_manual_note": "イランが数日で2度目となるバーレーン攻撃を行い、米イランの和平協議は停滞しているとみられる。パキスタンはイランの最新提案への米国の回答を待っている。"
+  "note_price_warnings": [],
+  "last_manual_note": "ホルムズ海峡でタンカーへの攻撃が続き、イランは24時間で4隻目の被弾を主張した。米イランはQeshm島とバーレーンをめぐって攻撃を応酬し、クウェートは敵対的なドローンを迎撃した。"
 }
