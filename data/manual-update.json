@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-11-18T09:31:58+09:00",
+  "updated_at": "2026-11-19T09:32:06+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-11-15",
-    "age_days": 3,
+    "age_days": 4,
     "stale_after_days": 30,
     "stale": false,
-    "timeline_updated": "2026-11-17",
+    "timeline_updated": "2026-11-18",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -15,28 +15,28 @@
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-16"
+    "judgment_date": "2027-02-17"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 13,
+    "A_diplomacy_pct": 12,
     "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 16,
-    "D_escalation_pct": 26
+    "C_full_blockade_pct": 18,
+    "D_escalation_pct": 25
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      12,
-      14
+      10,
+      12
     ],
     "B_partial_blockade_pct": [
-      41,
-      48
+      40,
+      45
     ],
     "C_full_blockade_pct": [
-      15,
+      18,
       20
     ],
     "D_escalation_pct": [
@@ -48,68 +48,75 @@
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "ホルムズ海峡でタンカーへの攻撃が続き、イランは24時間で4隻目の被弾を主張した。",
+      "text": "イランがクウェートとバーレーンを攻撃し、湾岸諸国が非難した。",
       "items": [
-        17,
-        24
+        4,
+        12,
+        17
       ],
       "sources": [
         {
-          "source": "https://houseofsaud.com/",
-          "domain": "houseofsaud.com",
-          "title": "Iran Navy Says 4th Tanker Hit in Hormuz as UKMTO Confirms Khasab Attack - https://houseofsaud.com/",
-          "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBLSWRtc1FNYzczSnJNZXhjb2ZCU2NrWTl0bkh6dXR3SHc3dUp2c08yQW42OWNhT0IxRHB4U0w0eFlSVkl0SldkcUI3dlVlaUFlZ1Y0M2o4M1RVNW9aMmNSa01zTTdzT19yNjRR?oc=5",
-          "published": "2026-11-17"
+          "source": "The National",
+          "domain": "www.thenationalnews.com",
+          "title": "Middle East latest: Gulf nations condemn 'hostile' Iranian attacks on Bahrain and Kuwait - The National",
+          "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQVTdScFFjTlhtU25LQmJvdEp1Vk5qZ3FtTFE3RkdXUzVDZFgtSnY3MkhTeW82UW9QTWVibnVQb2Nyb1RVYWlFTlpyd3JCdjIzVnV1QmVxUEUyTDhzWXdrZUhPN0N6aUxrYWN3NXdWcVNQeUtFVnFPMHRvSURyTFpMY0tvWmxoZ014aS1iWjVsMnRCVHFDeVhjcllvYw?oc=5",
+          "published": "2026-11-19"
         },
         {
-          "source": "investingLive",
-          "domain": "investinglive.com",
-          "title": "Iran says 4th tanker hit in 24 hours as UKMTO reports Hormuz attack near Oman - investingLive",
-          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOWGpqMUFOZjE1MVVwQ3E1UE1GX3NOMmQ2MGwyeC1GbThJUHZfOHM2QnRWTmJsUWdtb1RBMXlJQkNJbTFrWFdlN3FzU2stNENMXzR4Y0hyd2pHSFB2Nk9kUGFLcjFPUnZFYmx1a3AzeEhiR2FUQ1h5MnJqRmlrczhScURZRnp3cVhWZG1QbDUzeVo1aGgzZjRMeG9mbndSekJEYVBITjRBMVB4LWVpb09RalV3Mm9FOFU?oc=5",
-          "published": "2026-11-17"
+          "source": "New York Times",
+          "domain": "rss.nytimes.com",
+          "title": "Iran Fires Missiles and Drones at Gulf Arab States as Peace Talks Falter",
+          "link": "https://www.nytimes.com/2026/11/18/world/middleeast/iran-attacks-bahrain-kuwait-ships-hormuz.html",
+          "published": "2026-11-19"
+        },
+        {
+          "source": "BBC",
+          "domain": "feeds.bbci.co.uk",
+          "title": "Kuwait says it repelled first Iranian attack in two months after US strikes island",
+          "link": "https://www.bbc.co.uk/news/articles/cw4gn9jeqjq7o?at_medium=RSS&at_campaign=rss",
+          "published": "2026-11-18"
         }
       ]
     },
     {
-      "text": "米イランはQeshm島とバーレーンをめぐって攻撃を応酬し、クウェートは敵対的なドローンを迎撃した。",
+      "text": "米国は洋上の積み替えも対イラン封鎖の対象に広げた。",
       "items": [
-        1,
-        2,
-        13,
-        14
+        8
       ],
       "sources": [
         {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Iran war live: Kuwait says intercepting ‘hostile’ drone attacks",
-          "link": "https://www.aljazeera.com/news/liveblog/2026/11/18/iran-war-live-kuwait-says-intercepting-hostile-drone-attacks?traffic_source=rss",
-          "published": "2026-11-18"
+          "source": "gCaptain",
+          "domain": "gcaptain.com",
+          "title": "U.S. Targets Ship-to-Ship Transfers in Expanded Iran Maritime Blockade - gCaptain",
+          "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOUXlVaHpKdmJjTDgwQ3o3R3NfLXR2ejBzdWprYlhFdTBtaERLZEw4TlZmbDB6NjhDdER5QUNrazlGc3dLaXk0MTl0RjRqSlA2Y3BTVTBRUkM5SjVaTDd2WEt0ci02NEoyUDA5T1hnV3dITklpMzlqY1JXaWhheDRuOThmekJIRGNIMGFsbTA0MVlPaUpxM3c?oc=5",
+          "published": "2026-11-19"
+        }
+      ]
+    },
+    {
+      "text": "原油価格は供給過剰の見通しで下落した。",
+      "items": [
+        7,
+        19
+      ],
+      "sources": [
+        {
+          "source": "Barchart.com",
+          "domain": "www.barchart.com",
+          "title": "Crude Oil Prices Plummet as Supply Concerns Ease - Barchart.com",
+          "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOTTdaa1JSNDlmcWRXWjI3X3BBdmFmckM1cjdMTWFveW4xUENfNEk1QUc4NXJvNTQwNTRlS3UwX0FWNWxnT1JURGFmU1JoTmpaeHA5cTV4WUlnZDhIekRlR2NudW9MamtqYWdad1h4RW9TZXFSY1hsWkI1dFppMFp5YUNzeUNIUG5TdW5rdmZKVWFfemhLdFJZ?oc=5",
+          "published": "2026-11-19"
         },
         {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Kuwait reports drone attacks as Iran, US trade attacks on Qeshm and Bahrain",
-          "link": "https://www.aljazeera.com/news/2026/11/17/kuwait-reports-drone-attacks-as-iran-us-trade-attacks-on-qeshm-and-bahrain?traffic_source=rss",
-          "published": "2026-11-18"
-        },
-        {
-          "source": "Los Angeles Times",
-          "domain": "www.latimes.com",
-          "title": "After 2-month lull, Iran carries out third strike on U.S. targets in Bahrain; U.S. retaliates - Los Angeles Times",
-          "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQOERCeEwxcENOVGVodWpFZWZ6SHlHMU9DR2pfWmpoVllXV0gtYkRqY3RXVFZsRXpzajVzU01ILW5QSFF2MTZGUGVFcFV2MVRtdXdrUHM3cFR2b3BKY2VScG51SFBuRlkzSVIxRVEyQ3YxWGl0cUh5OEhwMWsyMVI5eWlGRkFoOFFzUEtGcjltVkZuSzJVYUVqU2JaNDRzSDdpWTJhcDAzcUpSeHREZWxHME1xaTJYNW5wZVAySXlteTU?oc=5",
-          "published": "2026-11-18"
-        },
-        {
-          "source": "Pragativadi",
-          "domain": "pragativadi.com",
-          "title": "US Launches Strikes on Iran’s Strategic Qeshm Island in Strait of Hormuz Hours After Iranian Drones Target US Radar in Bahrain - Pragativadi",
-          "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQNU9kek0wam96dWFWZ01zejFjLVl1WDdFNUc0cVlsbUZxQm9qekJuZWRIRUNxQVBIaWJCVExTMGk0TV9saTFWTGptWmNobmlGdGhMT09pbC1haklSaEozVGc0T2tyVDI2WFdjZ1RpcGcwN3pFWGZIZHhyV3lleDVPQV83bU5wWmhyeWxBY0ZVclJtVi1Xb294OV9Wb2s5WnFVaFdsOUItTGJqbUNyQVUxcUFKUnJMbFJ4S1lFaWd2LXpEbGQ5OHlGUnlUZE5BSWNZSzZOaTBISF9FeEdCZnNteDZUZGE?oc=5",
+          "source": "Reuters",
+          "domain": "www.reuters.com",
+          "title": "Oil prices settle lower as traders weigh surplus supply outlook - Reuters",
+          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbmp3REJQam1xdjkyMkpCN1JlSkotTnJNM0JEWDVFNmJqZ2FHbmNIN2E0V2twa2N3djBLTXlNNVJvcDJmZVNXMlBlQnk2VG1FTThnX0hQbVRqS2dKbVVBdXl6MWR5ZHo0S2VneWt2bUdwVjE4TnNxaHFLN0hHNU9IUVljVnNXLWJTeHdORFFJX3BfQXhPTThEbGFYQXhYaGNneHRHcVRGS2NyOFhxTzVN?oc=5",
           "published": "2026-11-18"
         }
       ]
     }
   ],
   "note_price_warnings": [],
-  "last_manual_note": "ホルムズ海峡でタンカーへの攻撃が続き、イランは24時間で4隻目の被弾を主張した。米イランはQeshm島とバーレーンをめぐって攻撃を応酬し、クウェートは敵対的なドローンを迎撃した。"
+  "last_manual_note": "イランがクウェートとバーレーンを攻撃し、湾岸諸国が非難した。米国は洋上の積み替えも対イラン封鎖の対象に広げた。原油価格は供給過剰の見通しで下落した。"
 }
