@@ -523,6 +523,11 @@
       "date": "2026-11-19",
       "fact": "米上院は、トランプ大統領の対イラン戦争権限を制限する決議を51対48で否決した。共和党のCollins、Murkowski、Paulの3人が賛成し、民主党ではFettermanだけが反対した。決議に法的拘束力はなく、大部分は象徴的だったと報じられている。下院は9月に220対204で可決していた。",
       "source": "Al Jazeera 2026-11-19（https://www.aljazeera.com/news/2026/11/19/senate-republicans-in-us-reject-measure-to-limit-trumps-war-powers-in-iran）"
+    },
+    {
+      "date": "2026-11-20",
+      "fact": "UKMTOは警報214（Attack・11/20 16:06 UTC発行）で、オマーン・Khasabの北8海里で、ホルムズ海峡を出る途中のタンカーが左舷船首に正体不明の飛翔体を受け、船上で火災が起きたと発表した。負傷者の報告はなく、環境への影響の報告もない。本文の発生時刻は11/20 15:00 UTC。船名・攻撃主体の記載はない。gCaptainも同じ時刻・位置と火災を伝える。IRGC海軍は同日、Khasab港付近のタンカーが機雷に触れて爆発・炎上したと主張したが、警報214と同じ船かは確認されていない。",
+      "source": "UKMTO 警報214（公式サイト Recent Incidents・2026-11-20 16:06 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-11-20（https://gcaptain.com/another-tanker-hit-in-strait-of-hormuz-as-maritime-attacks-surge-worldwide/）/ Anadolu 2026-11-20（IRGC海軍の主張。https://aa.com.tr/en/middle-east/iran-says-tanker-catches-fire-after-striking-naval-mines-near-omans-khasab-port/4132530）"
     }
   ],
 
