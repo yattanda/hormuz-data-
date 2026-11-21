@@ -528,6 +528,16 @@
       "date": "2026-11-20",
       "fact": "UKMTOは警報214（Attack・11/20 16:06 UTC発行）で、オマーン・Khasabの北8海里で、ホルムズ海峡を出る途中のタンカーが左舷船首に正体不明の飛翔体を受け、船上で火災が起きたと発表した。負傷者の報告はなく、環境への影響の報告もない。本文の発生時刻は11/20 15:00 UTC。船名・攻撃主体の記載はない。gCaptainも同じ時刻・位置と火災を伝える。IRGC海軍は同日、Khasab港付近のタンカーが機雷に触れて爆発・炎上したと主張したが、警報214と同じ船かは確認されていない。",
       "source": "UKMTO 警報214（公式サイト Recent Incidents・2026-11-20 16:06 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-11-20（https://gcaptain.com/another-tanker-hit-in-strait-of-hormuz-as-maritime-attacks-surge-worldwide/）/ Anadolu 2026-11-20（IRGC海軍の主張。https://aa.com.tr/en/middle-east/iran-says-tanker-catches-fire-after-striking-naval-mines-near-omans-khasab-port/4132530）"
+    },
+    {
+      "date": "2026-11-21",
+      "fact": "UKMTOは警報215（Attack・11/21 07:41 UTC発行）で、オマーン・Khasabの北11海里で、ホルムズ海峡を出る途中のタンカーが船尾に正体不明の飛翔体を受けたと発表した。負傷者の報告はなく、環境への影響は未確認。本文の発生時刻は11/21 05:00 UTC。船名・攻撃主体の記載はない。",
+      "source": "UKMTO 警報215（公式サイト Recent Incidents・2026-11-21 07:41 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-11-21（Reuters配信。https://gcaptain.com/two-tanker-incidents-reported-near-oman-vessel-hit-mine-east-of-hormuz/）"
+    },
+    {
+      "date": "2026-11-21",
+      "fact": "UKMTOは警報216（Attack・11/21 08:17 UTC発行）で、オマーン・Khasabの東17海里で、ホルムズ海峡を出る途中のタンカーが機関室に正体不明の飛翔体を受けたと発表した。負傷者の報告はなく、環境への影響は未確認。本文の発生時刻は11/21 05:50 UTC。船名・攻撃主体の記載はない。ロイターは、警報215と216が同じ船かは直ちには明らかでないと書く。",
+      "source": "UKMTO 警報216（公式サイト Recent Incidents・2026-11-21 08:17 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ gCaptain 2026-11-21（Reuters配信。https://gcaptain.com/two-tanker-incidents-reported-near-oman-vessel-hit-mine-east-of-hormuz/）"
     }
   ],
 
