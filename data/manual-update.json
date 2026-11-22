@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-11-21T09:32:00+09:00",
+  "updated_at": "2026-11-22T09:31:48+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-11-15",
-    "age_days": 6,
+    "age_days": 7,
     "stale_after_days": 30,
     "stale": false,
-    "timeline_updated": "2026-11-20",
+    "timeline_updated": "2026-11-21",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -15,124 +15,100 @@
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-19"
+    "judgment_date": "2027-02-20"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
     "A_diplomacy_pct": 14,
-    "B_partial_blockade_pct": 50,
-    "C_full_blockade_pct": 16,
-    "D_escalation_pct": 20
+    "B_partial_blockade_pct": 52,
+    "C_full_blockade_pct": 10,
+    "D_escalation_pct": 24
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      14,
-      15
+      12,
+      14
     ],
     "B_partial_blockade_pct": [
       50,
-      50
+      55
     ],
     "C_full_blockade_pct": [
-      15,
-      17
+      10,
+      11
     ],
     "D_escalation_pct": [
-      18,
-      21
+      20,
+      28
     ]
   },
   "scenario_samples": 5,
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "イランはホルムズ海峡でタンカー攻撃を強め、和平協議は停滞している。",
+      "text": "イランはバーレーンの米軍拠点を攻撃し、同国の工業施設で火災が起きた。",
       "items": [
-        27,
-        28,
-        37
+        1,
+        6
       ],
       "sources": [
         {
-          "source": "Bloomberg.com",
-          "domain": "www.bloomberg.com",
-          "title": "Iran Intensifies Hormuz Tanker Attacks Just as Oil Prices Slide - Bloomberg.com",
-          "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQV0xLbmVSbGZvbm5GVkFJaGNGUzFDLXc3Rkh6b0RwR1BWVHRvV0taRVJIV2Z2NWROX3djNTl0LUdGXzliWm96bXA1VFRfT2ZMNUNPRElqRXp5eF9ObHZZeVFvOVROY3NwSlNBUV8xUzM2U091bnY5d1J0LUlSUmZlMjhTU05fTzFjQmg1eVg2SjBIV0tkQzRVSGVjX3BrSVJlYXJVMlZFTXkyZUFHQWZKa3NPQUM?oc=5",
-          "published": "2026-11-19"
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Iran war live: Iran targets US military in Bahrain; Houthi strikes continue",
+          "link": "https://www.aljazeera.com/news/liveblog/2026/11/21/iran-war-live-iran-targets-us-military-in-bahrain-houthi-strikes-continue?traffic_source=rss",
+          "published": "2026-11-22"
         },
         {
-          "source": "The New York Times",
-          "domain": "www.nytimes.com",
-          "title": "Iran Keeps Up Unrelenting Attacks on Ships in the Strait of Hormuz - The New York Times",
-          "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNczJXN3dIbXJITGpRV1BQQzdMRlp4QVl0ZE5jZnM2Vk9SNm5tZ2ZJV1NlbXA4em01SGZxM3p3b0FQemFMS0dTNGhhdzdPZzhCdXZDVzJTRXYtRThDWHRQa3dZQzRTOGdPZWxuQThVTGo5RGVzUHluWnNVaWRmNE5XQ2VpSS1aMVZUT3IyOA?oc=5",
-          "published": "2026-11-19"
-        },
-        {
-          "source": "New York Times",
-          "domain": "rss.nytimes.com",
-          "title": "Iran Fires Missiles and Drones at Gulf Arab States as Peace Talks Falter",
-          "link": "https://www.nytimes.com/2026/11/18/world/middleeast/iran-attacks-bahrain-kuwait-ships-hormuz.html",
-          "published": "2026-11-19"
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Bahrain says Iranian attack causes fire at industrial facility",
+          "link": "https://www.aljazeera.com/news/2026/11/21/bahrain-says-iranian-attack-causes-fire-at-industrial-facility?traffic_source=rss",
+          "published": "2026-11-22"
         }
       ]
     },
     {
-      "text": "米国は洋上積み替えを封鎖対象に加え、イランはカーグ島でタンカー船団を準備している。",
+      "text": "ホルムズ海峡ではタンカー2隻が被弾した。",
       "items": [
-        13,
-        34,
-        36
+        11,
+        16
       ],
       "sources": [
         {
-          "source": "Saudi Gazette",
-          "domain": "saudigazette.com.sa",
-          "title": "Iran readies tanker convoy at Kharg Island to test US oil blockade - Saudi Gazette",
-          "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPVDNtN0JSclBoUmdZNzFRNGhDNGtPdlFzOWN3OTV0cjZRVzRVdF90ZVlyelBRRkJJQnAxRHotNHlSd0NVN3VCWnZEMms1eXpBYU50UnZ5Z3h6SXFWU2k5S0djR0FYd1V6OWsyQkloZzVUbHZUMlFXMl9fNVE5R0ttcEYtMnNnZkVFNVVnYnE5aENXYmlMYlBzQlRPeDdMZlo1blUxXzlaR01PY0d2QTB5cnBKZnVJdw?oc=5",
-          "published": "2026-11-20"
+          "source": "New York Post",
+          "domain": "nypost.com",
+          "title": "Two tankers hit in Strait of Hormuz as hawks press Trump to resume Iran strikes - New York Post",
+          "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOZ0VzSEdkMFJlclR3UnhCVFVBa0dKWVF4SEd2Zzk3M0t1NW5GZWI4U2Q4T28xS1dtNXdVTl90VzJfQ0RCVE9rdENDWk93MHpTTGtzaU9lQ29BS2ZaVklnZzhMY2tYeTBhV3hnWlhNYmdWRE1yd0N5X1hELTNubmtiU2k4bXI5T3BHTGlONjRyajFsckY0MVZUSmFicWhQazBuM1dkRlU2OEI0MXpUWUZvM2tkVWpWUUxzR2U3TUJR?oc=5",
+          "published": "2026-11-22"
         },
         {
-          "source": "Reuters",
-          "domain": "www.reuters.com",
-          "title": "US tightens Iran blockade with curbs on oil transfers at sea, advisory shows - Reuters",
-          "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNS21BSEJXWHdIUGpZcWRtZm0tT084cTd5WFpvbFZUeE9wdHkyelI4Y2pFamp5YmY3S09BRm9zMWQ3VE5NcHVnSGZNM20yZ3B5NE1mXzZ4VVg3NUZ5RTVuQ2owQzE4MkxpaTBIcEhCNng4MDE1ZnpyTUVOMUVHVFdzcm14Mkl2TlNGZmNuVFQ1NFMwdGFOT1JSTEFURDNOQ005cWVaUG5ybmtyNWQyTW1QMG82SHhGQXNmb3VMTUtB?oc=5",
-          "published": "2026-11-19"
-        },
-        {
-          "source": "gCaptain",
-          "domain": "gcaptain.com",
-          "title": "U.S. Targets Ship-to-Ship Transfers in Expanded Iran Maritime Blockade - gCaptain",
-          "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOUXlVaHpKdmJjTDgwQ3o3R3NfLXR2ejBzdWprYlhFdTBtaERLZEw4TlZmbDB6NjhDdER5QUNrazlGc3dLaXk0MTl0RjRqSlA2Y3BTVTBRUkM5SjVaTDd2WEt0ci02NEoyUDA5T1hnV3dITklpMzlqY1JXaWhheDRuOThmekJIRGNIMGFsbTA0MVlPaUpxM3c?oc=5",
-          "published": "2026-11-19"
-        }
-      ]
-    },
-    {
-      "text": "原油価格は世界的な供給増で下落が続く。",
-      "items": [
-        4,
-        17
-      ],
-      "sources": [
-        {
-          "source": "gCaptain",
-          "domain": "gcaptain.com",
-          "title": "Iran War Oil Premium Evaporates as Global Crude Supplies Surge - gCaptain",
-          "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQajV6dVh1R2Nmdm1lMzRHc2Q2YVJqb0tRNF9KdWpsSlFCSnR0RzRSQTM2WWd4eS1zaWg1S2tIeUZaUFpiSTlCLVcxLUUtQ3Axb2RwaXpYQnQ5SkNrTmlKSERuWnpkQ3RmZjFNcmVyeU9NX2NSdzFPZ0lzRDZrQmExTVJMdGU5bjNXdFMtdg?oc=5",
+          "source": "https://streamlinefeed.co.ke/",
+          "domain": "streamlinefeed.co.ke",
+          "title": "Two tankers struck near Strait of Hormuz, UKMTO says - https://streamlinefeed.co.ke/",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPVFNxTTk5VVU3bmM1MVN6d0dVUmcxdHRlV0xaLVpCOGx4Y29QcW9oTXFlakZQNWtTRndJaU01X0N4QzFRbzF0ZWtweU0wbDZwcDBJcnYzR2E0RS1mYTliYjk2bWk3ZU9JcWFLbzhOS2VObUNHbUptaXdSUk1yU2VNOU15dkF2eFFITHZ6bWZ3?oc=5",
           "published": "2026-11-21"
-        },
+        }
+      ]
+    },
+    {
+      "text": "イランはカタールの仲介者と協議し、米国に条件の受け入れを求めた。",
+      "items": [
+        7
+      ],
+      "sources": [
         {
-          "source": "CNBC",
-          "domain": "www.cnbc.com",
-          "title": "Oil prices set for third straight weekly decline on Middle East export flows - CNBC",
-          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5SV3VLcC1fUXZ3eUN2ckZpSzd3akdsSE55cFRrUEZFNDZtVUFxcDRCWng5dHB3XzBDaUliLUowaGdqdDVkaW5va25nUkx5OVc4UXZoVU9qem1NdWFUNndPWldTeXFhVnVo0gFuQVVfeXFMTXRDbE5XQlFpNEF3ZVBycUpzZXFqQXJOdmVWTWVlX2NWLTNPc2w2TEk5TVdEb3FSZTV3c1JpSEJpUTlaX1g3cVhfY0o1cnFZd2xLZm03ZkJWTjRCelpOU2V5bl9pYlk0RkJsZnQtS1E?oc=5",
-          "published": "2026-11-20"
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Iran says held talks with Qatari mediators, urges US to accept conditions",
+          "link": "https://www.aljazeera.com/news/2026/11/21/iran-says-held-talks-with-qatari-mediators-urges-us-to-accept-conditions?traffic_source=rss",
+          "published": "2026-11-22"
         }
       ]
     }
   ],
   "note_price_warnings": [],
-  "last_manual_note": "イランはホルムズ海峡でタンカー攻撃を強め、和平協議は停滞している。米国は洋上積み替えを封鎖対象に加え、イランはカーグ島でタンカー船団を準備している。原油価格は世界的な供給増で下落が続く。"
+  "last_manual_note": "イランはバーレーンの米軍拠点を攻撃し、同国の工業施設で火災が起きた。ホルムズ海峡ではタンカー2隻が被弾した。イランはカタールの仲介者と協議し、米国に条件の受け入れを求めた。"
 }
