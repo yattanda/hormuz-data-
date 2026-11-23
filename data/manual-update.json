@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-11-22T09:31:48+09:00",
+  "updated_at": "2026-11-23T09:32:03+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-11-15",
-    "age_days": 7,
+    "age_days": 8,
     "stale_after_days": 30,
     "stale": false,
-    "timeline_updated": "2026-11-21",
+    "timeline_updated": "2026-11-22",
     "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
@@ -15,16 +15,16 @@
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-20"
+    "judgment_date": "2027-02-21"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 14,
-    "B_partial_blockade_pct": 52,
-    "C_full_blockade_pct": 10,
-    "D_escalation_pct": 24
+    "A_diplomacy_pct": 12,
+    "B_partial_blockade_pct": 47,
+    "C_full_blockade_pct": 11,
+    "D_escalation_pct": 30
   },
   "scenario_range": {
     "A_diplomacy_pct": [
@@ -32,51 +32,36 @@
       14
     ],
     "B_partial_blockade_pct": [
-      50,
-      55
+      44,
+      50
     ],
     "C_full_blockade_pct": [
-      10,
-      11
+      8,
+      15
     ],
     "D_escalation_pct": [
-      20,
-      28
+      27,
+      30
     ]
   },
   "scenario_samples": 5,
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "イランはバーレーンの米軍拠点を攻撃し、同国の工業施設で火災が起きた。",
+      "text": "ホルムズ海峡での攻撃は開戦以来最多の水準となり、タンカーの被弾が続いている。",
       "items": [
-        1,
-        6
+        6,
+        17,
+        21
       ],
       "sources": [
         {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Iran war live: Iran targets US military in Bahrain; Houthi strikes continue",
-          "link": "https://www.aljazeera.com/news/liveblog/2026/11/21/iran-war-live-iran-targets-us-military-in-bahrain-houthi-strikes-continue?traffic_source=rss",
-          "published": "2026-11-22"
+          "source": "CNN",
+          "domain": "edition.cnn.com",
+          "title": "Iranian attacks in the Strait of Hormuz are at the highest levels since the conflict began - CNN",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNMXFHbkduUzVMeUJDQmhwWmJiOHVuUVpXLXlRSGtndXNHZkwyQUdZdERSZF9HTWgtckotNEhhNzhkSWZuVVN1VTZPMDE5SDk3d2I0cHpROUZ5TGNrY196NU5SWE9zV0xReFhJNjBCWkZZbzBFdXNNRS1YZ2dyNVgtbVdFM29tZXlTeFRuSFk1MDBIdlU?oc=5",
+          "published": "2026-11-23"
         },
-        {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Bahrain says Iranian attack causes fire at industrial facility",
-          "link": "https://www.aljazeera.com/news/2026/11/21/bahrain-says-iranian-attack-causes-fire-at-industrial-facility?traffic_source=rss",
-          "published": "2026-11-22"
-        }
-      ]
-    },
-    {
-      "text": "ホルムズ海峡ではタンカー2隻が被弾した。",
-      "items": [
-        11,
-        16
-      ],
-      "sources": [
         {
           "source": "New York Post",
           "domain": "nypost.com",
@@ -85,30 +70,46 @@
           "published": "2026-11-22"
         },
         {
-          "source": "https://streamlinefeed.co.ke/",
-          "domain": "streamlinefeed.co.ke",
-          "title": "Two tankers struck near Strait of Hormuz, UKMTO says - https://streamlinefeed.co.ke/",
-          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPVFNxTTk5VVU3bmM1MVN6d0dVUmcxdHRlV0xaLVpCOGx4Y29QcW9oTXFlakZQNWtTRndJaU01X0N4QzFRbzF0ZWtweU0wbDZwcDBJcnYzR2E0RS1mYTliYjk2bWk3ZU9JcWFLbzhOS2VObUNHbUptaXdSUk1yU2VNOU15dkF2eFFITHZ6bWZ3?oc=5",
+          "source": "ABC News - Breaking News, Latest News and Videos",
+          "domain": "abcnews.com",
+          "title": "Strait of Hormuz attacks have increased to highest level since Iran war began - ABC News - Breaking News, Latest News and Videos",
+          "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPWHRGNHdBbkpIa3IyWTlmV2l5aDVwZ0pLUE1WRzhIVjRqM3p4c3ZsSWNtaVo4YnU4WHBwbUREbzJoX1VzeENVb0xFclVKaW9HY2lVb2lxRnFzWUhNb3RvTDlPYjRfUTVWOUU1dHJ4b2lfZGNPV3h0SGZfdEJLX3NacWxLam1QV1pnb08xRVFDei1OaFZIQXduTmJjbkNqYXFuaGk4a3p4OE5YR0HSAbABQVVfeXFMT3JyZk0yRTFISFBvWF9WMnZrUnp2NHBtMG9pRHo2OUlfaHd0QkZOWmEwWjJLMHJMdlMxal9WQ0lfU1pyd0RLejdCaEtWS2tGUGoyN0ZDVFJOWUZoR3RBQjBsUS1RV2xWcGlVSWNsd3c5aTR5a0dMWkUtMWtVeV95ajVhMkJBc0FrdVo3OWlmVUlPY2tLRU5VWmwtQzRKTXktQnBYVHpSN2k1U2xwUDJVdHU?oc=5",
           "published": "2026-11-21"
         }
       ]
     },
     {
-      "text": "イランはカタールの仲介者と協議し、米国に条件の受け入れを求めた。",
+      "text": "イランは米封鎖の突破に向けタンカー14隻を集め、カタールの仲介者とも協議した。",
       "items": [
-        7
+        5,
+        12,
+        14
       ],
       "sources": [
         {
+          "source": "New York Post",
+          "domain": "nypost.com",
+          "title": "Iran amasses 14 oil tankers at key export hub as Tehran weighs challenge to US blockade: report - New York Post",
+          "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQMWI2WWllMnpmMUEwTnp1VERkbjNRRmRBNUluVzl5ei1CNnQ4MzMxOV9rVzRyQ3NVZTVzWWZ4WHBTbWZPZlBkZENld1VidkV4R0pidjZocFJETzVXYWkxemtlTEtrUVR4SHJEU2o5TS1zRWo2UWtFU1UtX29iSmM0aFYzTmlhRXZqYzFyVDdXWGU4SUhXVTJoZXlfRjZNRHMteXVmUHZIY0lXNTYtT2R6M2xiUTZvX0M1dnNKNGowZFJQZGkzYXM3N2FVT0JDUQ?oc=5",
+          "published": "2026-11-23"
+        },
+        {
+          "source": "Gulf News",
+          "domain": "gulfnews.com",
+          "title": "Hormuz showdown? Cash-strapped Iran readies 14 tankers to break US blockade. What happens if they try? - Gulf News",
+          "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNeU1sUkRpN3NDLUFSZmpDUkFzQ21OQ05uekRlMTY3SWpvYlFLOTJ6UWtQd2RYT01ONW1kSW9kRmJocTQzS0dsbUpKTzFvSjI1UnZFTlQ2OUc4RHBvc3lIVU5VMVQ2RlE2ZFp0Z2l5VWxPanhhcmpLU3JZSEV3QS1rdkNuN2xMZHV3bDZiWmhOODRSUTNyX0hBSEFIS0VaM0ktbE9xOXNnVlhab1NkWDkwNFVLc9IBxgFBVV95cUxNdmRGQXJnTG5sUkpUeW03VnRTRVc3US1wRlVsVXZwTlYtaUoyYWQzRWNmdjNMWnNpQjIzVzZ2c1hsS0ttLXF1YmZsRS1VVWJpY1FpVDZqYmViSnFDOHRKb2ZYYlBnQl9iN2M0aHk0ZGpKeHREMWN3RlljUlZObVN0ZGt4NGlXQnRuOGx0NV9kTzd1bndEQnQ4a2RGaDRBeFZIOGsyblEwUkdjbUF6NEZtRVFleUxsLWUwcU00RWFHeFk1aTkxa1E?oc=5",
+          "published": "2026-11-22"
+        },
+        {
           "source": "Al Jazeera",
           "domain": "www.aljazeera.com",
-          "title": "Iran says held talks with Qatari mediators, urges US to accept conditions",
-          "link": "https://www.aljazeera.com/news/2026/11/21/iran-says-held-talks-with-qatari-mediators-urges-us-to-accept-conditions?traffic_source=rss",
+          "title": "Iran says held talks with Qatari mediators, urges US to accept conditions - Al Jazeera",
+          "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNWHFKUDdNZFRCLWtBLVdXaXJicmtVTFVoMFM2anB6VnA2dER4bHhWTVROaDdpWFhTeUpZYUJRWnZjYzc1b3g1WC1TcTJnZk5EdXpULTRwRFJRMGJRYmRKTzlzd1FiazJrSlNGRHNuUktRRjNaLTBTWlJScGhkeHJMTnYxdUdlcVRJOHZmWFdFeE1fUnlhMHB5MnM1SzcxaTdrWnRiT1BFbktpcmhSemw3anQ1R23SAboBQVVfeXFMT01MTmVjb1NOQWlBR3ZTRUhUU203dVZZSVljRnUwcGhWSUtiQkFOOFdsQjduS0tSVkN0VUtIVDc5NTJ4b21UbVVXWEp2SmdXTFZpbHB1X3FvM3ZHZ2piWURGTU45anA0M3VDOTJiaXh6ZTNZVFhlSlhlTjBoS0FFWjY0NDJ4V04zSUFwcVVORTJqQ083RjAtdmtCanZUMWQxNzgwak5NSWxwMWx5eVZGWHlWODhIM1R4Uzln?oc=5",
           "published": "2026-11-22"
         }
       ]
     }
   ],
   "note_price_warnings": [],
-  "last_manual_note": "イランはバーレーンの米軍拠点を攻撃し、同国の工業施設で火災が起きた。ホルムズ海峡ではタンカー2隻が被弾した。イランはカタールの仲介者と協議し、米国に条件の受け入れを求めた。"
+  "last_manual_note": "ホルムズ海峡での攻撃は開戦以来最多の水準となり、タンカーの被弾が続いている。イランは米封鎖の突破に向けタンカー14隻を集め、カタールの仲介者とも協議した。"
 }
