@@ -1,46 +1,46 @@
 {
-  "updated_at": "2026-11-24T09:31:54+09:00",
+  "updated_at": "2026-11-25T09:31:54+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-11-15",
-    "age_days": 9,
+    "age_days": 10,
     "stale_after_days": 30,
     "stale": false,
     "timeline_updated": "2026-11-22",
-    "timeline_age_days": 2,
+    "timeline_age_days": 3,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-22"
+    "judgment_date": "2027-02-23"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
   "war_risk_premium_source": null,
   "scenario": {
-    "A_diplomacy_pct": 14,
+    "A_diplomacy_pct": 12,
     "B_partial_blockade_pct": 45,
-    "C_full_blockade_pct": 15,
-    "D_escalation_pct": 26
+    "C_full_blockade_pct": 18,
+    "D_escalation_pct": 25
   },
   "scenario_range": {
     "A_diplomacy_pct": [
       12,
-      14
+      15
     ],
     "B_partial_blockade_pct": [
-      40,
-      50
+      43,
+      45
     ],
     "C_full_blockade_pct": [
-      14,
-      20
+      15,
+      18
     ],
     "D_escalation_pct": [
-      21,
+      25,
       30
     ]
   },
@@ -48,34 +48,19 @@
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "革命防衛隊は、ホルムズ海峡でタンカー3隻が機雷に触れて炎上したと主張した。",
+      "text": "ホルムズ海峡での船舶への攻撃は開戦以来最多の水準に達した。",
       "items": [
-        1
+        22,
+        33,
+        36
       ],
       "sources": [
         {
-          "source": "Al Jazeera",
-          "domain": "www.aljazeera.com",
-          "title": "Iran war live: Iran says three ships catch fire after hitting Hormuz mines",
-          "link": "https://www.aljazeera.com/news/liveblog/2026/11/24/iran-war-live-iran-says-three-ships-catch-fire-after-hitting-hormuz-mines?traffic_source=rss",
+          "source": "Beinsure",
+          "domain": "beinsure.com",
+          "title": "Strait of Hormuz shipping attacks reach highest level since Iran war began - Beinsure",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNMmtmQXp4TVJzT1VHd3ktNUNVRVBCV0JweUhtSlhuaHZ4RVJNSExNT2k1YVV4VmkyaTRISFhYb29aMnpMMUdCS3NJei04dndMSmVyU1Q0ZmtIWEszaDVGakJpeXh4N0RxeWJDVEVKdmxLOFV2blpuU3lILUQ3V2VnMjJObmpUSFk?oc=5",
           "published": "2026-11-24"
-        }
-      ]
-    },
-    {
-      "text": "海峡での船舶への攻撃は開戦以来最多の水準に達した。",
-      "items": [
-        19,
-        32,
-        35
-      ],
-      "sources": [
-        {
-          "source": "The Jerusalem Post",
-          "domain": "www.jpost.com",
-          "title": "Iranian attacks on ships near Strait of Hormuz hit highest level since war began, data shows - The Jerusalem Post",
-          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBSWDJ3dGtDQ1RaWjFnbXZ5VEdJZVR3T1IwSW5RaUpqSDdJOW5KN3h3QXFKY3Q3UW1IVUhEOXBienRvRlZLUDREaXlGSC1PM2N0aWc2eXEzMGdVS2xGeUFoX1ZSY09yUzhENmc?oc=5",
-          "published": "2026-11-23"
         },
         {
           "source": "CNN",
@@ -94,10 +79,10 @@
       ]
     },
     {
-      "text": "イランは米国の海上封鎖に全手段で対抗すると表明した。",
+      "text": "イランは米海上封鎖に全手段で対抗すると表明した。",
       "items": [
-        14,
-        20
+        27,
+        30
       ],
       "sources": [
         {
@@ -115,8 +100,23 @@
           "published": "2026-11-23"
         }
       ]
+    },
+    {
+      "text": "11月の海峡の石油流量は日量1,000万バレルに減った。",
+      "items": [
+        37
+      ],
+      "sources": [
+        {
+          "source": "https://houseofsaud.com/",
+          "domain": "houseofsaud.com",
+          "title": "Hormuz Oil Flows Fall to 10 Million b/d in November 2026 - https://houseofsaud.com/",
+          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBIYUNnUWZkcjAwNTNUUnpGdnYxWFBuM3lNaGtWdkhiOEFTbHdKYnpOdW1IcERfdlBVQkRJRllPV0dmQ2NhNW5EM3NMeXp2djlyX2tneFBVdm1KRUgzNklYTGsyclNGN3A5bDZMUENOMA?oc=5",
+          "published": "2026-11-21"
+        }
+      ]
     }
   ],
   "note_price_warnings": [],
-  "last_manual_note": "革命防衛隊は、ホルムズ海峡でタンカー3隻が機雷に触れて炎上したと主張した。海峡での船舶への攻撃は開戦以来最多の水準に達した。イランは米国の海上封鎖に全手段で対抗すると表明した。"
+  "last_manual_note": "ホルムズ海峡での船舶への攻撃は開戦以来最多の水準に達した。イランは米海上封鎖に全手段で対抗すると表明した。11月の海峡の石油流量は日量1,000万バレルに減った。"
 }
