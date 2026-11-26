@@ -553,6 +553,26 @@
       "date": "2026-11-22",
       "fact": "UKMTOは警報219〜221（Attack・11/24 11:58 UTC〜19:32 UTC発行・遅れて届いた報告）で、ホルムズ海峡で東向きに航行中のタンカー3隻が相次いで正体不明の飛翔体を受けたと発表した。本文の発生時刻は11/22 20:25・20:32・20:42 UTC。3隻とも航行を続け、乗組員は全員無事で、被害の程度と環境への影響は不明。警報219は当初の報告を3件の別の攻撃に分け直した更新版。船名・攻撃主体の記載はない。",
       "source": "UKMTO 警報219〜221（公式サイト Recent Incidents・2026-11-24 11:58 UTC〜19:32 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）"
+    },
+    {
+      "date": "2026-11-25",
+      "fact": "UKMTOは警報223（Attack・11/26 12:01 UTC発行）で、オマーン・Khasabの東18海里で、海峡を出る向きのタンカーが正体不明の飛翔体を受けたと、現地当局の報告として発表した。乗組員の安否は確認され、環境への影響の報告はない。本文に発生時刻・船名・攻撃主体の記載はなく、日時欄は11/25 13:00 UTC。ロイター配信は発生を水曜（11/25）と書く。",
+      "source": "UKMTO 警報223（公式サイト Recent Incidents・2026-11-26 12:01 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Reuters 2026-11-26（BOE Report 掲載。https://boereport.com/2026/11/26/tanker-struck-by-projectile-while-transiting-strait-of-hormuz-ukmto-says/）"
+    },
+    {
+      "date": "2026-11-25",
+      "fact": "UKMTOは警報222（Suspicious Activity・11/25 22:55 UTC発行）で、UAE・ドバイの西50海里で、タンカーの船長が正体不明の飛翔体による爆発が船の近くで起きたと報告したと発表した。乗組員は無事で、船と環境への被害の報告はない。本文に発生時刻・船名・攻撃主体の記載はなく、日時欄は11/25 22:54 UTC。",
+      "source": "UKMTO 警報222（公式サイト Recent Incidents・2026-11-25 22:55 UTC 発行。公式の公開 API で本文を取得。https://www.ukmto.org/recent-incidents）/ Arab News 2026-11-26（https://www.arabnews.com/middle-east/ukmto-reports-explosion-near-tanker-west-of-dubai-3014072）"
+    },
+    {
+      "date": "2026-11-26",
+      "fact": "クウェートの防空監視施設へのドローン攻撃で、作業していたイタリア人2人が死亡した。クウェート国防省は重要施設がイランの攻撃で標的にされたと述べ、イラン軍報道官は関与を否定した。",
+      "source": "Reuters 2026-11-26（Yahoo 転載）/ The New Arab 2026-11-26 / Arab News 2026-11-26（https://www.arabnews.com/saudi-arabia/houthi-attack-on-saudi-arabias-jazan-refinery-kills-nepali-worker-3014153）"
+    },
+    {
+      "date": "2026-11-26",
+      "fact": "サウジ南西部ジャザンの製油所が飛翔体を受けて火災が起き、一部の操業が停止し、ネパール人労働者1人が死亡、国籍の異なる数人が負傷した。サウジのエネルギー省が発表した（同省は攻撃主体を明示していない）。連合軍は、ホデイダ港のミサイル発射台を破壊したと発表した。",
+      "source": "Arab News 2026-11-26（サウジ・エネルギー省の発表。https://www.arabnews.com/saudi-arabia/houthi-attack-on-saudi-arabias-jazan-refinery-kills-nepali-worker-3014153）/ Al Jazeera 2026-11-26"
     }
   ],
 
