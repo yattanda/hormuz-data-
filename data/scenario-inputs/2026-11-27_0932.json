@@ -1,0 +1,366 @@
+{
+  "at": "2026-11-27T09:32:00+09:00",
+  "context_sha256": "299b9a56731f8857a164eb0cb4e749da4fb3524e743ca43a6699bef0cbb84872",
+  "items": [
+    {
+      "n": 1,
+      "title": "Iran war live: Iran’s Araghchi calls deadly Kuwait attack ‘suspicious’",
+      "source": "Al Jazeera",
+      "domain": "www.aljazeera.com",
+      "link": "https://www.aljazeera.com/news/liveblog/2026/11/27/iran-war-live-irans-araghchi-calls-deadly-kuwait-attack-suspicious?traffic_source=rss",
+      "published": "2026-11-27T00:00:00+00:00",
+      "feed": "https://www.aljazeera.com/xml/rss/all.xml"
+    },
+    {
+      "n": 2,
+      "title": "Diesel tanker carrying up to 7,000 tonnes capsizes near Ibiza, killing one",
+      "source": "BBC",
+      "domain": "feeds.bbci.co.uk",
+      "link": "https://www.bbc.co.uk/news/articles/c9gklryvj24do?at_medium=RSS&at_campaign=rss",
+      "published": "2026-11-26T22:01:22+00:00",
+      "feed": "https://feeds.bbci.co.uk/news/world/rss.xml"
+    },
+    {
+      "n": 3,
+      "title": "Two Italians killed in strike in Kuwait, as Iran denies responsibility",
+      "source": "BBC",
+      "domain": "feeds.bbci.co.uk",
+      "link": "https://www.bbc.co.uk/news/articles/c39w9y5dx4k5o?at_medium=RSS&at_campaign=rss",
+      "published": "2026-11-26T21:17:53+00:00",
+      "feed": "https://feeds.bbci.co.uk/news/world/rss.xml"
+    },
+    {
+      "n": 4,
+      "title": "Egypt detains driver over Cairo fuel tanker fire that killed 31",
+      "source": "Al Jazeera",
+      "domain": "www.aljazeera.com",
+      "link": "https://www.aljazeera.com/news/2026/11/26/egypt-detains-driver-over-cairo-fuel-tanker-fire-that-killed-31?traffic_source=rss",
+      "published": "2026-11-26T21:08:44+00:00",
+      "feed": "https://www.aljazeera.com/xml/rss/all.xml"
+    },
+    {
+      "n": 5,
+      "title": "Two Italians Killed in Iranian Drone Attack on Kuwait, Officials Say",
+      "source": "New York Times",
+      "domain": "rss.nytimes.com",
+      "link": "https://www.nytimes.com/2026/11/26/world/middleeast/italians-killed-iran-drone-attack-kuwait.html",
+      "published": "2026-11-26T19:33:06+00:00",
+      "feed": "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml"
+    },
+    {
+      "n": 6,
+      "title": "Oil Price Forecast According to Experts: November 2026 - MoneyMagpie",
+      "source": "MoneyMagpie",
+      "domain": "www.moneymagpie.com",
+      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQSGg1eDFOTjltMjdyd2Z3dzB0dkgxNkJSTDN0bThRdjZnUE01ZXBYS05BUV9KTkpFT1VHeEp6LVVwc2xXU3RNbmhjVUd0ZVY4eFpqdnJuSFJNeWYwVTV4WEdfSG5ZOEp2c2xlRFJMRmQwUHdFRjFEalVoOWIzNUYxWmMwRzd1ZjA?oc=5",
+      "published": "2026-11-26T19:26:32+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 7,
+      "title": "Nine injured, three critically, after Bangkok oil refinery explosion",
+      "source": "BBC",
+      "domain": "feeds.bbci.co.uk",
+      "link": "https://www.bbc.co.uk/news/articles/crx209kwk4kzo?at_medium=RSS&at_campaign=rss",
+      "published": "2026-11-26T16:21:19+00:00",
+      "feed": "https://feeds.bbci.co.uk/news/world/rss.xml"
+    },
+    {
+      "n": 8,
+      "title": "US’s Iran war boosts Putin’s oil revenue as Russia takes in $102 billion in nine months - ProtoThema English",
+      "source": "ProtoThema English",
+      "domain": "en.protothema.gr",
+      "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQWXhBQ1M3b3pRRk5uTDRtcW85amZUVEpkTjBxRTcxY3U5eWZvX1NLckQtMEpVc3JCN3ZUb3pGWTNGa3ZZY0FBRTdQc2ZLRE42V3lOV3I0c29jR29XVTVuODduV25XVjI3VG9SWUphZ28ybnZFZDc4UWJzMElLSEozSjBQYXFpV0NVVzJ3YUtLdUU4NFNibWdlRFJkQXpLRzd5LU5zRU5JYzZIZ1ZRZWZhU29XblVJNmhEVV9KTGVn?oc=5",
+      "published": "2026-11-26T13:55:33+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 9,
+      "title": "Airlines strained by Iran-war fuel price shock - Reuters",
+      "source": "Reuters",
+      "domain": "www.reuters.com",
+      "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOM0RXOWhRODZRb01BelZsb3BrVUVOeFdqejJtT18xNEhDTm1CNW43RmRHd1RtdWc4UDJVTnBYV3lVMktqV2Q0RTktYW5JWWxjMUI3TEdWWFUtMVZ6SWFrWGx6amJ6bFMzLTh2OVlKMHM5OFdPSjB4UUFVdFVZLW1DaTRJNHdhZWV0ZHAwQnBwMEVobDdhbW9PLTg4OVVFM3V4?oc=5",
+      "published": "2026-11-26T12:50:13+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 10,
+      "title": "Egyptian authorities arrest motorist over tanker crash that killed 31",
+      "source": "BBC",
+      "domain": "feeds.bbci.co.uk",
+      "link": "https://www.bbc.co.uk/news/articles/c3gre90l0g45o?at_medium=RSS&at_campaign=rss",
+      "published": "2026-11-26T12:16:06+00:00",
+      "feed": "https://feeds.bbci.co.uk/news/world/rss.xml"
+    },
+    {
+      "n": 11,
+      "title": "Iran’s 2027 Budget Faces Oil Revenue Crisis as Regime Turns to Taxes, Inflation, and Public Assets - Iran News Update",
+      "source": "Iran News Update",
+      "domain": "irannewsupdate.com",
+      "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxObU9GRUJJWGZaSXZtMTh6TkZqMjAzWFplTTEtaGstTWVwNnJkdk9kRFhIc1NKYkcxOXZUN3FCSmpaY1BGRjhlclFhdzE4RFRFY0tyV0ZRNU1RS2k1UzNYT1ZEbF9QYld6cE5OajlnVWNSNWxrU3FBZXlWQlp1U1B3MXAzTm9Xam84VmN3SDNybWJMYkxrQWYzWnBXMGZFWUVMLV9CcjdMQm85a0FScTdTWGMwTnRUYy1aaG5FeFpxVXJneVJZeXB2enIzaEVTMUpqeGfSAdIBQVVfeXFMTm1PRkVCSVhmWkl2bTE4ek5GajIwM1haZU0xLWhrLU1lcDZyZHZPZERYSHNTSmJHMTl2VDdxQkpqWmNQRkY4ZXJRYXcxOERURWNLcldGUTVNUUtpNVMzWE9WRGxfUGJXenBOTmo5Z1VjUjVsa1NxQWV5VkJadVNQdzFwM05vV2pvOFZjd0gzcm1iTGJMa0FmM1pwVzBmRVlFTC1fQnI3TEJvOWtBUnE3U1hjME50VGMtWmhuRXhacVVyZ3lSWXlwdnpyM2hFUzFKanhn?oc=5",
+      "published": "2026-11-26T12:00:46+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 12,
+      "title": "Trump Faces Iran Deadlock as Hormuz Blockade Raises Costs - SuaraGarut.ID",
+      "source": "SuaraGarut.ID",
+      "domain": "suaragarut.id",
+      "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5DdUNEWllSUXhnSkJUb2M5YjQ0akttREVCcGlFR0FQX2NkYkhRMndMTVdRVVJMTy02bVlHX2liODVsWDhFNGdZbGJmelFpMS1yVl9KWVdiem5GT0JVSXFDTmtQbEg3blZmZUJPVg?oc=5",
+      "published": "2026-11-26T10:53:40+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 13,
+      "title": "Crude oil finds some footing as prolonged US-Iran tensions keep the downside limited. What's next? - investingLive",
+      "source": "investingLive",
+      "domain": "investinglive.com",
+      "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPZHk1SmVQR3ZralZfblg5dnRuUllkdFE3MkFUUVhsYnV2TkF3UDNPczVTOVlBM2NmS0NZNTBWNkVyRi1ldzZlYkZtTGZQdnZfcTMwUHFwc0xIM3pLeTR0ZkpGYklId1UtdER6NS1LQUhZY2x6WGwybHljRElxbnRnTkFtMHBQaXNLeW11SHphajdWSzVMS3pyTEdiN1h5R2R1bDZhbExVb2t0SWxBYi1LQnNjMVdaWTllSU55dDZqajBXa1hXaTc1UmZuUXkzd0lV?oc=5",
+      "published": "2026-11-26T10:08:04+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 14,
+      "title": "Two screenings of Pakistani TV show cancelled in India after backlash",
+      "source": "BBC",
+      "domain": "feeds.bbci.co.uk",
+      "link": "https://www.bbc.co.uk/news/articles/cky97x7delz9o?at_medium=RSS&at_campaign=rss",
+      "published": "2026-11-26T08:30:12+00:00",
+      "feed": "https://feeds.bbci.co.uk/news/world/rss.xml"
+    },
+    {
+      "n": 15,
+      "title": "Oil Swings Persist as Iran War Drives Volatility - Wisevoter",
+      "source": "Wisevoter",
+      "domain": "wisevoter.com",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQdWFpYjNmcnZaSU8zYWNTVTNYNTlyTWdGMVNyTFNZOWs3U2lfMVhVVVllamxYTzhSdUhRRk1XUHM4R250LU9Bell5bHBZMVZ0dmxBMVN1ak9kX3puaWVad0VPa1dWdWhKT1Y2bkFmT2lqRXhqbll6UjlaeDdaMUNNUQ?oc=5",
+      "published": "2026-11-26T07:13:07+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 16,
+      "title": "Desperate appeals from women on death row in Iran after protests",
+      "source": "BBC",
+      "domain": "feeds.bbci.co.uk",
+      "link": "https://www.bbc.co.uk/news/articles/cm8x0ve4yd7wo?at_medium=RSS&at_campaign=rss",
+      "published": "2026-11-26T06:01:58+00:00",
+      "feed": "https://feeds.bbci.co.uk/news/world/rss.xml"
+    },
+    {
+      "n": 17,
+      "title": "Oil rises on supply concerns as Iran claims mine strikes on ships - CNBC",
+      "source": "CNBC",
+      "domain": "www.cnbc.com",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNZjJNNHJQMXB1U0JpZEVtSF96dms3OUdSdEJLempwbFA3NTR5ZVVBTnpZeDItc2x2QWVVcjFGT1h6eEZMN1RVVnNSYUNIalhLc2oxV0x5RGVSNGRtbmYyZkhUbXhHTkxrY0N3ZGN0bHFFb1pQSXdwSWJibjJ2RGtBVdIBhgFBVV95cUxPNDhMbDFsaFBFMHIzYjdTejlZYThtZGpERnRSV0NmMUY1QjFtUnc2T0RUN0FnVVY3aHBfODVDQm4tZE95UmY2S3J4OW9QYnBLZXE0Qk54WUJqSkpzRWNjdnlWY0t2b0JwOXVYSm1JVVBtRDBzSkdCT0RfekNhc3VUVG5KLTQzUQ?oc=5",
+      "published": "2026-11-26T04:46:00+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 18,
+      "title": "Unilever Warns Iran War Costs May Raise Prices - Wisevoter",
+      "source": "Wisevoter",
+      "domain": "wisevoter.com",
+      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQSHZ2Q3lxMkRYRTYzUGdVbEQ2dkh6Ny1PSUQxYkRodGdnenF2M0FCcUVpZ2h3b3VQR0xzeUNydGp3YVZ5XzhOMFdlRUU3TXZwQkFHV1prSm1CRXUweTlzS296QmF0eEpZT2NJNk9oLTA2VUhPT1JGNmYxTTA0Z01XTDdZWkU2N2ta?oc=5",
+      "published": "2026-11-26T02:38:09+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 19,
+      "title": "Iran Economic Pressure: Tehran Says It Can Withstand US Blockade as Inflation Soars - Batam News Asia",
+      "source": "Batam News Asia",
+      "domain": "batamnewsasia.com",
+      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNUk9NQ0VQVElkNTU3bGNLUVp6dmlFTUY3LUVWeEt5eDBzdzhUWGhTLXNHeFp6c2RXZW4zb0JaV0hJT2RGZ2YwT2p1WWFVWU9yX0Vmbk9mTHFMVlExZDVLYjFhR2RlZnlHSEVPZnp5Vnd5U0lOZV9wdjJpb3gwZWhCcmpaeE5NVS0yUXNpbmI1b3pyV1lsS0RTbjBsc0ZIZE5EWlJ2dmVGaDVvX2c2Ty1nQS1zb3hYWkJWVmZ3SA?oc=5",
+      "published": "2026-11-25T23:00:00+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 20,
+      "title": "UK Energy Bills Set to Soar 26% as Iran War Drives Up Gas Prices - Crude Oil Prices Today | OilPrice.com",
+      "source": "Crude Oil Prices Today | OilPrice.com",
+      "domain": "oilprice.com",
+      "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOYWNfU0Fkby02ZXVxQ3ptbW1mQmpNclpYcVdyUHVoV2FBWTg5RURmYnpMZVYwZ0dpYUtnd3drMEJyWk93RUlxNmlBQjNzQ1hKRDloTWlDa1B0UTMyOUdhdkhQd1BxRzkxaGlRSWtCbDlNVDFoRWhQZzNuNktSSUhBWlU4blRubUk5ZklXamRlVDZaZWQ3ck9mVW92NktzUlMxTHd0dW02Z1Vlem5KazdMStIBtgFBVV95cUxOLXYzVHk2RF9rdnhaT3BDb0prMGF3c21QUWtKQmxCSkl2YlgwRjJ2Skw2WnNDQzlUT2xMdVNMb0NSUjdzWC1oYVpHdnBwOXZpczFHdzlLZkhINTllVEczZ2pjUV9WQ2xOUGNIX1RpOEhyNDJKQUVHR0kxUkVaMzZzYmVPNDJUbUw2UktwaTg0T20xc3UtZzJBT3JtVW5feWRVdERZeHJlcVRvXzB4ZzBDRTltWThpZw?oc=5",
+      "published": "2026-11-25T15:00:00+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 21,
+      "title": "Energy price cap: The Iran war is being blamed for raising bills - here's why - BBC",
+      "source": "BBC",
+      "domain": "www.bbc.co.uk",
+      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE9PR0toS1BhNmQzM1Q5UGtTcWdIeVA5NkFSem85ck1GQVhRRndnZkxHQzFtMnV3VmFRWTZVdy13SDdCeTI5Q01XaFFHM0FDME9JMEJ0aFBnSUR2QkZaTXc?oc=5",
+      "published": "2026-11-25T14:58:51+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 22,
+      "title": "How an Iranian Ally Gained the Upper Hand in Yemen’s War",
+      "source": "New York Times",
+      "domain": "rss.nytimes.com",
+      "link": "https://www.nytimes.com/2026/11/25/world/middleeast/yemen-houthis-war-government-losses.html",
+      "published": "2026-11-25T13:59:32+00:00",
+      "feed": "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml"
+    },
+    {
+      "n": 23,
+      "title": "Defending Aden, Yemen’s Holdout Against the Houthis",
+      "source": "New York Times",
+      "domain": "rss.nytimes.com",
+      "link": "https://www.nytimes.com/video/world/middleeast/100000011300541/defending-aden-yemens-holdout-against-the-houthis.html",
+      "published": "2026-11-25T13:39:46+00:00",
+      "feed": "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml"
+    },
+    {
+      "n": 24,
+      "title": "Iran War Is Pushing Record Numbers of Fuel Tankers Into Crude Trade - Crude Oil Prices Today | OilPrice.com",
+      "source": "Crude Oil Prices Today | OilPrice.com",
+      "domain": "oilprice.com",
+      "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPd0xrRjNXRkJIMlI1MkRZdUZ3YmdwS2dhSHA1dVFfbE1DWHdzR09vV19qb2lObWp3eDRxTUlJSDhCMWttSHZVSjF5VGx3OXRXYXBwNVIyU1F3a28xRkFsRXFYWHpJbTVLZXhQbVQySS0wYklfSVNIaFV6S25DOVRUNjJWWHVIZTdaTjJ3UXc0N3ZRVjlwdU9EcjZ1WDYzVDlvQmNQc3FvYUF1OGc5d3lSZzZkalJGVFlJM0Nmd3lubHTSAcYBQVVfeXFMTnl6bTVmRzQ4TDRKOFpvMkZBYUpQUTR6QTZLdmU5S0xqejFnWjJxZW9ERUYyRVlLaEo4NEdKaS1IYU9hSk0xaEtTQnE5aGwwMXh6SkFFLU5nWng1V2s0SFczbUVmNmk4cEphX09fSnd1aUctUi1xa2hJN2tVd1ZfTnJJMkNKdEtxWENXZ3JtdHhSc0cxRTVHcHJTczdJZTJ2QjJYYlY2a1Mwak8tOTJReDV1Z3o5X2tRNzNpRHYwRFVvSXpoNGVn?oc=5",
+      "published": "2026-11-25T13:00:00+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 25,
+      "title": "Current price of oil as of November 25, 2026 - Fortune",
+      "source": "Fortune",
+      "domain": "fortune.com",
+      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9uc1Azc283OWV3YTZYU21XV2xlempBWlM4R3c2anBqT01SN0ItT2hNU2lRcmJKdWZwY2RmQVNhS1NHOGV2MnM0c2JveEVlRk1WRFNVdlRfcWQyZnlncUJZUXJR?oc=5",
+      "published": "2026-11-25T12:00:00+00:00",
+      "feed": "https://news.google.com/rss/search?q=Iran+war+oil+price+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 26,
+      "title": "Iran warns vessels to coordinate passage amid claims of ships hitting mines in Hormuz - The Jerusalem Post",
+      "source": "The Jerusalem Post",
+      "domain": "www.jpost.com",
+      "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9Tb21wTjg0aWQ1WF9Rbi1PMTNsRUoxWHFjNjJnNmRZVTRPa0w5NGZRSnprX00wSjhDQVFXaVgtSWhXWE9uakg1Y053a2JLUnBkRmxfaExlZ200UHNYeUluSzdFTk9iSnpyS3c?oc=5",
+      "published": "2026-11-25T10:53:27+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 27,
+      "title": "Iran says it is prepared to withstand US blockade, seeks to curb price rises - Reuters",
+      "source": "Reuters",
+      "domain": "www.reuters.com",
+      "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOQUtreFI1ZkdfaWRTMFJZWElnOFJtM2E1ZlZ6OVhiSDlVTnFOLVQtZTExQWZjbWRvRjR0SFJ3ZUotcEV5Z3RFaE5Wb1RsUEFSdUVoVUhvaXU1bFFNckhHcHdDZjdkRTNMUVlzR0ZVcUx1VWRLeV9DSnFtQjJrOUU1NjJSM1VyTEc3QUltV2p6bFpvSGVLd3dKMXRkaXpnVEJrUWcycHI5UVBNOTAwWTIzTTloYlZSeXpiUjJIcS1HOWQ?oc=5",
+      "published": "2026-11-25T08:29:22+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 28,
+      "title": "Iraq’s Prime Minister Aims to Wrest More Power From Kurdistan Region",
+      "source": "New York Times",
+      "domain": "rss.nytimes.com",
+      "link": "https://www.nytimes.com/2026/11/24/world/middleeast/iraq-prime-minister-kurdistan-control.html",
+      "published": "2026-11-25T07:36:48+00:00",
+      "feed": "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml"
+    },
+    {
+      "n": 29,
+      "title": "Persian Gulf oil exports near prewar levels despite Hormuz attacks - Iran International",
+      "source": "Iran International",
+      "domain": "www.iranintl.com",
+      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBnNlZUcmZ2ZnVwSEtHRzZ3VVpybUUtbTlJUVpZcWRkcTN0eWYxNkpBSFRYUnJJM3ZVcDl4VmdJQ0l5bDFmeUZfQ0RneTU5ZGtZQ2c?oc=5",
+      "published": "2026-11-24T23:04:42+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 30,
+      "title": "Trump Praises US Naval Blockade Against Iran in Strait of Hormuz - cwibc.co.id",
+      "source": "cwibc.co.id",
+      "domain": "cwibc.co.id",
+      "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE55NnFFeXo0ZzNVVDhFN205S0tNQUdLWlpEMjRWdWxHTGtPTXM1R2w4NGVhTWtRUVVMZ3BfZGlrMjBzMlBBUzhPWHBzTFh6OHBJREVGLUdsOGpfSk41R201MWpFQmJBTms?oc=5",
+      "published": "2026-11-24T22:11:00+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 31,
+      "title": "Houthi Attack on Skyscraper in Saudi Capital Wounds 11, Officials Say",
+      "source": "New York Times",
+      "domain": "rss.nytimes.com",
+      "link": "https://www.nytimes.com/2026/11/24/world/middleeast/saudi-skyscraper-houthi-strike.html",
+      "published": "2026-11-24T19:18:16+00:00",
+      "feed": "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml"
+    },
+    {
+      "n": 32,
+      "title": "Iran rules out talks with US until its seven conditions are met and other Mideast news - The New Indian Express",
+      "source": "The New Indian Express",
+      "domain": "www.newindianexpress.com",
+      "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPR0F5aXhjWE1RcWdxU1NpeW9YdnF3elY5VC1hWDdHWFZ6QWpaOVhmSk5wQzYtd3NhZkY4WjRtVVVRcHFqV09OZXJPMHNMcFBzd2Rpb2pRWlZmUGNPQWM5VlpTa3R3TC1DbmFaM1hnYXVHODdiSnI2X1diOHRtZ2RqcVlBSTlSUmEydkhVdFpDZFBRZTdWRGpORGRpeFZmT0R1cGpYQzI4THNpX3dHUlZHNUpfQUdubkhEZzl3aFM2SXhhZnhMVjlWbDVJSm12SFZydUpB0gHgAUFVX3lxTE5ncDZudjcxRFdVWTdsNHJ2RzJreDRYOS1iVUozeDVNZmtnNVZ2amFvdC12cGwwb0lhQ2J5VW8wTFhwRDJXZUNIVTNNR1NMVEVvN0g1OUY4VG9NaGNHUVJ5bW05V2kydk0wdFdMdDZZVG13dkVUaDFRdjBsekZEcElrWFJrNHFGenBSeVlJamU4OUM1ZkZRVGtpbk1yQzJoT1V6eG5YN2RpTzVLYUQxQkwzSmhIM1d3b2ZsY1RTQ2hZTkNGWnBCbEhEWVNsTTdIMXZ6dDJfNXdfYXlYRzAwWUFG?oc=5",
+      "published": "2026-11-24T14:42:07+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 33,
+      "title": "Hormuz oil traffic is down 40 percent: Are Iran’s tanker attacks working? - Al Jazeera",
+      "source": "Al Jazeera",
+      "domain": "www.aljazeera.com",
+      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQeWtaYWl0aXk3bE1SVS1CWDdMUy1NSmNQTUxHbTFRbFlFemVOS0FkZDE4TjVZWDNUODUycDJHTXpfaGp6SWwya2gxWVhJUlk1bWUxTmpjSk5UZm5wME5ZYWc5SkJsM1I2Vmx2c2paS3owWTdPX0pDN0ZXUUtQck11OHFfSVhwd18yakNEM3NBaTBPbmtTRjVNSnNISklHTUE3ZkJLclh4LXQzbUNZOGx3dC1n0gG3AUFVX3lxTE9yaW03aWdDZFBjTUh0YXhVMk5hdy0ybmpGQXZ5UVkwN3N3M0NrQkRTTVVwQkpEY3BBQ3ZxS0c2cmdyMUlNSlZrbmNWUzQzc05SN29ZS2h4dXJuVzdyWVFOcGVmbEFfaWxPNlpTT1JVdDJqdHRkaTE4QTZMZkFqNFl5RURUOHB6SWR5WmFTSldZcWhSa25SSVBjYkJhT09Od2Jvb2gzQzktYjZJWUxObGFoaW1kbjN1cw?oc=5",
+      "published": "2026-11-24T13:46:20+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 34,
+      "title": "Iranian Singer Receives 74 Lashes for Performing With No Hijab",
+      "source": "New York Times",
+      "domain": "rss.nytimes.com",
+      "link": "https://www.nytimes.com/2026/11/24/world/middleeast/iran-singer-parastoo-ahmadi-flogging-lashes.html",
+      "published": "2026-11-24T12:34:52+00:00",
+      "feed": "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml"
+    },
+    {
+      "n": 35,
+      "title": "Brent drops to $88, WTI at $79: Why oil is sliding despite Iran’s tanker attacks - Gulf News",
+      "source": "Gulf News",
+      "domain": "gulfnews.com",
+      "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPN2E5VGQyLWhPM0hmRlJxY2M1dDVpelg0M0NxWHF6ZDd6RVVmemFpejhPeFQtVld4NjJrdmtCV1ZHRHViYTlZeUhHNnkyeDRvc3o3ZzRSem1DelJxenlRaDg5STJ5UExRWXdJNTE1RVNabE1Sb0VoNzU4ZVJfU3NfSjU0a1BRVEJudHE1VGptTEdwNnI3R1pvbUhVQlJiYXczSW9FZl9Ud2lBMkd6WmE4ckN6c2NlSFZYY2VFcDNSZDdZZ9IB1AFBVV95cUxPSGFSYm42TDNWaXNZNzBNR1pYbDNzRzhPMlpTOURZeG1RQURZd2RiVmVMUU9DOUlKM2lITm1LY0ZEZlpNZU5NelFnWGI1WVEzcklXQXE4cnJCU1JIb3kxLXdGd2h1VmJiakJhSVEwZFhNenJkbUlPbmJfbEFSVkQzVlhZVHU1aXMyRkc0aUkyMHE5dGRmOHh2M1k2Mmd3SFpWUVlVaVNfU2VsUmRrcHdMUjNyTERyRlV1Z2ltejBkZDh1SmM5cGhuYTZXMjBuUjlJR1FkUQ?oc=5",
+      "published": "2026-11-24T06:22:44+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+oil+flow+tanker+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 36,
+      "title": "What The Strait Of Hormuz Tanker Attacks Actually Mean For C - ИФЗ РАН",
+      "source": "ИФЗ РАН",
+      "domain": "geosirius.ifz.ru",
+      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNSVpSSWZsR1VxcFFJT2tfa0E4U0FEazdWUS1zTjhCcFJKaEwzczJ1dTlYcDAzeWJ1ZE9BYXAxZk1OWkU2S0dtRzB2eFBaUC01aTVzeU1WU0xRUnJHRFJWLU40c1lEVE5WTzhsdE5XS01ZZTFxaWxBSnpvd1RiNkd2Q2RVTFpqMldZQ2c?oc=5",
+      "published": "2026-11-24T06:00:57+00:00",
+      "feed": "https://news.google.com/rss/search?q=war+risk+insurance+tanker+Hormuz&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 37,
+      "title": "Iran says three tankers hit mines in Hormuz despite U.S. escort, as Treasury widens sanctions - CNBC",
+      "source": "CNBC",
+      "domain": "www.cnbc.com",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9aSnVNOTQ5Ml81YUdQSkxzbkI0bVF5OUV4RndqcjVrWkM1SGw4V0tZOVJEbGRmTGgybGxfTUwzRVNISTRFUmxkX0cydWlPcVRCN2dIWFFfaklmbk40ZnptNVMxUURLdWFoRUtUNkNR0gFzQVVfeXFMTVY0aG5JUVJlODBXb0tvdmJTRjJoV2R2Uk9TMVpKcFdpLVpTUThDU3MzcGw3RnVmanBjQ1VNRFlkRi1JZUMxMDRNcWFXLVJoNlo4dVB6VU91V2tYRnpDU1oyekUxaWQwdlBXbGJoZ1ZlSGNKcw?oc=5",
+      "published": "2026-11-24T05:05:08+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 38,
+      "title": "Strait of Hormuz shipping attacks reach highest level since Iran war began - Beinsure",
+      "source": "Beinsure",
+      "domain": "beinsure.com",
+      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNMmtmQXp4TVJzT1VHd3ktNUNVRVBCV0JweUhtSlhuaHZ4RVJNSExNT2k1YVV4VmkyaTRISFhYb29aMnpMMUdCS3NJei04dndMSmVyU1Q0ZmtIWEszaDVGakJpeXh4N0RxeWJDVEVKdmxLOFV2blpuU3lILUQ3V2VnMjJObmpUSFk?oc=5",
+      "published": "2026-11-23T21:53:20+00:00",
+      "feed": "https://news.google.com/rss/search?q=war+risk+insurance+tanker+Hormuz&hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "n": 39,
+      "title": "Netanyahu Wants to Attack Iran. Does That Serve Israel or Him?",
+      "source": "New York Times",
+      "domain": "rss.nytimes.com",
+      "link": "https://www.nytimes.com/2026/11/23/world/middleeast/netanyahu-israel-iran.html",
+      "published": "2026-11-23T18:54:42+00:00",
+      "feed": "https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml"
+    },
+    {
+      "n": 40,
+      "title": "Iran says it will use ‘all available means’ to counter US blockade - Al Jazeera",
+      "source": "Al Jazeera",
+      "domain": "www.aljazeera.com",
+      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPTktLdU1YVmxRUnlCdUNRZmlIdWloVW12TFNEZGVMdXhoWHdpWGdIMmpkMTJnNWdFdXh2WlhFYWNzckVtcFotcW9ya2JHd1VmLVY2b2hsTFdObno2Q0IxM3oyYWsySUszUEtiTHlEV3JOaW1ZbmJ3YUc4X3BndTRMbmJteXpGTG1VZDU3clloNWNtd3RXdEx5dVdQSlZ6TS14T0tpbUg2eXlZZ9IBrwFBVV95cUxObFRhRTR4SXZfbVZ4c0VMbnJvVVNZbFBjaGw5S29VUG1kcXRieXJjUEROZUoyQTRvSGFOeDdKNUpYbmN4UmZxcTAzNmZjOWR2SmJhVHVHTkxBbUJtc2hjT1NGOTZOUzhpbHZsQ0FKNWhQYkl1S0ZRcTdaTWMzU2N4QnBGV1cwOGpJNERSbmJwYzVNRERpb0JwTGlrUmp4LWczVXVxTXkzLXNRS05JNzBV?oc=5",
+      "published": "2026-11-23T13:25:38+00:00",
+      "feed": "https://news.google.com/rss/search?q=Hormuz+strait+Iran+blockade+2026&hl=en-US&gl=US&ceid=US:en"
+    }
+  ]
+}

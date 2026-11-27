@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-11-26T09:31:57+09:00",
+  "updated_at": "2026-11-27T09:32:00+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-11-15",
-    "age_days": 11,
+    "age_days": 12,
     "stale_after_days": 30,
     "stale": false,
-    "timeline_updated": "2026-11-22",
-    "timeline_age_days": 4,
+    "timeline_updated": "2026-11-26",
+    "timeline_age_days": 1,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-24"
+    "judgment_date": "2027-02-25"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
@@ -23,92 +23,85 @@
   "scenario": {
     "A_diplomacy_pct": 12,
     "B_partial_blockade_pct": 46,
-    "C_full_blockade_pct": 16,
-    "D_escalation_pct": 26
+    "C_full_blockade_pct": 22,
+    "D_escalation_pct": 20
   },
   "scenario_range": {
     "A_diplomacy_pct": [
       12,
-      15
+      14
     ],
     "B_partial_blockade_pct": [
-      43,
-      45
+      41,
+      46
     ],
     "C_full_blockade_pct": [
-      13,
-      18
+      18,
+      25
     ],
     "D_escalation_pct": [
-      25,
-      30
+      20,
+      25
     ]
   },
   "scenario_samples": 5,
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "ホルムズ海峡での船舶攻撃は開戦以来最多の水準に達した。",
+      "text": "クウェートへの攻撃でイタリア人2人が死亡し、イランは関与を否定した。アラグチ外相は攻撃を「疑わしい」と述べた。",
       "items": [
-        28,
-        37
-      ],
-      "sources": [
-        {
-          "source": "Beinsure",
-          "domain": "beinsure.com",
-          "title": "Strait of Hormuz shipping attacks reach highest level since Iran war began - Beinsure",
-          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNMmtmQXp4TVJzT1VHd3ktNUNVRVBCV0JweUhtSlhuaHZ4RVJNSExNT2k1YVV4VmkyaTRISFhYb29aMnpMMUdCS3NJei04dndMSmVyU1Q0ZmtIWEszaDVGakJpeXh4N0RxeWJDVEVKdmxLOFV2blpuU3lILUQ3V2VnMjJObmpUSFk?oc=5",
-          "published": "2026-11-24"
-        },
-        {
-          "source": "ABC News - Breaking News, Latest News and Videos",
-          "domain": "abcnews.com",
-          "title": "Strait of Hormuz attacks have increased to highest level since Iran war began - ABC News - Breaking News, Latest News and Videos",
-          "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPWHRGNHdBbkpIa3IyWTlmV2l5aDVwZ0pLUE1WRzhIVjRqM3p4c3ZsSWNtaVo4YnU4WHBwbUREbzJoX1VzeENVb0xFclVKaW9HY2lVb2lxRnFzWUhNb3RvTDlPYjRfUTVWOUU1dHJ4b2lfZGNPV3h0SGZfdEJLX3NacWxLam1QV1pnb08xRVFDei1OaFZIQXduTmJjbkNqYXFuaGk4a3p4OE5YR0HSAbABQVVfeXFMT3JyZk0yRTFISFBvWF9WMnZrUnp2NHBtMG9pRHo2OUlfaHd0QkZOWmEwWjJLMHJMdlMxal9WQ0lfU1pyd0RLejdCaEtWS2tGUGoyN0ZDVFJOWUZoR3RBQjBsUS1RV2xWcGlVSWNsd3c5aTR5a0dMWkUtMWtVeV95ajVhMkJBc0FrdVo3OWlmVUlPY2tLRU5VWmwtQzRKTXktQnBYVHpSN2k1U2xwUDJVdHU?oc=5",
-          "published": "2026-11-21"
-        }
-      ]
-    },
-    {
-      "text": "11月の同海峡の石油流量は日量1,000万バレルに落ちた。",
-      "items": [
-        38
-      ],
-      "sources": [
-        {
-          "source": "https://houseofsaud.com/",
-          "domain": "houseofsaud.com",
-          "title": "Hormuz Oil Flows Fall to 10 Million b/d in November 2026 - https://houseofsaud.com/",
-          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBIYUNnUWZkcjAwNTNUUnpGdnYxWFBuM3lNaGtWdkhiOEFTbHdKYnpOdW1IcERfdlBVQkRJRllPV0dmQ2NhNW5EM3NMeXp2djlyX2tneFBVdm1KRUgzNklYTGsyclNGN3A5bDZMUENOMA?oc=5",
-          "published": "2026-11-21"
-        }
-      ]
-    },
-    {
-      "text": "イランは米国の海上封鎖に「あらゆる手段」で対抗すると表明した。",
-      "items": [
-        30,
-        32
+        1,
+        3,
+        5
       ],
       "sources": [
         {
           "source": "Al Jazeera",
           "domain": "www.aljazeera.com",
-          "title": "Iran says it will use ‘all available means’ to counter US blockade - Al Jazeera",
-          "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPTktLdU1YVmxRUnlCdUNRZmlIdWloVW12TFNEZGVMdXhoWHdpWGdIMmpkMTJnNWdFdXh2WlhFYWNzckVtcFotcW9ya2JHd1VmLVY2b2hsTFdObno2Q0IxM3oyYWsySUszUEtiTHlEV3JOaW1ZbmJ3YUc4X3BndTRMbmJteXpGTG1VZDU3clloNWNtd3RXdEx5dVdQSlZ6TS14T0tpbUg2eXlZZ9IBrwFBVV95cUxObFRhRTR4SXZfbVZ4c0VMbnJvVVNZbFBjaGw5S29VUG1kcXRieXJjUEROZUoyQTRvSGFOeDdKNUpYbmN4UmZxcTAzNmZjOWR2SmJhVHVHTkxBbUJtc2hjT1NGOTZOUzhpbHZsQ0FKNWhQYkl1S0ZRcTdaTWMzU2N4QnBGV1cwOGpJNERSbmJwYzVNRERpb0JwTGlrUmp4LWczVXVxTXkzLXNRS05JNzBV?oc=5",
-          "published": "2026-11-23"
+          "title": "Iran war live: Iran’s Araghchi calls deadly Kuwait attack ‘suspicious’",
+          "link": "https://www.aljazeera.com/news/liveblog/2026/11/27/iran-war-live-irans-araghchi-calls-deadly-kuwait-attack-suspicious?traffic_source=rss",
+          "published": "2026-11-27"
         },
         {
-          "source": "Euronews.com",
-          "domain": "www.euronews.com",
-          "title": "Iran vows 'every means' to counter US blockade of Hormuz after Trump threat - Euronews.com",
-          "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNZERsTGg1S2ltaDZLdHdmVElHakxUQ01UWk5SaTdQUm5USUtYV3ZadWZkUHByM0lpckxTWXhqVy1sa2YyOXdhQ0VkRXljOTlwV0ZkRUhQTmQwSVYxX0YyTE1CWmxJWG5pZEpsblF6V3pGQlpOSEJFbFdaeHZyTl9fWVR1YjFGTEwxc1ViOG1tVkhIcVV4SWM1YWhCUGt1ZmxDTzhsTXh2Wnd5WmdxUHc?oc=5",
-          "published": "2026-11-23"
+          "source": "BBC",
+          "domain": "feeds.bbci.co.uk",
+          "title": "Two Italians killed in strike in Kuwait, as Iran denies responsibility",
+          "link": "https://www.bbc.co.uk/news/articles/c39w9y5dx4k5o?at_medium=RSS&at_campaign=rss",
+          "published": "2026-11-27"
+        },
+        {
+          "source": "New York Times",
+          "domain": "rss.nytimes.com",
+          "title": "Two Italians Killed in Iranian Drone Attack on Kuwait, Officials Say",
+          "link": "https://www.nytimes.com/2026/11/26/world/middleeast/italians-killed-iran-drone-attack-kuwait.html",
+          "published": "2026-11-27"
+        }
+      ]
+    },
+    {
+      "text": "イランは船の機雷接触を主張し、通航船に事前の調整を求めた。",
+      "items": [
+        26,
+        37
+      ],
+      "sources": [
+        {
+          "source": "The Jerusalem Post",
+          "domain": "www.jpost.com",
+          "title": "Iran warns vessels to coordinate passage amid claims of ships hitting mines in Hormuz - The Jerusalem Post",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9Tb21wTjg0aWQ1WF9Rbi1PMTNsRUoxWHFjNjJnNmRZVTRPa0w5NGZRSnprX00wSjhDQVFXaVgtSWhXWE9uakg1Y053a2JLUnBkRmxfaExlZ200UHNYeUluSzdFTk9iSnpyS3c?oc=5",
+          "published": "2026-11-25"
+        },
+        {
+          "source": "CNBC",
+          "domain": "www.cnbc.com",
+          "title": "Iran says three tankers hit mines in Hormuz despite U.S. escort, as Treasury widens sanctions - CNBC",
+          "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9aSnVNOTQ5Ml81YUdQSkxzbkI0bVF5OUV4RndqcjVrWkM1SGw4V0tZOVJEbGRmTGgybGxfTUwzRVNISTRFUmxkX0cydWlPcVRCN2dIWFFfaklmbk40ZnptNVMxUURLdWFoRUtUNkNR0gFzQVVfeXFMTVY0aG5JUVJlODBXb0tvdmJTRjJoV2R2Uk9TMVpKcFdpLVpTUThDU3MzcGw3RnVmanBjQ1VNRFlkRi1JZUMxMDRNcWFXLVJoNlo4dVB6VU91V2tYRnpDU1oyekUxaWQwdlBXbGJoZ1ZlSGNKcw?oc=5",
+          "published": "2026-11-24"
         }
       ]
     }
   ],
   "note_price_warnings": [],
-  "last_manual_note": "ホルムズ海峡での船舶攻撃は開戦以来最多の水準に達した。11月の同海峡の石油流量は日量1,000万バレルに落ちた。イランは米国の海上封鎖に「あらゆる手段」で対抗すると表明した。"
+  "last_manual_note": "クウェートへの攻撃でイタリア人2人が死亡し、イランは関与を否定した。アラグチ外相は攻撃を「疑わしい」と述べた。イランは船の機雷接触を主張し、通航船に事前の調整を求めた。"
 }
