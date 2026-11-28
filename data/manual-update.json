@@ -1,21 +1,21 @@
 {
-  "updated_at": "2026-11-27T09:32:00+09:00",
+  "updated_at": "2026-11-28T09:32:06+09:00",
   "auto_generated": true,
   "source": "Claude（opus） による推計（入力: Google ニュース検索・BBC・Al Jazeera・New York Times の公開RSS）",
   "context": {
     "updated": "2026-11-15",
-    "age_days": 12,
+    "age_days": 13,
     "stale_after_days": 30,
     "stale": false,
     "timeline_updated": "2026-11-26",
-    "timeline_age_days": 1,
+    "timeline_age_days": 2,
     "timeline_stale_after_days": 7,
     "timeline_stale": false,
     "note": "この推計に与えた前提の基準日。data/context.json で管理している。"
   },
   "scenario_horizon": {
     "days": 90,
-    "judgment_date": "2027-02-25"
+    "judgment_date": "2027-02-26"
   },
   "war_risk_premium_manual": null,
   "war_risk_premium_verified": false,
@@ -23,17 +23,17 @@
   "scenario": {
     "A_diplomacy_pct": 12,
     "B_partial_blockade_pct": 46,
-    "C_full_blockade_pct": 22,
-    "D_escalation_pct": 20
+    "C_full_blockade_pct": 21,
+    "D_escalation_pct": 21
   },
   "scenario_range": {
     "A_diplomacy_pct": [
-      12,
-      14
+      10,
+      15
     ],
     "B_partial_blockade_pct": [
-      41,
-      46
+      43,
+      50
     ],
     "C_full_blockade_pct": [
       18,
@@ -48,26 +48,64 @@
   "reported_figures": [],
   "note_sentences": [
     {
-      "text": "クウェートへの攻撃でイタリア人2人が死亡し、イランは関与を否定した。アラグチ外相は攻撃を「疑わしい」と述べた。",
+      "text": "米軍はイランの港を出て封鎖を破ろうとした商船を航行不能にした。",
       "items": [
-        1,
-        3,
+        2,
         5
       ],
       "sources": [
         {
           "source": "Al Jazeera",
           "domain": "www.aljazeera.com",
-          "title": "Iran war live: Iran’s Araghchi calls deadly Kuwait attack ‘suspicious’",
-          "link": "https://www.aljazeera.com/news/liveblog/2026/11/27/iran-war-live-irans-araghchi-calls-deadly-kuwait-attack-suspicious?traffic_source=rss",
-          "published": "2026-11-27"
+          "title": "US disables ship attempting to breach Iran blockade",
+          "link": "https://www.aljazeera.com/video/newsfeed/2026/11/27/us-disables-ship-attempting-to-breach-iran-blockade?traffic_source=rss",
+          "published": "2026-11-28"
         },
         {
-          "source": "BBC",
-          "domain": "feeds.bbci.co.uk",
-          "title": "Two Italians killed in strike in Kuwait, as Iran denies responsibility",
-          "link": "https://www.bbc.co.uk/news/articles/c39w9y5dx4k5o?at_medium=RSS&at_campaign=rss",
-          "published": "2026-11-27"
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "US military says it disabled merchant ship trying to breach Iran blockade - Al Jazeera",
+          "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNVHhKQVVmUXhlYkI2T3JnUlhHb3pLYk9FRmlqX19JcjZrNWdFV0g3VDdZbGRSclp6akN4bnNjTFctbkdNanpLZWxVSkhPZXVWMDNLVjY1Vm9fTFZWQk10NFAtNFBkenhpMkZkSDFFaWpVVlRGVDhxZnNncmg5dXlVT1ZoaVlYQTZEQnVpc3o4UEhmLVFaeUJpQ0VwTzFVVkdhQWpHWGZ2T2JtM0pTSVl3YzA3R0dNUdIBuwFBVV95cUxQMl9KeEFfTjdYTkRLM1Zfblg0S3Q1OUVhQ1l1VVcyNHhrbHRjQ2Zvcl9TengzSTVrakVPWDM0d00zZy16N21VQVJ0QXNpSW1TT1hraHJYUkc5V3Q5bGxQbktSQ2t0SWlSWWlDeGtYeHBiS1haNDZhNHJJQ1Y0bU5sR1NwX0VCeVJaVlFlMVZkcEhJbzJZbHc0SGx6MFBRc3dLeVVwS0FSd0psbllDMXl6NThCdUNzbnpYcFY0?oc=5",
+          "published": "2026-11-28"
+        }
+      ]
+    },
+    {
+      "text": "IRGCは封鎖打破を誓い、タンカーの機雷接触を主張した。",
+      "items": [
+        3,
+        8
+      ],
+      "sources": [
+        {
+          "source": "The Jerusalem Post",
+          "domain": "www.jpost.com",
+          "title": "Senior IRGC officials vow to break US blockade on Strait of Hormuz, claim Iran's ports are 'open' - The Jerusalem Post",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTFAxLU1CUTdXdndZZllNbjFmYUJIbjI5dTkxYnVUeTZpSVEwQ0JQVkNDQ3FJdzh4N0JtbnJ1aWI0Q3RFcDdDTkUtN05wclJSNFBVZlRnSmZGNHh1TTVFa3MwOEEyMURzdkdHY1E?oc=5",
+          "published": "2026-11-28"
+        },
+        {
+          "source": "The Jerusalem Post",
+          "domain": "www.jpost.com",
+          "title": "Oil tanker hits naval mine while attempting to transit Strait of Hormuz, IRGC says - report - The Jerusalem Post",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5lS203UndXM2Rmd3YtM0NoSjMwQTljUWJwc3JDcmNKRGRSRVJCNnNoaldHcTNRZ1dteC0tY3ZJNXd1ZVMtSjNURnZHUjBMdkt6cnhfMUhwbk1kd1o3MmVGWmF1UEZUWTNGOGc?oc=5",
+          "published": "2026-11-28"
+        }
+      ]
+    },
+    {
+      "text": "伊外相はクウェートでの死亡攻撃の無人機をイラン製とした。",
+      "items": [
+        1,
+        19
+      ],
+      "sources": [
+        {
+          "source": "Al Jazeera",
+          "domain": "www.aljazeera.com",
+          "title": "Iran war live: Italy says drone in deadly Kuwait attack was made in Iran",
+          "link": "https://www.aljazeera.com/news/liveblog/2026/11/28/iran-war-live-italy-says-drone-in-deadly-kuwait-attack-was-made-in-iran?traffic_source=rss",
+          "published": "2026-11-28"
         },
         {
           "source": "New York Times",
@@ -77,31 +115,8 @@
           "published": "2026-11-27"
         }
       ]
-    },
-    {
-      "text": "イランは船の機雷接触を主張し、通航船に事前の調整を求めた。",
-      "items": [
-        26,
-        37
-      ],
-      "sources": [
-        {
-          "source": "The Jerusalem Post",
-          "domain": "www.jpost.com",
-          "title": "Iran warns vessels to coordinate passage amid claims of ships hitting mines in Hormuz - The Jerusalem Post",
-          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9Tb21wTjg0aWQ1WF9Rbi1PMTNsRUoxWHFjNjJnNmRZVTRPa0w5NGZRSnprX00wSjhDQVFXaVgtSWhXWE9uakg1Y053a2JLUnBkRmxfaExlZ200UHNYeUluSzdFTk9iSnpyS3c?oc=5",
-          "published": "2026-11-25"
-        },
-        {
-          "source": "CNBC",
-          "domain": "www.cnbc.com",
-          "title": "Iran says three tankers hit mines in Hormuz despite U.S. escort, as Treasury widens sanctions - CNBC",
-          "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9aSnVNOTQ5Ml81YUdQSkxzbkI0bVF5OUV4RndqcjVrWkM1SGw4V0tZOVJEbGRmTGgybGxfTUwzRVNISTRFUmxkX0cydWlPcVRCN2dIWFFfaklmbk40ZnptNVMxUURLdWFoRUtUNkNR0gFzQVVfeXFMTVY0aG5JUVJlODBXb0tvdmJTRjJoV2R2Uk9TMVpKcFdpLVpTUThDU3MzcGw3RnVmanBjQ1VNRFlkRi1JZUMxMDRNcWFXLVJoNlo4dVB6VU91V2tYRnpDU1oyekUxaWQwdlBXbGJoZ1ZlSGNKcw?oc=5",
-          "published": "2026-11-24"
-        }
-      ]
     }
   ],
   "note_price_warnings": [],
-  "last_manual_note": "クウェートへの攻撃でイタリア人2人が死亡し、イランは関与を否定した。アラグチ外相は攻撃を「疑わしい」と述べた。イランは船の機雷接触を主張し、通航船に事前の調整を求めた。"
+  "last_manual_note": "米軍はイランの港を出て封鎖を破ろうとした商船を航行不能にした。IRGCは封鎖打破を誓い、タンカーの機雷接触を主張した。伊外相はクウェートでの死亡攻撃の無人機をイラン製とした。"
 }
